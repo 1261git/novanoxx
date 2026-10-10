@@ -17,6 +17,7 @@ const google=require('./google-auth.cjs');
 const naver=require('./naver-auth.cjs');
 const kakao=require('./kakao-auth.cjs');
 const creatorApi=require('./creator-api.cjs')(db,dir,user,json);
+const neonPayments=require('./neon-payments.cjs')(db,user,json);
 const attempts = new Map();
 function json(res,status,data,headers={}){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store',...headers});res.end(JSON.stringify(data));}
 function token(req){const cookie=(req.headers.cookie||'').split(';').map(x=>x.trim()).find(x=>x.startsWith('nnx_session='));return cookie?cookie.slice(12):'';}
@@ -27,6 +28,7 @@ async function body(req){let size=0,chunks=[];for await(const c of req){size+=c.
 module.exports=async function auth(req,res,name){
  if(!name.startsWith('/api/auth/')&&!name.startsWith('/api/catalog'))return false;
  try{
+ if(await neonPayments(req,res,name))return true;
  if(await creatorApi(req,res,name))return true;
  if(await kakao(req,res,name,db,session,json,{user:user(req),sessionHash:hashToken(token(req))}))return true;
  if(await naver(req,res,name,db,session,json))return true;
