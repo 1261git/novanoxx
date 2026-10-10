@@ -38,14 +38,5 @@ main{max-width:1680px;margin:auto;padding:0 3%}footer{border-top:1px solid #ffff
 .image-logo{display:flex;align-items:center;justify-content:center;width:190px;height:38px;flex-shrink:0;overflow:hidden}.image-logo img{display:block;width:100%;height:auto}footer .image-logo{width:180px}@media(max-width:760px){header .image-logo{width:150px;height:32px}footer .image-logo{width:160px}}
 
 .marketplace-view #purposes button[aria-pressed="true"],.marketplace-view #purposes button[aria-pressed="true"] *{color:#ff6b2b}.marketplace-view #purposes button[aria-pressed="true"]{border-color:#ff6b2b70;background:#ff6b2b12}
-/* Center the homepage content with balanced side gutters. */
-main:has(.landing-page){max-width:1280px;margin-inline:auto}
-.landing-hero{grid-template-columns:1fr;justify-items:center;gap:34px;padding:55px 0 40px}
-.landing-copy{width:100%;max-width:960px;text-align:center}
-.landing-copy h1{white-space:normal}
-.landing-actions{justify-content:center}
-.celestial-stage{width:min(100%,560px);min-height:430px;margin-inline:auto}
-.landing-trust{max-width:960px;margin-inline:auto}
-.trust-item{display:grid;justify-items:center;text-align:center;gap:12px}
-.trust-item p{margin-inline:auto}
-@media(max-width:760px){.landing-hero{padding-top:34px;gap:24px}.celestial-stage{min-height:300px}.landing-actions{gap:14px}.trust-item{gap:10px}}
+/* Keep the original side-by-side hero centered within the page. */
+.landing-page{margin-inline:auto;width:100%;max-width:1400px}
