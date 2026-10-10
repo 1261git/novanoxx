@@ -1,6 +1,7 @@
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 module.exports=function createCreatorApi(db,dir,user,json){
  db.exec(`CREATE TABLE IF NOT EXISTS creator_assets(id TEXT PRIMARY KEY,user_id TEXT NOT NULL,metadata TEXT NOT NULL,status TEXT NOT NULL,created INTEGER NOT NULL,updated INTEGER NOT NULL);CREATE TABLE IF NOT EXISTS creator_files(id TEXT PRIMARY KEY,asset_id TEXT NOT NULL,user_id TEXT NOT NULL,kind TEXT NOT NULL,name TEXT NOT NULL,ext TEXT NOT NULL,size INTEGER NOT NULL,created INTEGER NOT NULL);`);
+ db.exec('CREATE TABLE IF NOT EXISTS creator_avatars(user_id TEXT PRIMARY KEY,data BLOB NOT NULL,mime TEXT NOT NULL,updated INTEGER NOT NULL);');
  const folder=path.join(dir,'uploads');fs.mkdirSync(folder,{recursive:true});
  const allowed=new Set(['png','jpg','jpeg','webp','mp4','webm','mov','mp3','wav','pdf','zip','glb','gltf','obj','fbx','pptx','docx']);
  const files=id=>db.prepare('SELECT id,kind,name,size FROM creator_files WHERE asset_id=?').all(id);
@@ -9,13 +10,15 @@ module.exports=function createCreatorApi(db,dir,user,json){
  const u=user(req);if(!u){json(res,401,{error:'로그인이 필요해요.'});return true;}
  if(!db.prepare('SELECT user_id FROM creator_profiles WHERE user_id=?').get(u.id)){json(res,403,{error:'크리에이터 프로필을 먼저 작성해주세요.'});return true;}
  const url=new URL(req.url,'http://localhost');const id=url.searchParams.get('id');const asset=id?db.prepare('SELECT * FROM creator_assets WHERE id=? AND user_id=?').get(id,u.id):null;
- const output=a=>({...JSON.parse(a.metadata),id:a.id,status:a.status,updated:a.updated,files:files(a.id)});
+ const output=a=>({...JSON.parse(a.metadata),id:a.id,status:a.status,created:a.created,updated:a.updated,files:files(a.id)});
  if(req.method==='GET'){
+ if(name.endsWith('/avatar')){const avatar=db.prepare('SELECT * FROM creator_avatars WHERE user_id=?').get(u.id);if(!avatar){json(res,404,{error:'사진이 없어요.'});return true;}res.writeHead(200,{'Content-Type':avatar.mime,'Content-Length':avatar.data.length,'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'});res.end(Buffer.from(avatar.data));return true;}
  if(name.endsWith('/assets')){json(res,200,{assets:db.prepare('SELECT * FROM creator_assets WHERE user_id=? ORDER BY updated DESC').all(u.id).map(output)});return true;}
- if(name.endsWith('/file')){const f=db.prepare('SELECT * FROM creator_files WHERE id=? AND user_id=?').get(id,u.id);if(!f){json(res,404,{error:'파일을 찾을 수 없어요.'});return true;}res.writeHead(200,{'Content-Type':'application/octet-stream','Content-Length':f.size,'Content-Disposition':`attachment; filename="download.${f.ext}"; filename*=UTF-8''${encodeURIComponent(f.name)}`,'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'});fs.createReadStream(path.join(folder,f.id)).pipe(res);return true;}
+ if(name.endsWith('/file')){const f=db.prepare('SELECT * FROM creator_files WHERE id=? AND user_id=?').get(id,u.id);if(!f){json(res,404,{error:'파일을 찾을 수 없어요.'});return true;}res.writeHead(200,{'Content-Type':url.searchParams.get('inline')==='1'&&f.kind!=='original'?({'png':'image/png','jpg':'image/jpeg','jpeg':'image/jpeg','webp':'image/webp'}[f.ext]||'application/octet-stream'):'application/octet-stream','Content-Length':f.size,'Content-Disposition':`${url.searchParams.get('inline')==='1'&&f.kind!=='original'&&['png','jpg','jpeg','webp'].includes(f.ext)?'inline':'attachment'}; filename="download.${f.ext}"; filename*=UTF-8''${encodeURIComponent(f.name)}`,'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'});fs.createReadStream(path.join(folder,f.id)).pipe(res);return true;}
  json(res,404,{error:'페이지를 찾을 수 없어요.'});return true;
  }
  const deployment=require('./deployment-config.cjs');if(req.method!=='POST'||req.headers.origin!==deployment.base){json(res,403,{error:'요청 출처를 확인해주세요.'});return true;}
+ if(name.endsWith('/avatar')){let size=0,chunks=[];for await(const chunk of req){size+=chunk.length;if(size>5*1024*1024){json(res,413,{error:'프로필 사진은 5MB 이하로 올려주세요.'});return true;}chunks.push(chunk);}const data=Buffer.concat(chunks);const mime=data.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))?'image/png':data[0]===255&&data[1]===216&&data[2]===255?'image/jpeg':data.toString('ascii',0,4)==='RIFF'&&data.toString('ascii',8,12)==='WEBP'?'image/webp':null;if(!mime){json(res,400,{error:'PNG, JPG, WEBP 사진을 선택해주세요.'});return true;}db.prepare('INSERT INTO creator_avatars VALUES(?,?,?,?) ON CONFLICT(user_id) DO UPDATE SET data=excluded.data,mime=excluded.mime,updated=excluded.updated').run(u.id,data,mime,Date.now());json(res,200,{ok:true});return true;}
  if(name.endsWith('/upload')){
  if(!asset||asset.status!=='DRAFT'){json(res,409,{error:'임시저장한 작품에만 파일을 올릴 수 있어요.'});return true;}
  const kind=url.searchParams.get('kind'),filename=url.searchParams.get('name')||'',ext=path.extname(filename).slice(1).toLowerCase();
