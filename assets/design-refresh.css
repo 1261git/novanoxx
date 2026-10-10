@@ -51,3 +51,4 @@ main{max-width:1680px;margin:auto;padding:0 3%}footer{border-top:1px solid #ffff
 .route-page[data-route^="creator-"] .creator-dashboard-layout{width:100%;margin-inline:auto}
 .route-page[data-route^="creator-"]>.narrow{margin-inline:auto}
 @media(max-width:760px){.route-page[data-route^="creator-"]{max-width:100%}.route-page[data-route^="creator-"] .creator-menu{gap:8px}.route-page[data-route^="creator-"] .creator-menu a{padding:10px 12px}}
+.route-page[data-route="creator-profile"]>.page-lead{text-align:center!important}.route-page[data-route="admin-reviews"]{max-width:1120px;width:100%;margin-inline:auto}.route-page[data-route="admin-reviews"]>h1,.route-page[data-route="admin-reviews"]>.eyebrow,.route-page[data-route="admin-reviews"]>.page-lead{text-align:center}
