@@ -1,0 +1,9 @@
+.private/
+.env
+.env.*
+!.env.production.example
+*.sqlite*
+*.jpg
+!assets/**
+client_secret*
+node_modules/
