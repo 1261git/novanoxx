@@ -15,6 +15,7 @@ db.exec('CREATE TABLE IF NOT EXISTS creator_profiles(user_id TEXT PRIMARY KEY,di
 const google=require('./google-auth.cjs');
 const naver=require('./naver-auth.cjs');
 const kakao=require('./kakao-auth.cjs');
+const creatorApi=require('./creator-api.cjs')(db,dir,user,json);
 const attempts = new Map();
 function json(res,status,data,headers={}){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store',...headers});res.end(JSON.stringify(data));}
 function token(req){const cookie=(req.headers.cookie||'').split(';').map(x=>x.trim()).find(x=>x.startsWith('nnx_session='));return cookie?cookie.slice(12):'';}
@@ -25,6 +26,7 @@ async function body(req){let size=0,chunks=[];for await(const c of req){size+=c.
 module.exports=async function auth(req,res,name){
  if(!name.startsWith('/api/auth/'))return false;
  try{
+ if(await creatorApi(req,res,name))return true;
  if(await kakao(req,res,name,db,session,json,{user:user(req),sessionHash:hashToken(token(req))}))return true;
  if(await naver(req,res,name,db,session,json))return true;
  if(await google(req,res,name,db,session,json))return true;
