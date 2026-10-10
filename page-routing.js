@@ -1,4 +1,5 @@
 const homeSections = Array.from(document.querySelector('main').children);
+homeSections.forEach(el=>el.hidden=true);
 const page = document.createElement('section');
 page.className = 'route-page'; page.hidden = true;
 document.querySelector('main').append(page);
@@ -15,7 +16,7 @@ const providerNames={google:"구글",naver:"네이버",kakao:"카카오",email:"
 function hasAuthenticatedSession(){return Boolean(authUser)}
 async function authRequest(action,data){const res=await fetch('/api/auth/'+action,{method:data?'POST':'GET',headers:data?{'Content-Type':'application/json'}:{},body:data?JSON.stringify(data):undefined});const result=await res.json();if(!res.ok)throw new Error(result.error||'연결에 실패했어요.');return result}
 function updateAccountHeader(){const b=document.querySelector('#account-session-button')||document.querySelector('.account button[data-info="로그인"]');if(!b)return;b.id='account-session-button';b.removeAttribute('data-info');b.textContent=authUser?authUser.name+' · 로그아웃':'로그인 ↗';b.onclick=async()=>{if(!authUser){go('login');return}try{await authRequest('logout',{});authUser=null;updateAccountHeader();route()}catch(e){toast(e.message)}}}
-async function initializeAuth(){try{const result=await authRequest('me');authUser=result.user;recentLogin=result.recentLogin||null}catch{}authReady=true;updateAccountHeader();route()}
+async function initializeAuth(){try{const result=await authRequest('me');authUser=result.user;recentLogin=result.recentLogin||null}catch{}authReady=true;updateAccountHeader();route();document.querySelector('main').setAttribute('data-route-ready','')}
 function accountHref(mode){const next=loginReturn();return '#/'+mode+(next&&/^assets\/\d+$/.test(next)?'?next='+encodeURIComponent(next):'')}
 function pageHeading(label,title,description){return `<a class="back-link" href="#/marketplace">← 마켓플레이스로</a><div class="eyebrow">${label}</div><h1 tabindex="-1">${title}</h1><p class="page-lead">${description}</p>`}
 function route(){
