@@ -23,7 +23,7 @@ module.exports=async function kakao(req,res,name,db,session,json,context={}){
  }catch{redirect(res,base+'/#/login?oauth_error=config');}return true;}
  if(name==='/api/auth/kakao/callback'&&req.method==='GET'){
  const state=url.searchParams.get('state');const p=pending.get(state);pending.delete(state);const binding=(req.headers.cookie||'').split(';').map(x=>x.trim()).find(x=>x.startsWith('nnx_kakao_oauth='))?.slice('nnx_kakao_oauth='.length)||'';
- const failure=code=>redirect(res,base+'/#/login?oauth_error='+code+(p?'&next='+encodeURIComponent(p.next):''),'nnx_kakao_oauth=; HttpOnly; SameSite=Lax; Path=/api/auth/kakao; Max-Age=0');
+ const failure=code=>redirect(res,base+'/#/login?oauth_error='+code+'&provider=kakao'+(p?'&next='+encodeURIComponent(p.next):''),'nnx_kakao_oauth=; HttpOnly; SameSite=Lax; Path=/api/auth/kakao; Max-Age=0');
  if(!p||p.expires<Date.now()||digest(binding)!==p.binding){failure('state');return true;}
  if(url.searchParams.get('error')){failure('cancelled');return true;}
  try{const c=config(),code=url.searchParams.get('code');if(!code)throw Error('code');
