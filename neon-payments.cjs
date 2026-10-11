@@ -44,7 +44,7 @@ module.exports=function(db,user,json,options={}){
     let result=await pg('confirm','POST',{paymentKey:d.paymentKey,orderId:order.id,amount:order.amount},order.id);
     if(!result.ok)result=await pg(encodeURIComponent(d.paymentKey),'GET');
     const p=result.value;if(!result.ok||p.status!=='DONE'||p.orderId!==order.id||p.paymentKey!==d.paymentKey||p.totalAmount!==order.amount||p.balanceAmount!==order.amount||p.currency!=='KRW'){json(res,400,{error:'결제 승인을 확인하지 못했어요. 잔액은 지급되지 않았습니다.'});return true;}
-    db.exec('BEGIN IMMEDIATE');try{const changed=db.prepare("UPDATE neon_topups SET state='PAID',paid=? WHERE id=? AND state='PENDING'").run(Date.now(),order.id).changes;if(changed)db.prepare('INSERT INTO neon_test_wallet(user_id,balance) VALUES(?,?) ON CONFLICT(user_id) DO UPDATE SET balance=balance+excluded.balance').run(u.id,order.neon);db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}
+    db.exec('BEGIN IMMEDIATE');try{const changed=db.prepare("UPDATE neon_topups SET state='PAID',paid=? WHERE id=? AND state='PENDING'").run(Date.now(),order.id).changes;if(changed)db.prepare('INSERT INTO neon_test_wallet(user_id,balance) VALUES(?,?) ON CONFLICT(user_id) DO UPDATE SET balance=neon_test_wallet.balance+excluded.balance').run(u.id,order.neon);db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}
     json(res,200,{ok:true,testBalance:balance(u.id)});
    }catch{json(res,503,{error:'결제 확인이 지연되고 있어요. 같은 주문으로 다시 확인해주세요.'});}return true;
   }

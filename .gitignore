@@ -7,3 +7,7 @@
 !assets/**
 client_secret*
 node_modules/
+
+*.docx.txt
+*.manifest.json
+backups/

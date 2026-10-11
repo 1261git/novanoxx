@@ -3,3 +3,9 @@
 *.jpg
 !assets/**
 *.sqlite*
+
+node_modules
+*.docx.txt
+backups
+
+.env*
