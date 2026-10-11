@@ -29,7 +29,7 @@ async function refreshHeaderNeon(){
 }
 async function initializeAuth(){try{const result=await authRequest('me');authUser=result.user;recentLogin=result.recentLogin||null}catch{}try{await refreshCatalog()}catch{}authReady=true;updateAccountHeader();if(new URLSearchParams(location.search).has('neon_result'))location.hash='/wallet';route();document.querySelector('main').setAttribute('data-route-ready','')}
 function accountHref(mode){const next=loginReturn();return '#/'+mode+(next&&/^assets\/\d+$/.test(next)?'?next='+encodeURIComponent(next):'')}
-function pageHeading(label,title,description){const hideBack=page.dataset.route==='briefs'||page.dataset.route==='creators'||page.dataset.route?.startsWith('creator-');return `${hideBack?'':'<a class="back-link" href="#/marketplace">← 마켓플레이스로</a>'}<div class="eyebrow">${label}</div><h1 tabindex="-1">${title}</h1><p class="page-lead">${description}</p>`}
+function pageHeading(label,title,description){const hideBack=page.dataset.route==='contest'||page.dataset.route==='contest-submit'||page.dataset.route==='briefs'||page.dataset.route==='creators'||page.dataset.route?.startsWith('creator-');return `${hideBack?'':'<a class="back-link" href="#/marketplace">← 마켓플레이스로</a>'}<div class="eyebrow">${label}</div><h1 tabindex="-1">${title}</h1><p class="page-lead">${description}</p>`}
 function route(){
  if(!authReady)return;
  stopAll(); observer?.disconnect(); hovered=focused=explicit=null;
