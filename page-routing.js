@@ -42,7 +42,7 @@ function route(){
  if(current==='refund-policy'){renderRefundPolicy();window.scrollTo(0,0);return;}
  if(current==='about'){renderAbout();window.scrollTo(0,0);return;}if(current==='faq'){renderFaq();window.scrollTo(0,0);return;}
  if(current==='contest'){renderContest();window.scrollTo(0,0);return;}if(current==='contest-submit'){renderContestSubmit();window.scrollTo(0,0);return;}
- if(isMarket){document.title='마켓플레이스 — NovaNoxX';render();window.scrollTo(0,0);return}
+ if(isMarket){const filters=new URLSearchParams(requested.split('?')[1]||'');if(filters.has('category')){const next=filters.get('category');category=next==='ALL'||Object.hasOwn(subcategories,next)?next:'ALL';const sub=filters.get('subcategory');subcategory=subcategories[category]?.includes(sub)?sub:'ALL';purpose='ALL';fit=savedOnly=false;$('#fit').classList.remove('selected');$('#search').value='';}document.title='마켓플레이스 — NovaNoxX';render();window.scrollTo(0,0);return}
  if(isHome){renderLanding();window.scrollTo(0,0);return}
  if(current.startsWith('assets/')){
   const a=assets.find(a=>a.id===Number(current.split('/')[1]));
