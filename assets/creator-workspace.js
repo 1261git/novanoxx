@@ -20,9 +20,9 @@ async function renderCreatorWorkspace(current,profile){
  }else if(current==='creator-briefs'){
  content.innerHTML='<div class="page-panel"><h2>제작 의뢰와 내 제안</h2><p>현재 공개된 제작 의뢰가 없어요.</p><p>의뢰가 등록되면 제작 방향·가격·기간·수정 조건을 담아 제안할 수 있습니다.</p><a class="outline-link" href="#/briefs">제작 의뢰 화면 보기 ↗</a></div>';
  }else if(current==='creator-payout'){
- content.innerHTML='<div class="page-panel"><h2>정산 내역</h2><p>아직 완료된 판매와 정산 내역이 없어요.</p><p>정산 내역에는 판매금액, 플랫폼 수수료 9%, 기타 수수료, 실수령액과 지급 상태가 표시됩니다.</p><h2>정산 계좌</h2><p>결제·정산 서비스 연결 후 계좌 등록과 본인 확인을 진행할 수 있습니다.</p></div>';
+ content.innerHTML='<div class="page-panel"><h2>정산 내역</h2><p>아직 완료된 판매와 정산 내역이 없어요.</p><p>정산 내역에는 판매금액, 총 수수료 12% (PG 결제수수료·수수료 부가세 포함), 실수령액과 지급 상태가 표시됩니다.</p><h2>정산 계좌</h2><p>결제·정산 서비스 연결 후 계좌 등록과 본인 확인을 진행할 수 있습니다.</p></div>';
  }else if(current==='creator-plan'){
- content.innerHTML='<div class="page-panel"><h2>플랜 안내</h2><p>현재는 작품 임시저장과 심사 제출을 이용할 수 있습니다. 유료 구독은 아직 시작되지 않으며 결제도 발생하지 않습니다.</p></div><div class="plans">'+[['FREE',0,1],['PLUS',3000,3],['ULTRA',6900,7],['PRO',9900,'무제한']].map(([n,p,c])=>`<section class="page-panel"><h2>${n}</h2><p>₩${p.toLocaleString('ko-KR')} / 월</p><p>판매 중 작품 ${c}${c==='무제한'?'':'개'}</p><p>거래 수수료 9%</p></section>`).join('')+'</div>';
+ content.innerHTML='<div class="page-panel"><h2>플랜 안내</h2><p>현재는 작품 임시저장과 심사 제출을 이용할 수 있습니다. 유료 구독은 아직 시작되지 않으며 결제도 발생하지 않습니다.</p></div><div class="plans">'+[['FREE',0,1],['PLUS',3000,3],['ULTRA',6900,7],['PRO',9900,'무제한']].map(([n,p,c])=>`<section class="page-panel"><h2>${n}</h2><p>₩${p.toLocaleString('ko-KR')} / 월</p><p>판매 중 작품 ${c}${c==='무제한'?'':'개'}</p><p>거래 수수료 12% (PG·수수료 부가세 포함)</p></section>`).join('')+'</div>';
  }else if(current==='creator-analytics'){
  content.innerHTML=`<div class="page-panel"><h2>작품 현황</h2><p>전체 ${list.length}개 · 임시저장 ${list.filter(a=>a.status==='DRAFT').length}개 · 심사 대기 ${list.filter(a=>a.status==='REVIEW').length}개</p><p>조회·찜·매출 집계는 공개 판매 기능과 함께 연결됩니다.</p></div>`;
  }
