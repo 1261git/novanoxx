@@ -2,6 +2,8 @@ const crypto=require('node:crypto');
 module.exports=function(db,user,json,options={}){
  const env=options.env||process.env,base=require('./deployment-config.cjs').base,request=options.fetch||fetch;
  db.exec("CREATE TABLE IF NOT EXISTS neon_topups(id TEXT PRIMARY KEY,user_id TEXT NOT NULL,neon INTEGER NOT NULL,amount INTEGER NOT NULL,state TEXT NOT NULL DEFAULT 'PENDING',payment_key TEXT UNIQUE,created INTEGER NOT NULL,paid INTEGER); CREATE TABLE IF NOT EXISTS neon_test_wallet(user_id TEXT PRIMARY KEY,balance INTEGER NOT NULL DEFAULT 0);");
+ db.exec('CREATE TABLE IF NOT EXISTS neon_test_grants(campaign TEXT NOT NULL,user_id TEXT NOT NULL,neon INTEGER NOT NULL,created INTEGER NOT NULL,PRIMARY KEY(campaign,user_id))');
+ if(db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='users'").get())require('./admin-test-grant.cjs')(db);
  const ready=()=>/^test_ck_/.test(env.TOSS_CLIENT_KEY||'')&&/^test_sk_/.test(env.TOSS_SECRET_KEY||'');
  const balance=id=>db.prepare('SELECT balance FROM neon_test_wallet WHERE user_id=?').get(id)?.balance||0;
  db.exec('CREATE TABLE IF NOT EXISTS neon_test_orders(id TEXT PRIMARY KEY,user_id TEXT NOT NULL,asset_id INTEGER NOT NULL,title TEXT NOT NULL,price INTEGER NOT NULL,created INTEGER NOT NULL,UNIQUE(user_id,asset_id)); CREATE TABLE IF NOT EXISTS neon_test_ledger(id TEXT PRIMARY KEY,user_id TEXT NOT NULL,order_id TEXT UNIQUE NOT NULL,delta INTEGER NOT NULL,balance_before INTEGER NOT NULL,balance_after INTEGER NOT NULL,created INTEGER NOT NULL);');
@@ -10,7 +12,7 @@ module.exports=function(db,user,json,options={}){
   if(!name.startsWith('/api/auth/neon/'))return false;
   const u=user(req);if(!u){json(res,401,{error:'로그인이 필요해요.'});return true;}
   if(name==='/api/auth/neon/orders'&&req.method==='GET'){json(res,200,{testBalance:balance(u.id),orders:db.prepare('SELECT id,asset_id AS assetId,title,price,created FROM neon_test_orders WHERE user_id=? ORDER BY created DESC').all(u.id)});return true;}
-  if(name==='/api/auth/neon/status'&&req.method==='GET'){json(res,200,{mode:'test',ready:ready(),testBalance:balance(u.id),history:db.prepare("SELECT neon,amount,paid FROM neon_topups WHERE user_id=? AND state='PAID' ORDER BY paid DESC LIMIT 20").all(u.id)});return true;}
+  if(name==='/api/auth/neon/status'&&req.method==='GET'){json(res,200,{mode:'test',ready:ready(),testBalance:balance(u.id),history:db.prepare("SELECT neon,amount,paid,kind FROM (SELECT neon,amount,paid,'payment' AS kind FROM neon_topups WHERE user_id=? AND state='PAID' UNION ALL SELECT neon,0 AS amount,created AS paid,'admin' AS kind FROM neon_test_grants WHERE user_id=?) ORDER BY paid DESC LIMIT 20").all(u.id,u.id)});return true;}
   if(req.method!=='POST'||req.headers.origin!==base){json(res,403,{error:'요청 출처를 확인해주세요.'});return true;}
   if(!ready()){json(res,503,{error:'테스트 결제 연결을 준비 중이에요.'});return true;}
   let size=0,chunks=[];for await(const c of req){size+=c.length;if(size>4096){json(res,413,{error:'요청이 너무 커요.'});return true;}chunks.push(c);}let d;try{d=JSON.parse(Buffer.concat(chunks))}catch{json(res,400,{error:'입력값을 확인해주세요.'});return true;}
