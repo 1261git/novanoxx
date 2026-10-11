@@ -3,12 +3,12 @@ homeSections.forEach(el=>el.hidden=true);
 const page = document.createElement('section');
 page.className = 'route-page'; page.hidden = true;
 document.querySelector('main').append(page);
-const routeNames={'Brief 의뢰':'briefs','Creator 안내':'creators','NEON 지갑':'wallet','로그인':'login'};
+const routeNames={'Contest':'contest','Brief 의뢰':'briefs','Creator 안내':'creators','NEON 지갑':'wallet','로그인':'login'};
 function go(route){location.hash='/'+route}
 function info(name){go(routeNames[name]||'')}
 function detail(id){rememberAsset('assets/'+id);go('assets/'+id)}
 function rememberAsset(value){if(/^assets\/\d+$/.test(value)){try{sessionStorage.setItem('nnx-login-return',value)}catch{}return value}return null}
-function loginReturn(){const next=new URLSearchParams(location.hash.split('?')[1]||'').get('next');if(rememberAsset(next))return next;try{const saved=sessionStorage.getItem('nnx-login-return');return /^assets\/\d+$/.test(saved||'')?saved:null}catch{return null}}
+function loginReturn(){const next=new URLSearchParams(location.hash.split('?')[1]||'').get('next');if(next==='contest-submit')return next;if(rememberAsset(next))return next;try{const saved=sessionStorage.getItem('nnx-login-return');return /^assets\/\d+$/.test(saved||'')?saved:null}catch{return null}}
 function pendingKakaoLink(){try{return sessionStorage.getItem("nnx-pending-link")==="kakao"}catch{return false}}
 function creatorIntent(){try{return sessionStorage.getItem("nnx-creator-intent")==="1"}catch{return false}}
 function finishLogin(){if(creatorIntent()&&!pendingKakaoLink()){go("creator-profile");return;}if(pendingKakaoLink()){go("connections");return;}const destination=loginReturn()||'marketplace';try{sessionStorage.removeItem('nnx-login-return')}catch{}go(destination)}
@@ -37,6 +37,7 @@ function route(){
  const requested=location.hash.replace(/^#\/?/,'');const current=requested.split('?')[0];if(authUser&&pendingKakaoLink()&&current!=='connections'){go('connections');return;}if(authUser&&creatorIntent()&&!pendingKakaoLink()&&!['creator-profile','creator-dashboard','connections'].includes(current)){go('creator-dashboard');return;}refreshHeaderNeon();page.dataset.route=current;if(current.startsWith('assets/')&&!hasAuthenticatedSession()){rememberAsset(current);location.replace('#/login?next='+encodeURIComponent(current));return;} if(hasAuthenticatedSession()&&['login','signup'].includes(current)&&loginReturn()){finishLogin();return;}if(hasAuthenticatedSession()&&current.startsWith('assets/')){try{sessionStorage.removeItem('nnx-login-return')}catch{}} const isHome=!current;const isMarket=current==='marketplace';document.body.classList.toggle('marketplace-view',isMarket);document.body.classList.toggle('asset-view',current.startsWith('assets/'));document.body.classList.toggle('briefs-view',current==='briefs');document.body.classList.toggle('info-view',!isHome&&!isMarket&&!current.startsWith('assets/')&&current!=='briefs');document.body.classList.toggle('creators-view',current==='creators');
  homeSections.forEach(el=>el.hidden=!isMarket);page.hidden=isMarket;page.classList.toggle('landing-page',isHome);
  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.id==='market-nav'?isMarket:routeNames[b.dataset.info]===current));
+ if(current==='contest'){renderContest();window.scrollTo(0,0);return;}if(current==='contest-submit'){renderContestSubmit();window.scrollTo(0,0);return;}
  if(isMarket){document.title='마켓플레이스 — NovaNoxX';render();window.scrollTo(0,0);return}
  if(isHome){renderLanding();window.scrollTo(0,0);return}
  if(current.startsWith('assets/')){

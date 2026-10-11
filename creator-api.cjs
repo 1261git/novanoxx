@@ -6,8 +6,10 @@ module.exports=function createCreatorApi(db,dir,user,json,isAdmin=require('./adm
  const originalAccess=require('./original-access.cjs')(db);
  const folder=path.join(dir,'uploads');fs.mkdirSync(folder,{recursive:true});
  const allowed=new Set(['png','jpg','jpeg','webp','mp4','webm','mov','mp3','wav','pdf','zip','glb','gltf','obj','fbx','pptx','docx','txt','md','json','yaml','yml']);
+ const contest=require('./contest-api.cjs')(db,dir,user,json);
  const files=id=>db.prepare('SELECT id,kind,name,size FROM creator_files WHERE asset_id=?').all(id);
  return async(req,res,name)=>{
+ if(await contest(req,res,name))return true;
 
  if(name==='/api/auth/original/download'){
   if(req.method!=='GET'){json(res,405,{error:'지원하지 않는 요청이에요.'});return true;}
