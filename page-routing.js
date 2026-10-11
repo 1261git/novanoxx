@@ -3,7 +3,7 @@ homeSections.forEach(el=>el.hidden=true);
 const page = document.createElement('section');
 page.className = 'route-page'; page.hidden = true;
 document.querySelector('main').append(page);
-const routeNames={'Contest':'contest','Brief 의뢰':'briefs','Creator 안내':'creators','NEON 지갑':'wallet','로그인':'login'};
+const routeNames={'About':'about','FAQ':'faq','Contest':'contest','Brief 의뢰':'briefs','Creator 안내':'creators','NEON 지갑':'wallet','로그인':'login'};
 function go(route){location.hash='/'+route}
 function info(name){go(routeNames[name]||'')}
 function detail(id){rememberAsset('assets/'+id);go('assets/'+id)}
@@ -29,7 +29,7 @@ async function refreshHeaderNeon(){
 }
 async function initializeAuth(){try{const result=await authRequest('me');authUser=result.user;recentLogin=result.recentLogin||null}catch{}try{await refreshCatalog()}catch{}authReady=true;updateAccountHeader();if(new URLSearchParams(location.search).has('neon_result'))location.hash='/wallet';route();document.querySelector('main').setAttribute('data-route-ready','')}
 function accountHref(mode){const next=loginReturn();return '#/'+mode+(next&&/^assets\/\d+$/.test(next)?'?next='+encodeURIComponent(next):'')}
-function pageHeading(label,title,description){const hideBack=page.dataset.route==='contest'||page.dataset.route==='contest-submit'||page.dataset.route==='briefs'||page.dataset.route==='creators'||page.dataset.route?.startsWith('creator-');return `${hideBack?'':'<a class="back-link" href="#/marketplace">← 마켓플레이스로</a>'}<div class="eyebrow">${label}</div><h1 tabindex="-1">${title}</h1><p class="page-lead">${description}</p>`}
+function pageHeading(label,title,description){const hideBack=['about','faq'].includes(page.dataset.route)||page.dataset.route==='contest'||page.dataset.route==='contest-submit'||page.dataset.route==='briefs'||page.dataset.route==='creators'||page.dataset.route?.startsWith('creator-');return `${hideBack?'':'<a class="back-link" href="#/marketplace">← 마켓플레이스로</a>'}<div class="eyebrow">${label}</div><h1 tabindex="-1">${title}</h1><p class="page-lead">${description}</p>`}
 function route(){
  if(!authReady)return;
  stopAll(); observer?.disconnect(); hovered=focused=explicit=null;
@@ -37,6 +37,7 @@ function route(){
  const requested=location.hash.replace(/^#\/?/,'');const current=requested.split('?')[0];if(authUser&&pendingKakaoLink()&&current!=='connections'){go('connections');return;}if(authUser&&creatorIntent()&&!pendingKakaoLink()&&!['creator-profile','creator-dashboard','connections'].includes(current)){go('creator-dashboard');return;}refreshHeaderNeon();page.dataset.route=current;if(current.startsWith('assets/')&&!hasAuthenticatedSession()){rememberAsset(current);location.replace('#/login?next='+encodeURIComponent(current));return;} if(hasAuthenticatedSession()&&['login','signup'].includes(current)&&loginReturn()){finishLogin();return;}if(hasAuthenticatedSession()&&current.startsWith('assets/')){try{sessionStorage.removeItem('nnx-login-return')}catch{}} const isHome=!current;const isMarket=current==='marketplace';document.body.classList.toggle('marketplace-view',isMarket);document.body.classList.toggle('asset-view',current.startsWith('assets/'));document.body.classList.toggle('briefs-view',current==='briefs');document.body.classList.toggle('info-view',!isHome&&!isMarket&&!current.startsWith('assets/')&&current!=='briefs');document.body.classList.toggle('creators-view',current==='creators');
  homeSections.forEach(el=>el.hidden=!isMarket);page.hidden=isMarket;page.classList.toggle('landing-page',isHome);
  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.id==='market-nav'?isMarket:routeNames[b.dataset.info]===current));
+ if(current==='about'){renderAbout();window.scrollTo(0,0);return;}if(current==='faq'){renderFaq();window.scrollTo(0,0);return;}
  if(current==='contest'){renderContest();window.scrollTo(0,0);return;}if(current==='contest-submit'){renderContestSubmit();window.scrollTo(0,0);return;}
  if(isMarket){document.title='마켓플레이스 — NovaNoxX';render();window.scrollTo(0,0);return}
  if(isHome){renderLanding();window.scrollTo(0,0);return}
