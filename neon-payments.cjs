@@ -22,8 +22,8 @@ module.exports=function(db,user,json,options={}){
     const existing=db.prepare('SELECT * FROM neon_test_orders WHERE id=?').get(d.requestId);if(existing){db.exec('ROLLBACK');json(res,existing.user_id===u.id&&existing.asset_id===d.assetId?200:409,existing.user_id===u.id&&existing.asset_id===d.assetId?{ok:true,orderId:existing.id,testBalance:balance(u.id)}:{error:'다른 구매에 사용된 요청이에요.'});return true;}
     let asset=require('./test-purchase-assets.json').find(a=>a.id===d.assetId);
     if(d.assetId>=1001){const row=db.prepare("SELECT a.metadata,a.status FROM creator_assets a JOIN catalog_links c ON c.asset_id=a.id WHERE c.public_id=?").get(d.assetId-1000);if(row){const m=JSON.parse(row.metadata);asset={id:d.assetId,title:m.title,price:m.price,sold:row.status!=='ACTIVE'};}}
-    if(!asset||asset.sold){db.exec('ROLLBACK');json(res,409,{error:'구매 가능한 작품이 아니에요.'});return true;}
-    if(db.prepare('SELECT id FROM neon_test_orders WHERE user_id=? AND asset_id=?').get(u.id,d.assetId)){db.exec('ROLLBACK');json(res,409,{error:'이미 테스트 구매한 작품이에요. 주문 내역에서 확인해주세요.'});return true;}
+    if(!asset||asset.sold){db.exec('ROLLBACK');json(res,409,{error:'구매 가능한 에셋이 아니에요.'});return true;}
+    if(db.prepare('SELECT id FROM neon_test_orders WHERE user_id=? AND asset_id=?').get(u.id,d.assetId)){db.exec('ROLLBACK');json(res,409,{error:'이미 테스트 구매한 에셋이에요. 주문 내역에서 확인해주세요.'});return true;}
     const before=balance(u.id);if(before<asset.price){db.exec('ROLLBACK');json(res,409,{error:'테스트 NEON 잔액이 부족해요. 테스트 충전 후 구매해주세요.'});return true;}
     const now=Date.now();db.prepare('UPDATE neon_test_wallet SET balance=balance-? WHERE user_id=? AND balance>=?').run(asset.price,u.id,asset.price);db.prepare('INSERT INTO neon_test_orders VALUES(?,?,?,?,?,?)').run(d.requestId,u.id,asset.id,asset.title,asset.price,now);db.prepare('INSERT INTO neon_test_ledger VALUES(?,?,?,?,?,?,?)').run(crypto.randomUUID(),u.id,d.requestId,-asset.price,before,before-asset.price,now);db.exec('COMMIT');json(res,200,{ok:true,orderId:d.requestId,testBalance:balance(u.id)});
    }catch(e){db.exec('ROLLBACK');throw e;}return true;

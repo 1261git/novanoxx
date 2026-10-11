@@ -7,7 +7,7 @@ module.exports=(db,dir,user,json)=>{
  const url=new URL(req.url,'http://localhost');
  if(name==='/api/contest'&&req.method==='GET'){json(res,200,{entries:db.prepare('SELECT id,title,description,creator,ext,created FROM contest_entries ORDER BY created DESC').all()});return true;}
  if(name==='/api/contest/media'&&req.method==='GET'){
- const f=db.prepare('SELECT * FROM contest_entries WHERE id=?').get(url.searchParams.get('id'));if(!f){json(res,404,{error:'작품을 찾을 수 없어요.'});return true;}
+ const f=db.prepare('SELECT * FROM contest_entries WHERE id=?').get(url.searchParams.get('id'));if(!f){json(res,404,{error:'출품작을 찾을 수 없어요.'});return true;}
  const headers={'Content-Type':{png:'image/png',jpg:'image/jpeg',mp4:'video/mp4',webm:'video/webm'}[f.ext],'Content-Length':f.size,'X-Content-Type-Options':'nosniff','Accept-Ranges':'bytes','Cache-Control':'no-cache'};
  let start=0,end=f.size-1;if(req.headers.range){const r=/^bytes=(\d+)-(\d*)$/.exec(req.headers.range);start=r?Number(r[1]):f.size;end=r&&r[2]?Math.min(Number(r[2]),end):end;if(start>end||start>=f.size){res.writeHead(416,{'Content-Range':'bytes */'+f.size});res.end();return true;}res.writeHead(206,{...headers,'Content-Length':end-start+1,'Content-Range':`bytes ${start}-${end}/${f.size}`});}else res.writeHead(200,headers);
  fs.createReadStream(path.join(folder,f.id),{start,end}).pipe(res);return true;
