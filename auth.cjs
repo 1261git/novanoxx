@@ -26,7 +26,7 @@ function user(req){const t=token(req);if(!t)return null;return db.prepare('SELEC
 function session(res,u,redirectTo,provider="email"){const t=crypto.randomBytes(32).toString('hex');db.prepare('DELETE FROM sessions WHERE expires<?').run(Date.now());db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hashToken(t),u.id,Date.now()+7*86400000);db.prepare('INSERT INTO login_events VALUES(?,?,?,?)').run(hashToken(t),u.id,provider,Date.now());const recentCookie='nnx_recent_login='+provider+'; HttpOnly; SameSite=Lax; Path=/; Max-Age=31536000';if(redirectTo){res.writeHead(303,{'Location':redirectTo,'Cache-Control':'no-store','Referrer-Policy':'no-referrer','Set-Cookie':[recentCookie,`nnx_session=${t}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800`,'nnx_oauth=; HttpOnly; SameSite=Lax; Path=/api/auth/google; Max-Age=0']});res.end();return;}json(res,200,{user:{id:u.id,name:u.name,email:u.email,loginProvider:provider},recentLogin:provider},{'Set-Cookie':[recentCookie,`nnx_session=${t}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800`]});}
 async function body(req){let size=0,chunks=[];for await(const c of req){size+=c.length;if(size>8192)throw new Error('SIZE');chunks.push(c);}return JSON.parse(Buffer.concat(chunks).toString('utf8'));}
 module.exports=async function auth(req,res,name){
- if(!name.startsWith('/api/auth/')&&!name.startsWith('/api/catalog'))return false;
+ if(!name.startsWith('/api/auth/')&&!name.startsWith('/api/catalog')&&!['/api/contest','/api/contest/media'].includes(name))return false;
  try{
  if(await neonPayments(req,res,name))return true;
  if(await creatorApi(req,res,name))return true;
