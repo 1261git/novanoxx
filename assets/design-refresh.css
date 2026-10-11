@@ -58,3 +58,4 @@ main{max-width:1680px;margin:auto;padding:0 3%}footer{border-top:1px solid #ffff
 .neon-test-notice{padding:16px;background:#ff6b2110;border:1px solid #ff6b213a;border-radius:12px;margin:20px 0}.neon-test-notice>strong{color:#ff6b21}.neon-test-notice p{font-size:13px}
 .route-page[data-route="wallet"]{width:100%;max-width:1120px;margin-inline:auto}.route-page[data-route="wallet"]>h1,.route-page[data-route="wallet"]>.eyebrow,.route-page[data-route="wallet"]>.page-lead{text-align:center}.route-page[data-route="wallet"]>.page-lead{margin-inline:auto}.route-page[data-route="wallet"]>.page-panel{margin-inline:auto;width:100%;box-sizing:border-box}
 .social-login button{display:flex;align-items:center;justify-content:center;gap:10px}.social-provider-symbol{flex:none;display:block;width:20px;height:20px}
+.wallet-login-prompt{text-align:center}.wallet-login-prompt .primary{display:inline-flex;align-items:center;justify-content:center;margin-inline:auto}
