@@ -61,3 +61,5 @@ main{max-width:1680px;margin:auto;padding:0 3%}footer{border-top:1px solid #ffff
 .wallet-login-prompt{text-align:center}.wallet-login-prompt .primary{display:inline-flex;align-items:center;justify-content:center;margin-inline:auto}
 .route-page[data-route="orders"]{width:100%;max-width:1120px;margin-inline:auto}.route-page[data-route="orders"]>h1,.route-page[data-route="orders"]>.eyebrow,.route-page[data-route="orders"]>.page-lead{text-align:center}#test-neon-buy{margin-bottom:8px}
 body{-webkit-user-select:none;user-select:none}input,textarea,[contenteditable=""],[contenteditable="true"]{-webkit-user-select:text;user-select:text}img,video{-webkit-user-drag:none}
+
+#account-session-button{display:flex;align-items:center;gap:9px}.header-profile-avatar{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#4b304d,#26202c);border:1px solid #ff6b2140;color:#ff6b21;font-size:14px;font-weight:800;overflow:hidden;flex-shrink:0}.header-profile-avatar img{width:100%;height:100%;object-fit:cover}.header-neon-test{font-size:9px;color:#ff6b21;margin-left:5px}.account-profile-avatar{color:#ff6b21;font-weight:800}

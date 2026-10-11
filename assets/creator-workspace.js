@@ -1,5 +1,5 @@
 const creatorCustomization=[['character','캐릭터'],['productModel','제품모델'],['background','배경'],['object','오브젝트'],['logo','로고'],['brandName','브랜드명'],['copy','카피'],['color','색상 적용']];
-const creatorSections=[['creator-assets','내 작품'],['creator-upload','작품 등록'],['creator-orders','주문 관리'],['creator-briefs','제작 의뢰'],['creator-payout','정산'],['creator-plan','플랜'],['creator-analytics','성과'],['creator-profile','프로필']];
+const creatorSections=[['creator-profile','프로필'],['creator-assets','내 작품'],['creator-upload','작품 등록'],['creator-orders','주문 관리'],['creator-briefs','제작 의뢰'],['creator-payout','정산'],['creator-plan','플랜'],['creator-analytics','성과']];
 function creatorMenu(current){return `<nav class="creator-menu" aria-label="크리에이터 메뉴"><a href="#/creator-dashboard">대시보드</a>${creatorSections.map(([r,t])=>`<a class="${r===current?'selected':''}" href="#/${r}">${t}</a>`).join('')}</nav>`}
 async function renderCreatorWorkspace(current,profile){
  const label=creatorSections.find(([r])=>r===current)?.[1]||'크리에이터';document.title=label+' — NovaNoxX';
