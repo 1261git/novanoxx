@@ -1,0 +1,14 @@
+const assert=require('node:assert/strict'),{DatabaseSync}=require('node:sqlite');
+const db=new DatabaseSync(':memory:');
+db.exec('CREATE TABLE creator_files(id TEXT PRIMARY KEY,asset_id TEXT,kind TEXT);');
+db.exec("INSERT INTO creator_files VALUES('original-a','asset-a','original'),('preview-a','asset-a','preview'),('original-b','asset-b','original')");
+const access=require('./original-access.cjs')(db);
+assert.equal(access('buyer','original-a'),undefined);
+db.prepare('INSERT INTO original_entitlements VALUES(?,?,?,?,?)').run('paid-order','buyer','asset-a','PAID',Date.now());
+assert.equal(access('buyer','original-a').id,'original-a');
+assert.equal(access('other','original-a'),undefined);
+assert.equal(access('buyer','original-b'),undefined);
+assert.equal(access('buyer','preview-a'),undefined);
+db.exec("UPDATE original_entitlements SET status='REFUNDED'");
+assert.equal(access('buyer','original-a'),undefined);
+console.log('Original access: purchaser, other user, other asset, preview and refund checks passed');
