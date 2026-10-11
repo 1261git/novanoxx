@@ -36,6 +36,7 @@ module.exports=function createCreatorApi(db,dir,user,json,isAdmin=require('./adm
  json(res,404,{error:'페이지를 찾을 수 없어요.'});return true;
  }
  const deployment=require('./deployment-config.cjs');if(req.method!=='POST'||req.headers.origin!==deployment.base){json(res,403,{error:'요청 출처를 확인해주세요.'});return true;}
+ if(name==='/api/auth/creator/avatar/delete'){db.prepare('DELETE FROM creator_avatars WHERE user_id=?').run(u.id);json(res,200,{ok:true});return true;}
  if(name.endsWith('/avatar')){let size=0,chunks=[];for await(const chunk of req){size+=chunk.length;if(size>5*1024*1024){json(res,413,{error:'프로필 사진은 5MB 이하로 올려주세요.'});return true;}chunks.push(chunk);}const data=Buffer.concat(chunks);const mime=data.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))?'image/png':data[0]===255&&data[1]===216&&data[2]===255?'image/jpeg':data.toString('ascii',0,4)==='RIFF'&&data.toString('ascii',8,12)==='WEBP'?'image/webp':null;if(!mime){json(res,400,{error:'PNG, JPG, WEBP 사진을 선택해주세요.'});return true;}db.prepare('INSERT INTO creator_avatars VALUES(?,?,?,?) ON CONFLICT(user_id) DO UPDATE SET data=excluded.data,mime=excluded.mime,updated=excluded.updated').run(u.id,data,mime,Date.now());json(res,200,{ok:true});return true;}
  if(name.endsWith('/upload')){
  if(!asset||asset.status!=='DRAFT'){json(res,409,{error:'임시저장한 에셋에만 파일을 올릴 수 있어요.'});return true;}
