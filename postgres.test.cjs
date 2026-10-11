@@ -12,3 +12,4 @@ test('PostgreSQL compatibility preserves rows, aliases, blobs, rollback and dupl
  assert.throws(()=>db.prepare('INSERT INTO users VALUES(?,?,?,?,?)').run('other','user@example.com','Name','s','h'));
  }finally{db.close()}
 });
+test('Real pg driver parses bigint sums numerically and rejects precision loss',()=>{const pg=require('pg');require('./database/pg-types.cjs')(pg);assert.equal(pg.types.getTypeParser(1700)('700000')+10,700010);assert.equal(pg.types.getTypeParser(20)('125'),125);assert.throws(()=>pg.types.getTypeParser(1700)('9007199254740993'));});

@@ -42,7 +42,7 @@ async function migrate(source){
 }
 const ready=(async()=>{
  if(workerData.pglite){const {PGlite}=require('@electric-sql/pglite');client=new PGlite(workerData.pglitePath);pglite=true;await client.waitReady;}
- else{const pg=require('pg');pg.types.setTypeParser(20,value=>{const n=Number(value);if(!Number.isSafeInteger(n))throw Error('Unsafe database integer');return n});const url=workerData.url||process.env.DATABASE_URL;if(!url)throw Error('DATABASE_URL missing');client=new pg.Client({connectionString:url,connectionTimeoutMillis:15000,statement_timeout:20000,application_name:'novanoxx'});await client.connect();}
+ else{const pg=require('pg');require('./pg-types.cjs')(pg);const url=workerData.url||process.env.DATABASE_URL;if(!url)throw Error('DATABASE_URL missing');client=new pg.Client({connectionString:url,connectionTimeoutMillis:15000,statement_timeout:20000,application_name:'novanoxx'});await client.connect();}
  if(workerData.migrateSource){const found=await query("SELECT tablename FROM pg_tables WHERE schemaname='public' AND tablename='nnx_migrations'");if(!found.rows.length)await migrate(workerData.migrateSource);else{const completed=await query("SELECT version FROM nnx_migrations WHERE version='sqlite-v1'");if(!completed.rows.length)throw Error('Unknown migration state');}}
 })().catch(error=>{initializationError=error});
 let queue=Promise.resolve();
