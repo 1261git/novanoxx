@@ -11,7 +11,7 @@ module.exports=async function google(req,res,name,db,session,json){
  const url=new URL(req.url,'http://localhost:4317');
  const base=deployment.base;
  if(name==='/api/auth/google/start'&&req.method==='GET'){
- try{const c=config();const next=url.searchParams.get('next')||'marketplace';const safe=/^assets\/\d+$/.test(next)?next:'marketplace';
+ try{const c=config();const next=url.searchParams.get('next')||'marketplace';const safe=(/^assets\/\d+$/.test(next)||next==='orders')?next:'marketplace';
  if(req.headers.host!==deployment.host){redirect(res,base+'/api/auth/google/start?next='+encodeURIComponent(safe));return true;}
  for(const [k,v] of pending)if(v.expires<Date.now())pending.delete(k);
  const state=crypto.randomBytes(32).toString('hex'),binding=crypto.randomBytes(32).toString('hex'),verifier=crypto.randomBytes(48).toString('base64url');pending.set(state,{binding:digest(binding),verifier,next:safe,expires:Date.now()+600000});
