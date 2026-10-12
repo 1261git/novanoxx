@@ -1,0 +1,31 @@
+# Costed proposal only. Requires user approval before creating resources.
+services:
+  - type: web
+    name: novanoxx-sandbox-staging
+    runtime: docker
+    repo: https://github.com/1261git/novanoxx
+    branch: codex/isolated-staging
+    dockerfilePath: ./Dockerfile.sandbox
+    region: virginia
+    plan: starter
+    autoDeployTrigger: off
+    healthCheckPath: /api/health
+    envVars:
+      - key: NNX_SANDBOX_REMOTE
+        value: "1"
+      - key: SANDBOX_PG_URL
+        fromDatabase:
+          name: novanoxx-sandbox-db
+          property: connectionString
+      - key: SANDBOX_ACCESS_PASSWORD
+        generateValue: true
+databases:
+  - name: novanoxx-sandbox-db
+    databaseName: nnx_sandbox_home_20261012
+    user: nnx_sandbox
+    postgresMajorVersion: "18"
+    region: virginia
+    plan: basic-256mb
+    diskSizeGB: 1
+    storageAutoscalingEnabled: false
+    ipAllowList: []

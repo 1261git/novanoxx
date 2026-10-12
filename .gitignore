@@ -11,3 +11,5 @@ node_modules/
 *.docx.txt
 *.manifest.json
 backups/
+.sandbox-commerce/
+.sandbox-cloud-runtime/
