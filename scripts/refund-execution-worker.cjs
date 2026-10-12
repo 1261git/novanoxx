@@ -1,0 +1,3 @@
+// Test worker: accepts only the explicit sandbox connection and marked DB.
+const fs=require('node:fs');
+(async()=>{const [configFile,adminId,requestId]=process.argv.slice(2);const cfg=JSON.parse(fs.readFileSync(configFile));const service=await require('../sandbox-postgres-commerce.cjs')({...cfg,initialize:false});try{const workflow=await require('../sandbox-refund-workflow.cjs')(service,{adminEmails:['admin@isolated.example']});const results=await Promise.all(Array.from({length:6},()=>workflow.action(adminId,{requestId,action:'execute'})));console.log(JSON.stringify({executions:results.length,statuses:results.map(x=>x.status)}));}finally{await service.close();}})().catch(e=>{console.error('Sandbox worker error code: '+(e.code||e.name));process.exitCode=1;});
