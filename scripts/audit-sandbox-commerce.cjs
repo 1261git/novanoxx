@@ -1,0 +1,15 @@
+// Read-only operator audit. Run inside the isolated service; no public endpoint.
+const {Client}=require('pg');
+const queries={
+ wallet_ledger:"SELECT count(*) AS n FROM wallets w WHERE w.balance<>(SELECT coalesce(sum(delta),0) FROM ledger l WHERE l.user_id=w.user_id)",
+ purchase_ledger:"SELECT count(*) AS n FROM orders o WHERE (SELECT count(*) FROM ledger l WHERE l.order_id=o.id AND l.kind='PURCHASE' AND l.user_id=o.buyer_id AND l.delta=-o.price)<>1",
+ refund_ledger:"SELECT count(*) AS n FROM orders o WHERE (SELECT count(*) FROM ledger l WHERE l.order_id=o.id AND l.kind='REFUND' AND l.user_id=o.buyer_id AND l.delta=o.price)<>CASE WHEN o.status='REFUNDED' THEN 1 ELSE 0 END",
+ settlement_state:"SELECT count(*) AS n FROM orders o LEFT JOIN settlements s ON s.order_id=o.id WHERE s.order_id IS NULL OR s.status<>CASE WHEN o.status='REFUNDED' THEN 'CANCELLED' ELSE 'PENDING' END OR s.gross_krw<>o.price*100 OR s.fee_krw<>o.price*12 OR s.net_krw<>o.price*88",
+ rights_state:"SELECT count(*) AS n FROM orders o WHERE NOT EXISTS(SELECT 1 FROM entitlements e WHERE e.order_id=o.id) OR EXISTS(SELECT 1 FROM entitlements e WHERE e.order_id=o.id AND (e.buyer_id<>o.buyer_id OR (o.status='REFUNDED' AND e.revoked IS NULL) OR (o.status='COMPLETED' AND e.revoked IS NOT NULL)))",
+ exclusive_state:"SELECT count(*) AS n FROM orders o JOIN assets a ON a.id=o.asset_id WHERE o.sale_mode='EXCLUSIVE' AND a.status<>'SOLD'",
+ duplicate_exclusive:"SELECT count(*) AS n FROM (SELECT asset_id FROM orders WHERE sale_mode='EXCLUSIVE' AND status='COMPLETED' GROUP BY asset_id HAVING count(*)>1) q",
+ snapshot_rights:"SELECT count(*) AS n FROM orders o CROSS JOIN LATERAL jsonb_array_elements(o.terms::jsonb->'files') f WHERE NOT EXISTS(SELECT 1 FROM entitlements e JOIN files x ON x.id=e.file_id WHERE e.order_id=o.id AND x.id=f->>'id' AND x.sha256=f->>'sha256')"
+};
+async function audit(config){const c=new Client(config);await c.connect();try{await c.query('BEGIN TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY');if((await c.query('SELECT marker FROM sandbox_environment')).rows[0]?.marker!=='NNX_REAL_PG_SANDBOX_V1')throw Error('SANDBOX_REQUIRED');const violations={};for(const [key,sql]of Object.entries(queries))violations[key]=Number((await c.query(sql)).rows[0].n);const totals=(await c.query('SELECT (SELECT count(*) FROM wallets) AS wallets,(SELECT count(*) FROM orders) AS orders,(SELECT count(*) FROM ledger) AS ledger,(SELECT count(*) FROM entitlements) AS rights,(SELECT count(*) FROM settlements) AS settlements')).rows[0];await c.query('COMMIT');return {status:Object.values(violations).every(n=>n===0)?'PASS':'FAIL',violations,totals,completed:new Date().toISOString()};}finally{await c.end();}}
+module.exports={audit,queries};
+if(require.main===module){let config;try{config=require('../sandbox-cloud.cjs').settings(process.env).config;}catch{console.error('Audit refused: isolated configuration required.');process.exit(1);}audit(config).then(report=>{console.log(JSON.stringify(report));if(report.status!=='PASS')process.exitCode=1;}).catch(()=>{console.error('Audit unavailable; no secrets printed.');process.exitCode=1;});}

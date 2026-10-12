@@ -11,6 +11,7 @@ async function start(options={}){
  const accountDir=path.join(commerce.root,'accounts');fs.mkdirSync(accountDir,{recursive:true});
  // Override before loading the existing auth module. Never inherit remote DB or OAuth/PG secrets.
  for(const key of Object.keys(process.env))if(/^(DATABASE_|DATA_DIR$|MIGRATE_SQLITE$|PUBLIC_BASE_URL$|RENDER_EXTERNAL_URL$|TOSS_|GOOGLE_|NAVER_|KAKAO_)/.test(key))delete process.env[key];
+ if(options.googleOAuth){process.env.GOOGLE_CLIENT_ID=options.googleOAuth.clientId;process.env.GOOGLE_CLIENT_SECRET=options.googleOAuth.clientSecret;}
  process.env.DATABASE_BACKEND=options.authDatabaseUrl?'postgres':'sqlite';if(options.authDatabaseUrl)process.env.DATABASE_URL=options.authDatabaseUrl;process.env.DATA_DIR=accountDir;process.env.NODE_ENV=options.publicOrigin?.startsWith('https:')?'production':'development';
  const sessions=new Map();let auth,accounts,origin,paused=false,inflight=0;
  const json=(res,status,data)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(data));};
@@ -25,7 +26,8 @@ async function start(options={}){
   const url=new URL(req.url,origin),name=url.pathname;
   if(name==='/api/health'){try{if(commerce.now)await commerce.now();else commerce.db.prepare('SELECT 1 AS ok').get();json(res,200,{status:'ok',environment:'SANDBOX',database:commerce.backend||'isolated-sqlite-and-pglite'});}catch{json(res,503,{status:'unavailable',environment:'SANDBOX'});}return;}
   if(name==='/api/catalog'&&req.method==='GET'){json(res,200,{assets:await catalog()});return;}
-  if(name==='/api/auth/providers'&&req.method==='GET'){json(res,200,{google:false,naver:false,kakao:false});return;}
+  if(name==='/api/auth/providers'&&req.method==='GET'){json(res,200,{google:!!options.googleOAuth,naver:false,kakao:false});return;}
+  if(options.googleOAuth&&['/api/auth/google/start','/api/auth/google/callback'].includes(name)&&req.method==='GET'){await auth(req,res,name);return;}
   if(name==='/api/auth/neon/status'&&req.method==='GET'){const u=currentUser(req);if(!u){json(res,401,{error:'로그인이 필요합니다.'});return;}json(res,200,{mode:'test',ready:false,testBalance:(await state(u)).balance,history:[]});return;}
   if(name.startsWith('/api/sandbox-commerce/')){
    const u=currentUser(req);if(!u){json(res,401,{error:'격리 계정으로 로그인해 주세요.'});return;}
