@@ -62,7 +62,7 @@ module.exports=async function connect(options){
    return (await c.query('SELECT * FROM orders WHERE id=$1',[requestId])).rows[0];
   });
  }
- async function refund(buyerId,orderId,{injectFailure=false}={}){return tx(async c=>{
+ async function refundInTransaction(c,buyerId,orderId,{injectFailure=false}={}){
   if(typeof orderId!=='string'||!/^sandbox_[0-9a-f-]{36}$/.test(orderId))fail('INVALID_REQUEST');
   await c.query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))',[orderId]);
   const o=(await c.query('SELECT * FROM orders WHERE id=$1 AND buyer_id=$2 FOR UPDATE',[orderId,buyerId])).rows[0];
@@ -83,6 +83,7 @@ module.exports=async function connect(options){
   await c.query('INSERT INTO events VALUES($1,$2,$3,$4)',[crypto.randomUUID(),orderId,'REFUNDED',now]);
   // A refunded exclusive sale remains SOLD pending future administrator review.
   return (await c.query('SELECT * FROM orders WHERE id=$1',[orderId])).rows[0];
- });}
- return {pool,reserve,cancel,expire,purchase,refund,close:()=>pool.end()};
+ }
+ async function refund(buyerId,orderId,options={}){return tx(c=>refundInTransaction(c,buyerId,orderId,options));}
+ return {pool,reserve,cancel,expire,purchase,refund,refundInTransaction,transaction:tx,close:()=>pool.end()};
 };
