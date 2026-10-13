@@ -1,0 +1,9 @@
+/* Pretendard v1.3.9 — SIL Open Font License; see fonts/Pretendard-LICENSE.txt. */
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('./fonts/PretendardVariable.woff2') format('woff2');
+}
+textarea { font-family: inherit; }

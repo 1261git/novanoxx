@@ -1,6 +1,6 @@
 /* NovaNoxX visual refresh: cinematic media, quiet surfaces, consistent controls. */
 :root{--bg:#0b0c10;--panel:#14141b;--line:#ffffff12;--muted:#9797a8;--text:#f5f3f8}
-body{background:var(--bg);font-family:'Space Grotesk','Malgun Gothic',sans-serif;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);font-family:'Space Grotesk','Pretendard Variable','Malgun Gothic',sans-serif;-webkit-font-smoothing:antialiased}
 header{height:76px;padding:0 3%;border-bottom:1px solid #ffffff0c;background:#0b0c10ed;backdrop-filter:blur(20px);position:sticky;top:0;z-index:30}
 header .logo{font-size:24px;letter-spacing:-1px}header nav{gap:8px;align-items:center}header nav button{padding:10px 18px;border-radius:9px;height:auto;border-bottom:0!important;font-size:13px;color:#a4a2b2}header nav button.active{background:#ffffff09;color:#faf7ff}header nav button:hover{background:#ffffff09;color:#fff}header .account{gap:12px}header .account>a{color:#777384;font-size:10px}header .account button{border-radius:9px;padding:10px 14px;font-size:12px}header .wallet{border-color:#ffffff16;background:#17151e}
 main{max-width:1680px;margin:auto;padding:0 3%}footer{border-top:1px solid #ffffff0c;color:#767380}
