@@ -91,3 +91,7 @@ body:has([data-route="contest"]) .route-page,body:has([data-route="contest-submi
   #account-session-button > span:last-child { overflow-wrap:anywhere; }
   .route-page :is(h1,h2,h3,p,dd,.primary,.secondary) { word-break:keep-all; overflow-wrap:anywhere; }
 }
+@media (max-width:760px) {
+  .account-profile-popover :is(a,span,strong,small) { word-break:keep-all; overflow-wrap:anywhere; }
+  .account-profile-popover .account-neon-status strong { flex-shrink:0; }
+}
