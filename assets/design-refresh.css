@@ -84,3 +84,10 @@ body:has([data-route="contest"]) .route-page,body:has([data-route="contest-submi
   .route-page[data-route^="creator-"] .creator-check input { flex-shrink:0; }
   .route-page[data-route^="creator-"] :is(input,select,textarea) { min-width:0; max-width:100%; }
 }
+/* Align the mobile wallet and account row with the right content edge. */
+@media (max-width:760px) {
+  header .account { margin-left:auto; justify-content:flex-end; max-width:100%; min-width:0; }
+  #account-session-button { min-width:0; max-width:100%; }
+  #account-session-button > span:last-child { overflow-wrap:anywhere; }
+  .route-page :is(h1,h2,h3,p,dd,.primary,.secondary) { word-break:keep-all; overflow-wrap:anywhere; }
+}
