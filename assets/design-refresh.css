@@ -74,3 +74,12 @@ body:has([data-route="contest"]) .route-page,body:has([data-route="contest-submi
 .creator-preview-dialog{width:min(1000px,94vw);border-radius:16px;padding:28px}.creator-preview-video{width:100%;max-height:52vh;object-fit:contain;background:#08080b;border-radius:12px}.creator-preview-dialog label{display:block;margin:18px 0}.creator-preview-dialog input[type=range]{width:100%;accent-color:#ff6b21}.creator-preview-dialog output{display:block;color:#ff8b4a;margin:16px 0}.creator-preview-placeholder{padding:60px 20px;background:#17141c;border-radius:12px;text-align:center}@media(max-width:650px){.creator-preview-dialog .detail-grid{grid-template-columns:1fr}}
 
 .asset-market-preview-action{display:flex;justify-content:center;margin:24px 0 32px}.asset-market-preview-action button{max-width:100%;text-align:center}
+/* Mobile navigation and Korean form wrapping. Keep dropdowns visible. */
+@media (max-width: 760px) {
+  header nav { min-width:0; max-width:100%; flex-wrap:wrap; overflow:visible; justify-content:flex-start; gap:4px; }
+  header nav > button, header nav .market-nav-dropdown { flex:0 0 auto; }
+  header nav button { white-space:nowrap; }
+  .route-page[data-route^="creator-"] :is(h1,h2,h3,label,p,.primary,.secondary,.creator-menu a,.sale-contract a) { word-break:keep-all; overflow-wrap:anywhere; }
+  .route-page[data-route^="creator-"] .creator-check input { flex-shrink:0; }
+  .route-page[data-route^="creator-"] :is(input,select,textarea) { min-width:0; max-width:100%; }
+}
