@@ -77,6 +77,7 @@ body:has([data-route="contest"]) .route-page,body:has([data-route="contest-submi
 /* Mobile navigation and Korean form wrapping. Keep dropdowns visible. */
 @media (max-width: 760px) {
   header nav { height:auto; min-width:0; max-width:100%; flex-wrap:wrap; overflow:visible; justify-content:flex-start; gap:4px; }
+  .route-page[data-route^="creator-"] .creator-menu { height:auto; }
   header nav > button, header nav .market-nav-dropdown { flex:0 0 auto; }
   header nav button { white-space:nowrap; }
   .route-page[data-route^="creator-"] :is(h1,h2,h3,label,p,.primary,.secondary,.creator-menu a,.sale-contract a) { word-break:keep-all; overflow-wrap:anywhere; }
