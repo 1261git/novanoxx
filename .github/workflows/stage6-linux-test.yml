@@ -1,0 +1,39 @@
+name: Stage6 isolated Linux TEST
+on:
+  push:
+    branches: [codex/stage6-test-closure]
+permissions:
+  contents: read
+jobs:
+  stage6:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: nnx_sandbox
+          POSTGRES_PASSWORD: Synthetic-ci-only-2026!
+          POSTGRES_DB: nnx_sandbox_home_20261014
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U nnx_sandbox -d nnx_sandbox_home_20261014"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Build TEST image only
+        run: docker build -f Dockerfile.sandbox -t nnx-stage6-test .
+      - name: Verify TEST HTTP, full video, storage and restore
+        run: docker run --name nnx-stage6-ci --network host -e NNX_STAGE6_LINUX=1 nnx-stage6-test node scripts/verify-stage6-cloud.cjs
+      - name: Copy public report only
+        if: always()
+        run: |
+          mkdir -p ci-artifacts
+          docker cp nnx-stage6-ci:/app/.sandbox-commerce/. ci-artifacts/ || true
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: stage6-linux-public-report
+          path: ci-artifacts/nnx-stage6-cloud-report-*/report.json
+          if-no-files-found: warn
+          retention-days: 14

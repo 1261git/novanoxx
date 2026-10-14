@@ -1,0 +1,19 @@
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),{spawn}=require('node:child_process');
+const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
+const fail=x=>{throw Error(x);};
+module.exports=async function convert(final,{executable,scratchRoot,fontFilterPath,orderId}){
+ const base=fs.realpathSync(scratchRoot),exe=fs.realpathSync(executable);
+ if(!final||typeof final.base64!=='string'||final.base64.length>1400000||!/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(final.base64))fail('INVALID_VIDEO');
+ const bytes=Buffer.from(final.base64,'base64');if(bytes.length>1048576||bytes.toString('ascii',4,8)!=='ftyp')fail('INVALID_VIDEO');
+ const root=fs.mkdtempSync(path.join(base,'nnx-work-video-')),input=path.join(root,'input.mp4'),output=path.join(root,'watermarked-full-review.mp4');fs.writeFileSync(input,bytes,{flag:'wx'});
+ async function run(args,label){return new Promise((resolve,reject)=>{const child=spawn(exe,['-nostdin','-hide_banner','-max_alloc','67108864',...args],{windowsHide:true,env:{SystemRoot:process.env.SystemRoot,TEMP:process.env.TEMP,PATH:path.dirname(exe)}});let out='',err='',large=false,done=false;const timer=setTimeout(()=>{large=true;child.kill();},30000);child.stdout.on('data',b=>{out+=b;if(out.length>262144){large=true;child.kill();}});child.stderr.on('data',b=>{err+=b;if(err.length>262144){large=true;child.kill();}});child.on('error',()=>{clearTimeout(timer);if(!done){done=true;reject(Error('MEDIA_PROCESS_FAILED'));}});child.on('close',code=>{clearTimeout(timer);if(done)return;done=true;fs.writeFileSync(path.join(root,label+'.log'),err,{flag:'wx'});if(large||code!==0){reject(Error('MEDIA_PROCESS_FAILED'));return;}resolve({out,err});});});}
+ const protocol=['-protocol_whitelist','file,pipe','-f','mov','-i'];
+ function inspect(result){const d=/Duration:\s*(\d+):(\d+):(\d+(?:\.\d+)?)/.exec(result.err),v=/Video:[^\r\n]*?\b(\d{2,5})x(\d{2,5})\b/.exec(result.err);if(!d||!v)fail('INVALID_VIDEO');const duration=Number(d[1])*3600+Number(d[2])*60+Number(d[3]),width=Number(v[1]),height=Number(v[2]);if(duration<=0||duration>120||width>1920||height>1080)fail('TEST_VIDEO_LIMIT');return {duration,width,height,audio:/Audio:/.test(result.err)};}
+ const original=inspect(await run([...protocol,input,'-map','0:v:0','-map','0:a?','-f','null','-'],'input-probe'));
+ const mark=`drawbox=x=0:y=ih-50:w=iw:h=50:color=black@0.5:t=fill,drawtext=fontfile='${fontFilterPath}':text='NOVANOXX TEST REVIEW':fontsize=18:fontcolor=white:x=(w-tw)/2:y=h-34,setpts=PTS-STARTPTS`;
+ await run([...protocol,input,'-map','0:v:0','-map','0:a?','-threads','2','-vf',mark,'-af','asetpts=PTS-STARTPTS','-c:v','libx264','-preset','veryfast','-crf','25','-pix_fmt','yuv420p','-c:a','aac','-b:a','64k','-movflags','+faststart','-n',output],'encode');
+ const review=inspect(await run([...protocol,output,'-map','0:v:0','-map','0:a?','-f','null','-'],'review-probe'));
+ if(Math.abs(review.duration-original.duration)>0.15||original.width!==review.width||original.height!==review.height||original.audio!==review.audio)fail('FULL_VIDEO_MISMATCH');
+ const data=fs.readFileSync(output);if(data.length>1048576)fail('TEST_FILE_LIMIT');const evidence={environment:'SANDBOX',generatedBy:'SERVER_FFMPEG_FULL_VIDEO_V1',orderId,original,review,inputSha:hash(bytes),reviewSha:hash(data),watermark:'NOVANOXX TEST REVIEW',fullDuration:true};fs.writeFileSync(path.join(root,'evidence.json'),JSON.stringify(evidence,null,2),{flag:'wx'});
+ return {data,inputSha:evidence.inputSha,reviewSha:evidence.reviewSha,evidence};
+};
