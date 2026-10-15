@@ -91,7 +91,7 @@ async function start(options={}){
   }
   if(name==='/api/sandbox-storage/state'&&options.storageContext){const user=currentUser(req);if(req.method!=='GET'){json(res,405,{error:'METHOD_REQUIRED'});return;}if(!user||!storageAdmin(user.id)){json(res,403,{error:'ADMIN_REQUIRED'});return;}json(res,200,{environment:'SANDBOX',volume:volumeBudget.inspect(),database:pgBudget.inspect()});return;}
   if(name.startsWith('/api/')){
-   if(scopedContest&&['/api/contest','/api/contest/media','/api/auth/contest/submit'].includes(name)){await scopedContest(req,res,name);return;}const registration=['/api/auth/creator-profile','/api/auth/creator/assets','/api/auth/creator/save','/api/auth/creator/upload','/api/auth/creator/submit','/api/auth/creator/file','/api/auth/admin/reviews','/api/auth/admin/decision'];
+   if(scopedContest&&['/api/contest','/api/contest/media','/api/auth/contest/submit'].includes(name)){await scopedContest(req,res,name);return;}const registration=['/api/auth/creator-profile','/api/auth/creator/assets','/api/auth/creator/save','/api/auth/creator/upload','/api/auth/creator/submit','/api/auth/creator/file','/api/auth/admin/reviews','/api/auth/admin/file','/api/auth/admin/decision'];
    if(options.workOrders?.extended&&(registration.includes(name)||volumeBudget&&name==='/api/auth/creator/avatar')){
     if(req.method==='POST'&&req.headers.origin!==origin){json(res,403,{error:'요청 출처를 확인해 주세요.'});return;}
     if(name==='/api/auth/creator-profile')await auth(req,res,name);else await scopedCreator(req,res,name);return;
