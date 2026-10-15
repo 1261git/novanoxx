@@ -1,7 +1,7 @@
 const deployment=require('./deployment-config.cjs');
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const configDir=path.resolve(__dirname,'../문서파일');
-function config(){if(process.env.GOOGLE_CLIENT_ID&&process.env.GOOGLE_CLIENT_SECRET)return {client_id:process.env.GOOGLE_CLIENT_ID,client_secret:process.env.GOOGLE_CLIENT_SECRET};if(process.env.NNX_SANDBOX_REMOTE==='1')throw Error('sandbox_config');const files=fs.readdirSync(configDir).filter(n=>n.startsWith('client_secret_')&&n.endsWith('.json'));if(files.length!==1)throw Error('config');const c=JSON.parse(fs.readFileSync(path.join(configDir,files[0]),'utf8')).web;if(!c?.client_id||!c.client_secret||!c.redirect_uris?.includes('http://localhost:4317/api/auth/google/callback'))throw Error('config');return c;}
+function config(){if(process.env.GOOGLE_CLIENT_ID&&process.env.GOOGLE_CLIENT_SECRET)return {client_id:process.env.GOOGLE_CLIENT_ID,client_secret:process.env.GOOGLE_CLIENT_SECRET};const files=fs.readdirSync(configDir).filter(n=>n.startsWith('client_secret_')&&n.endsWith('.json'));if(files.length!==1)throw Error('config');const c=JSON.parse(fs.readFileSync(path.join(configDir,files[0]),'utf8')).web;if(!c?.client_id||!c.client_secret||!c.redirect_uris?.includes('http://localhost:4317/api/auth/google/callback'))throw Error('config');return c;}
 const pending=new Map();
 const digest=v=>crypto.createHash('sha256').update(v).digest('hex');
 function redirect(res,url,cookie){res.writeHead(303,{'Location':url,'Cache-Control':'no-store','Referrer-Policy':'no-referrer',...(cookie?{'Set-Cookie':cookie}:{})});res.end();}
@@ -11,7 +11,7 @@ module.exports=async function google(req,res,name,db,session,json){
  const url=new URL(req.url,'http://localhost:4317');
  const base=deployment.base;
  if(name==='/api/auth/google/start'&&req.method==='GET'){
- try{const c=config();const next=url.searchParams.get('next')||'marketplace';const safe=(/^assets\/\d+$/.test(next)||next==='orders')?next:'marketplace';
+ try{const c=config();const next=url.searchParams.get('next')||'marketplace';const safe=/^assets\/\d+$/.test(next)?next:'marketplace';
  if(req.headers.host!==deployment.host){redirect(res,base+'/api/auth/google/start?next='+encodeURIComponent(safe));return true;}
  for(const [k,v] of pending)if(v.expires<Date.now())pending.delete(k);
  const state=crypto.randomBytes(32).toString('hex'),binding=crypto.randomBytes(32).toString('hex'),verifier=crypto.randomBytes(48).toString('base64url');pending.set(state,{binding:digest(binding),verifier,next:safe,expires:Date.now()+600000});

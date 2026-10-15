@@ -1,5 +1,6 @@
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
-module.exports=(db,dir,user,json)=>{
+module.exports=(db,dir,user,json,{diskPolicy,volumeBudget}={})=>{
+ if(volumeBudget)require('./sandbox-volume-budget.cjs').assert(volumeBudget,dir);if(diskPolicy)require('./sandbox-contest-disk.cjs').assert(diskPolicy,dir);
  db.exec('CREATE TABLE IF NOT EXISTS contest_entries(id TEXT PRIMARY KEY,user_id TEXT NOT NULL,title TEXT NOT NULL,description TEXT NOT NULL,creator TEXT NOT NULL,ext TEXT NOT NULL,size INTEGER NOT NULL,created INTEGER NOT NULL)');
  const folder=path.join(dir,'contest');fs.mkdirSync(folder,{recursive:true});
  return async(req,res,name)=>{
@@ -18,7 +19,19 @@ module.exports=(db,dir,user,json)=>{
  const title=(url.searchParams.get('title')||'').trim(),description=(url.searchParams.get('description')||'').trim();if(!title||title.length>120||description.length>2000){json(res,400,{error:'제목과 설명을 확인해주세요.'});return true;}
  if(db.prepare('SELECT COUNT(*) AS n FROM contest_entries WHERE user_id=?').get(u.id).n>=20){json(res,409,{error:'계정당 최대 20개까지 제출할 수 있어요.'});return true;}
  if(db.prepare('SELECT COALESCE(SUM(size),0) AS n FROM contest_entries').get().n>500*1024*1024){json(res,413,{error:'콘테스트 저장 공간이 부족해요.'});return true;}
- const id=crypto.randomUUID(),filename=path.join(folder,id);let size=0,head=Buffer.alloc(0);const handle=await fs.promises.open(filename,'wx');
- try{for await(const c of req){size+=c.length;if(size>50*1024*1024)throw Error('size');if(head.length<32)head=Buffer.concat([head,c]).subarray(0,32);await handle.write(c);}await handle.close();const ext=head.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))?'png':head[0]===255&&head[1]===216&&head[2]===255?'jpg':head.toString('ascii',4,8)==='ftyp'?'mp4':head.subarray(0,4).equals(Buffer.from([26,69,223,163]))?'webm':null;if(!ext)throw Error('type');db.prepare('INSERT INTO contest_entries VALUES(?,?,?,?,?,?,?,?)').run(id,u.id,title,description,u.name,ext,size,Date.now());json(res,200,{ok:true,id});}catch(e){await handle.close().catch(()=>{});await fs.promises.unlink(filename).catch(()=>{});json(res,400,{error:'PNG·JPG·MP4·WEBM 파일을 50MB 이하로 올려주세요.'});}return true;
+ const id=crypto.randomUUID(),filename=path.join(folder,id);let size=0,head=Buffer.alloc(0),handle,created=false,reserved=false,volumeToken;
+ try{
+  if(volumeBudget)volumeToken=volumeBudget.reserve('contest',req.headers['content-length']===undefined?300*1024*1024:Number(req.headers['content-length']));if(diskPolicy){diskPolicy.reserve(id,req.headers['content-length']===undefined?300*1024*1024:Number(req.headers['content-length']));reserved=true;}
+  handle=await fs.promises.open(filename,'wx');created=true;
+  for await(const c of req){size+=c.length;if(size>300*1024*1024)throw Error('size');if(head.length<32)head=Buffer.concat([head,c]).subarray(0,32);let offset=0;while(offset<c.length){const written=await handle.write(c.subarray(offset));if(!written.bytesWritten)throw Error('SHORT_WRITE');offset+=written.bytesWritten;}}
+  await handle.close();const ext=head.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))?'png':head[0]===255&&head[1]===216&&head[2]===255?'jpg':head.toString('ascii',4,8)==='ftyp'?'mp4':head.subarray(0,4).equals(Buffer.from([26,69,223,163]))?'webm':null;if(!ext)throw Error('type');
+  db.exec(db.backend==='postgres'?'BEGIN':'BEGIN IMMEDIATE');try{
+   if(db.backend==='postgres')db.prepare('SELECT pg_advisory_xact_lock(771108002)').get();
+   if(Number(db.prepare('SELECT COALESCE(SUM(size),0) AS n FROM contest_entries').get().n)+size>500*1024*1024)throw Error('CONTEST_TOTAL_LIMIT');
+   if(Number(db.prepare('SELECT COUNT(*) AS n FROM contest_entries WHERE user_id=?').get(u.id).n)>=20)throw Error('CONTEST_COUNT_LIMIT');
+   db.prepare('INSERT INTO contest_entries VALUES(?,?,?,?,?,?,?,?)').run(id,u.id,title,description,u.name,ext,size,Date.now());db.exec('COMMIT');
+  }catch(e){db.exec('ROLLBACK');throw e;}
+  if(reserved){try{diskPolicy.finish(id,true);}catch{}}json(res,200,{ok:true,id});
+ }catch(e){await handle?.close().catch(()=>{});if(reserved){try{diskPolicy.finish(id,false);}catch{}}if(created)await fs.promises.unlink(filename).catch(()=>{});const total=e.message==='CONTEST_TOTAL_LIMIT',count=e.message==='CONTEST_COUNT_LIMIT';json(res,['DISK_RESERVE_LOW','VOLUME_LOW'].includes(e.message)?507:total?413:count?409:400,{error:['DISK_RESERVE_LOW','VOLUME_LOW'].includes(e.message)?'TEST 디스크 여유 공간이 부족합니다. 기존 파일은 보존했습니다.':total?'콘테스트 전체 저장 한도 500MB를 초과합니다. 기존 출품작은 보존했습니다.':count?'계정당 최대 20개까지 제출할 수 있어요.':'PNG·JPG·MP4·WEBM 파일을 300MB 이하로 올려주세요.'});}finally{if(volumeToken){try{volumeBudget.release(volumeToken);}catch{}}}return true;
  };
 };

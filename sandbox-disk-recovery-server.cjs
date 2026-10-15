@@ -1,0 +1,14 @@
+// Fixture-only server for exercising a single-writer freeze and disk delivery.
+const http=require('node:http'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
+module.exports=async function start({config,storageRoot,readyRoot}){
+ require('./sandbox-transition.cjs').guard(config);if(readyRoot)await require('./sandbox-file-db-backup.cjs').validateReady(readyRoot,config);
+ const pool=new(require('pg').Pool)(config);if((await pool.query('SELECT marker FROM sandbox_environment')).rows[0]?.marker!=='NNX_REAL_PG_SANDBOX_V1'){await pool.end();throw Error('SANDBOX_REQUIRED');}
+ let frozen=false;const active=new Set();const reply=(res,status,data)=>{res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify(data));};
+ const server=http.createServer(async(req,res)=>{if(frozen){reply(res,503,{status:'backup-in-progress'});return;}const run=(async()=>{try{const u=new URL(req.url,'http://localhost');
+ if(u.pathname==='/fixture-write'&&req.method==='POST'){await new Promise(resolve=>setTimeout(resolve,100));fs.writeFileSync(path.join(storageRoot,'tmp','inflight.txt'),'Finished before snapshot');reply(res,200,{status:'TEST-WRITE'});return;}
+ const token=(req.headers.cookie||'').split(';').map(x=>x.trim()).find(x=>x.startsWith('nnx_session='))?.slice('nnx_session='.length),hashed=crypto.createHash('sha256').update(token||'').digest('hex');const user=(await pool.query('SELECT user_id FROM sessions WHERE token=$1 AND expires>$2',[hashed,Date.now()])).rows[0];if(!user){reply(res,401,{error:'login-required'});return;}
+ if(u.pathname==='/original'){const id=u.searchParams.get('id');if(! /^[a-f0-9-]{36}$/.test(id||'')){reply(res,400,{error:'invalid-id'});return;}const f=(await pool.query("SELECT f.* FROM creator_files f WHERE f.id=$1 AND f.kind='original' AND EXISTS(SELECT 1 FROM original_entitlements e WHERE e.user_id=$2 AND e.asset_id=f.asset_id AND e.status='PAID')",[id,user.user_id])).rows[0];if(!f){reply(res,403,{error:'not-entitled'});return;}const file=path.join(storageRoot,'uploads',f.id);if(!fs.existsSync(file)){reply(res,404,{error:'missing-file'});return;}const bytes=fs.readFileSync(file);if(bytes.length!==Number(f.size)){reply(res,503,{error:'file-size-mismatch'});return;}res.writeHead(200,{'Content-Type':'application/octet-stream','Cache-Control':'private, no-store'});res.end(bytes);return;}
+ reply(res,404,{error:'not-found'});
+ }catch{reply(res,500,{error:'fixture-error'});}})();active.add(run);run.finally(()=>active.delete(run));});
+ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));return {origin:'http://127.0.0.1:'+server.address().port,activeCount:()=>active.size,quiesce:async()=>{frozen=true;await Promise.all([...active]);},resume:async()=>{frozen=false;},close:async()=>{frozen=true;await Promise.all([...active]);await new Promise(resolve=>server.close(resolve));await pool.end();}};
+};

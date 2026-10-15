@@ -1,6 +1,6 @@
 /* NovaNoxX visual refresh: cinematic media, quiet surfaces, consistent controls. */
 :root{--bg:#0b0c10;--panel:#14141b;--line:#ffffff12;--muted:#9797a8;--text:#f5f3f8}
-body{background:var(--bg);font-family:'Space Grotesk','Malgun Gothic',sans-serif;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);font-family:'Space Grotesk','Pretendard Variable','Malgun Gothic',sans-serif;-webkit-font-smoothing:antialiased}
 header{height:76px;padding:0 3%;border-bottom:1px solid #ffffff0c;background:#0b0c10ed;backdrop-filter:blur(20px);position:sticky;top:0;z-index:30}
 header .logo{font-size:24px;letter-spacing:-1px}header nav{gap:8px;align-items:center}header nav button{padding:10px 18px;border-radius:9px;height:auto;border-bottom:0!important;font-size:13px;color:#a4a2b2}header nav button.active{background:#ffffff09;color:#faf7ff}header nav button:hover{background:#ffffff09;color:#fff}header .account{gap:12px}header .account>a{color:#777384;font-size:10px}header .account button{border-radius:9px;padding:10px 14px;font-size:12px}header .wallet{border-color:#ffffff16;background:#17151e}
 main{max-width:1680px;margin:auto;padding:0 3%}footer{border-top:1px solid #ffffff0c;color:#767380}
@@ -74,3 +74,24 @@ body:has([data-route="contest"]) .route-page,body:has([data-route="contest-submi
 .creator-preview-dialog{width:min(1000px,94vw);border-radius:16px;padding:28px}.creator-preview-video{width:100%;max-height:52vh;object-fit:contain;background:#08080b;border-radius:12px}.creator-preview-dialog label{display:block;margin:18px 0}.creator-preview-dialog input[type=range]{width:100%;accent-color:#ff6b21}.creator-preview-dialog output{display:block;color:#ff8b4a;margin:16px 0}.creator-preview-placeholder{padding:60px 20px;background:#17141c;border-radius:12px;text-align:center}@media(max-width:650px){.creator-preview-dialog .detail-grid{grid-template-columns:1fr}}
 
 .asset-market-preview-action{display:flex;justify-content:center;margin:24px 0 32px}.asset-market-preview-action button{max-width:100%;text-align:center}
+/* Mobile navigation and Korean form wrapping. Keep dropdowns visible. */
+@media (max-width: 760px) {
+  header nav { height:auto; min-width:0; max-width:100%; flex-wrap:wrap; overflow:visible; justify-content:flex-start; gap:4px; }
+  .route-page[data-route^="creator-"] .creator-menu { height:auto; }
+  header nav > button, header nav .market-nav-dropdown { flex:0 0 auto; }
+  header nav button { white-space:nowrap; }
+  .route-page[data-route^="creator-"] :is(h1,h2,h3,label,p,.primary,.secondary,.creator-menu a,.sale-contract a) { word-break:keep-all; overflow-wrap:anywhere; }
+  .route-page[data-route^="creator-"] .creator-check input { flex-shrink:0; }
+  .route-page[data-route^="creator-"] :is(input,select,textarea) { min-width:0; max-width:100%; }
+}
+/* Align the mobile wallet and account row with the right content edge. */
+@media (max-width:760px) {
+  header .account { margin-left:auto; justify-content:flex-end; max-width:100%; min-width:0; }
+  #account-session-button { min-width:0; max-width:100%; }
+  #account-session-button > span:last-child { overflow-wrap:anywhere; }
+  .route-page :is(h1,h2,h3,p,dd,.primary,.secondary) { word-break:keep-all; overflow-wrap:anywhere; }
+}
+@media (max-width:760px) {
+  .account-profile-popover :is(a,span,strong,small) { word-break:keep-all; overflow-wrap:anywhere; }
+  .account-profile-popover .account-neon-status strong { flex-shrink:0; }
+}

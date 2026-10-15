@@ -39,6 +39,7 @@ function route(){
  homeSections.forEach(el=>el.hidden=!(isMarket&&(!isLibrary||el.id==='market'||el.classList.contains('brief-banner')||el.classList.contains('note'))));page.hidden=isMarket;page.classList.toggle('landing-page',isHome);
  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.id==='market-nav'?isMarket:routeNames[b.dataset.info]===current));
  if(['exclusive-contract','license-contract'].includes(current)){renderSaleContract(current==='exclusive-contract');window.scrollTo(0,0);return;}
+ if(current==='developer-notes'){renderDeveloperNotes();window.scrollTo(0,0);return;}
  if(current==='refund-policy'){renderRefundPolicy();window.scrollTo(0,0);return;}
  if(current==='about'){renderAbout();window.scrollTo(0,0);return;}if(current==='faq'){renderFaq();window.scrollTo(0,0);return;}
  if(current==='contest'){renderContest();window.scrollTo(0,0);return;}if(current==='contest-submit'){renderContestSubmit();window.scrollTo(0,0);return;}
