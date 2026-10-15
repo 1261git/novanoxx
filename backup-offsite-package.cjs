@@ -63,7 +63,8 @@ function publicIdentity(key) {
   if (publicKey.asymmetricKeyType !== 'rsa' || publicKey.asymmetricKeyDetails.modulusLength < 3072) throw Error('RSA_3072_RECIPIENT_REQUIRED');
   return { publicKey, fingerprint: sha(publicKey.export({ type: 'spki', format: 'pem' })) };
 }
-async function createPackage({ captureRoot, captureAnchor, key, recipientPublicKey, destination, scope }) {
+async function createPackage({ captureRoot, captureAnchor, key, recipientPublicKey, destination, scope, automationJournal }) {
+  if (automationJournal !== undefined && (automationJournal?.version !== 1 || !Array.isArray(automationJournal.runs) || Buffer.byteLength(JSON.stringify(automationJournal)) > 262144)) throw Error('AUTOMATION_JOURNAL_METADATA_INVALID');
   if (!Buffer.isBuffer(key) || key.length !== 32) throw Error('CAPTURE_KEY_REQUIRED');
   const source = fs.realpathSync(captureRoot), target = emptyDestination(source, destination);
   if (fs.existsSync(path.join(source, 'FAILED.json'))) throw Error('FAILED_CAPTURE_REFUSED');
@@ -83,7 +84,7 @@ async function createPackage({ captureRoot, captureAnchor, key, recipientPublicK
   if (sha(readJSON(source, 'manifest.json').bytes) !== captureAnchor) throw Error('CAPTURE_CHANGED_DURING_PACKAGING');
   const header = { version: 1, context: CONTEXT, id, keyFingerprint: identity.fingerprint }, aad = Buffer.from(JSON.stringify(header));
   const metadataKey = crypto.randomBytes(32), iv = crypto.randomBytes(12);
-  const plaintext = Buffer.from(JSON.stringify({ manifestBase64: manifest.bytes.toString('base64'), captureAnchor, captureKey: key.toString('base64'), records }));
+  const plaintext = Buffer.from(JSON.stringify({ manifestBase64: manifest.bytes.toString('base64'), captureAnchor, captureKey: key.toString('base64'), records, ...(automationJournal === undefined ? {} : { automationJournal }) }));
   try {
     if (plaintext.length > LIMIT) throw Error('TRANSPORT_METADATA_LIMIT');
     const cipher = crypto.createCipheriv('aes-256-gcm', metadataKey, iv); cipher.setAAD(aad);
@@ -120,6 +121,7 @@ async function restorePackage({ packageRoot, indexAnchor, privateKey, destinatio
     metadataBytes = Buffer.concat([decipher.update(Buffer.from(envelope.ciphertext, 'base64')), decipher.final()]);
     if (metadataBytes.length > LIMIT) throw Error('TRANSPORT_METADATA_LIMIT');
     const metadata = JSON.parse(metadataBytes.toString()), manifestBytes = Buffer.from(metadata.manifestBase64 || '', 'base64');
+    if (metadata.automationJournal !== undefined && (metadata.automationJournal?.version !== 1 || !Array.isArray(metadata.automationJournal.runs) || Buffer.byteLength(JSON.stringify(metadata.automationJournal)) > 262144)) throw Error('AUTOMATION_JOURNAL_METADATA_INVALID');
     if (sha(manifestBytes) !== metadata.captureAnchor) throw Error('CAPTURE_ANCHOR_MISMATCH');
     metadata.manifest = JSON.parse(manifestBytes.toString());
     const artifacts = manifestCheck(metadata.manifest, value.scope); captureKey = Buffer.from(metadata.captureKey || '', 'base64');
@@ -138,7 +140,7 @@ async function restorePackage({ packageRoot, indexAnchor, privateKey, destinatio
       if (actual.bytes !== record.bytes || actual.sha256 !== record.sha256) throw Error('TRANSPORT_CHANGED_DURING_RESTORE');
     }
     fs.writeFileSync(path.join(target, 'manifest.json'), manifestBytes, { flag: 'wx', mode: 0o600 });
-    const result = { root: target, anchor: metadata.captureAnchor, key: captureKey, scope: value.scope };
+    const result = { root: target, anchor: metadata.captureAnchor, key: captureKey, scope: value.scope, ...(metadata.automationJournal === undefined ? {} : { automationJournal: metadata.automationJournal }) };
     captureKey = null; return result; // Caller passes key to existing restore helper and zeroes it afterwards.
   } finally { metadataKey?.fill(0); metadataBytes?.fill(0); captureKey?.fill(0); }
 }

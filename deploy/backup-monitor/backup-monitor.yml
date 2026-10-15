@@ -1,0 +1,35 @@
+name: Backup verification monitor
+on:
+  workflow_dispatch:
+    inputs:
+      notification_probe:
+        description: 'Send one explicitly approved synthetic failed-run notification'
+        required: false
+        type: boolean
+        default: false
+  schedule:
+    # 03:37 Asia/Seoul. Backup is due at 03:00; avoid the busy hour boundary.
+    - cron: '37 18 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: novanoxx-backup-monitor
+  cancel-in-progress: false
+jobs:
+  verify:
+    if: vars.NNX_BACKUP_MONITOR_ENABLED == '1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Approved notification probe
+        if: inputs.notification_probe == true
+        run: echo 'NNX_SYNTHETIC_NOTIFICATION_PROBE'; exit 1
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6, official commit verified
+        with:
+          persist-credentials: false
+          sparse-checkout: scripts/monitor-backup-automation.cjs
+          sparse-checkout-cone-mode: false
+      - name: Verify freshness and record independent backup trust hashes
+        env:
+          NNX_BACKUP_MONITOR_TOKEN: ${{ secrets.NNX_BACKUP_MONITOR_TOKEN }}
+        run: node scripts/monitor-backup-automation.cjs

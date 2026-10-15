@@ -78,7 +78,12 @@ function verifyWriters(observed, expectedPids, previous) {
 function verifyClients(rows, allowedAddresses, user) {
   for (const row of rows) {
     if (row.state !== 'idle' || row.in_transaction !== false) refuse('DATABASE_CLIENT_NOT_QUIESCENT');
-    const address = String(row.address || '').replace(/^::ffff:/, '');
+    // inet::text includes a host prefix; remove only an exact /32 or /128,
+    // never a broader subnet. Address membership remains an exact comparison.
+    let address = String(row.address || '');
+    if (address.includes(':')) address = address.replace(/\/128$/, '');
+    else address = address.replace(/\/32$/, '');
+    address = address.replace(/^::ffff:/, '');
     if (row.user_name !== user || !allowedAddresses.has(address)) refuse('UNPROVEN_DATABASE_CLIENT');
   }
   return rows.length;

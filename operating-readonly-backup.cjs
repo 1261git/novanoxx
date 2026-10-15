@@ -31,7 +31,9 @@ async function capture(env=process.env){
   root=fs.mkdtempSync(path.join(store,'bundle-'));const core=require('./backup-pg-readonly.cjs');
   const beforeFiles=await files('/data',store,freeze.signal),before=await core.fingerprint(config),catalog=await core.catalog(config),client=new Client(config);await client.connect();let size;
   try{await client.query('BEGIN READ ONLY');size=Number((await client.query('SELECT pg_database_size(current_database()) AS n')).rows[0].n);await client.query('COMMIT');}finally{await client.end();}
-  const stat=fs.statfsSync(store);if(Number(stat.bavail)*Number(stat.bsize)<beforeFiles.reduce((a,row)=>a+row.bytes,0)+size*3+512*1048576)throw Error('BACKUP_SPACE_LOW');
+  const fileBytes=beforeFiles.reduce((a,row)=>a+row.bytes,0),captureLimit=env.NNX_BACKUP_CAPTURE_MAX_BYTES===undefined?null:Number(env.NNX_BACKUP_CAPTURE_MAX_BYTES);
+  if(captureLimit!==null&&(!Number.isSafeInteger(captureLimit)||captureLimit<1||captureLimit>512*1048576||fileBytes+size*2+4*1048576>captureLimit))throw Error('BACKUP_CAPTURE_POLICY_LIMIT');
+  const stat=fs.statfsSync(store);if(Number(stat.bavail)*Number(stat.bsize)<fileBytes+size*3+512*1048576)throw Error('BACKUP_SPACE_LOW');
   await freeze.assert();
   child=spawn(runtime.binary,['-h',config.host,'-p','5432','-U',config.user,'-d',config.database,'-Fc'],{env:{PATH:'/usr/bin:/bin',LANG:'C',PGPASSWORD:config.password,PGCONNECT_TIMEOUT:'10',PGOPTIONS:'-c default_transaction_read_only=on -c statement_timeout=60000 -c lock_timeout=10000'},stdio:['ignore','pipe','ignore'],signal:freeze.signal});
   const done=new Promise((resolve,reject)=>{child.once('error',()=>reject(Error('OPERATING_DUMP_FAILED')));child.once('close',code=>code===0?resolve():reject(Error('OPERATING_DUMP_FAILED')));});done.catch(()=>{});
