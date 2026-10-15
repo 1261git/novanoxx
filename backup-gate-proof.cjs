@@ -9,6 +9,9 @@ function validateSummary(value) {
     value.gate.remainingMs > 0 && Number.isSafeInteger(value.gate.pid) && value.gate.pid > 0 &&
     Array.isArray(value.writers) && value.writers.length === 1 && value.writers[0].pid === value.gate.pid &&
     value.writers[0].mainServer === true && /^\d+$/.test(value.writers[0].startTime || '') &&
+    (value.isolatedPlatformProcesses === undefined || Array.isArray(value.isolatedPlatformProcesses) && value.isolatedPlatformProcesses.length <= 1 && value.isolatedPlatformProcesses.every(row =>
+      row.kind === 'ISOLATED_PORT_DETECTOR_NO_SOURCE_VOLUME' && Number.isSafeInteger(row.pid) && row.pid > 0 && row.pid !== value.gate.pid && /^\d+$/.test(row.startTime || '') &&
+      /^\d+:\d+$/.test(row.sourceVolumeDevice || '') && ['commandSha256','cgroupSha256','mountInfoSha256'].every(key => /^[a-f0-9]{64}$/.test(row[key] || '')))) &&
     /^[a-f0-9]{64}$/.test(value.writers[0].commandSha256 || '') && Number.isSafeInteger(value.idleClients) && value.idleClients >= 0;
 }
 async function production({ env = process.env, config }) {
@@ -19,17 +22,18 @@ async function production({ env = process.env, config }) {
   try {
     const boot = sha(fs.readFileSync('/proc/sys/kernel/random/boot_id')), initial = lease.initial;
     if (initial.service !== SERVICE || initial.instance !== env.RENDER_INSTANCE_ID || initial.bootSha256 !== boot) throw Error('GATE_SOURCE_BINDING_REQUIRED');
-    const writers = observer.inspectWriters();
+    const processSet = observer.inspectProcesses(), writers = processSet.writers;
     // Only the single, request-driven production server is supported. Any separate
     // Node worker or converter causes refusal until it has its own drain contract.
     if (writers.length !== 1 || writers[0].pid !== initial.pid || !writers[0].mainServer) throw Error('UNCONTROLLED_WRITER_PRESENT');
     const addresses = new Set(['127.0.0.1', '::1']);
     for (const entries of Object.values(os.networkInterfaces())) for (const row of entries || []) addresses.add(row.address.replace(/^::ffff:/, ''));
     const summary = { version: 1, kind: KIND, service: SERVICE, instance: env.RENDER_INSTANCE_ID,
-      bootSha256: boot, observedAt: new Date().toISOString(), writers, gate: initial, idleClients: 0 };
+      bootSha256: boot, observedAt: new Date().toISOString(), writers, isolatedPlatformProcesses: processSet.isolated, gate: initial, idleClients: 0 };
     async function assert() {
       if (lease.signal.aborted || sha(fs.readFileSync('/proc/sys/kernel/random/boot_id')) !== boot || env.RENDER_INSTANCE_ID !== initial.instance) throw Error('GATE_LEASE_LOST');
-      const status = await lease.assert(), current = observer.inspectWriters();
+      const status = await lease.assert(), currentSet = observer.inspectProcesses(), current = currentSet.writers;
+      if (JSON.stringify(currentSet.isolated) !== JSON.stringify(processSet.isolated)) throw Error('PLATFORM_PROCESS_GENERATION_CHANGED');
       if (current.length !== 1 || current[0].pid !== writers[0].pid || current[0].startTime !== writers[0].startTime || current[0].commandSha256 !== writers[0].commandSha256) throw Error('WRITER_GENERATION_CHANGED');
       const { Client } = require('pg'), client = new Client({ ...config, application_name: 'nnx_capture_cooperative_guard', connectionTimeoutMillis: 5000, statement_timeout: 5000 });
       await client.connect();

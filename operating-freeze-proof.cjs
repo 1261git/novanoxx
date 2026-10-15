@@ -3,6 +3,27 @@ const fs = require('node:fs'), path = require('node:path'), crypto = require('no
 const SERVICE = 'srv-db5aqunlk1mc739bi0m0';
 const hash = value => crypto.createHash('sha256').update(value).digest('hex');
 function refuse(code) { throw Error(code); }
+function mountRows(value) {
+  return String(value).trim().split('\n').map(line => {
+    const [left, right] = line.split(' - '), fields = left?.split(' ');
+    if (!right || fields.length < 6 || !/^\d+:\d+$/.test(fields[2])) refuse('PROCESS_MOUNT_EVIDENCE_REQUIRED');
+    return { device: fields[2], root: fields[3], point: fields[4] };
+  });
+}
+// Render exposes a port detector from a sibling container in /proc. Do not
+// suppress EACCES generally: require its kernel cgroup and mount evidence,
+// exact identity, and absence of ANY mount of the source data device.
+function isolatedPortDetector({ selfCgroup, selfMountInfo, cgroup, mountInfo, comm, status, cmdline, stat, pid }) {
+  if (selfCgroup !== '0::/\n' || !/^0::\/\.\.\/cri-containerd-[a-f0-9]{64}\.scope\n$/.test(cgroup) ||
+      comm !== 'portdetectorv2\n' || cmdline !== '/portdetectorv2\0' ||
+      !/^Uid:\s+1000\s+1000\s+1000\s+1000$/m.test(status) || !/^PPid:\s+0$/m.test(status)) refuse('UNPROVEN_INACCESSIBLE_PROCESS');
+  const own = mountRows(selfMountInfo), foreign = mountRows(mountInfo), data = own.filter(row => row.point === '/data');
+  if (data.length !== 1 || foreign.some(row => row.device === data[0].device)) refuse('FOREIGN_PROCESS_MAY_ACCESS_SOURCE_VOLUME');
+  const end = stat.lastIndexOf(')'), fields = stat.slice(end + 2).trim().split(/\s+/);
+  if (end < 0 || !/^\d+$/.test(fields[19] || '')) refuse('WRITER_STAT_INVALID');
+  return { pid, kind: 'ISOLATED_PORT_DETECTOR_NO_SOURCE_VOLUME', startTime: fields[19],
+    commandSha256: hash(cmdline), cgroupSha256: hash(cgroup), mountInfoSha256: hash(mountInfo), sourceVolumeDevice: data[0].device };
+}
 function pids(value) {
   if (typeof value !== 'string' || !/^[1-9]\d*(?:,[1-9]\d*)*$/.test(value)) refuse('WRITER_PID_SET_REQUIRED');
   const result = value.split(',').map(Number).sort((a, b) => a - b);
@@ -10,13 +31,25 @@ function pids(value) {
   return result;
 }
 // Only the unit fixture accepts another procRoot. The production controller fixes /proc.
-function inspectWriters({ procRoot = '/proc', skipPid = process.pid } = {}) {
-  const result = [];
+function inspectProcesses({ procRoot = '/proc', skipPid = process.pid } = {}) {
+  const result = [], isolated = [];
   for (const name of fs.readdirSync(procRoot).filter(n => /^\d+$/.test(n))) {
     const pid = Number(name); if (pid === skipPid) continue;
     const dir = path.join(procRoot, name);
     try {
-      const executable = fs.readlinkSync(path.join(dir, 'exe')), kind = path.basename(executable);
+      let executable;
+      try { executable = fs.readlinkSync(path.join(dir, 'exe')); }
+      catch (error) {
+        if (error.code !== 'EACCES') throw error;
+        isolated.push(isolatedPortDetector({ pid,
+          selfCgroup: fs.readFileSync(path.join(procRoot, 'self/cgroup'), 'utf8'),
+          selfMountInfo: fs.readFileSync(path.join(procRoot, 'self/mountinfo'), 'utf8'),
+          cgroup: fs.readFileSync(path.join(dir, 'cgroup'), 'utf8'), mountInfo: fs.readFileSync(path.join(dir, 'mountinfo'), 'utf8'),
+          comm: fs.readFileSync(path.join(dir, 'comm'), 'utf8'), status: fs.readFileSync(path.join(dir, 'status'), 'utf8'),
+          cmdline: fs.readFileSync(path.join(dir, 'cmdline'), 'utf8'), stat: fs.readFileSync(path.join(dir, 'stat'), 'utf8') }));
+        continue;
+      }
+      const kind = path.basename(executable);
       if (!/^(node|nodejs|ffmpeg|ffprobe)$/.test(kind)) continue;
       const raw = fs.readFileSync(path.join(dir, 'stat'), 'utf8'), end = raw.lastIndexOf(')');
       if (end < 0) refuse('WRITER_STAT_INVALID');
@@ -29,8 +62,9 @@ function inspectWriters({ procRoot = '/proc', skipPid = process.pid } = {}) {
       if (!['ENOENT', 'ESRCH'].includes(error.code)) throw error;
     }
   }
-  return result.sort((a, b) => a.pid - b.pid);
+  return { writers: result.sort((a, b) => a.pid - b.pid), isolated: isolated.sort((a, b) => a.pid - b.pid) };
 }
+function inspectWriters(options) { return inspectProcesses(options).writers; }
 function verifyWriters(observed, expectedPids, previous) {
   if (!Array.isArray(observed) || !Array.isArray(expectedPids) || !observed.length ||
       new Set(observed.map(v => v.pid)).size !== observed.length ||
@@ -79,4 +113,4 @@ async function production({ env = process.env, config }) {
     service: SERVICE, instance: env.RENDER_INSTANCE_ID, bootSha256: boot, observedAt: new Date().toISOString(),
     writers: initial, idleClients, maintenanceModeAndOffsitePolicy: 'SEPARATE_OPERATOR_REQUIREMENTS' } };
 }
-module.exports = { pids, inspectWriters, verifyWriters, verifyClients, production };
+module.exports = { pids, inspectWriters, inspectProcesses, isolatedPortDetector, verifyWriters, verifyClients, production };
