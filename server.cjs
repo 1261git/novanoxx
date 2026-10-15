@@ -4,8 +4,9 @@ const path = require('path');
 const root = __dirname;
 const deployment = require('./deployment-config.cjs');
 const auth = require('./auth.cjs');
+const backupGate = require('./backup-quiesce-gate.cjs').configured();
 const types = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.jpg':'image/jpeg','.png':'image/png','.webp':'image/webp','.mp4':'video/mp4','.woff2':'font/woff2'};
-http.createServer(async (req,res) => {
+const server = http.createServer(backupGate.wrap(async (req,res) => {
   const writeHead=res.writeHead;
   res.writeHead=function(status,headers){if(deployment.secure&&headers&&headers['Set-Cookie']){const cookies=headers['Set-Cookie'];headers['Set-Cookie']=Array.isArray(cookies)?cookies.map(c=>c+'; Secure'):cookies+'; Secure'}return writeHead.call(this,status,headers)};
   let name;
@@ -30,4 +31,6 @@ http.createServer(async (req,res) => {
       fs.createReadStream(file).pipe(res);
     }
   });
-}).listen(Number(process.env.PORT||4317),process.env.HOST||'127.0.0.1',() => console.log('NovaNoxX server ready'));
+}));
+backupGate.ready.then(() => server.listen(Number(process.env.PORT||4317),process.env.HOST||'127.0.0.1',() => console.log('NovaNoxX server ready')))
+ .catch(() => { console.error('Backup control initialization failed; server not started.'); process.exitCode=1; });
