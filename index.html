@@ -49,7 +49,10 @@ body.marketplace-view{background:#0b0c10}.marketplace-view main{background:radia
 .categories button{font-size:14px}.purposes .pill{font-size:13px;padding:8px 12px}.categories button .category-en,.purposes .pill .category-en{font-size:9px}.categories button small:not(.category-en){font-size:9px}
 </style>
 <link rel="stylesheet" href="assets/design-refresh.css">
-<link rel="stylesheet" href="assets/market-menu.css"><link rel="stylesheet" href="assets/marketplace-page.css"><link rel="stylesheet" href="assets/developer-notes.css"></head>
+<link rel="stylesheet" href="assets/market-menu.css"><link rel="stylesheet" href="assets/marketplace-page.css"><link rel="stylesheet" href="assets/developer-notes.css"><style id="business-footer-styles">
+.site-footer{align-items:flex-start;flex-wrap:wrap;gap:20px}.footer-business{flex:0 0 100%;order:3;text-align:center;font-size:12px;line-height:1.85;overflow-wrap:anywhere}.footer-business p{margin:0}.footer-business span{display:inline-block;margin:0 8px}.footer-business strong{color:var(--text);font-weight:500}.footer-business a{text-decoration:underline;text-underline-offset:3px}@media(max-width:760px){.footer-business{font-size:11px}.footer-business span{margin-inline:5px}.site-footer .footer-links{margin-left:auto}}
+</style>
+</head>
 <body>
 <header><a class="logo image-logo" href="#/" aria-label="NovaNoxX 홈"><img src="assets/novanoxx-brand-logo.png" alt="NovaNoxX"></a><nav><button class="active" id="market-nav">마켓플레이스</button><button data-info="Contest">콘테스트</button><button data-info="Brief 의뢰">제작 의뢰 ↗</button><button data-info="Creator 안내">크리에이터</button><button data-info="About">About</button><button data-info="FAQ">FAQ</button></nav><div class="account"><button class="wallet" data-info="NEON 지갑"><span>✦</span> NEON</button><button data-info="로그인">로그인 ↗</button></div></header>
 <main>
@@ -69,7 +72,7 @@ body.marketplace-view{background:#0b0c10}.marketplace-view main{background:radia
 </section>
 <section class="brief-banner"><div><div class="eyebrow">HAVE SOMETHING SPECIFIC IN MIND?</div><h2>있으면 사고, 없으면 함께 만듭니다.</h2><p>당신의 아이디어를 크리에이터에게 전하세요.<br>예산과 일정에 맞는 제안을 비교할 수 있어요.</p></div><button class="primary" data-info="Brief 의뢰">제작 의뢰하기 ↗</button></section>
 <div class="note">홈 화면 시안 · 영상 카드는 작업 폴더의 perfume1과 NovaNoxX 모션 로고를 사용한 재생 샘플입니다. 다른 에셋 이미지와 가격은 예시입니다. 실제 결제와 판매는 진행되지 않습니다.</div>
-</main><footer><a class="logo image-logo" href="#/" aria-label="NovaNoxX 홈"><img src="assets/novanoxx-brand-logo.png" alt="NovaNoxX"></a><div class="footer-links"><a href="#/developer-notes">개발자 노트 ↗</a><span>THE FUTURE BELONGS TO ORIGINALS.<br>© 2026 NNX. All rights reserved.</span></div></footer>
+</main><footer class="site-footer"><a class="logo image-logo" href="#/" aria-label="NovaNoxX 홈"><img src="assets/novanoxx-brand-logo.png" alt="NovaNoxX"></a><div class="footer-business" aria-label="사업자 정보"><p><span>상호 <strong>노바녹스</strong></span><span>대표자 김명선</span><span>사업자등록번호 644-31-01860</span></p><p><span>주소 경기도 광주시 오포로 701-5 105동 203호</span><span>연락처 <a href="tel:01042313221">010-4231-3221</a></span></p></div><div class="footer-links"><a href="#/developer-notes">개발자 노트 ↗</a><span>THE FUTURE BELONGS TO ORIGINALS.<br>© 2026 NNX. All rights reserved.</span></div></footer>
 <div class="toast" hidden role="status" id="toast"></div>
 <script>
 const assets=[
