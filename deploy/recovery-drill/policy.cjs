@@ -1,0 +1,14 @@
+const crypto=require('node:crypto');
+const SOURCE_COMMIT='f88960985743ca5c96caf56babe77eaf3ed229d0',SOURCE_ID='8499deb7-0f97-42d1-a6fe-70de0967f266',SOURCE_SHA='a1601a9527b5491a91bfe10cd48ba0667da27695a64462c9c0513ad8b2222549';
+const MAX_BODY=8*1048576,MAX_CIPHER=4*1048576;
+function authorized(value,token){const a=Buffer.from(String(value||'')),b=Buffer.from('Bearer '+token);return /^[A-Za-z0-9_-]{43}$/.test(token||'')&&a.length===b.length&&crypto.timingSafeEqual(a,b);}
+function route(method,url){let p;if(typeof url!=='string'||!url.startsWith('/')||url.startsWith('//')||url.includes('\\')||/%5c/i.test(url))return false;try{p=decodeURIComponent(new URL(url,'http://localhost').pathname);}catch{return false;}if(!['GET','HEAD'].includes(method)||p.includes('..')||p.includes('\\')||p.includes('//')||/[\x00-\x1f]/.test(p))return false;return ['/', '/index.html','/api/health','/api/catalog','/api/catalog/file','/api/auth/me','/page-routing.js','/landing.css','/favicon.ico'].includes(p)||/^\/(assets|uploads)\/[a-zA-Z0-9_./ -]+$/.test(p);}
+function capsuleCheck(value){if(value?.version!==1||value.sourcePacketId!==SOURCE_ID||value.sourceIndexAnchor!==SOURCE_SHA||!Array.isArray(value.files)||value.files.length!==15||!/^[a-f0-9]{64}$/.test(value.indexAnchor||''))throw Error('CAPSULE_BINDING_REQUIRED');
+ let total=0;const names=new Set(),decoded=[];
+ for(const f of value.files){if(!/^(index\.json|recovery-metadata\.enc\.json|payload-\d+\.enc)$/.test(f.name||'')||names.has(f.name)||typeof f.base64!=='string'||!/^[A-Za-z0-9+/]*={0,2}$/.test(f.base64))throw Error('CAPSULE_RECORD_INVALID');names.add(f.name);const bytes=Buffer.from(f.base64,'base64');if(bytes.toString('base64')!==f.base64)throw Error('CAPSULE_ENCODING_INVALID');total+=bytes.length;if(total>MAX_CIPHER)throw Error('CAPSULE_LIMIT');decoded.push({name:f.name,bytes});}
+ if(!names.has('index.json')||!names.has('recovery-metadata.enc.json'))throw Error('CAPSULE_INDEX_REQUIRED');
+ const indexBytes=decoded.find(f=>f.name==='index.json').bytes;if(crypto.createHash('sha256').update(indexBytes).digest('hex')!==value.indexAnchor)throw Error('CAPSULE_ANCHOR_MISMATCH');
+ return {files:decoded,indexAnchor:value.indexAnchor};
+}
+function recoveryMetrics({declaredAt,capturedAt,verifiedAt}){const start=Date.parse(declaredAt),capture=Date.parse(capturedAt),end=Date.parse(verifiedAt);if(![start,capture,end].every(Number.isFinite)||capture>start||end<start)throw Error('DRILL_CLOCK_INVALID');const rpoSeconds=(start-capture)/1000,rtoSeconds=(end-start)/1000;return {rpoSeconds,rtoSeconds,rpoTargetSeconds:86400,rtoTargetSeconds:14400,rpoWithinTarget:rpoSeconds<=86400,rtoWithinTarget:rtoSeconds<=14400,scope:'ONE_DECLARED_EXTERNAL_LOGICAL_RESTORE_DRILL_NOT_LONG_TERM_SLA_OR_PITR'};}
+module.exports={SOURCE_COMMIT,SOURCE_ID,SOURCE_SHA,MAX_BODY,authorized,route,capsuleCheck,recoveryMetrics};
