@@ -1,6 +1,6 @@
 'use strict';
 // External TEST only. Capture explicit mail settings before home-server clears inherited secrets.
-const recipients=['novanoxx2026@gmail.com','novanoxx2026+nnx-stage9-20261016@gmail.com'];
+const recipients=['novanoxx2026+nnx-stage9-20261016@gmail.com'];
 const webhookPath='/api/auth/mail/webhook';
 function settings(env,origin,{localTest=false,transport}={}){
  if(env.NNX_MAIL_ENABLED!==undefined&&!['0','1'].includes(env.NNX_MAIL_ENABLED))throw Error('SANDBOX_MAIL_FLAG_REQUIRED');
