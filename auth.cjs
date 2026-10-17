@@ -19,6 +19,7 @@ const memberAdmin=require('./member-administration.cjs')({db,user,json,origin:de
 const creatorApi=require('./creator-api.cjs')(db,dir,user,json);
 const savedApi=require('./account-saved.cjs')({db,user,json,origin:deployment.base});
 const catalogAdmin=require('./catalog-admin.cjs')({db,user,json,origin:deployment.base});
+const applicationEngine=require('./application-engine-bridge.cjs')({user,json,origin:deployment.base});
 const integrationReadiness=require('./integration-readiness.cjs')({db,dir,user,json,origin:deployment.base});
 const operationsCases=require('./operations-cases.cjs')({db,user,json,origin:deployment.base});
 const operationsOverview=require('./operations-overview.cjs')({db,user,json});
@@ -45,6 +46,7 @@ module.exports=async function auth(req,res,name){
  }
  if(await savedApi(req,res,name))return true;
  if(await catalogAdmin(req,res,name))return true;
+ if(await applicationEngine.handle(req,res,name))return true;
  if(await integrationReadiness(req,res,name))return true;
  if(await operationsCases(req,res,name))return true;
  if(await operationsOverview(req,res,name))return true;
@@ -83,3 +85,5 @@ module.exports.configureMail=factory=>{if(accountMail)throw Error('MAIL_ALREADY_
 module.exports.mail=()=>accountMail;
 module.exports.close=()=>{accountMail?.close();db.close();};
 
+
+module.exports.configureEngine=services=>applicationEngine.configure(services);
