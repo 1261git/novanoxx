@@ -17,6 +17,7 @@ const naver=require('./naver-auth.cjs');
 const kakao=require('./kakao-auth.cjs');
 const creatorApi=require('./creator-api.cjs')(db,dir,user,json);
 const savedApi=require('./account-saved.cjs')({db,user,json,origin:deployment.base});
+const catalogAdmin=require('./catalog-admin.cjs')({db,user,json,origin:deployment.base});
 let accountMail;
 const neonPayments=require('./neon-payments.cjs')(db,user,json,{notify:input=>accountMail?.notificationInside(input)});
 accountMail=require('./mail-runtime.cjs').configured({db,origin:deployment.base});
@@ -39,6 +40,7 @@ module.exports=async function auth(req,res,name){
   json(res,200,accountMail.webhook(await body(req,{raw:true,max:65536}),req.headers));return true;
  }
  if(await savedApi(req,res,name))return true;
+ if(await catalogAdmin(req,res,name))return true;
  if(await neonPayments(req,res,name))return true;
  if(await creatorApi(req,res,name))return true;
  if(await kakao(req,res,name,db,session,json,{user:user(req),sessionHash:hashToken(token(req))}))return true;

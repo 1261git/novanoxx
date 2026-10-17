@@ -13,6 +13,6 @@
   document.querySelectorAll('#categories button').forEach((button,i)=>{button.dataset.index=String(i).padStart(2,'0');button.setAttribute('aria-pressed',String(button.dataset.cat===category));});
  }
  const originalRender=render;render=function(){originalRender();syncLibrary();};
- document.addEventListener('click',event=>{const button=event.target.closest('#categories button, #purposes button');if(!button||!document.body.classList.contains('library-view'))return;setTimeout(()=>{const query=new URLSearchParams({category,subcategory});history.replaceState(null,'','#/marketplace?'+query);});},true);
+ document.addEventListener('click',event=>{const button=event.target.closest('#categories button, #purposes button');if(!button||!document.body.classList.contains('library-view'))return;setTimeout(()=>{const query=new URLSearchParams(location.hash.split('?')[1]||'');query.set('category',category);query.set('subcategory',subcategory);history.replaceState(null,'','#/marketplace?'+query);});},true);
  syncLibrary();
 })();

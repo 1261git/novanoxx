@@ -1,0 +1,23 @@
+'use strict';
+const crypto=require('crypto');
+module.exports=function({db,user,json,origin,isAdmin=require('./admin-policy.cjs')}){
+ db.exec('CREATE TABLE IF NOT EXISTS catalog_price_guides(category TEXT PRIMARY KEY,minimum INTEGER NOT NULL,maximum INTEGER NOT NULL,version TEXT NOT NULL,updated INTEGER NOT NULL); CREATE TABLE IF NOT EXISTS catalog_price_guide_history(id TEXT PRIMARY KEY,category TEXT NOT NULL,minimum INTEGER NOT NULL,maximum INTEGER NOT NULL,admin_id TEXT NOT NULL,created INTEGER NOT NULL); CREATE TABLE IF NOT EXISTS creator_review_events(id TEXT PRIMARY KEY,asset_id TEXT NOT NULL,admin_id TEXT NOT NULL,action TEXT NOT NULL,reason TEXT NOT NULL,before_state TEXT NOT NULL,after_state TEXT NOT NULL,created INTEGER NOT NULL);');
+ return async(req,res,name)=>{
+  if(!['/api/auth/price-guide','/api/auth/admin/price-guide','/api/auth/admin/published-assets','/api/auth/admin/asset-state'].includes(name))return false;
+  const owner=user(req);if(!owner){json(res,401,{error:'로그인이 필요합니다.'});return true;}
+  const admin=name.startsWith('/api/auth/admin/');if(admin&&!isAdmin(owner)){json(res,403,{error:'관리자 권한이 필요합니다.'});return true;}
+  if(name==='/api/auth/price-guide'&&req.method==='GET'){const category=new URL(req.url,origin).searchParams.get('category');if(!Object.hasOwn(require('./creator-options.cjs'),category||'')){json(res,400,{error:'카테고리를 확인해주세요.'});return true;}json(res,200,{guide:db.prepare('SELECT * FROM catalog_price_guides WHERE category=?').get(category)||null});return true;}
+  if(name==='/api/auth/admin/price-guide'&&req.method==='GET'){json(res,200,{guides:db.prepare('SELECT * FROM catalog_price_guides ORDER BY category').all(),history:db.prepare('SELECT * FROM catalog_price_guide_history ORDER BY created DESC,id LIMIT 50').all()});return true;}
+  if(name==='/api/auth/admin/published-assets'&&req.method==='GET'){json(res,200,{assets:db.prepare("SELECT id,status,metadata,updated FROM creator_assets WHERE status IN ('ACTIVE','PAUSED','SOLD') ORDER BY updated DESC").all().map(a=>({id:a.id,status:a.status,title:JSON.parse(a.metadata).title,updated:a.updated}))});return true;}
+  if(req.method!=='POST'){json(res,405,{error:'지원하지 않는 요청입니다.'});return true;}
+  if(req.headers.origin!==origin){json(res,403,{error:'요청 출처를 확인해주세요.'});return true;}if(req.headers['content-type']?.split(';')[0].trim().toLowerCase()!=='application/json'){json(res,415,{error:'JSON 요청이 필요합니다.'});return true;}
+  let bytes=0,chunks=[];for await(const c of req){bytes+=c.length;if(bytes>8192){json(res,413,{error:'요청이 너무 큽니다.'});return true;}chunks.push(c);}let input;try{input=JSON.parse(Buffer.concat(chunks));}catch{input=null;}if(!input||typeof input!=='object'||Array.isArray(input)){json(res,400,{error:'입력값을 확인해주세요.'});return true;}
+  if(name==='/api/auth/admin/price-guide'){
+   const {category,minimum,maximum}=input;if(!Object.hasOwn(require('./creator-options.cjs'),category||'')||!Number.isSafeInteger(minimum)||!Number.isSafeInteger(maximum)||minimum<1||minimum>maximum){json(res,400,{error:'카테고리와 양의 정수 가격 범위를 확인해주세요.'});return true;}
+   const id=crypto.randomUUID(),now=Date.now();db.exec('BEGIN IMMEDIATE');try{db.prepare('INSERT INTO catalog_price_guide_history VALUES(?,?,?,?,?,?)').run(id,category,minimum,maximum,owner.id,now);db.prepare('INSERT INTO catalog_price_guides VALUES(?,?,?,?,?) ON CONFLICT(category) DO UPDATE SET minimum=excluded.minimum,maximum=excluded.maximum,version=excluded.version,updated=excluded.updated').run(category,minimum,maximum,id,now);db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}json(res,200,{ok:true,version:id});return true;
+  }
+  if(name!=='/api/auth/admin/asset-state'){json(res,405,{error:'지원하지 않는 요청입니다.'});return true;}
+  const reason=typeof input.reason==='string'?input.reason.trim():'';if(typeof input.assetId!=='string'||!['pause','resume'].includes(input.action)||!reason||reason.length>1000){json(res,400,{error:'판매 상태와 처리 사유(1~1000자)를 확인해주세요.'});return true;}
+  const before=input.action==='pause'?'ACTIVE':'PAUSED',after=input.action==='pause'?'PAUSED':'ACTIVE';db.exec('BEGIN IMMEDIATE');try{const asset=db.prepare('SELECT status FROM creator_assets WHERE id=?').get(input.assetId);if(!asset||asset.status!==before){db.exec('ROLLBACK');json(res,409,{error:'현재 상태에서 처리할 수 없습니다. 새로고침해주세요.'});return true;}const now=Date.now();db.prepare('UPDATE creator_assets SET status=?,updated=? WHERE id=?').run(after,now,input.assetId);db.prepare('INSERT INTO creator_review_events VALUES(?,?,?,?,?,?,?,?)').run(crypto.randomUUID(),input.assetId,owner.id,input.action,reason,before,after,now);db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}json(res,200,{ok:true,status:after});return true;
+ };
+};

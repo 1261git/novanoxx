@@ -1,0 +1,13 @@
+const assert=require('assert/strict'),fs=require('fs'),path=require('path'),{filterMarketAssets:filter}=require('./assets/market-search.js');
+const assets=[{id:1,title:'Alpha',creator:'Studio',cat:'VIDEO',subcategory:'Brand Film',purpose:'BRANDING',price:80,industry:'beauty',style:'cinematic',tags:'perfume, luxury',spec:'4K MP4',fit:true,created:10},{id:2,title:'Beta',cat:'AUDIO',purpose:'MUSIC',price:35,style:'minimal',spec:'WAV',sold:true,created:20},{id:3,title:'Gamma',cat:'VIDEO',purpose:'AD',price:100,industry:'game',style:'cinematic',spec:'1080 MP4',created:30}];
+const checks=[];function test(name,fn){try{fn();checks.push({name,status:'PASS'});}catch(error){checks.push({name,status:'FAIL',error:error.message});}}
+test('terms match across tags style and industry',()=>assert.deepEqual(filter(assets,{query:'perfume cinematic beauty'}).map(a=>a.id),[1]));
+test('full-width unicode normalizes without changing data',()=>assert.deepEqual(filter(assets,{query:'ＡＬＰＨＡ'}).map(a=>a.id),[1]));
+test('inclusive price range and category combine',()=>assert.deepEqual(filter(assets,{category:'VIDEO',minimum:80,maximum:100}).map(a=>a.id),[1,3]));
+test('invalid reversed or negative ranges show no misleading matches',()=>{assert.equal(filter(assets,{minimum:100,maximum:35}).length,0);assert.equal(filter(assets,{minimum:-1}).length,0);});
+test('purpose industry style and specifications combine',()=>assert.deepEqual(filter(assets,{purpose:'BRANDING',industry:'beaut',style:'cinem',spec:'4k'}).map(a=>a.id),[1]));
+test('SOLD filter keeps sold metadata',()=>assert.deepEqual(filter(assets,{availability:'sold'}).map(a=>a.id),[2]));
+test('saved filter intersects price without mutating catalog',()=>{const copy=JSON.stringify(assets);assert.deepEqual(filter(assets,{savedOnly:true,saved:new Set([1,2]),minimum:50}).map(a=>a.id),[1]);assert.equal(JSON.stringify(assets),copy);});
+test('newest uses actual creation timestamps',()=>assert.deepEqual(filter(assets,{sort:'newest'}).map(a=>a.id),[3,2,1]));
+test('price sort is stable and does not mutate original',()=>{assert.deepEqual(filter(assets,{sort:'low'}).map(a=>a.id),[2,1,3]);assert.deepEqual(assets.map(a=>a.id),[1,2,3]);});
+const output=path.resolve(__dirname,'../novanoxx-stage10-evidence-20261017/search-report.json');fs.writeFileSync(output,JSON.stringify({scope:'PURE_LOCAL_FILTERING_NO_NETWORK_OR_TELEMETRY',checks},null,2));console.log({passed:checks.filter(x=>x.status==='PASS').length,total:checks.length});if(checks.some(x=>x.status==='FAIL'))process.exitCode=1;
