@@ -1,0 +1,104 @@
+{
+  "version": "PRIVACY_RELEASE_PREPARATION_V1",
+  "status": "PREPARATION_NOT_OPERATING_POLICY",
+  "operator": {
+    "legalName": "NovaNoxx(노바녹스)",
+    "privacyOfficer": "김명선",
+    "publicContact": "novanoxx2026@gmail.com"
+  },
+  "discovery": {
+    "fields": [
+      "query",
+      "resultCount",
+      "referrerDomain",
+      "source",
+      "medium",
+      "campaign"
+    ],
+    "accountLinked": true,
+    "ipCollected": false,
+    "retentionDays": 120,
+    "defaultAllowed": false,
+    "eraseOnWithdrawal": true
+  },
+  "futureDiscoveryBackups": {
+    "includeRawRecords": true,
+    "retentionFromCreationDays": null,
+    "recommendedDays": 7,
+    "status": "OWNER_CONSIDERING_90_DAYS_PERIOD_NOT_CONFIRMED",
+    "existingOperatingTestAndTradeBackupsPreserved": true,
+    "accessAfterWithdrawal": "BLOCK_UNTIL_VERIFIED_DELETION_FILTER",
+    "restoreBeforeService": "REAPPLY_EXPIRY_AND_CURRENT_DELETIONS_WITH_COLLECTION_DISABLED",
+    "destructiveCleanupEnabled": false,
+    "considerationDays": 90
+  },
+  "processingRegister": [
+    {
+      "purpose": "회원 가입과 로그인",
+      "items": [
+        "이메일",
+        "표시 이름",
+        "비밀번호 해시 또는 소셜 식별자",
+        "세션",
+        "신규 가입 시각"
+      ],
+      "scope": "신규 가입 시각은 170 이후 기록하며 과거 값은 보충하지 않음",
+      "retention": "공식 계정 보존 및 삭제 기준 확인 필요"
+    },
+    {
+      "purpose": "상품 등록과 거래",
+      "items": [
+        "계정 ID",
+        "상품과 파일 지문",
+        "주문과 약정 조건",
+        "구매 시각",
+        "미검증 구매 국가 코드",
+        "제작 자료와 메시지"
+      ],
+      "scope": "현재 추가 거래 엔진은 격리 TEST이며 LIVE 금융과 구분",
+      "retention": "제공자 계약 및 거래별 법적 보존 기준 확인 필요"
+    },
+    {
+      "purpose": "선택형 검색과 유입 분석",
+      "items": [
+        "계정 ID",
+        "검색어",
+        "검색 결과 수",
+        "유입 도메인",
+        "UTM source/medium/campaign"
+      ],
+      "scope": "기본 차단 및 사용자 허용·철회·현재 기록 삭제",
+      "retention": "120일"
+    },
+    {
+      "purpose": "이용 제한과 보안",
+      "items": [
+        "접속·로그인·감사 기록",
+        "기존 가입/메일 요청 제한 정보"
+      ],
+      "scope": "선택형 검색·유입의 IP 제외 정책을 기존 보안 기록 전체 삭제로 확대하지 않음",
+      "retention": "실제 처리 항목과 보존 근거 확인 필요"
+    }
+  ],
+  "externalProcessingVerification": {
+    "servicesToVerify": [
+      "Render",
+      "Resend",
+      "Cloudflare R2",
+      "Google",
+      "Naver",
+      "Kakao",
+      "계약 후 실제 결제 제공자"
+    ],
+    "processorContractsConfirmed": false,
+    "storageLocationsAndInternationalTransfersConfirmed": false,
+    "rightsRequestProcedureConfirmed": false,
+    "legalReviewConfirmed": false
+  },
+  "operatingCollectionEnabled": false,
+  "references": [
+    "https://pipc.go.kr/np/cop/bbs/selectBoardArticle.do?bbsId=BS217&mCode=&nttId=12018",
+    "https://www.law.go.kr/법령/개인정보보호법/제21조",
+    "https://www.law.go.kr/법령/개인정보보호법/제30조"
+  ]
+}

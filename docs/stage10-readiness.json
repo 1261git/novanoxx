@@ -1,5 +1,5 @@
 {
-  "revision": 170,
+  "revision": 171,
   "status": "LOCAL_SCOPE_INVENTORY_NOT_RELEASE_APPROVAL",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -32,7 +32,7 @@
         "R-07",
         "R-08"
       ],
-      "remaining": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요."
+      "remaining": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요. 171에서 원래 PRD의 무추가작업 즉시 완료 요구와 후보 검수 흐름 차이를 찾아, 판매자가 REGISTERED_INSTANT를 명시한 상품의 추가작업 미선택 구매는 TEST 차감/주문/최종본 사본/완료/EXCLUSIVE SOLD를 같은 트랜잭션으로 연결. 이전 상품·주문은 WORKFLOW 유지, 추가작업 선택 시 기존 자료/검수 경로 유지. 실제 LIVE 권리·정산 아님."
     },
     {
       "id": "ADMIN_CONTEST_DECISIONS",
@@ -66,7 +66,7 @@
         "D-09",
         "D-10"
       ],
-      "remaining": "170 검색·유입 고지/선택 설정·기본 수집 차단·허용/철회·현재 기록 삭제와120일 경과 삭제/요청 payload 제거, 타 계정/금융 기록 보존을 연결. 실제 계정 삭제 기능은 없으며 삭제 연계 함수는 준비만 됨. 가입 생성 시각은 신규 이메일/인증메일/Google/Kakao/Naver 경로에 연결; 과거 생성 시각은 UNKNOWN/null. 일반/Brief TEST 구매 시각·선택형 구매국가 코드(구매자 입력/미검증)를 주문 snapshot에 기록; IP 추정/과거값 보충 없음. 운영 개인정보처리방침 완성/법률·모국어 검토, 백업 수집기록 삭제 기준, 제공자 확정 환불사유/실제 결제 국가 연계는 잔여. 운영 수집 비활성."
+      "remaining": "170 검색·유입 고지/선택 설정·기본 수집 차단·허용/철회·현재 기록 삭제와120일 경과 삭제/요청 payload 제거, 타 계정/금융 기록 보존을 연결. 실제 계정 삭제 기능은 없으며 삭제 연계 함수는 준비만 됨. 가입 생성 시각은 신규 이메일/인증메일/Google/Kakao/Naver 경로에 연결; 과거 생성 시각은 UNKNOWN/null. 일반/Brief TEST 구매 시각·선택형 구매국가 코드(구매자 입력/미검증)를 주문 snapshot에 기록; IP 추정/과거값 보충 없음. 운영 개인정보처리방침 완성/법률·모국어 검토, 백업 수집기록 삭제 기준, 제공자 확정 환불사유/실제 결제 국가 연계는 잔여. 운영 수집 비활성. 171 개인정보 처리 목록·운영 준비 점검을 추가. 원문 백업 포함은 사용자 선택,90일을 고려 중이나 기간 미확정. 실제 크기와 기존 보관량 미측정 시 시작 불가, 전체 약4GB 예산 초과 시 중지 계산기를 준비. 기존 전체 백업/보관/자동삭제 설정 변경 없음. 사업자명 NovaNoxx(노바녹스), 보호책임자 김명선, 공개 문의 이메일 novanoxx2026@gmail.com 확정·데이터 설정 화면 연결. 위탁/국외이전/권리절차·법률 확인은 미완료."
     },
     {
       "id": "OPERATIONAL_INTEGRATION_AND_GUI",
@@ -100,7 +100,7 @@
         "X-05",
         "X-07"
       ],
-      "remaining": "PRD/기능정의서 Word/PDF 최종본과123 ID별 출시 판정 일치, 계정·키·도메인/갱신·운영 담당자 인계, 미표식 레거시 UI/접근성과 실제 화면·모국어/법률 감수. 현재 기계적 사전 누락0은 전체 사이트 감수와 다름."
+      "remaining": "171에서123 ID와 고정 정책/현재 코드/운영 조건을 같은 JSON 기준 PDF로 정리. 기존 Word/원본 PDF 보존. Word 필수 렌더러 LibreOffice 미제공으로 Word 수정본의 시각 검수/납품은 불가. 실제 전체 브라우저/접근성/모국어·법률 감수와 계정·키·도메인 갱신/운영 담당자 인계는 남음."
     },
     {
       "id": "PROVIDER_REPLY_AND_LIVE_FINANCE",
@@ -582,11 +582,12 @@
       "baselineStatus": "테스트 구현",
       "baselineRemaining": "테스트 구매만 구현. 실결제·유료 NEON·수수료·실제 납품 권한 생성 필요.",
       "current": {
-        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요. 171에서 원래 PRD의 무추가작업 즉시 완료 요구와 후보 검수 흐름 차이를 찾아, 판매자가 REGISTERED_INSTANT를 명시한 상품의 추가작업 미선택 구매는 TEST 차감/주문/최종본 사본/완료/EXCLUSIVE SOLD를 같은 트랜잭션으로 연결. 이전 상품·주문은 WORKFLOW 유지, 추가작업 선택 시 기존 자료/검수 경로 유지. 실제 LIVE 권리·정산 아님.",
         "refs": [
           "HANDOFF169",
-          "bundle169-sqlite-report.json",
-          "bundle169-postgres-report.json"
+          "HANDOFF171",
+          "release171-sqlite-report.json",
+          "release171-postgres-report.json"
         ]
       },
       "openGroups": [
@@ -600,11 +601,12 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "독점 에셋에 한해 10분 checkout lock과 PAID 후 RESERVED 구현 필요. 다회 판매는 다른 구매자 전체를 잠그지 않음.",
       "current": {
-        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요. 171에서 원래 PRD의 무추가작업 즉시 완료 요구와 후보 검수 흐름 차이를 찾아, 판매자가 REGISTERED_INSTANT를 명시한 상품의 추가작업 미선택 구매는 TEST 차감/주문/최종본 사본/완료/EXCLUSIVE SOLD를 같은 트랜잭션으로 연결. 이전 상품·주문은 WORKFLOW 유지, 추가작업 선택 시 기존 자료/검수 경로 유지. 실제 LIVE 권리·정산 아님.",
         "refs": [
           "HANDOFF169",
-          "bundle169-sqlite-report.json",
-          "bundle169-postgres-report.json"
+          "HANDOFF171",
+          "release171-sqlite-report.json",
+          "release171-postgres-report.json"
         ]
       },
       "openGroups": [
@@ -637,11 +639,12 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "추가 작업 없는 실결제 주문 즉시 COMPLETED·다운로드 권한·정산 생성 필요. 독점만 SOLD, 다회 판매는 ACTIVE 유지.",
       "current": {
-        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
+        "scope": "171 판매자 명시 등록 최종본 즉시 제공·추가작업 미선택 TEST 구매의 완료/원장/최종본 사본/독점 SOLD 원자 처리. 이전 상품/주문은 기존 흐름 유지. 실제 LIVE 권리·정산은 미연결.",
         "refs": [
           "HANDOFF169",
-          "bundle169-sqlite-report.json",
-          "bundle169-postgres-report.json"
+          "HANDOFF171",
+          "release171-sqlite-report.json",
+          "release171-postgres-report.json"
         ]
       },
       "openGroups": [
@@ -725,11 +728,12 @@
       "baselineStatus": "부분 구현",
       "baselineRemaining": "판매자 지원 항목과 기본/추가 가격 입력 구현. 구매 옵션 선택·자료 제출·작업·납품 처리 필요. AI 자동 적용은 제외.",
       "current": {
-        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요. 171에서 원래 PRD의 무추가작업 즉시 완료 요구와 후보 검수 흐름 차이를 찾아, 판매자가 REGISTERED_INSTANT를 명시한 상품의 추가작업 미선택 구매는 TEST 차감/주문/최종본 사본/완료/EXCLUSIVE SOLD를 같은 트랜잭션으로 연결. 이전 상품·주문은 WORKFLOW 유지, 추가작업 선택 시 기존 자료/검수 경로 유지. 실제 LIVE 권리·정산 아님.",
         "refs": [
           "HANDOFF169",
-          "bundle169-sqlite-report.json",
-          "bundle169-postgres-report.json"
+          "HANDOFF171",
+          "release171-sqlite-report.json",
+          "release171-postgres-report.json"
         ]
       },
       "openGroups": [
@@ -2300,5 +2304,30 @@
     },
     "operatingDeployment": false,
     "paidResourcesCreated": false
+  },
+  "bundle171": {
+    "status": "LOCAL_RELEASE_PREPARATION_NOT_DEPLOYED",
+    "registeredInstant": {
+      "sellerExplicit": true,
+      "buyerNoOptionsOnly": true,
+      "legacyOrdersPreserved": true,
+      "billing": "SIMULATED_NO_CHARGE"
+    },
+    "privacyPlan": "docs/privacy-release-plan.json",
+    "backupRetentionDays": null,
+    "backupPeriodConsiderationDays": 90,
+    "storageMeasurementRequired": true,
+    "originalDocumentsPreserved": true,
+    "wordRendererAvailable": false,
+    "pdfArtifact": "문서파일/NovaNoxX_10단계_기능현황과출시조건_2026-10-18.pdf",
+    "sourceIds": 123,
+    "operator": {
+      "legalName": "NovaNoxx(노바녹스)",
+      "privacyOfficer": "김명선",
+      "publicContact": "novanoxx2026@gmail.com"
+    },
+    "pdfVisualReviewPages": 10,
+    "translationKeys": 991,
+    "wordStatus": "ORIGINAL_PRESERVED_RENDERER_UNAVAILABLE_NOT_EDITED"
   }
 }
