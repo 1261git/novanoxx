@@ -23,14 +23,13 @@
   },
   "futureDiscoveryBackups": {
     "includeRawRecords": true,
-    "retentionFromCreationDays": null,
+    "retentionFromCreationDays": 90,
     "recommendedDays": 7,
-    "status": "OWNER_CONSIDERING_90_DAYS_PERIOD_NOT_CONFIRMED",
+    "status": "OWNER_CONFIRMED_90_DAYS_NOT_OPERATING_ENABLED",
     "existingOperatingTestAndTradeBackupsPreserved": true,
     "accessAfterWithdrawal": "BLOCK_UNTIL_VERIFIED_DELETION_FILTER",
     "restoreBeforeService": "REAPPLY_EXPIRY_AND_CURRENT_DELETIONS_WITH_COLLECTION_DISABLED",
     "destructiveCleanupEnabled": false,
-    "considerationDays": 90,
     "restorePreparation": {
       "module": "discovery-restore-filter.cjs",
       "mode": "ISOLATED_RESTORE_ONLY",
@@ -39,7 +38,8 @@
       "collectionAfterRestore": false,
       "productionPipelineConnected": false,
       "localSqliteCoordinator": "discovery-isolated-restore.cjs"
-    }
+    },
+    "ownerConfirmedDays": 90
   },
   "processingRegister": [
     {
