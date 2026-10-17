@@ -1,5 +1,9 @@
 (function(root){const dictionaries={
   "es": {
+"기존 상품 판매 조건을 적용합니다. 상업적 이용·수정은 허용하며 재배포·재판매는 별도 합의가 필요합니다.":"Se aplican las condiciones de venta existentes. Se permiten el uso comercial y las modificaciones; la redistribución y reventa requieren un acuerdo aparte.",
+"수수료 (원 미만 버림)":"Comisión (sin fracciones de KRW)",
+"정산 예상액 · 지급 미실행":"Importe estimado del vendedor · no pagado",
+"현재 단독 관리자 운영입니다. 추가 담당자 권한 부여는 중지되어 있습니다.":"Está activo el modo de administrador único. No se conceden permisos a otros responsables.",
 "조건 선택 후 양측 TEST 조건을 확인하면 TEST 잔액으로 작업 주문을 만들 수 있습니다. 실제 청구는 없습니다.":"Tras la selección, ambas partes pueden confirmar condiciones TEST y crear una orden con créditos TEST. No hay cargos reales.",
 "작업 주문 보기":"Ver orden de trabajo",
 "선택한 권리 조건을 TEST 주문에 기록하는 데 동의합니다.":"Acepto registrar las condiciones de derechos seleccionadas en la orden TEST.",
@@ -927,6 +931,10 @@
     "워터마크 포함 전체화면": "Pantalla completa con marca de agua"
   },
   "zh-Hans": {
+"기존 상품 판매 조건을 적용합니다. 상업적 이용·수정은 허용하며 재배포·재판매는 별도 합의가 필요합니다.":"适用现有商品销售条件。允许商业使用和修改，重新分发及转售需另行约定。",
+"수수료 (원 미만 버림)":"手续费（舍去不足1韩元部分）",
+"정산 예상액 · 지급 미실행":"预计卖方结算金额 · 未支付",
+"현재 단독 관리자 운영입니다. 추가 담당자 권한 부여는 중지되어 있습니다.":"当前为单管理员模式，已停用额外人员授权。",
 "조건 선택 후 양측 TEST 조건을 확인하면 TEST 잔액으로 작업 주문을 만들 수 있습니다. 실제 청구는 없습니다.":"选择后，双方确认TEST条件即可使用TEST余额创建工作订单，不会实际扣款。",
 "작업 주문 보기":"查看工作订单",
 "선택한 권리 조건을 TEST 주문에 기록하는 데 동의합니다.":"我同意在TEST订单中记录所选权利条件。",
@@ -1854,6 +1862,10 @@
     "워터마크 포함 전체화면": "含水印全屏显示"
   },
   "vi": {
+"기존 상품 판매 조건을 적용합니다. 상업적 이용·수정은 허용하며 재배포·재판매는 별도 합의가 필요합니다.":"Áp dụng điều kiện bán sản phẩm hiện có. Cho phép sử dụng thương mại và chỉnh sửa; phân phối lại và bán lại cần thỏa thuận riêng.",
+"수수료 (원 미만 버림)":"Phí (bỏ phần lẻ dưới 1 KRW)",
+"정산 예상액 · 지급 미실행":"Khoản dự kiến cho người bán · chưa chi trả",
+"현재 단독 관리자 운영입니다. 추가 담당자 권한 부여는 중지되어 있습니다.":"Hiện chỉ có một quản trị viên vận hành. Đã tắt cấp quyền cho người khác.",
 "조건 선택 후 양측 TEST 조건을 확인하면 TEST 잔액으로 작업 주문을 만들 수 있습니다. 실제 청구는 없습니다.":"Sau khi chọn, hai bên xác nhận điều kiện TEST để tạo đơn bằng số dư TEST. Không thu tiền thật.",
 "작업 주문 보기":"Xem đơn công việc",
 "선택한 권리 조건을 TEST 주문에 기록하는 데 동의합니다.":"Tôi đồng ý ghi điều kiện quyền đã chọn vào đơn TEST.",
@@ -2781,6 +2793,10 @@
     "워터마크 포함 전체화면": "Toàn màn hình có dấu bản quyền"
   },
   "de": {
+"기존 상품 판매 조건을 적용합니다. 상업적 이용·수정은 허용하며 재배포·재판매는 별도 합의가 필요합니다.":"Es gelten die bestehenden Verkaufsbedingungen. Kommerzielle Nutzung und Bearbeitung sind erlaubt; Weitergabe und Weiterverkauf erfordern eine gesonderte Vereinbarung.",
+"수수료 (원 미만 버림)":"Gebühr (Bruchteile eines KRW abgerundet)",
+"정산 예상액 · 지급 미실행":"Geschätzter Verkäufererlös · nicht ausgezahlt",
+"현재 단독 관리자 운영입니다. 추가 담당자 권한 부여는 중지되어 있습니다.":"Der Einzeladministratorbetrieb ist aktiv. Zusätzliche Mitarbeiterrechte sind deaktiviert.",
 "조건 선택 후 양측 TEST 조건을 확인하면 TEST 잔액으로 작업 주문을 만들 수 있습니다. 실제 청구는 없습니다.":"Nach der Auswahl können beide Seiten TEST-Bedingungen bestätigen und einen Auftrag mit TEST-Guthaben erstellen. Keine echte Abbuchung.",
 "작업 주문 보기":"Arbeitsauftrag ansehen",
 "선택한 권리 조건을 TEST 주문에 기록하는 데 동의합니다.":"Ich stimme zu, die ausgewählten Rechtebedingungen im TEST-Auftrag zu erfassen.",

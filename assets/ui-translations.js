@@ -1,4 +1,8 @@
 (function(root){const entries={
+"기존 상품 판매 조건을 적용합니다. 상업적 이용·수정은 허용하며 재배포·재판매는 별도 합의가 필요합니다.":"Existing product sale terms apply. Commercial use and modification are allowed; redistribution and resale require separate agreement.",
+"수수료 (원 미만 버림)":"Fee (fractional KRW discarded)",
+"정산 예상액 · 지급 미실행":"Estimated seller proceeds · not paid",
+"현재 단독 관리자 운영입니다. 추가 담당자 권한 부여는 중지되어 있습니다.":"Single-administrator operation is active. Additional staff grants are disabled.",
 "조건 선택 후 양측 TEST 조건을 확인하면 TEST 잔액으로 작업 주문을 만들 수 있습니다. 실제 청구는 없습니다.":"After selection, both parties can confirm TEST terms and create a work order using TEST credits. No real charge occurs.",
 "작업 주문 보기":"View work order",
 "선택한 권리 조건을 TEST 주문에 기록하는 데 동의합니다.":"I agree to record the selected rights terms in the TEST order.",

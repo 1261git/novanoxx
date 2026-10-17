@@ -1,5 +1,5 @@
 {
-  "revision": 165,
+  "revision": 166,
   "status": "LOCAL_SCOPE_INVENTORY_NOT_RELEASE_APPROVAL",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -32,7 +32,7 @@
         "R-07",
         "R-08"
       ],
-      "remaining": "165에서 선택된 Brief의 판매자/구매자 TEST 조건 확인→정확 환산→원장/주문/연결 원자 처리→기존 보호 납품/확정까지 연결. 실제 청구/권리 집행·수수료 반올림/정산은 미실행. 남은 일반 구현은 완성 원본의 직접 납품·일반 운영 권한, 옵션별 독립 견적/납기, Brief 유사 추천 및 일반 주문 구매자 자료 첨부 통합."
+      "remaining": "165에서 선택된 Brief의 판매자/구매자 TEST 조건 확인→정확 환산→원장/주문/연결 원자 처리→기존 보호 납품/확정까지 연결. 실제 청구/권리 집행·수수료 반올림/정산은 미실행. 남은 일반 구현은 완성 원본의 직접 납품·일반 운영 권한, 옵션별 독립 견적/납기, Brief 유사 추천 및 일반 주문 구매자 자료 첨부 통합.166 수수료는 원화12%·원 미만 버림, 판매자 예상액=판매가-수수료로 신규 주문에 고정. Brief는 기존 독점/비독점 조건과 참고 계약 버전을 적용; 실제 금융/권리 집행은 미실행."
     },
     {
       "id": "ADMIN_CONTEST_DECISIONS",
@@ -47,7 +47,7 @@
         "AD-07",
         "X-04"
       ],
-      "remaining": "165에서 역할별 서버 경로 권한·부여/회수/감사·기존 최고관리자 보호와 화면 패널 분리를 소유 TEST 후보에 연결. 실제 담당 계정 지정과 운영 적용은 미실행. 콘테스트 선정·일정·혜택/상금 운영 결정은 남음."
+      "remaining": "166 사용자 단독 운영 확정. 추가 역할 부여는 기본 차단하고 기존 최고관리자 판정/계정·기록은 보존. 실제 운영 적용은 별도. 콘테스트 운영 결정은 남음."
     },
     {
       "id": "MINIMUM_DATA_AND_RETENTION",
@@ -223,11 +223,11 @@
       "baselineStatus": "부분 구현",
       "baselineRemaining": "허용된 이메일 해시 기반 관리자 권한과 심사 화면 구현. 회원·거래·정산·분쟁·구독 관리 화면/API 필요.",
       "current": {
-        "scope": "165 소유 TEST 역할 분리·실제 auth 및 엔진 경로 권한·버전/감사·즉시회수·최고관리자 보호. 실제 담당자 지정/운영 적용 없음.",
+        "scope": "166: 원화12% 원 미만 버림과 정산 예상액을 신규 주문에 고정, 기존 상품 조건 Brief TEST기록, 단독 운영으로 추가 역할 부여 차단. 실제 지급·운영 적용은 아님.",
         "refs": [
-          "HANDOFF165",
-          "checkout165-sqlite-report.json",
-          "checkout165-postgres-report.json"
+          "HANDOFF166",
+          "policy166-sqlite-report.json",
+          "policy166-postgres-report.json"
         ]
       },
       "openGroups": [
@@ -965,11 +965,11 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "의뢰 서버 모델·유사 에셋 추천·제안·선정·결제·주문 메시지/파일·조건 스냅샷·납품/검수 전체 흐름 필요.",
       "current": {
-        "scope": "165 실제 소유 TEST Brief 양측 조건→정확 KRW/NEON환산→TEST차감/고유작업주문→보호납품/확정. 12%는 분수 견적만 보관·반올림/정산 미집행.",
+        "scope": "166: 원화12% 원 미만 버림과 정산 예상액을 신규 주문에 고정, 기존 상품 조건 Brief TEST기록, 단독 운영으로 추가 역할 부여 차단. 실제 지급·운영 적용은 아님.",
         "refs": [
-          "HANDOFF165",
-          "checkout165-sqlite-report.json",
-          "checkout165-postgres-report.json"
+          "HANDOFF166",
+          "policy166-sqlite-report.json",
+          "policy166-postgres-report.json"
         ]
       },
       "openGroups": [
@@ -983,11 +983,11 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "의뢰 서버 모델·유사 에셋 추천·제안·선정·결제·주문 메시지/파일·조건 스냅샷·납품/검수 전체 흐름 필요.",
       "current": {
-        "scope": "165 실제 소유 TEST Brief 양측 조건→정확 KRW/NEON환산→TEST차감/고유작업주문→보호납품/확정. 12%는 분수 견적만 보관·반올림/정산 미집행.",
+        "scope": "166: 원화12% 원 미만 버림과 정산 예상액을 신규 주문에 고정, 기존 상품 조건 Brief TEST기록, 단독 운영으로 추가 역할 부여 차단. 실제 지급·운영 적용은 아님.",
         "refs": [
-          "HANDOFF165",
-          "checkout165-sqlite-report.json",
-          "checkout165-postgres-report.json"
+          "HANDOFF166",
+          "policy166-sqlite-report.json",
+          "policy166-postgres-report.json"
         ]
       },
       "openGroups": [
@@ -1037,11 +1037,11 @@
       "baselineStatus": "화면만 구현",
       "baselineRemaining": "총 12% 정책 안내는 변경됨. Brief 거래와 실제 수수료 계산·정산은 미구현.",
       "current": {
-        "scope": "165 실제 소유 TEST Brief 양측 조건→정확 KRW/NEON환산→TEST차감/고유작업주문→보호납품/확정. 12%는 분수 견적만 보관·반올림/정산 미집행.",
+        "scope": "166: 원화12% 원 미만 버림과 정산 예상액을 신규 주문에 고정, 기존 상품 조건 Brief TEST기록, 단독 운영으로 추가 역할 부여 차단. 실제 지급·운영 적용은 아님.",
         "refs": [
-          "HANDOFF165",
-          "checkout165-sqlite-report.json",
-          "checkout165-postgres-report.json"
+          "HANDOFF166",
+          "policy166-sqlite-report.json",
+          "policy166-postgres-report.json"
         ]
       },
       "openGroups": [
@@ -1229,8 +1229,12 @@
       "baselineStatus": "화면만 구현",
       "baselineRemaining": "PG 비용과 수수료 부가세를 포함한 총 12% 안내. 실제 계산·반올림·취소 정산·원장 필요. 별도 5% 중복 차감 금지; 기타 실제 지급/환전 비용은 확정 후 별도 고지.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "166: 원화12% 원 미만 버림과 정산 예상액을 신규 주문에 고정, 기존 상품 조건 Brief TEST기록, 단독 운영으로 추가 역할 부여 차단. 실제 지급·운영 적용은 아님.",
+        "refs": [
+          "HANDOFF166",
+          "policy166-sqlite-report.json",
+          "policy166-postgres-report.json"
+        ]
       },
       "openGroups": [
         "PROVIDER_REPLY_AND_LIVE_FINANCE"
@@ -1525,11 +1529,11 @@
       "baselineStatus": "부분 구현",
       "baselineRemaining": "3개 관리자 이메일 해시 허용 목록 존재. 관리자 UI·세부 작업 감사·권한 변경 운영 절차 필요.",
       "current": {
-        "scope": "165 소유 TEST 역할 분리·실제 auth 및 엔진 경로 권한·버전/감사·즉시회수·최고관리자 보호. 실제 담당자 지정/운영 적용 없음.",
+        "scope": "166: 원화12% 원 미만 버림과 정산 예상액을 신규 주문에 고정, 기존 상품 조건 Brief TEST기록, 단독 운영으로 추가 역할 부여 차단. 실제 지급·운영 적용은 아님.",
         "refs": [
-          "HANDOFF165",
-          "checkout165-sqlite-report.json",
-          "checkout165-postgres-report.json"
+          "HANDOFF166",
+          "policy166-sqlite-report.json",
+          "policy166-postgres-report.json"
         ]
       },
       "openGroups": [
@@ -2063,17 +2067,44 @@
     {
       "id": "ADMIN_ACCOUNTS",
       "question": "기존 최고관리자는 유지한 상태에서 어느 계정에 심사/편집/고객지원/분쟁/TEST지갑/구독TEST/조회 역할을 부여할지",
-      "current": "새 담당자 부여0; 소유 fixture 합성 계정만 확인"
+      "current": "새 담당자 부여0; 소유 fixture 합성 계정만 확인",
+      "resolvedBy": "HANDOFF166"
     },
     {
       "id": "QUOTE_AND_FEE_ROUNDING",
       "question": "100원 미만 견적 허용 여부와 NEON/12% 수수료 소수점·반올림 단위",
-      "current": "100원 단위의 정확한 TEST환산만 허용; 수수료는 분수 견적만 보관하고 정산하지 않음"
+      "current": "100원 단위의 정확한 TEST환산만 허용; 수수료는 분수 견적만 보관하고 정산하지 않음",
+      "resolvedBy": "HANDOFF166"
     },
     {
       "id": "LIVE_BRIEF_TERMS",
       "question": "실제 Brief 계약서와 독점/비독점 권리·고지 범위 확정",
-      "current": "양측 명시 TEST확인 snapshot만 기록; 실제 계약/권리 집행은 미실행"
+      "current": "양측 명시 TEST확인 snapshot만 기록; 실제 계약/권리 집행은 미실행",
+      "resolvedBy": "HANDOFF166"
     }
-  ]
+  ],
+  "userDecisions166": {
+    "fee": {
+      "status": "CONFIRMED",
+      "ratePercent": 12,
+      "currency": "KRW",
+      "rounding": "FLOOR_BELOW_ONE_KRW",
+      "sellerNet": "grossKrw - feeKrw"
+    },
+    "administration": {
+      "status": "CONFIRMED_OWNER_ONLY",
+      "additionalStaffGrants": false,
+      "existingBootstrapAccountsPreserved": true
+    },
+    "brief": {
+      "status": "CONFIRMED_EXISTING_PRODUCT_TERMS",
+      "contractVersion": "2026-10-11-v1",
+      "templates": [
+        "exclusive-contract",
+        "license-contract"
+      ],
+      "operatingRightsOrPaymentsExecuted": false
+    },
+    "quoteUnit": "Existing exact100KRW/NEON conversion retained; fee rounding decision does not authorize fractional NEON or a new billing unit."
+  }
 }
