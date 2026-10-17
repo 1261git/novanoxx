@@ -1,5 +1,5 @@
 {
-  "revision": 173,
+  "revision": 174,
   "status": "LOCAL_SCOPE_INVENTORY_NOT_RELEASE_APPROVAL",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -66,7 +66,7 @@
         "D-09",
         "D-10"
       ],
-      "remaining": "170 검색·유입 고지/선택 설정·기본 수집 차단·허용/철회·현재 기록 삭제와120일 경과 삭제/요청 payload 제거, 타 계정/금융 기록 보존을 연결. 실제 계정 삭제 기능은 없으며 삭제 연계 함수는 준비만 됨. 가입 생성 시각은 신규 이메일/인증메일/Google/Kakao/Naver 경로에 연결; 과거 생성 시각은 UNKNOWN/null. 일반/Brief TEST 구매 시각·선택형 구매국가 코드(구매자 입력/미검증)를 주문 snapshot에 기록; IP 추정/과거값 보충 없음. 운영 개인정보처리방침 완성/법률·모국어 검토, 백업 수집기록 삭제 기준, 제공자 확정 환불사유/실제 결제 국가 연계는 잔여. 운영 수집 비활성. 171 개인정보 처리 목록·운영 준비 점검을 추가. 원문 백업 포함은 사용자 선택,90일을 고려 중이나 기간 미확정. 실제 크기와 기존 보관량 미측정 시 시작 불가, 전체 약4GB 예산 초과 시 중지 계산기를 준비. 기존 전체 백업/보관/자동삭제 설정 변경 없음. 사업자명 NovaNoxx(노바녹스), 보호책임자 김명선, 공개 문의 이메일 novanoxx2026@gmail.com 확정·데이터 설정 화면 연결. 위탁/국외이전/권리절차·법률 확인은 미완료."
+      "remaining": "170 검색·유입 고지/선택 설정·기본 수집 차단·허용/철회·현재 기록 삭제와120일 경과 삭제/요청 payload 제거, 타 계정/금융 기록 보존을 연결. 실제 계정 삭제 기능은 없으며 삭제 연계 함수는 준비만 됨. 가입 생성 시각은 신규 이메일/인증메일/Google/Kakao/Naver 경로에 연결; 과거 생성 시각은 UNKNOWN/null. 일반/Brief TEST 구매 시각·선택형 구매국가 코드(구매자 입력/미검증)를 주문 snapshot에 기록; IP 추정/과거값 보충 없음. 운영 개인정보처리방침 완성/법률·모국어 검토, 백업 수집기록 삭제 기준, 제공자 확정 환불사유/실제 결제 국가 연계는 잔여. 운영 수집 비활성. 171 개인정보 처리 목록·운영 준비 점검을 추가. 원문 백업 포함은 사용자 선택,90일을 고려 중이나 기간 미확정. 실제 크기와 기존 보관량 미측정 시 시작 불가, 전체 약4GB 예산 초과 시 중지 계산기를 준비. 기존 전체 백업/보관/자동삭제 설정 변경 없음. 사업자명 NovaNoxx(노바녹스), 보호책임자 김명선, 공개 문의 이메일 support@novanoxx.com 확정·데이터 설정 화면 연결. 위탁/국외이전/권리절차·법률 확인은 미완료. 173 삭제 기준 보존 및 복구 필터,174 별도 최신 DB를 읽어 새 SQLite 복사본에 적용하는 격리 연결을 추가. 원격 최신 이력 별도 보관/전송·운영 백업/PG 복구 연결·복구 후 서비스 전환은 미실행."
     },
     {
       "id": "OPERATIONAL_INTEGRATION_AND_GUI",
@@ -2351,5 +2351,47 @@
     ],
     "operatingDeployment": false,
     "existingBackupsModified": false
+  },
+  "bundle174": {
+    "status": "LOCAL_SQLITE_RESTORE_AND_ADMIN_LANGUAGE_PREPARATION_NOT_PRODUCTION_RELEASE",
+    "isolatedRestore": {
+      "module": "discovery-isolated-restore.cjs",
+      "separateCurrentDatabaseRequired": true,
+      "quiescenceConfirmationRequired": true,
+      "destination": "NEW_OWNED_ISOLATED_DIRECTORY_ONLY",
+      "overwritesExistingDatabase": false,
+      "collectionEnabled": false,
+      "productionRestoreProcedureConnected": false
+    },
+    "adminUi": {
+      "mappingIssuesTranslated": true,
+      "loadingControlsDisabled": true,
+      "ariaBusy": true,
+      "languages": [
+        "ko",
+        "en",
+        "es",
+        "zh-Hans",
+        "vi",
+        "de"
+      ]
+    },
+    "validation": {
+      "focusedTests": 12,
+      "registeredTranslationKeys": 1006,
+      "extraLocalesMissing": 0,
+      "originalFilesChecked": 675,
+      "originalFilesChanged": 0
+    },
+    "remaining": [
+      "Owner backup period confirmation and actual storage measurements",
+      "Separate durable current privacy-state backup/transport and production PostgreSQL/offsite restore procedure",
+      "External processor/location/transfer and rights-request policy confirmation plus legal review",
+      "Full browser/accessibility/native-language review; Word document reconciliation",
+      "Production account/order/file/permission migration and deployment",
+      "Provider replies and actual financial contract integration"
+    ],
+    "newPaidResources": false,
+    "deployed": false
   }
 }

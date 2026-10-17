@@ -37,7 +37,8 @@
       "currentStateSource": "TRUSTED_LATEST_PREFERENCES_AND_DELETION_CUTOFFS_REQUIRED",
       "unknownActors": "REMOVE_DISCOVERY_RECORDS",
       "collectionAfterRestore": false,
-      "productionPipelineConnected": false
+      "productionPipelineConnected": false,
+      "localSqliteCoordinator": "discovery-isolated-restore.cjs"
     }
   },
   "processingRegister": [
