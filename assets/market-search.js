@@ -8,11 +8,11 @@ function filterMarketAssets(items,filters={}){
   if(filters.fit&&!a.fit||filters.savedOnly&&!filters.saved?.has(a.id))return false;
   if(filters.availability==='available'&&a.sold||filters.availability==='sold'&&!a.sold)return false;
   if(lower!==null&&a.price<lower||upper!==null&&a.price>upper)return false;
-  const searchable=text([a.title,a.titleKo,a.descriptionKo,a.creator,a.cat,a.subcategory,a.desc,a.tags,a.style,a.industry,a.spec,a.tools].join(' '));
+  const searchable=text([a.title,a.titleKo,a.descriptionKo,a.creator,a.cat,a.subcategory,a.desc,a.tags,...(a.editorialTags||[]),a.style,a.industry,a.spec,a.tools].join(' '));
   if(!words.every(word=>searchable.includes(word)))return false;
   return ['industry','style','spec'].every(key=>!filters[key]||text(a[key]).includes(text(filters[key]).trim()));
  });
- const order=filters.sort;if(order==='low')result.sort((a,b)=>a.price-b.price||a.id-b.id);else if(order==='high')result.sort((a,b)=>b.price-a.price||a.id-b.id);else if(order==='newest')result.sort((a,b)=>(b.created||0)-(a.created||0)||b.id-a.id);
+ const order=filters.sort;if(order==='curated')result.sort((a,b)=>Number(b.featured===true)-Number(a.featured===true));else if(order==='low')result.sort((a,b)=>a.price-b.price||a.id-b.id);else if(order==='high')result.sort((a,b)=>b.price-a.price||a.id-b.id);else if(order==='newest')result.sort((a,b)=>(b.created||0)-(a.created||0)||b.id-a.id);
  return result;
 }
 if(typeof module!=='undefined')module.exports={filterMarketAssets};

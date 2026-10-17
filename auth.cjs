@@ -15,6 +15,7 @@ db.exec("CREATE TABLE IF NOT EXISTS account_status(user_id TEXT PRIMARY KEY,plan
 const google=require('./google-auth.cjs');
 const naver=require('./naver-auth.cjs');
 const kakao=require('./kakao-auth.cjs');
+const memberAdmin=require('./member-administration.cjs')({db,user,json,origin:deployment.base});
 const creatorApi=require('./creator-api.cjs')(db,dir,user,json);
 const savedApi=require('./account-saved.cjs')({db,user,json,origin:deployment.base});
 const catalogAdmin=require('./catalog-admin.cjs')({db,user,json,origin:deployment.base});
@@ -26,8 +27,8 @@ const attempts = new Map();
 function json(res,status,data,headers={}){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store',...headers});res.end(JSON.stringify(data));}
 function token(req){const cookie=(req.headers.cookie||'').split(';').map(x=>x.trim()).find(x=>x.startsWith('nnx_session='));return cookie?cookie.slice(12):'';}
 function hashToken(value){return crypto.createHash('sha256').update(value).digest('hex');}
-function user(req){const t=token(req);if(!t)return null;const u=db.prepare('SELECT u.id,u.name,u.email FROM users u JOIN sessions s ON s.user_id=u.id WHERE s.token=? AND s.expires>?').get(hashToken(t),Date.now())||null;return u&&accountMail&&!accountMail.verified(u.id)?null:u;}
-function session(res,u,redirectTo,provider="email"){const t=crypto.randomBytes(32).toString('hex');if(!accountMail)db.prepare('DELETE FROM sessions WHERE expires<?').run(Date.now());db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hashToken(t),u.id,Date.now()+7*86400000);db.prepare('INSERT INTO login_events VALUES(?,?,?,?)').run(hashToken(t),u.id,provider,Date.now());const recentCookie='nnx_recent_login='+provider+'; HttpOnly; SameSite=Lax; Path=/; Max-Age=31536000';if(redirectTo){res.writeHead(303,{'Location':redirectTo,'Cache-Control':'no-store','Referrer-Policy':'no-referrer','Set-Cookie':[recentCookie,`nnx_session=${t}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800`,'nnx_oauth=; HttpOnly; SameSite=Lax; Path=/api/auth/google; Max-Age=0']});res.end();return;}json(res,200,{user:{id:u.id,name:u.name,email:u.email,loginProvider:provider,isAdmin:require('./admin-policy.cjs')(u)},recentLogin:provider},{'Set-Cookie':[recentCookie,`nnx_session=${t}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800`]});}
+function user(req){const t=token(req);if(!t)return null;const u=db.prepare('SELECT u.id,u.name,u.email FROM users u JOIN sessions s ON s.user_id=u.id WHERE s.token=? AND s.expires>?').get(hashToken(t),Date.now())||null;return u&&(memberAdmin.blocked(u.id)||accountMail&&!accountMail.verified(u.id))?null:u;}
+function session(res,u,redirectTo,provider="email"){if(memberAdmin.blocked(u.id)){json(res,403,{error:'이 계정은 이용이 제한되어 있습니다. 고객 지원에 문의해주세요.'});return;}const t=crypto.randomBytes(32).toString('hex');if(!accountMail)db.prepare('DELETE FROM sessions WHERE expires<?').run(Date.now());db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hashToken(t),u.id,Date.now()+7*86400000);db.prepare('INSERT INTO login_events VALUES(?,?,?,?)').run(hashToken(t),u.id,provider,Date.now());const recentCookie='nnx_recent_login='+provider+'; HttpOnly; SameSite=Lax; Path=/; Max-Age=31536000';if(redirectTo){res.writeHead(303,{'Location':redirectTo,'Cache-Control':'no-store','Referrer-Policy':'no-referrer','Set-Cookie':[recentCookie,`nnx_session=${t}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800`,'nnx_oauth=; HttpOnly; SameSite=Lax; Path=/api/auth/google; Max-Age=0']});res.end();return;}json(res,200,{user:{id:u.id,name:u.name,email:u.email,loginProvider:provider,isAdmin:require('./admin-policy.cjs')(u)},recentLogin:provider},{'Set-Cookie':[recentCookie,`nnx_session=${t}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800`]});}
 async function body(req,{raw=false,max=8192}={}){let size=0,chunks=[];for await(const c of req){size+=c.length;if(size>max)throw new Error('SIZE');chunks.push(c);}const bytes=Buffer.concat(chunks);return raw?bytes:JSON.parse(bytes.toString('utf8'));}
 module.exports=async function auth(req,res,name){
  if(name==='/api/health'&&req.method==='GET'){try{db.prepare('SELECT 1 AS ok').get();const migrated=db.backend==='postgres'?!!db.prepare("SELECT version FROM nnx_migrations WHERE version='sqlite-v1'").get():false;json(res,200,{status:'ok',database:db.backend||'sqlite',migrationVerified:migrated});}catch{json(res,503,{status:'unavailable'});}return true;}
@@ -43,6 +44,7 @@ module.exports=async function auth(req,res,name){
  if(await savedApi(req,res,name))return true;
  if(await catalogAdmin(req,res,name))return true;
  if(await operationsOverview(req,res,name))return true;
+ if(await memberAdmin(req,res,name))return true;
  if(await neonPayments(req,res,name))return true;
  if(await creatorApi(req,res,name))return true;
  if(await kakao(req,res,name,db,session,json,{user:user(req),sessionHash:hashToken(token(req))}))return true;
