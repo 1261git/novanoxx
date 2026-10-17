@@ -6,6 +6,10 @@ const deployment = require('./deployment-config.cjs');
 const auth = require('./auth.cjs');
 const backupGate = require('./backup-quiesce-gate.cjs').configured();
 const backupAutomation = require('./backup-automation.cjs').configured({gate:backupGate});
+const mail=auth.mail();
+const mailWorker=mail?require('./mail-worker.cjs').create({mail,gate:backupGate,
+  paused:require('./mail-worker.cjs').sendPaused(),
+  onError:()=>console.error('NNX_MAIL_WORKER_DEFERRED')}):null;
 const types = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.jpg':'image/jpeg','.png':'image/png','.webp':'image/webp','.mp4':'video/mp4','.woff2':'font/woff2'};
 const server = http.createServer(backupGate.wrap(async (req,res) => {
   const writeHead=res.writeHead;
@@ -19,7 +23,7 @@ const server = http.createServer(backupGate.wrap(async (req,res) => {
   if (!file.startsWith(root + path.sep)) { res.writeHead(403).end(); return; }
   fs.stat(file,(err,stat) => {
     if(err || !stat.isFile()) { res.writeHead(404).end(); return; }
-    const headers = {'Content-Type':types[path.extname(file)] || 'application/octet-stream','Accept-Ranges':'bytes','Cache-Control':'no-cache'};
+    const headers = {'Content-Type':types[path.extname(file)] || 'application/octet-stream','Accept-Ranges':'bytes','Cache-Control':'no-cache','Referrer-Policy':'no-referrer'};
     const range = req.headers.range;
     if(range) {
       const m = /^bytes=(\d+)-(\d*)$/.exec(range);
@@ -34,5 +38,5 @@ const server = http.createServer(backupGate.wrap(async (req,res) => {
     }
   });
 }));
-backupGate.ready.then(() => server.listen(Number(process.env.PORT||4317),process.env.HOST||'127.0.0.1',() => { console.log('NovaNoxX server ready'); backupAutomation.start().catch(() => console.error('NNX_BACKUP_AUTOMATION_ALERT START_FAILED')); }))
+backupGate.ready.then(() => server.listen(Number(process.env.PORT||4317),process.env.HOST||'127.0.0.1',() => { console.log('NovaNoxX server ready'); mailWorker?.start(); backupAutomation.start().catch(() => console.error('NNX_BACKUP_AUTOMATION_ALERT START_FAILED')); }))
  .catch(() => { console.error('Backup control initialization failed; server not started.'); process.exitCode=1; });

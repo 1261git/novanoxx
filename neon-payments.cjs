@@ -14,18 +14,20 @@ module.exports=function(db,user,json,options={}){
   if(name==='/api/auth/neon/orders'&&req.method==='GET'){json(res,200,{testBalance:balance(u.id),orders:db.prepare('SELECT id,asset_id AS assetId,title,price,created FROM neon_test_orders WHERE user_id=? ORDER BY created DESC').all(u.id)});return true;}
   if(name==='/api/auth/neon/status'&&req.method==='GET'){json(res,200,{mode:'test',ready:ready(),testBalance:balance(u.id),history:db.prepare("SELECT neon,amount,paid,kind FROM (SELECT neon,amount,paid,'payment' AS kind FROM neon_topups WHERE user_id=? AND state='PAID' UNION ALL SELECT neon,0 AS amount,created AS paid,'admin' AS kind FROM neon_test_grants WHERE user_id=?) ORDER BY paid DESC LIMIT 20").all(u.id,u.id)});return true;}
   if(req.method!=='POST'||req.headers.origin!==base){json(res,403,{error:'요청 출처를 확인해주세요.'});return true;}
+  if(req.headers['content-type']?.split(';')[0].trim().toLowerCase()!=='application/json'){json(res,415,{error:'JSON 요청이 필요합니다.'});return true;}
   if(!ready()){json(res,503,{error:'테스트 결제 연결을 준비 중이에요.'});return true;}
   let size=0,chunks=[];for await(const c of req){size+=c.length;if(size>4096){json(res,413,{error:'요청이 너무 커요.'});return true;}chunks.push(c);}let d;try{d=JSON.parse(Buffer.concat(chunks))}catch{json(res,400,{error:'입력값을 확인해주세요.'});return true;}
+  if(!d||typeof d!=='object'||Array.isArray(d)){json(res,400,{error:'입력값을 확인해주세요.'});return true;}
   if(name==='/api/auth/neon/purchase'){
    if(!Number.isSafeInteger(d.assetId)||typeof d.requestId!=='string'||!/^buy_[0-9a-f-]{36}$/.test(d.requestId)){json(res,400,{error:'구매 요청을 확인해주세요.'});return true;}
    db.exec('BEGIN IMMEDIATE');try{
     const existing=db.prepare('SELECT * FROM neon_test_orders WHERE id=?').get(d.requestId);if(existing){db.exec('ROLLBACK');json(res,existing.user_id===u.id&&existing.asset_id===d.assetId?200:409,existing.user_id===u.id&&existing.asset_id===d.assetId?{ok:true,orderId:existing.id,testBalance:balance(u.id)}:{error:'다른 구매에 사용된 요청이에요.'});return true;}
     let asset=require('./test-purchase-assets.json').find(a=>a.id===d.assetId);
     if(d.assetId>=1001){const row=db.prepare("SELECT a.metadata,a.status FROM creator_assets a JOIN catalog_links c ON c.asset_id=a.id WHERE c.public_id=?").get(d.assetId-1000);if(row){const m=JSON.parse(row.metadata);asset={id:d.assetId,title:m.title,price:m.price,sold:row.status!=='ACTIVE'};}}
-    if(!asset||asset.sold){db.exec('ROLLBACK');json(res,409,{error:'구매 가능한 에셋이 아니에요.'});return true;}
+    if(!asset||asset.sold||!Number.isSafeInteger(asset.price)||asset.price<1){db.exec('ROLLBACK');json(res,409,{error:'구매 가능한 에셋이 아니에요.'});return true;}
     if(db.prepare('SELECT id FROM neon_test_orders WHERE user_id=? AND asset_id=?').get(u.id,d.assetId)){db.exec('ROLLBACK');json(res,409,{error:'이미 테스트 구매한 에셋이에요. 주문 내역에서 확인해주세요.'});return true;}
-    const before=balance(u.id);if(before<asset.price){db.exec('ROLLBACK');json(res,409,{error:'테스트 NEON 잔액이 부족해요. 테스트 충전 후 구매해주세요.'});return true;}
-    const now=Date.now();db.prepare('UPDATE neon_test_wallet SET balance=balance-? WHERE user_id=? AND balance>=?').run(asset.price,u.id,asset.price);db.prepare('INSERT INTO neon_test_orders VALUES(?,?,?,?,?,?)').run(d.requestId,u.id,asset.id,asset.title,asset.price,now);db.prepare('INSERT INTO neon_test_ledger VALUES(?,?,?,?,?,?,?)').run(crypto.randomUUID(),u.id,d.requestId,-asset.price,before,before-asset.price,now);db.exec('COMMIT');json(res,200,{ok:true,orderId:d.requestId,testBalance:balance(u.id)});
+    const before=balance(u.id);if(!Number.isSafeInteger(before)||before<0){db.exec('ROLLBACK');json(res,409,{error:'테스트 잔액을 확인할 수 없어요. 관리자에게 문의해주세요.'});return true;}if(before<asset.price){db.exec('ROLLBACK');json(res,409,{error:'테스트 NEON 잔액이 부족해요. 테스트 충전 후 구매해주세요.'});return true;}
+    const now=Date.now();const debited=db.prepare('UPDATE neon_test_wallet SET balance=balance-? WHERE user_id=? AND balance>=?').run(asset.price,u.id,asset.price).changes;if(debited!==1){db.exec('ROLLBACK');json(res,409,{error:'잔액이 변경됐어요. 지갑을 확인한 뒤 다시 시도해주세요.'});return true;}db.prepare('INSERT INTO neon_test_orders VALUES(?,?,?,?,?,?)').run(d.requestId,u.id,asset.id,asset.title,asset.price,now);db.prepare('INSERT INTO neon_test_ledger VALUES(?,?,?,?,?,?,?)').run(crypto.randomUUID(),u.id,d.requestId,-asset.price,before,before-asset.price,now);options.notify?.({sourceKey:'neon-purchase:'+d.requestId,userId:u.id,kind:'ORDER',orderId:d.requestId});db.exec('COMMIT');json(res,200,{ok:true,orderId:d.requestId,testBalance:balance(u.id)});
    }catch(e){db.exec('ROLLBACK');throw e;}return true;
   }
   if(name==='/api/auth/neon/order'){
@@ -44,7 +46,7 @@ module.exports=function(db,user,json,options={}){
     let result=await pg('confirm','POST',{paymentKey:d.paymentKey,orderId:order.id,amount:order.amount},order.id);
     if(!result.ok)result=await pg(encodeURIComponent(d.paymentKey),'GET');
     const p=result.value;if(!result.ok||p.status!=='DONE'||p.orderId!==order.id||p.paymentKey!==d.paymentKey||p.totalAmount!==order.amount||p.balanceAmount!==order.amount||p.currency!=='KRW'){json(res,400,{error:'결제 승인을 확인하지 못했어요. 잔액은 지급되지 않았습니다.'});return true;}
-    db.exec('BEGIN IMMEDIATE');try{const changed=db.prepare("UPDATE neon_topups SET state='PAID',paid=? WHERE id=? AND state='PENDING'").run(Date.now(),order.id).changes;if(changed)db.prepare('INSERT INTO neon_test_wallet(user_id,balance) VALUES(?,?) ON CONFLICT(user_id) DO UPDATE SET balance=neon_test_wallet.balance+excluded.balance').run(u.id,order.neon);db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}
+    db.exec('BEGIN IMMEDIATE');try{const changed=db.prepare("UPDATE neon_topups SET state='PAID',paid=? WHERE id=? AND state='PENDING'").run(Date.now(),order.id).changes;if(changed){const before=balance(u.id);if(!Number.isSafeInteger(before)||before<0||!Number.isSafeInteger(before+order.neon))throw Error('TEST_WALLET_BALANCE_INVALID');db.prepare('INSERT INTO neon_test_wallet(user_id,balance) VALUES(?,?) ON CONFLICT(user_id) DO UPDATE SET balance=neon_test_wallet.balance+excluded.balance').run(u.id,order.neon);options.notify?.({sourceKey:'neon-topup:'+order.id,userId:u.id,kind:'ORDER_UPDATE',orderId:order.id});}db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}
     json(res,200,{ok:true,testBalance:balance(u.id)});
    }catch{json(res,503,{error:'결제 확인이 지연되고 있어요. 같은 주문으로 다시 확인해주세요.'});}return true;
   }
