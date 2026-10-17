@@ -1,5 +1,5 @@
 (() => {
- const section=document.querySelector('.featured-collection'),video=section.querySelector('video'),reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ const section=document.querySelector('.featured-collection'),video=section?.querySelector('video'),reduced=matchMedia('(prefers-reduced-motion: reduce)');if(!video)return;
  let visible=false,ready=false;
  function sync(){const play=visible&&!document.hidden&&!section.hidden&&document.body.classList.contains('marketplace-view')&&!reduced.matches;section.classList.toggle('featured-motion-active',play);if(play&&ready)video.play().catch(()=>{});else video.pause()}
  video.addEventListener('loadedmetadata',()=>{video.currentTime=video.duration>5?5:0;ready=true;sync()});

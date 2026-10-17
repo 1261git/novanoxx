@@ -1,4 +1,7 @@
 .market-nav-dropdown{position:relative;display:flex;align-items:center;height:100%}
+/* Overflow on the nav clips its absolutely positioned category menu. */
+header nav:has(.market-nav-dropdown){overflow:visible!important;min-width:0;flex-wrap:wrap}
+@media(max-width:1200px){header:has(.market-nav-dropdown){height:auto;min-height:76px;flex-wrap:wrap;padding-block:12px;gap:10px}header nav:has(.market-nav-dropdown){order:3;width:100%;align-self:auto;justify-content:flex-start;gap:4px}.market-nav-dropdown{height:auto}}
 .market-category-menu{position:absolute;top:100%;left:0;width:220px;background:#14141b;border:1px solid #ffffff18;border-radius:12px;box-shadow:0 16px 45px #0008;padding:10px;z-index:60;text-align:left}
 .market-category-menu[hidden],.market-submenu[hidden]{display:none!important}
 .market-category-menu ul{list-style:none;padding:0;margin:0}
@@ -8,4 +11,4 @@
 .market-category-menu .market-all-link{color:#ff8654;border-bottom:1px solid #ffffff0c;border-radius:0;margin-bottom:8px}
 .market-submenu{position:absolute;left:100%;top:0;width:280px;min-height:100%;padding:14px;background:#14141b;border:1px solid #ffffff18;border-radius:12px;box-shadow:12px 16px 45px #0007}
 .market-submenu strong{display:block;color:#f5f3f8;padding:8px 13px 15px;font-size:15px}.market-submenu .category-en{display:block;font-size:10px;color:#9797a8;margin:3px 0 0}
-@media(max-width:760px){header nav:has(.market-nav-dropdown){overflow:visible!important}.market-category-menu{position:fixed;top:112px;left:5vw;width:90vw;max-height:70vh;overflow-y:auto;padding-right:60%}.market-submenu{left:40%;width:60%;border-radius:0 12px 12px 0;box-shadow:none;border-width:0 0 0 1px;min-height:100%}.market-category-menu a{padding:10px 8px;font-size:12px}.market-all-link{width:100%}.market-nav-dropdown{height:auto}}
+@media(max-width:760px){.market-category-menu{position:fixed;left:5vw;width:90vw;max-height:65dvh;overflow-y:auto;overflow-x:hidden;padding:10px}.market-submenu{position:static;width:100%;min-height:0;padding:4px 12px 10px;box-shadow:none;border-width:0 0 0 1px;border-radius:0}.market-category-menu a{padding:10px 8px;font-size:12px}.market-all-link{width:100%}.market-nav-dropdown{height:auto}}

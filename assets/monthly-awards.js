@@ -1,5 +1,6 @@
 (() => {
  const section=document.querySelector('.monthly-awards'),slides=[...section.querySelectorAll('.award-slide')],tabs=[...section.querySelectorAll('.award-tabs button')],pause=section.querySelector('.award-pause'),reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ if(!slides.length||!pause)return;
  let index=0,elapsed=0,last=performance.now(),visible=false,paused=reduced.matches;
  function active(){return visible&&!document.hidden&&!section.hidden&&!paused&&document.body.classList.contains('marketplace-view')}
  function media(){slides.forEach((slide,i)=>{const v=slide.querySelector('video');if(v){if(i===index&&active())v.play().catch(()=>{});else v.pause()}});section.classList.toggle('awards-paused',!active())}

@@ -17,6 +17,10 @@ const server = http.createServer(backupGate.wrap((req,res)=>deployment.withReque
   res.writeHead=function(status,headers){if(deployment.secure&&headers&&headers['Set-Cookie']){const cookies=headers['Set-Cookie'];headers['Set-Cookie']=Array.isArray(cookies)?cookies.map(c=>c+'; Secure'):cookies+'; Secure'}return writeHead.call(this,status,headers)};
   let name;
   try { name = decodeURIComponent(new URL(req.url,'http://localhost').pathname); } catch { res.writeHead(400).end(); return; }
+  if(process.env.RENDER_SERVICE_ID==='srv-db5aqunlk1mc739bi0m0'&&['/','/index.html'].includes(name)&&['GET','HEAD'].includes(req.method)){
+    if(req.headers.host==='novanoxx.onrender.com'||req.headers.host==='www.novanoxx.com'){res.writeHead(308,{'Location':deployment.base+req.url,'Cache-Control':'no-store'});res.end();return;}
+    const html=Buffer.from(require('./production-page.cjs')(fs.readFileSync(path.join(root,'index.html'),'utf8')));res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Content-Length':html.length,'Cache-Control':'no-cache','Referrer-Policy':'no-referrer'});res.end(req.method==='HEAD'?undefined:html);return;
+  }
   if(await backupAutomation.handle(req,res,name)) return;
   if(await auth(req,res,name)) return;
   if(name.split('/').some(p=>p.startsWith('.')) || !['/','/index.html','/landing.css','/page-routing.js'].includes(name)&&!name.startsWith('/assets/')) {res.writeHead(404).end();return;}
