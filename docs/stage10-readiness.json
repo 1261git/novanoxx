@@ -1,5 +1,5 @@
 {
-  "revision": 168,
+  "revision": 169,
   "status": "LOCAL_SCOPE_INVENTORY_NOT_RELEASE_APPROVAL",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -32,14 +32,14 @@
         "R-07",
         "R-08"
       ],
-      "remaining": "165에서 선택된 Brief의 판매자/구매자 TEST 조건 확인→정확 환산→원장/주문/연결 원자 처리→기존 보호 납품/확정까지 연결. 실제 청구/권리 집행·수수료 반올림/정산은 미실행. 남은 일반 구현은 완성 원본의 직접 납품·일반 운영 권한, 옵션별 독립 견적/납기, Brief 유사 추천 및 일반 주문 구매자 자료 첨부 통합.166 수수료는 원화12%·원 미만 버림, 판매자 예상액=판매가-수수료로 신규 주문에 고정. Brief는 기존 독점/비독점 조건과 참고 계약 버전을 적용; 실제 금융/권리 집행은 미실행."
+      "remaining": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요."
     },
     {
       "id": "ADMIN_CONTEST_DECISIONS",
       "replyRequired": false,
       "deploymentRequired": false,
       "additionalCloudCostRequired": false,
-      "ownerDecisionRequired": true,
+      "ownerDecisionRequired": false,
       "ids": [
         "U-06",
         "AD-04",
@@ -47,14 +47,14 @@
         "AD-07",
         "X-04"
       ],
-      "remaining": "167 사용자 결정: MVP는 novanoxx2026@gmail.com 단독 전체 관리. 담당자별 역할 지정/위임은 Phase2로 이관해10단계 필수 잔여에서 제외. 기존 코드/계정은 보존하고 추가 역할 부여 비활성 유지. 콘테스트 운영 결정·실제 운영 적용은 별도 잔여."
+      "remaining": "169 결정: 일정별 수동 입력, 관리자 수동 수상 선정, 소유자가 상금/혜택을 지정한 뒤 공개. 격리 관리자 초안/공개/수상 상태와 조건 차단·버전·감사 기록 준비. 혜택 실제 지급 없음. 콘테스트별 출품작 연결/공개 화면 및 심사 기준 최종 연계는 잔여. 담당 역할 위임 Phase2 유지."
     },
     {
       "id": "MINIMUM_DATA_AND_RETENTION",
       "replyRequired": false,
       "deploymentRequired": false,
       "additionalCloudCostRequired": false,
-      "ownerDecisionRequired": true,
+      "ownerDecisionRequired": false,
       "ids": [
         "D-03",
         "D-04",
@@ -65,7 +65,7 @@
         "D-09",
         "D-10"
       ],
-      "remaining": "가입/거래 시각·구매 지역·표준 환불 사유·조회/검색·UTM/유입의 실제 수집 범위·보존 기간 확정 및 누락 연결. 현재 거래 audit를 모든 분석 기록 수집으로 확대하지 않으며 과거값 보충 금지. 분석 화면은 후순위."
+      "remaining": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성."
     },
     {
       "id": "OPERATIONAL_INTEGRATION_AND_GUI",
@@ -551,17 +551,17 @@
       "baselineStatus": "부분 구현",
       "baselineRemaining": "8개 지원 항목과 기타 50자·추가금액·작업일 저장 구현. 항목별 금액·기본가 포함·구매자 자료·납기 구분과 주문 가격 스냅샷 필요.",
       "current": {
-        "scope": "164 로컬 TEST: 판매자 지원 옵션만 선택, 단일 extraPrice 묶음1회, 예상금액 확인·가격 snapshot, 필수 옵션별 자료와 등록 작업일 납기. 실제 결제/옵션별 독립 가격·납기는 제외.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
         "refs": [
-          "HANDOFF164",
-          "checkout164-sqlite-report.json",
-          "checkout164-postgres-report.json"
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
         ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "P-01",
@@ -581,17 +581,17 @@
       "baselineStatus": "테스트 구현",
       "baselineRemaining": "테스트 구매만 구현. 실결제·유료 NEON·수수료·실제 납품 권한 생성 필요.",
       "current": {
-        "scope": "164 로컬 TEST: 판매자 지원 옵션만 선택, 단일 extraPrice 묶음1회, 예상금액 확인·가격 snapshot, 필수 옵션별 자료와 등록 작업일 납기. 실제 결제/옵션별 독립 가격·납기는 제외.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
         "refs": [
-          "HANDOFF164",
-          "checkout164-sqlite-report.json",
-          "checkout164-postgres-report.json"
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
         ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "P-03",
@@ -599,13 +599,17 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "독점 에셋에 한해 10분 checkout lock과 PAID 후 RESERVED 구현 필요. 다회 판매는 다른 구매자 전체를 잠그지 않음.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
+        "refs": [
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
+        ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "P-04",
@@ -632,13 +636,17 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "추가 작업 없는 실결제 주문 즉시 COMPLETED·다운로드 권한·정산 생성 필요. 독점만 SOLD, 다회 판매는 ACTIVE 유지.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
+        "refs": [
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
+        ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "P-06",
@@ -665,20 +673,17 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "실제 주문 상태머신·상태 이력·취소/환불 전환과 검수 기한 처리 필요.",
       "current": {
-        "scope": "이미지/PDF/오디오/영상 보호 및 로컬 TEST 구매/예약/납품/검수/확정·버전 권한. 네이티브는 opaque 보관+별도 검수 자료; 완전한 변환/권리 판정 아님.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
         "refs": [
-          "HANDOFF160",
-          "HANDOFF161",
-          "engine160-report.json",
-          "full-media160-report.json",
-          "engine161-sqlite-report.json",
-          "engine161-postgres-report.json"
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
         ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "P-08",
@@ -719,17 +724,17 @@
       "baselineStatus": "부분 구현",
       "baselineRemaining": "판매자 지원 항목과 기본/추가 가격 입력 구현. 구매 옵션 선택·자료 제출·작업·납품 처리 필요. AI 자동 적용은 제외.",
       "current": {
-        "scope": "164 로컬 TEST: 판매자 지원 옵션만 선택, 단일 extraPrice 묶음1회, 예상금액 확인·가격 snapshot, 필수 옵션별 자료와 등록 작업일 납기. 실제 결제/옵션별 독립 가격·납기는 제외.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
         "refs": [
-          "HANDOFF164",
-          "checkout164-sqlite-report.json",
-          "checkout164-postgres-report.json"
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
         ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "B-02",
@@ -737,17 +742,17 @@
       "baselineStatus": "부분 구현",
       "baselineRemaining": "판매자 지원 항목과 기본/추가 가격 입력 구현. 구매 옵션 선택·자료 제출·작업·납품 처리 필요. AI 자동 적용은 제외.",
       "current": {
-        "scope": "164 로컬 TEST: 판매자 지원 옵션만 선택, 단일 extraPrice 묶음1회, 예상금액 확인·가격 snapshot, 필수 옵션별 자료와 등록 작업일 납기. 실제 결제/옵션별 독립 가격·납기는 제외.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
         "refs": [
-          "HANDOFF164",
-          "checkout164-sqlite-report.json",
-          "checkout164-postgres-report.json"
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
         ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "B-03",
@@ -771,13 +776,17 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "주문별 옵션/자료/납기 저장, 수작업 납품, 워터마크 최종 검수본, 24시간 검수·오류 신고·중지/재시작·자동확정 구현 필요. 판매 전 4/8/12초 공개 미리보기와 최종 검수본은 별개.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
+        "refs": [
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
+        ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "B-05",
@@ -797,17 +806,17 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "주문별 옵션/자료/납기 저장, 수작업 납품, 워터마크 최종 검수본, 24시간 검수·오류 신고·중지/재시작·자동확정 구현 필요. 판매 전 4/8/12초 공개 미리보기와 최종 검수본은 별개.",
       "current": {
-        "scope": "164 로컬 TEST: 판매자 지원 옵션만 선택, 단일 extraPrice 묶음1회, 예상금액 확인·가격 snapshot, 필수 옵션별 자료와 등록 작업일 납기. 실제 결제/옵션별 독립 가격·납기는 제외.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
         "refs": [
-          "HANDOFF164",
-          "checkout164-sqlite-report.json",
-          "checkout164-postgres-report.json"
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
         ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "B-07",
@@ -891,13 +900,17 @@
       "baselineStatus": "부분 구현",
       "baselineRemaining": "본인 에셋 파일과 구매 권한 검사 존재. 현재 original_entitlements PAID 검사이며 COMPLETED 주문의 약정 납품파일 단위 권한 생성·철회로 보완 필요. 테스트 구매에는 권한 미생성.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
+        "refs": [
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
+        ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "B-12",
@@ -905,17 +918,17 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "주문별 옵션/자료/납기 저장, 수작업 납품, 워터마크 최종 검수본, 24시간 검수·오류 신고·중지/재시작·자동확정 구현 필요. 판매 전 4/8/12초 공개 미리보기와 최종 검수본은 별개.",
       "current": {
-        "scope": "164 로컬 TEST: 판매자 지원 옵션만 선택, 단일 extraPrice 묶음1회, 예상금액 확인·가격 snapshot, 필수 옵션별 자료와 등록 작업일 납기. 실제 결제/옵션별 독립 가격·납기는 제외.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
         "refs": [
-          "HANDOFF164",
-          "checkout164-sqlite-report.json",
-          "checkout164-postgres-report.json"
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
         ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "R-01",
@@ -939,13 +952,17 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "의뢰 서버 모델·유사 에셋 추천·제안·선정·결제·주문 메시지/파일·조건 스냅샷·납품/검수 전체 흐름 필요.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
+        "refs": [
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
+        ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "R-03",
@@ -969,17 +986,17 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "의뢰 서버 모델·유사 에셋 추천·제안·선정·결제·주문 메시지/파일·조건 스냅샷·납품/검수 전체 흐름 필요.",
       "current": {
-        "scope": "168 Brief 중개/당사자 합의·최종본만 납품·구매자 상업/수정·무단 사이트 재판매 검토·제3자 권리 고지/법정책임 보존. 새 Brief TEST 조건 버전과 화면4위치 연결. 실제 법률 감수/배포는 아님.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
         "refs": [
-          "HANDOFF168",
-          "brief168-sqlite-report.json",
-          "brief168-postgres-report.json"
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
         ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "R-05",
@@ -987,17 +1004,17 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "의뢰 서버 모델·유사 에셋 추천·제안·선정·결제·주문 메시지/파일·조건 스냅샷·납품/검수 전체 흐름 필요.",
       "current": {
-        "scope": "168 Brief 중개/당사자 합의·최종본만 납품·구매자 상업/수정·무단 사이트 재판매 검토·제3자 권리 고지/법정책임 보존. 새 Brief TEST 조건 버전과 화면4위치 연결. 실제 법률 감수/배포는 아님.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
         "refs": [
-          "HANDOFF168",
-          "brief168-sqlite-report.json",
-          "brief168-postgres-report.json"
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
         ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "R-06",
@@ -1005,17 +1022,17 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "의뢰 서버 모델·유사 에셋 추천·제안·선정·결제·주문 메시지/파일·조건 스냅샷·납품/검수 전체 흐름 필요.",
       "current": {
-        "scope": "Brief 비공개 초안/인증 TEST게시·제안 비교/선택 snapshot과 분쟁 hold/관리자 검토·회신대기/남은 검수시간 재개. 계약·유상 주문·환불/정산 집행 제외.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
         "refs": [
-          "HANDOFF162",
-          "review162-sqlite-report.json",
-          "review162-postgres-report.json"
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
         ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "R-07",
@@ -1023,17 +1040,17 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "의뢰 서버 모델·유사 에셋 추천·제안·선정·결제·주문 메시지/파일·조건 스냅샷·납품/검수 전체 흐름 필요.",
       "current": {
-        "scope": "164 로컬 TEST Brief 의뢰자↔제안자 비공개 메시지·첨부300MiB/메시지10개, 파일 hash/권한/중복/공통700MiB. 실제 유상 주문의 자료 첨부 전체 적용은 별도.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
         "refs": [
-          "HANDOFF164",
-          "checkout164-sqlite-report.json",
-          "checkout164-postgres-report.json"
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
         ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "R-08",
@@ -1041,17 +1058,17 @@
       "baselineStatus": "화면만 구현",
       "baselineRemaining": "총 12% 정책 안내는 변경됨. Brief 거래와 실제 수수료 계산·정산은 미구현.",
       "current": {
-        "scope": "166: 원화12% 원 미만 버림과 정산 예상액을 신규 주문에 고정, 기존 상품 조건 Brief TEST기록, 단독 운영으로 추가 역할 부여 차단. 실제 지급·운영 적용은 아님.",
+        "scope": "169 격리 TEST에 일반 주문 구매자 자료/메시지 첨부·참가자 전용 다운로드, 등록 원본의 명시적 재사용→보호 납품→확정, 항목별 독립 가격/작업일 합산과 기존 묶음 견적 호환, Brief 동일 카테고리/예산 추천 연결. 일반 주문 자료 본문도 참가자 화면에 전달. 실운영 구매/원본 권한 매핑은 운영 통합 그룹에서 별도 필요.",
         "refs": [
-          "HANDOFF166",
-          "policy166-sqlite-report.json",
-          "policy166-postgres-report.json"
+          "HANDOFF169",
+          "bundle169-sqlite-report.json",
+          "bundle169-postgres-report.json"
         ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
       ],
-      "releaseVerdict": "OPEN"
+      "releaseVerdict": "LOCAL_IMPLEMENTED_OPERATING_INTEGRATION_OPEN"
     },
     {
       "id": "S-01",
@@ -1606,8 +1623,10 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "가격 변경 전체 이력 및 노출·조회·회원별 찜·체크아웃·의뢰 전환 이벤트 수집 필요.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "refs": [
+          "HANDOFF169"
+        ]
       },
       "openGroups": [
         "MINIMUM_DATA_AND_RETENTION"
@@ -1620,8 +1639,10 @@
       "baselineStatus": "테스트 구현",
       "baselineRemaining": "테스트 충전/구매·잔액 이력 존재. 실제 주문/판매자/수수료/환불과 TEST/LIVE 구분 데이터 필요.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "refs": [
+          "HANDOFF169"
+        ]
       },
       "openGroups": [
         "MINIMUM_DATA_AND_RETENTION"
@@ -1634,8 +1655,10 @@
       "baselineStatus": "부분 구현",
       "baselineRemaining": "등록 created/updated와 심사 audit 존재. 최초 공개·PAUSED/RESERVED·검수·완료·권한 제공 시각 전체 이력 필요.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "refs": [
+          "HANDOFF169"
+        ]
       },
       "openGroups": [
         "MINIMUM_DATA_AND_RETENTION"
@@ -1648,8 +1671,10 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "구독·검색 이벤트와 KPI 계산 필요. 다회 판매 매출은 주문별 집계, 평균 최초 판매기간은 독점 완료 거래만 계산하는 설계안으로 확정 필요.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "refs": [
+          "HANDOFF169"
+        ]
       },
       "openGroups": [
         "MINIMUM_DATA_AND_RETENTION"
@@ -1662,8 +1687,10 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "구독·검색 이벤트와 KPI 계산 필요. 다회 판매 매출은 주문별 집계, 평균 최초 판매기간은 독점 완료 거래만 계산하는 설계안으로 확정 필요.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "refs": [
+          "HANDOFF169"
+        ]
       },
       "openGroups": [
         "MINIMUM_DATA_AND_RETENTION"
@@ -1676,8 +1703,10 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "구독·검색 이벤트와 KPI 계산 필요. 다회 판매 매출은 주문별 집계, 평균 최초 판매기간은 독점 완료 거래만 계산하는 설계안으로 확정 필요.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "refs": [
+          "HANDOFF169"
+        ]
       },
       "openGroups": [
         "MINIMUM_DATA_AND_RETENTION"
@@ -1690,8 +1719,10 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "구독·검색 이벤트와 KPI 계산 필요. 다회 판매 매출은 주문별 집계, 평균 최초 판매기간은 독점 완료 거래만 계산하는 설계안으로 확정 필요.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "refs": [
+          "HANDOFF169"
+        ]
       },
       "openGroups": [
         "MINIMUM_DATA_AND_RETENTION"
@@ -1704,8 +1735,10 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "구독·검색 이벤트와 KPI 계산 필요. 다회 판매 매출은 주문별 집계, 평균 최초 판매기간은 독점 완료 거래만 계산하는 설계안으로 확정 필요.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "refs": [
+          "HANDOFF169"
+        ]
       },
       "openGroups": [
         "MINIMUM_DATA_AND_RETENTION"
@@ -1916,8 +1949,10 @@
       "baselineStatus": "구현",
       "baselineRemaining": "로그인·형식/용량·목록 재조회. 상금/일정·심사·수상 운영은 미확정.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "169 결정: 일정별 수동 입력, 관리자 수동 수상 선정, 소유자가 상금/혜택을 지정한 뒤 공개. 격리 관리자 초안/공개/수상 상태와 조건 차단·버전·감사 기록 준비. 혜택 실제 지급 없음. 콘테스트별 출품작 연결/공개 화면 및 심사 기준 최종 연계는 잔여. 담당 역할 위임 Phase2 유지.",
+        "refs": [
+          "HANDOFF169"
+        ]
       },
       "openGroups": [
         "ADMIN_CONTEST_DECISIONS"
@@ -2174,5 +2209,50 @@
     "statutoryDutiesPreserved": true,
     "oldOrdersAndOrdinaryContractsUnchanged": true,
     "liveApplied": false
+  },
+  "userDecisions169": {
+    "contest": {
+      "schedule": "PER_CONTEST_MANUAL",
+      "selection": "MANUAL_ADMIN",
+      "publication": "OWNER_SPECIFIED_BENEFITS_REQUIRED",
+      "benefitsExecuted": false
+    },
+    "discovery": {
+      "fields": [
+        "query",
+        "resultCount",
+        "referrerDomain",
+        "source",
+        "medium",
+        "campaign"
+      ],
+      "accountLinked": true,
+      "collectIp": false,
+      "retentionDays": 120,
+      "operatingCollectionEnabled": false,
+      "cost": "Storage growth may require capacity upgrade; none provisioned or charged by this work."
+    }
+  },
+  "bundle169": {
+    "status": "IMPLEMENTED_LOCAL_NOT_WHOLE_STAGE_COMPLETE",
+    "features": [
+      "ORDER_PRIVATE_ATTACHMENTS",
+      "REGISTERED_FINAL_PROTECTED_DELIVERY",
+      "ITEMIZED_OPTION_QUOTE_DAYS",
+      "BRIEF_CATEGORY_BUDGET_RECOMMENDATIONS",
+      "CONTEST_POLICY_ADMIN_PREPARATION",
+      "ACCOUNT_LINKED_DISCOVERY_120_DAY_RETENTION"
+    ],
+    "tests": {
+      "sqlite": "bundle169-sqlite-report.json",
+      "postgres": "bundle169-postgres-report.json",
+      "translation": "translation169-report.json"
+    },
+    "boundaries": [
+      "No actual network PostgreSQL or production entitlement migration",
+      "No server/deployment/new resources/real finance",
+      "Contest entries/public results and privacy rollout remain",
+      "Unmarked legacy UI/native-language review and final Word/PDF reconciliation remain"
+    ]
   }
 }

@@ -1,0 +1,5 @@
+(function(){'use strict';let timer,last='',arrivalOwner=null;
+ async function send(payload,owner){try{const status=await authRequest('engine/status');if(!status.capabilities?.discovery||authUser?.id!==owner)return;await authRequest('engine/discovery-action',{...payload,requestId:crypto.randomUUID()});}catch{}}
+ document.getElementById('search')?.addEventListener('change',()=>{clearTimeout(timer);const query=document.getElementById('search').value.trim(),owner=authUser?.id;if(!owner||!query||query===last)return;timer=setTimeout(()=>{if(authUser?.id!==owner||document.getElementById('search').value.trim()!==query)return;last=query;send({kind:'SEARCH',query,resultCount:document.querySelectorAll('#grid > .card').length},owner);},400);});
+ window.addEventListener('hashchange',()=>{const owner=authUser?.id;if(!owner||arrivalOwner===owner)return;arrivalOwner=owner;const params=new URLSearchParams(location.search);let referrerDomain='';try{referrerDomain=new URL(document.referrer).hostname;}catch{}send({kind:'ARRIVAL',referrerDomain,source:params.get('utm_source')||'',medium:params.get('utm_medium')||'',campaign:params.get('utm_campaign')||''},owner);});
+})();

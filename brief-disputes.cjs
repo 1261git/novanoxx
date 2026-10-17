@@ -18,9 +18,10 @@ module.exports=function({db,member,request,order,event,clock,isAdmin,busy,dir,st
   if(value.reference){let link;try{link=new URL(value.reference);}catch{fail('BRIEF_INVALID');}if(!['https:','http:'].includes(link.protocol)||link.username||link.password||value.reference.length>2000)fail('BRIEF_INVALID');}
   return value;
  }
+ function recommendations(b){const body=JSON.parse(b.body);return db.prepare("SELECT a.id,a.metadata,l.public_id FROM creator_assets a JOIN catalog_links l ON l.asset_id=a.id WHERE a.status='ACTIVE' AND a.user_id<>?").all(b.owner).map(a=>{let m;try{m=JSON.parse(a.metadata);}catch{return null;}if(m.category!==body.category||!Number.isSafeInteger(m.price)||m.price<1||m.price*100>body.budget)return null;return {publicId:Number(a.public_id)+1000,title:String(m.title||'').slice(0,150),price:m.price};}).filter(Boolean).sort((a,b)=>a.price-b.price||a.publicId-b.publicId).slice(0,5);}
  function briefState(actor){member(actor);const rows=db.prepare('SELECT * FROM engine_briefs ORDER BY created DESC,id').all();return {environment:'SANDBOX',financialEffects:false,briefs:rows.filter(b=>b.owner===actor||b.state==='OPEN'||db.prepare('SELECT id FROM engine_brief_offers WHERE brief_id=? AND seller=?').get(b.id,actor)).map(b=>{
    const offers=db.prepare('SELECT * FROM engine_brief_offers WHERE brief_id=? ORDER BY created,id').all(b.id).filter(o=>b.owner===actor||o.seller===actor).map(o=>({...o,body:JSON.parse(o.body)}));
-   return {...b,checkout:checkout.state(actor,b),body:JSON.parse(b.body),offers,messages:b.owner===actor||offers.some(o=>o.seller===actor)?correspondence.state(actor,b.id):[],history:b.owner===actor?history(b.id).filter(h=>!['PRIVATE_MESSAGE','ATTACHMENT_STAGED'].includes(h.kind)):[]};
+   return {...b,recommendations:recommendations(b),checkout:checkout.state(actor,b),body:JSON.parse(b.body),offers,messages:b.owner===actor||offers.some(o=>o.seller===actor)?correspondence.state(actor,b.id):[],history:b.owner===actor?history(b.id).filter(h=>!['PRIVATE_MESSAGE','ATTACHMENT_STAGED'].includes(h.kind)):[]};
   })};}
  function briefAct(actor,i){if(['briefTerms','briefCheckout'].includes(i.action))return checkout.act(actor,i);if(i.action==='briefMessage')return correspondence.act(actor,i);return request(actor,i,()=>{
   let b,result;
