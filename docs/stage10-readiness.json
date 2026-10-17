@@ -1,5 +1,5 @@
 {
-  "revision": 171,
+  "revision": 173,
   "status": "LOCAL_SCOPE_INVENTORY_NOT_RELEASE_APPROVAL",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -2329,5 +2329,27 @@
     "pdfVisualReviewPages": 10,
     "translationKeys": 991,
     "wordStatus": "ORIGINAL_PRESERVED_RENDERER_UNAVAILABLE_NOT_EDITED"
+  },
+  "currentPublicOperator": {
+    "legalName": "NovaNoxx(노바녹스)",
+    "privacyOfficer": "김명선",
+    "publicContact": "support@novanoxx.com"
+  },
+  "bundle173": {
+    "status": "LOCAL_RESTORE_FILTER_NOT_PRODUCTION_RESTORE_PIPELINE",
+    "features": [
+      "DURABLE_DISCOVERY_DELETION_CUTOFF",
+      "ISOLATED_RESTORE_EXPIRY_AND_CURRENT_PERMISSION_FILTER",
+      "RESTORE_COLLECTION_DEFAULT_OFF"
+    ],
+    "tests": "discovery-restore-filter.test.cjs: 4 passed",
+    "contact": "support@novanoxx.com",
+    "remaining": [
+      "Trusted current deletion/permission state must be stored separately from historical backups and supplied by the production restore procedure",
+      "Backup retention period and measured capacity remain unconfirmed",
+      "Operating restore pipeline, external service contracts, full UI/native-language review and production migration remain"
+    ],
+    "operatingDeployment": false,
+    "existingBackupsModified": false
   }
 }

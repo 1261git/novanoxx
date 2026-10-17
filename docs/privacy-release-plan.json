@@ -4,7 +4,7 @@
   "operator": {
     "legalName": "NovaNoxx(노바녹스)",
     "privacyOfficer": "김명선",
-    "publicContact": "novanoxx2026@gmail.com"
+    "publicContact": "support@novanoxx.com"
   },
   "discovery": {
     "fields": [
@@ -30,7 +30,15 @@
     "accessAfterWithdrawal": "BLOCK_UNTIL_VERIFIED_DELETION_FILTER",
     "restoreBeforeService": "REAPPLY_EXPIRY_AND_CURRENT_DELETIONS_WITH_COLLECTION_DISABLED",
     "destructiveCleanupEnabled": false,
-    "considerationDays": 90
+    "considerationDays": 90,
+    "restorePreparation": {
+      "module": "discovery-restore-filter.cjs",
+      "mode": "ISOLATED_RESTORE_ONLY",
+      "currentStateSource": "TRUSTED_LATEST_PREFERENCES_AND_DELETION_CUTOFFS_REQUIRED",
+      "unknownActors": "REMOVE_DISCOVERY_RECORDS",
+      "collectionAfterRestore": false,
+      "productionPipelineConnected": false
+    }
   },
   "processingRegister": [
     {

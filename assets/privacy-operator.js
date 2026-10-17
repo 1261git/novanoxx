@@ -1,1 +1,1 @@
-(function(root){'use strict';const operator={legalName:'NovaNoxx(노바녹스)',privacyOfficer:'김명선',publicContact:'novanoxx2026@gmail.com'};if(typeof module!=='undefined')module.exports=operator;else root.NNX_PRIVACY_OPERATOR=operator;})(typeof globalThis!=='undefined'?globalThis:this);
+(function(root){'use strict';const operator={legalName:'NovaNoxx(노바녹스)',privacyOfficer:'김명선',publicContact:'support@novanoxx.com'};if(typeof module!=='undefined')module.exports=operator;else root.NNX_PRIVACY_OPERATOR=operator;})(typeof globalThis!=='undefined'?globalThis:this);
