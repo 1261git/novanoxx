@@ -57,7 +57,8 @@ module.exports=function({db,user,json,origin,env=process.env,clock=Date.now}){
     if(!env.NNX_REVIEW_TOSS_CLIENT_KEY)fail('REVIEW_KEY_REQUIRED',503);
     if(!['PREPARED','STARTED'].includes(row.state))fail('CHECKOUT_CLOSED',409);
     const snap=quote(actor,JSON.parse(row.payload));if(JSON.stringify(snap)!==row.snapshot)fail('PRICE_CHANGED',409);
-    const token=crypto.randomBytes(32).toString('base64url'),key='review_'+digest(row.id+':'+actor.id).slice(0,40),url=outcome=>origin+'/api/auth/review/return?id='+encodeURIComponent(row.id)+'&state='+encodeURIComponent(token)+'&outcome='+outcome;
+    const returnOrigin=env.productionSite?require('./deployment-config.cjs').requestOrigin(req):origin;
+    const token=crypto.randomBytes(32).toString('base64url'),key='review_'+digest(row.id+':'+actor.id).slice(0,40),url=outcome=>returnOrigin+'/api/auth/review/return?id='+encodeURIComponent(row.id)+'&state='+encodeURIComponent(token)+'&outcome='+outcome;
     db.prepare("UPDATE review_checkouts SET state='STARTED',token_hash=? WHERE id=? AND actor=?").run(digest(token),row.id,actor.id);
     json(res,200,{...response({...row,state:'STARTED'}),clientKey:env.NNX_REVIEW_TOSS_CLIENT_KEY,customerKey:key,successUrl:url('success'),failUrl:url('fail')});return true;
    }
