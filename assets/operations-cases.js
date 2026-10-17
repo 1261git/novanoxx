@@ -1,7 +1,7 @@
 async function renderOperationsCases(host){
  const owner=authUser?.id,section=document.createElement('section');section.className='page-panel';host.append(section);let busy=false,pending=null;
  const current=()=>authUser?.id===owner&&section.isConnected&&page.dataset.route==='admin-reviews';
- const tr=(ko,en)=>uiReferenceLanguage()==='en'?en:ko;
+ const tr=(ko,en)=>uiText(ko);
  const key='nnx-admin-case-pending:'+owner;
  try{pending=JSON.parse(sessionStorage.getItem(key)||'null');}catch{}
  section.innerHTML='<h2>'+tr('분쟁·운영 검토','Disputes and operations review')+'</h2><p>'+tr('수동 검토 기록입니다. 종료해도 주문·환불·정산·권리는 변경되지 않습니다.','Manual review records. Closing a case does not change orders, refunds, payouts or rights.')+'</p><form><select name="kind"><option value="DISPUTE">DISPUTE</option><option value="OPERATIONS">OPERATIONS</option></select><select name="targetType"><option>MEMBER</option><option>ASSET</option><option>TEST_ORDER</option></select><label>'+tr('대상 ID','Target ID')+'<input name="targetId" maxlength="100" required></label><label>'+tr('요약','Summary')+'<input name="summary" maxlength="500" required></label><label>'+tr('처리 사유','Reason')+'<input name="reason" maxlength="1000" required></label><button>'+tr('검토 접수','Open case')+'</button></form><button type="button" data-retry hidden>'+tr('미확정 요청 재확인','Retry pending request')+'</button><p role="status"></p><div data-cases></div><button type="button" data-more hidden>'+tr('더 보기','More')+'</button>';

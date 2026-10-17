@@ -20,5 +20,5 @@ async function renderApplicationEngine(host,scope){
    for(const file of order.files){const a=document.createElement('a');a.href='/api/auth/engine/file?id='+encodeURIComponent(file.id);a.textContent=file.kind+' · '+file.name;a.className='outline-link';a.setAttribute('translate','no');panel.append(a);}content.append(panel);
   }
  }lock();}
- retry.onclick=()=>act();lock();try{await load();}catch(e){if(current())status.textContent=text(e.message);}
+ retry.onclick=()=>act();lock();try{await load();if(scope!=='subscription'&&current())await renderEngineDisputes(host);}catch(e){if(current())status.textContent=text(e.message);}
 }
