@@ -1,5 +1,5 @@
 {
-  "revision": 167,
+  "revision": 168,
   "status": "LOCAL_SCOPE_INVENTORY_NOT_RELEASE_APPROVAL",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -969,11 +969,11 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "의뢰 서버 모델·유사 에셋 추천·제안·선정·결제·주문 메시지/파일·조건 스냅샷·납품/검수 전체 흐름 필요.",
       "current": {
-        "scope": "166: 원화12% 원 미만 버림과 정산 예상액을 신규 주문에 고정, 기존 상품 조건 Brief TEST기록, 단독 운영으로 추가 역할 부여 차단. 실제 지급·운영 적용은 아님.",
+        "scope": "168 Brief 중개/당사자 합의·최종본만 납품·구매자 상업/수정·무단 사이트 재판매 검토·제3자 권리 고지/법정책임 보존. 새 Brief TEST 조건 버전과 화면4위치 연결. 실제 법률 감수/배포는 아님.",
         "refs": [
-          "HANDOFF166",
-          "policy166-sqlite-report.json",
-          "policy166-postgres-report.json"
+          "HANDOFF168",
+          "brief168-sqlite-report.json",
+          "brief168-postgres-report.json"
         ]
       },
       "openGroups": [
@@ -987,11 +987,11 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "의뢰 서버 모델·유사 에셋 추천·제안·선정·결제·주문 메시지/파일·조건 스냅샷·납품/검수 전체 흐름 필요.",
       "current": {
-        "scope": "166: 원화12% 원 미만 버림과 정산 예상액을 신규 주문에 고정, 기존 상품 조건 Brief TEST기록, 단독 운영으로 추가 역할 부여 차단. 실제 지급·운영 적용은 아님.",
+        "scope": "168 Brief 중개/당사자 합의·최종본만 납품·구매자 상업/수정·무단 사이트 재판매 검토·제3자 권리 고지/법정책임 보존. 새 Brief TEST 조건 버전과 화면4위치 연결. 실제 법률 감수/배포는 아님.",
         "refs": [
-          "HANDOFF166",
-          "policy166-sqlite-report.json",
-          "policy166-postgres-report.json"
+          "HANDOFF168",
+          "brief168-sqlite-report.json",
+          "brief168-postgres-report.json"
         ]
       },
       "openGroups": [
@@ -1900,11 +1900,11 @@
       "baselineStatus": "부분 구현",
       "baselineRemaining": "구매 주문에 동의한 버전과 조건을 불변 스냅샷으로 연결. 권리 없는 부분의 양도를 자동 보장하지 않음.",
       "current": {
-        "scope": "한국어 원문 유지·긴 참고본문과 등록 번역사전4개 추가언어. 미표식 전체 문자열/전문 감수는 별도.",
+        "scope": "168 Brief 중개/당사자 합의·최종본만 납품·구매자 상업/수정·무단 사이트 재판매 검토·제3자 권리 고지/법정책임 보존. 새 Brief TEST 조건 버전과 화면4위치 연결. 실제 법률 감수/배포는 아님.",
         "refs": [
-          "HANDOFF160",
-          "HANDOFF162",
-          "translation162-report.json"
+          "HANDOFF168",
+          "brief168-sqlite-report.json",
+          "brief168-postgres-report.json"
         ]
       },
       "openGroups": [],
@@ -1930,11 +1930,11 @@
       "baselineStatus": "부분 구현",
       "baselineRemaining": "게시 문구와 실제 기능/사업자 연락처/약관 정합성 확인 후 실결제 개시. 법적 검토 완료를 뜻하지 않음.",
       "current": {
-        "scope": "한국어 원문 유지·긴 참고본문과 등록 번역사전4개 추가언어. 미표식 전체 문자열/전문 감수는 별도.",
+        "scope": "168 Brief 중개/당사자 합의·최종본만 납품·구매자 상업/수정·무단 사이트 재판매 검토·제3자 권리 고지/법정책임 보존. 새 Brief TEST 조건 버전과 화면4위치 연결. 실제 법률 감수/배포는 아님.",
         "refs": [
-          "HANDOFF160",
-          "HANDOFF162",
-          "translation162-report.json"
+          "HANDOFF168",
+          "brief168-sqlite-report.json",
+          "brief168-postgres-report.json"
         ]
       },
       "openGroups": [
@@ -2139,5 +2139,40 @@
       "mvpBlocker": false,
       "existingCandidateCode": "보존하되 기본 위임 비활성; Phase2 출시 완료로 표시하지 않음"
     }
+  },
+  "briefRights168": {
+    "version": "BRIEF_FINAL_ONLY_V1",
+    "scope": "BRIEF_ONLY",
+    "clauses": [
+      [
+        "거래 중개와 당사자 협의",
+        "Brief의 독점·비독점 여부와 이용 범위는 판매자와 구매자가 협의하여 정합니다. NovaNoxX는 거래를 중개하며 제작·판매 계약의 당사자가 아닙니다."
+      ],
+      [
+        "최종 납품물",
+        "최종 납품물에는 거래에서 정한 최종본만 포함됩니다."
+      ],
+      [
+        "상업적 이용·수정",
+        "거래가 완료된 최종 납품물의 상업적 이용·수정 권한은 구매자에게 부여됩니다. 판매자가 적법하게 허락할 수 있는 범위 및 사전에 고지된 제3자 이용 조건을 따릅니다."
+      ],
+      [
+        "사이트 내 재판매",
+        "최종 납품물의 NovaNoxX 내 무단 재판매는 금지되며, 확인 시 운영 검토·제재 대상이 될 수 있습니다."
+      ],
+      [
+        "제3자 소재와 책임",
+        "판매자는 폰트·음원·이미지 등 제3자 소재의 이용 허락과 판매·납품에 필요한 권한을 확보하고, 이용 범위·기간·매체·추가 라이선스 필요 여부 등 제한 사항을 거래 전에 고지해야 합니다. 구매자는 고지된 이용 조건을 준수해야 합니다. NovaNoxX의 중개나 검토·승인은 제3자 권리 또는 라이선스의 보증을 의미하지 않습니다. 권리 침해 신고가 접수되면 관련 자료 제출을 요청하고 게시·거래를 검토할 수 있습니다. 다만 관련 법령에 따른 NovaNoxX의 의무와 책임은 배제되지 않습니다."
+      ]
+    ],
+    "placements": [
+      "briefs: 의뢰 양식 앞",
+      "brief 조건 확인: 판매자/구매자",
+      "brief-terms: 별도 안내 페이지",
+      "faq: Brief 안내"
+    ],
+    "statutoryDutiesPreserved": true,
+    "oldOrdersAndOrdinaryContractsUnchanged": true,
+    "liveApplied": false
   }
 }
