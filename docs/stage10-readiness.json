@@ -1,12 +1,12 @@
 {
-  "revision": 180,
-  "status": "ACTUAL_PRODUCTION_DEPLOYED_PRECONTRACT",
+  "revision": 182,
+  "status": "PRODUCTION_SOCIAL_AND_CATEGORY_FIX_DEPLOYED_KAKAO_CONSENT_PENDING",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
     "sha256": "35baf3bcef6b10632787d8661c4a48992e70181267c4e4d5fc6d7070b3b1b339",
     "historicalRowsPreserved": true
   },
-  "policy": "실제 운영 서버와 도메인에 10단계 소스 및 비금융 기능을 배포했습니다. 실결제·유료 주문권한·자동청구·지급은 계약과 운영 연결 검증 전 비활성입니다. 179 TEST 배포 기록과 구분합니다.",
+  "policy": "실제 운영 소셜 연결·카테고리 잘림·TEST 공개 제외를 배포했습니다. Google/네이버 개발 멤버 실제 로그인은 확인했으나 카카오 최초 동의와 미완성 금융·검색유입/백업복구 연결은 완료가 아닙니다.",
   "groups": [
     {
       "id": "LOCAL_TRANSACTION_GAPS",
@@ -2765,5 +2765,180 @@
       "production180-domains-verified.png"
     ],
     "fullStage10Complete": false
+  },
+  "productionDeployment182": {
+    "revision": 182,
+    "status": "PRODUCTION_SOCIAL_AND_CATEGORY_FIX_DEPLOYED_KAKAO_CONSENT_PENDING",
+    "origin": "https://novanoxx.com",
+    "serviceId": "srv-db5aqunlk1mc739bi0m0",
+    "deployedCommit": "4b7c36a23827cd78c1ce02b91b672954f0ea4284",
+    "deployId": "dep-db9t79nlk1mc73caefdg",
+    "deployStatus": "live",
+    "finishedAt": "2026-10-17T20:00:26.877366Z",
+    "finishedAtKST": "2026-10-18 05:00:26 KST",
+    "scope": [
+      "Canonical production login/callback origin novanoxx.com; legacy home redirects 308 and provider registrations retained",
+      "Category-menu overflow clipping fixed; narrow header wraps, mobile submenu remains accessible",
+      "Prototype fixtures omitted from production HTML without editing/deleting original prototype data",
+      "Two explicitly identified TEST listings hidden by publication policy; public preview URLs also denied",
+      "TEST wallet/history and test charging hidden from ordinary operating wallet/order screens",
+      "TEST data copied additively to nnx_test_archive_v1 without deleting source rows or moving files"
+    ],
+    "login": {
+      "google": {
+        "actualProductionLogin": true,
+        "existingAdminAccount": true,
+        "adminMenuVerified": true,
+        "identityAutoMerged": false
+      },
+      "naver": {
+        "actualProductionLogin": true,
+        "existingDevelopmentMember": true,
+        "publicReviewStillRequired": true,
+        "newReviewApplication": false
+      },
+      "kakao": {
+        "configured": true,
+        "newDomainAuthorizationPageReached": true,
+        "firstEmailConsentPendingUser": true,
+        "actualProductionLogin": false,
+        "accountLinkNotPerformed": true
+      },
+      "providersEndpoint": {
+        "google": true,
+        "naver": true,
+        "kakao": true
+      }
+    },
+    "checks": {
+      "healthHTTP": 200,
+      "productionSite": true,
+      "reviewOnly": false,
+      "database": "postgres",
+      "migrationVerified": true,
+      "legacyHomeRedirect": {
+        "status": 308,
+        "to": "https://novanoxx.com/"
+      },
+      "publicCatalog": {
+        "includeDemo": false,
+        "count": 0
+      },
+      "categoryMenu600px": {
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "navClientWidth": 527,
+        "navScrollWidth": 527,
+        "allSixCategoriesVisible": true,
+        "subcategoriesVisible": true,
+        "viewportReset": true
+      },
+      "targetedLocalCasesPassed": 13,
+      "productionHtmlFixtureAndCategoryCheck": true,
+      "productionAppErrorsSinceDeployment": 0,
+      "externalPaymentCalls": 0
+    },
+    "preservation": {
+      "snapshot": "/data/.stage10-release182-20261018",
+      "dumpBytes": 838474,
+      "archiveListVerified": true,
+      "fullRestorePerformed": false,
+      "publicTablesCompared": 59,
+      "unchangedTableFingerprints": 56,
+      "changedTables": [
+        "account_status",
+        "login_events",
+        "sessions"
+      ],
+      "changedTableExplanation": "Successful real Google/Naver sign-ins created session/login records and initialized one previously absent Free/0 account_status row. Read-only comparison against the pre-deploy dump confirmed all 3 original plan/balance rows unchanged; current rows 4.",
+      "originalAccountStatusRowsPreserved": true,
+      "originalUploadFiles": 5,
+      "changedOriginalUploadFiles": [],
+      "testArchive": {
+        "schema": "nnx_test_archive_v1",
+        "sourceRowsDeleted": 0,
+        "sourceFilesMoved": 0,
+        "hiddenAssets": 2,
+        "tables": [
+          {
+            "table": "neon_test_wallet",
+            "count": 2,
+            "sourceAndArchiveDigestEqual": true
+          },
+          {
+            "table": "neon_test_orders",
+            "count": 3,
+            "sourceAndArchiveDigestEqual": true
+          },
+          {
+            "table": "neon_test_ledger",
+            "count": 3,
+            "sourceAndArchiveDigestEqual": true
+          },
+          {
+            "table": "neon_test_grants",
+            "count": 2,
+            "sourceAndArchiveDigestEqual": true
+          },
+          {
+            "table": "neon_topups",
+            "count": 8,
+            "sourceAndArchiveDigestEqual": true
+          },
+          {
+            "table": "review_checkouts",
+            "count": 2,
+            "sourceAndArchiveDigestEqual": true
+          }
+        ]
+      },
+      "originalLocalFiles": 675,
+      "originalLocalChanged": [],
+      "originalDirtyCheckoutResetOrCommitted": false,
+      "testSiteChanged": false
+    },
+    "backupReadOnlyCheck": {
+      "healthy": true,
+      "problems": [],
+      "lastSuccessAt": "2026-10-17T18:00:59.794Z",
+      "keyExpiresAt": "2027-01-12T00:00:00.000Z",
+      "existingDailyTarget": 7,
+      "existingWeeklyTarget": 4,
+      "existingAutomaticDeletion": false,
+      "monthOutboundBytes": 8854013,
+      "monthWrites": 45,
+      "monthReads": 45,
+      "futureRawDiscovery90DayBackupActivated": false,
+      "additionalDiscoveryCollectionActivated": false
+    },
+    "cost": {
+      "newPaidResources": 0,
+      "newFixedMonthlyUSD": 0,
+      "computePlanChanged": false,
+      "diskSizeChanged": false,
+      "deploys": 1,
+      "variableUsageMayIncrease": true
+    },
+    "uncommittedPreserved": {
+      "file": "sandbox-engine-core.cjs",
+      "sha256": "a14e953bc6030b9c9c7932b2b5e0b0ddb48c2294ccc25cd4f42b41b19952e8fb",
+      "partialPaymentAuthorityHookDeployed": false
+    },
+    "remaining": [
+      "Kakao owner first email consent and any explicit existing-account link, then final actual login verification",
+      "Naver review before public-user availability; no application submitted",
+      "Verified payment → actual operating order/delivery/file-entitlement atomic handoff remains unfinished",
+      "Encrypted billing-credential repository, unique subscription cycles/renewal and actual payout remain unfinished/contract-dependent",
+      "Actual search/referral collection + future raw 90-day backup/operating restore/deletion replay remain unfinished; existing encrypted automation retained and healthy",
+      "Provider reply/contract decisions for NEON model/refund/limits/settlement and billing; Toss reply October 20"
+    ],
+    "fullStage10Complete": false,
+    "proof": [
+      "production182-category-menu-600.png",
+      "production182-category-submenu-600.png",
+      "production182-google-login.png",
+      "production182-naver-login.png",
+      "production182-kakao-consent-required.png"
+    ]
   }
 }
