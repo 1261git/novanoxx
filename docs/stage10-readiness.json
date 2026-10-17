@@ -1,5 +1,5 @@
 {
-  "revision": 177,
+  "revision": 178,
   "status": "LOCAL_SCOPE_INVENTORY_NOT_RELEASE_APPROVAL",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -2482,5 +2482,45 @@
       "실제 위탁·보관 위치·국외이전·권리행사 조건 확정 및 법률 확인, 전체 GUI/접근성/모국어·Word 문서 정합성 검수.",
       "제공자 회신 및 실제 환불·한도·정산·정기청구 계약/API 연결."
     ]
+  },
+  "bundle178": {
+    "status": "SOURCE_TRANSITION_PREFLIGHT_IMPLEMENTED_NOT_MIGRATED",
+    "module": "operating-transition-audit.cjs",
+    "implemented": [
+      "IMMUTABLE_ACCOUNT_IDS_NO_EMAIL_MERGE",
+      "TEST_ARCHIVE_PRESERVE_ONLY_NO_BALANCE_OR_ENTITLEMENT_TRANSFER",
+      "EXISTING_ENGINE_ORDER_ID_CONFLICT_DETECTION",
+      "TEST_ORDER_ACTIVE_LIVE_ENTITLEMENT_CONFLICT_DETECTION",
+      "ORIGINAL_OWNER_SIZE_FINGERPRINT_METADATA_CHECKS",
+      "LEGACY_SCHEMA_WITHOUT_FINGERPRINT_TABLE_SUPPORTED_WITHOUT_DDL",
+      "READINESS_GET_ONLY_FINGERPRINT_POST_ISOLATION"
+    ],
+    "sourceObservation": {
+      "readOnlyValidated": true,
+      "transactionReadOnly": "on",
+      "engineTablePresent": false,
+      "fingerprintTablePresent": false,
+      "unmappedTestArchives": 2,
+      "sourceChangesPerformed": false,
+      "aggregateReport": "transition178-operating-readonly-report.json"
+    },
+    "validation": {
+      "sqliteAndEmbeddedPostgresCases": 2,
+      "adminMinimalDomLocales": 6,
+      "existingReadinessChecks": 30,
+      "translationKeys": 1071,
+      "originalFilesPreserved": 675
+    },
+    "nextApplyRequirements": {
+      "targetOperatingEngineAndSchemaDesignRequired": true,
+      "knownFingerprintStoragePreparationRequired": true,
+      "consistentSourceSnapshotAndTargetValidationRequired": true,
+      "requiresDeploymentNotice": true,
+      "requiresCostReviewBeforeExecution": true
+    },
+    "operatingMigrationAllowed": false,
+    "rightsGranted": false,
+    "newPaidResources": false,
+    "deployed": false
   }
 }
