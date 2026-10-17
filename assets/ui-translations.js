@@ -1,4 +1,9 @@
 (function(root){const entries={
+"지원 항목만 선택할 수 있습니다. 유료 추가 작업은 표시된 묶음 금액을 한 번 적용합니다.":"Only supported options can be selected. The listed paid customization bundle is charged once.",
+"작업 납기":"Work due date",
+"메시지":"Message",
+"메시지와 첨부 보내기":"Send message and attachments",
+"PRICE_CHANGED":"The quoted total has changed. Check the options and total again.",
 "새 의뢰 작성":"New brief",
 "새 의뢰 내용을 입력해주세요.":"Enter the new brief details.",
 "증거 파일":"Evidence files",

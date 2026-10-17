@@ -1,5 +1,10 @@
 (function(root){const dictionaries={
   "es": {
+"지원 항목만 선택할 수 있습니다. 유료 추가 작업은 표시된 묶음 금액을 한 번 적용합니다.":"Solo se pueden elegir opciones compatibles. El importe del paquete de trabajo adicional se aplica una vez.",
+"작업 납기":"Fecha de entrega del trabajo",
+"메시지":"Mensaje",
+"메시지와 첨부 보내기":"Enviar mensaje y adjuntos",
+"PRICE_CHANGED":"El total ha cambiado. Revise las opciones y el importe.",
 "새 의뢰 작성":"Nuevo encargo",
 "새 의뢰 내용을 입력해주세요.":"Introduzca los detalles del nuevo encargo.",
 "증거 파일":"Archivos de prueba",
@@ -896,6 +901,11 @@
     "워터마크 포함 전체화면": "Pantalla completa con marca de agua"
   },
   "zh-Hans": {
+"지원 항목만 선택할 수 있습니다. 유료 추가 작업은 표시된 묶음 금액을 한 번 적용합니다.":"只能选择支持的选项。付费定制套餐按标示金额收取一次。",
+"작업 납기":"工作交付期限",
+"메시지":"消息",
+"메시지와 첨부 보내기":"发送消息和附件",
+"PRICE_CHANGED":"报价总额已更改，请重新确认选项和总额。",
 "새 의뢰 작성":"新建委托",
 "새 의뢰 내용을 입력해주세요.":"请输入新委托的内容。",
 "증거 파일":"证据文件",
@@ -1792,6 +1802,11 @@
     "워터마크 포함 전체화면": "含水印全屏显示"
   },
   "vi": {
+"지원 항목만 선택할 수 있습니다. 유료 추가 작업은 표시된 묶음 금액을 한 번 적용합니다.":"Chỉ chọn được hạng mục được hỗ trợ. Phí gói công việc bổ sung được tính một lần.",
+"작업 납기":"Hạn hoàn thành công việc",
+"메시지":"Tin nhắn",
+"메시지와 첨부 보내기":"Gửi tin nhắn và tệp đính kèm",
+"PRICE_CHANGED":"Tổng giá đã thay đổi. Kiểm tra lại lựa chọn và tổng tiền.",
 "새 의뢰 작성":"Tạo yêu cầu mới",
 "새 의뢰 내용을 입력해주세요.":"Nhập nội dung yêu cầu mới.",
 "증거 파일":"Tệp bằng chứng",
@@ -2688,6 +2703,11 @@
     "워터마크 포함 전체화면": "Toàn màn hình có dấu bản quyền"
   },
   "de": {
+"지원 항목만 선택할 수 있습니다. 유료 추가 작업은 표시된 묶음 금액을 한 번 적용합니다.":"Nur unterstützte Optionen sind wählbar. Der angegebene Preis für das Zusatzpaket wird einmal berechnet.",
+"작업 납기":"Arbeitsfrist",
+"메시지":"Nachricht",
+"메시지와 첨부 보내기":"Nachricht und Anhänge senden",
+"PRICE_CHANGED":"Der Gesamtpreis hat sich geändert. Prüfen Sie Optionen und Betrag erneut.",
 "새 의뢰 작성":"Neuer Auftrag",
 "새 의뢰 내용을 입력해주세요.":"Geben Sie die neuen Auftragsdetails ein.",
 "증거 파일":"Nachweisdateien",

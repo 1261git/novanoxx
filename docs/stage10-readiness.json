@@ -1,5 +1,5 @@
 {
-  "revision": 163,
+  "revision": 164,
   "status": "LOCAL_SCOPE_INVENTORY_NOT_RELEASE_APPROVAL",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -32,7 +32,7 @@
         "R-07",
         "R-08"
       ],
-      "remaining": "추가 작업 옵션 선택·가격/자료/납기의 현재 웹 주문 연결, 일반 원본 권한의 실거래 적용, Brief 추천/계약/유상 주문/메시지·첨부 및 수수료 연결. 기존 별도 TEST 구현과 현재 웹 후보를 구분해야 함."
+      "remaining": "현재 후보의 판매자 지원 옵션 선택·단일 추가작업 묶음 금액·필수 자료·등록 작업일 납기 snapshot과 Brief 비공개 메시지/첨부는164에서 연결. 남은 것은 항목별 독립 견적/옵션별 별도 납기(현재 등록 자료는 단일extraPrice/days), 완성 원본의 직접 납품/일반 실거래 권한, Brief 유사 추천·실제 계약/유상 주문·수수료 및 주문별 구매자 자료 첨부 통합. 운영 전환과 실제 금융정책은 별도."
     },
     {
       "id": "ADMIN_CONTEST_DECISIONS",
@@ -548,8 +548,12 @@
       "baselineStatus": "부분 구현",
       "baselineRemaining": "8개 지원 항목과 기타 50자·추가금액·작업일 저장 구현. 항목별 금액·기본가 포함·구매자 자료·납기 구분과 주문 가격 스냅샷 필요.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "164 로컬 TEST: 판매자 지원 옵션만 선택, 단일 extraPrice 묶음1회, 예상금액 확인·가격 snapshot, 필수 옵션별 자료와 등록 작업일 납기. 실제 결제/옵션별 독립 가격·납기는 제외.",
+        "refs": [
+          "HANDOFF164",
+          "checkout164-sqlite-report.json",
+          "checkout164-postgres-report.json"
+        ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
@@ -574,8 +578,12 @@
       "baselineStatus": "테스트 구현",
       "baselineRemaining": "테스트 구매만 구현. 실결제·유료 NEON·수수료·실제 납품 권한 생성 필요.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "164 로컬 TEST: 판매자 지원 옵션만 선택, 단일 extraPrice 묶음1회, 예상금액 확인·가격 snapshot, 필수 옵션별 자료와 등록 작업일 납기. 실제 결제/옵션별 독립 가격·납기는 제외.",
+        "refs": [
+          "HANDOFF164",
+          "checkout164-sqlite-report.json",
+          "checkout164-postgres-report.json"
+        ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
@@ -708,8 +716,12 @@
       "baselineStatus": "부분 구현",
       "baselineRemaining": "판매자 지원 항목과 기본/추가 가격 입력 구현. 구매 옵션 선택·자료 제출·작업·납품 처리 필요. AI 자동 적용은 제외.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "164 로컬 TEST: 판매자 지원 옵션만 선택, 단일 extraPrice 묶음1회, 예상금액 확인·가격 snapshot, 필수 옵션별 자료와 등록 작업일 납기. 실제 결제/옵션별 독립 가격·납기는 제외.",
+        "refs": [
+          "HANDOFF164",
+          "checkout164-sqlite-report.json",
+          "checkout164-postgres-report.json"
+        ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
@@ -722,8 +734,12 @@
       "baselineStatus": "부분 구현",
       "baselineRemaining": "판매자 지원 항목과 기본/추가 가격 입력 구현. 구매 옵션 선택·자료 제출·작업·납품 처리 필요. AI 자동 적용은 제외.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "164 로컬 TEST: 판매자 지원 옵션만 선택, 단일 extraPrice 묶음1회, 예상금액 확인·가격 snapshot, 필수 옵션별 자료와 등록 작업일 납기. 실제 결제/옵션별 독립 가격·납기는 제외.",
+        "refs": [
+          "HANDOFF164",
+          "checkout164-sqlite-report.json",
+          "checkout164-postgres-report.json"
+        ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
@@ -736,8 +752,12 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "주문별 옵션/자료/납기 저장, 수작업 납품, 워터마크 최종 검수본, 24시간 검수·오류 신고·중지/재시작·자동확정 구현 필요. 판매 전 4/8/12초 공개 미리보기와 최종 검수본은 별개.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "164 로컬 TEST: 판매자 지원 옵션만 선택, 단일 extraPrice 묶음1회, 예상금액 확인·가격 snapshot, 필수 옵션별 자료와 등록 작업일 납기. 실제 결제/옵션별 독립 가격·납기는 제외.",
+        "refs": [
+          "HANDOFF164",
+          "checkout164-sqlite-report.json",
+          "checkout164-postgres-report.json"
+        ]
       },
       "openGroups": [],
       "releaseVerdict": "BASELINE_RETAINED_NOT_RELEASE_CERTIFIED"
@@ -774,8 +794,12 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "주문별 옵션/자료/납기 저장, 수작업 납품, 워터마크 최종 검수본, 24시간 검수·오류 신고·중지/재시작·자동확정 구현 필요. 판매 전 4/8/12초 공개 미리보기와 최종 검수본은 별개.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "164 로컬 TEST: 판매자 지원 옵션만 선택, 단일 extraPrice 묶음1회, 예상금액 확인·가격 snapshot, 필수 옵션별 자료와 등록 작업일 납기. 실제 결제/옵션별 독립 가격·납기는 제외.",
+        "refs": [
+          "HANDOFF164",
+          "checkout164-sqlite-report.json",
+          "checkout164-postgres-report.json"
+        ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
@@ -878,8 +902,12 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "주문별 옵션/자료/납기 저장, 수작업 납품, 워터마크 최종 검수본, 24시간 검수·오류 신고·중지/재시작·자동확정 구현 필요. 판매 전 4/8/12초 공개 미리보기와 최종 검수본은 별개.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "164 로컬 TEST: 판매자 지원 옵션만 선택, 단일 extraPrice 묶음1회, 예상금액 확인·가격 snapshot, 필수 옵션별 자료와 등록 작업일 납기. 실제 결제/옵션별 독립 가격·납기는 제외.",
+        "refs": [
+          "HANDOFF164",
+          "checkout164-sqlite-report.json",
+          "checkout164-postgres-report.json"
+        ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
@@ -992,8 +1020,12 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "의뢰 서버 모델·유사 에셋 추천·제안·선정·결제·주문 메시지/파일·조건 스냅샷·납품/검수 전체 흐름 필요.",
       "current": {
-        "scope": "기준 이후 이번163에서 재실행/기능 전체 완료 판정하지 않음. 기존 인수인계 증거와 기준 상태를 유지하며 전수 완료로 표시하지 않음.",
-        "refs": []
+        "scope": "164 로컬 TEST Brief 의뢰자↔제안자 비공개 메시지·첨부300MiB/메시지10개, 파일 hash/권한/중복/공통700MiB. 실제 유상 주문의 자료 첨부 전체 적용은 별도.",
+        "refs": [
+          "HANDOFF164",
+          "checkout164-sqlite-report.json",
+          "checkout164-postgres-report.json"
+        ]
       },
       "openGroups": [
         "LOCAL_TRANSACTION_GAPS"
@@ -2017,7 +2049,7 @@
   ],
   "counts": {
     "ids": 123,
-    "withScopeEvidence": 52,
+    "withScopeEvidence": 60,
     "baselineNotReleaseCertified": 51
   }
 }

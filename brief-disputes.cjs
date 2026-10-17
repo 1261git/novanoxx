@@ -1,6 +1,6 @@
 'use strict';
 const crypto=require('node:crypto');
-module.exports=function({db,member,request,order,event,clock,isAdmin,busy}){
+module.exports=function({db,member,request,order,event,clock,isAdmin,busy,dir,store,usage,tx}){
  db.exec(`CREATE TABLE IF NOT EXISTS engine_briefs(id TEXT PRIMARY KEY,owner TEXT NOT NULL,state TEXT NOT NULL,body TEXT NOT NULL,version INTEGER NOT NULL,selected_offer TEXT,created INTEGER NOT NULL,updated INTEGER NOT NULL);
  CREATE TABLE IF NOT EXISTS engine_brief_offers(id TEXT PRIMARY KEY,brief_id TEXT NOT NULL,seller TEXT NOT NULL,state TEXT NOT NULL,body TEXT NOT NULL,version INTEGER NOT NULL,created INTEGER NOT NULL,UNIQUE(brief_id,seller));
  CREATE TABLE IF NOT EXISTS engine_disputes(id TEXT PRIMARY KEY,order_id TEXT NOT NULL,opened_by TEXT NOT NULL,state TEXT NOT NULL,previous_status TEXT NOT NULL,remaining_review INTEGER,version INTEGER NOT NULL,assignee TEXT,summary TEXT NOT NULL,created INTEGER NOT NULL,updated INTEGER NOT NULL);
@@ -8,6 +8,7 @@ module.exports=function({db,member,request,order,event,clock,isAdmin,busy}){
  CREATE TABLE IF NOT EXISTS engine_review_events(id TEXT PRIMARY KEY,target_id TEXT NOT NULL,actor TEXT NOT NULL,kind TEXT NOT NULL,detail TEXT NOT NULL,created INTEGER NOT NULL);`);
  const fail=code=>{throw Error(code);},id=()=>crypto.randomUUID();
  const audit=(target,actor,kind,detail)=>db.prepare('INSERT INTO engine_review_events VALUES(?,?,?,?,?,?)').run(id(),target,actor,kind,JSON.stringify(detail),clock());
+ const correspondence=require('./brief-correspondence.cjs')({db,dir,store,usage,member,request,tx,clock,audit});
  const text=(value,max)=>typeof value==='string'&&value.trim().length>0&&value.length<=max;
  const history=target=>db.prepare('SELECT actor,kind,detail,created FROM engine_review_events WHERE target_id=? ORDER BY created,id').all(target).map(e=>({...e,detail:JSON.parse(e.detail)}));
  function version(row,input){if(!row||row.version!==input.version)fail('REVIEW_VERSION_CONFLICT');}
@@ -18,9 +19,9 @@ module.exports=function({db,member,request,order,event,clock,isAdmin,busy}){
  }
  function briefState(actor){member(actor);const rows=db.prepare('SELECT * FROM engine_briefs ORDER BY created DESC,id').all();return {environment:'SANDBOX',financialEffects:false,briefs:rows.filter(b=>b.owner===actor||b.state==='OPEN'||db.prepare('SELECT id FROM engine_brief_offers WHERE brief_id=? AND seller=?').get(b.id,actor)).map(b=>{
    const offers=db.prepare('SELECT * FROM engine_brief_offers WHERE brief_id=? ORDER BY created,id').all(b.id).filter(o=>b.owner===actor||o.seller===actor).map(o=>({...o,body:JSON.parse(o.body)}));
-   return {...b,body:JSON.parse(b.body),offers,history:b.owner===actor?history(b.id):[]};
+   return {...b,body:JSON.parse(b.body),offers,messages:b.owner===actor||offers.some(o=>o.seller===actor)?correspondence.state(actor,b.id):[],history:b.owner===actor?history(b.id).filter(h=>!['PRIVATE_MESSAGE','ATTACHMENT_STAGED'].includes(h.kind)):[]};
   })};}
- function briefAct(actor,i){return request(actor,i,()=>{
+ function briefAct(actor,i){if(i.action==='briefMessage')return correspondence.act(actor,i);return request(actor,i,()=>{
   let b,result;
   if(i.action==='briefCreate'){const content=body(i.body);b={id:id(),owner:actor,state:'DRAFT',body:JSON.stringify(content),version:1,selected_offer:null,created:clock(),updated:clock()};db.prepare('INSERT INTO engine_briefs VALUES(?,?,?,?,?,?,?,?)').run(...Object.values(b));audit(b.id,actor,'CREATED',{body:content});result={id:b.id,state:b.state,version:1};}
   else{
@@ -59,5 +60,5 @@ module.exports=function({db,member,request,order,event,clock,isAdmin,busy}){
    }else fail('INVALID_ACTION');db.prepare('UPDATE engine_disputes SET state=?,assignee=?,version=version+1,updated=? WHERE id=? AND version=?').run(c.state,c.assignee,clock(),c.id,c.version);c=db.prepare('SELECT * FROM engine_disputes WHERE id=?').get(c.id);
   }return {id:c.id,state:c.state,version:c.version,financialEffects:false};
  });}
- return {briefs:{state:briefState,act:briefAct},disputes:{state:disputeState,act:disputeAct}};
+ return {briefs:{state:briefState,act:briefAct,upload:correspondence.upload,download:correspondence.download},disputes:{state:disputeState,act:disputeAct}};
 };
