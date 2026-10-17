@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "NovaNoxX / 모션 아이덴티티 01",
+    "price": 80,
+    "sold": false
+  },
+  {
+    "id": 2,
+    "title": "크로매틱 / 현실 너머",
+    "price": 65,
+    "sold": false
+  },
+  {
+    "id": 3,
+    "title": "NovaNoxX / 모션 아이덴티티 02",
+    "price": 100,
+    "sold": false
+  },
+  {
+    "id": 4,
+    "title": "미드나잇 프리퀀시",
+    "price": 35,
+    "sold": false
+  },
+  {
+    "id": 5,
+    "title": "이벤트 호라이즌 / 새로운 세계",
+    "price": 55,
+    "sold": false
+  },
+  {
+    "id": 6,
+    "title": "벨로시티 / 새로운 기준",
+    "price": 90,
+    "sold": false
+  },
+  {
+    "id": 7,
+    "title": "퓨처 포워드 / 피치 시스템",
+    "price": 45,
+    "sold": false
+  },
+  {
+    "id": 8,
+    "title": "콘크리트 드림",
+    "price": 70,
+    "sold": true
+  }
+]
