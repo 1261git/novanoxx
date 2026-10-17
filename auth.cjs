@@ -5,6 +5,9 @@ const crypto = require('node:crypto');
 const {promisify} = require('node:util');
 const derive = promisify(crypto.scrypt);
 const dir = process.env.DATA_DIR || path.join(__dirname, '.private');
+if(process.env.NNX_OPERATING_ENGINE==='1')throw Error('OPERATING_ENGINE_ADAPTER_NOT_APPROVED_OR_BOUND');
+if(process.env.NNX_REVIEW_MODE!==undefined&&!['0','1'].includes(process.env.NNX_REVIEW_MODE))throw Error('REVIEW_MODE_FLAG_REQUIRED');
+if(process.env.NNX_REVIEW_MODE==='1')require('./review-environment.cjs').verifyDirectory(require('./review-environment.cjs').config());
 fs.mkdirSync(dir, {recursive:true});
 const db = require('./database.cjs')(dir);
 db.exec('PRAGMA journal_mode=WAL; CREATE TABLE IF NOT EXISTS users(id TEXT PRIMARY KEY,email TEXT UNIQUE NOT NULL,name TEXT NOT NULL,salt TEXT NOT NULL,hash TEXT NOT NULL); CREATE TABLE IF NOT EXISTS sessions(token TEXT PRIMARY KEY,user_id TEXT NOT NULL,expires INTEGER NOT NULL);');
@@ -27,6 +30,8 @@ const operationsOverview=require('./operations-overview.cjs')({db,user,json,isAd
 let accountMail;
 const neonPayments=require('./neon-payments.cjs')(db,user,json,{notify:input=>accountMail?.notificationInside(input),orderStatus:(actor,id)=>localEngine?.work.orderStatus(actor,id)});
 if(process.env.NNX_LOCAL_ENGINE_TEST==='1'){localEngine=require('./local-test-engine.cjs')({db,dir});applicationEngine.configure(localEngine);}
+if(process.env.NNX_REVIEW_MODE==='1'){localEngine=require('./review-engine.cjs')({db,dir});applicationEngine.configure(localEngine);}
+const reviewCheckout=process.env.NNX_REVIEW_MODE==='1'?require('./review-checkout.cjs')({db,user,json,origin:deployment.base}):null;
 accountMail=require('./mail-runtime.cjs').configured({db,origin:deployment.base});
 const attempts = new Map();
 function json(res,status,data,headers={}){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store',...headers});res.end(JSON.stringify(data));}
@@ -36,7 +41,8 @@ function user(req){const t=token(req);if(!t)return null;const u=db.prepare('SELE
 function session(res,u,redirectTo,provider="email"){if(memberAdmin.blocked(u.id)){json(res,403,{error:'이 계정은 이용이 제한되어 있습니다. 고객 지원에 문의해주세요.'});return;}const t=crypto.randomBytes(32).toString('hex');if(!accountMail)db.prepare('DELETE FROM sessions WHERE expires<?').run(Date.now());db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hashToken(t),u.id,Date.now()+7*86400000);db.prepare('INSERT INTO login_events VALUES(?,?,?,?)').run(hashToken(t),u.id,provider,Date.now());const recentCookie='nnx_recent_login='+provider+'; HttpOnly; SameSite=Lax; Path=/; Max-Age=31536000';if(redirectTo){res.writeHead(303,{'Location':redirectTo,'Cache-Control':'no-store','Referrer-Policy':'no-referrer','Set-Cookie':[recentCookie,`nnx_session=${t}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800`,'nnx_oauth=; HttpOnly; SameSite=Lax; Path=/api/auth/google; Max-Age=0']});res.end();return;}json(res,200,{user:{id:u.id,name:u.name,email:u.email,loginProvider:provider,isAdmin:isScopedAdmin(u),adminPermissions:localEngine?.admin.permissions(u.id)||(baseAdmin(u)?['*']:[])},recentLogin:provider},{'Set-Cookie':[recentCookie,`nnx_session=${t}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800`]});}
 async function body(req,{raw=false,max=8192}={}){let size=0,chunks=[];for await(const c of req){size+=c.length;if(size>max)throw new Error('SIZE');chunks.push(c);}const bytes=Buffer.concat(chunks);return raw?bytes:JSON.parse(bytes.toString('utf8'));}
 module.exports=async function auth(req,res,name){
- if(name==='/api/health'&&req.method==='GET'){try{db.prepare('SELECT 1 AS ok').get();const migrated=db.backend==='postgres'?!!db.prepare("SELECT version FROM nnx_migrations WHERE version='sqlite-v1'").get():false;json(res,200,{status:'ok',database:db.backend||'sqlite',migrationVerified:migrated});}catch{json(res,503,{status:'unavailable'});}return true;}
+ if(reviewCheckout&&await reviewCheckout(req,res,name))return true;
+ if(name==='/api/health'&&req.method==='GET'){try{db.prepare('SELECT 1 AS ok').get();const migrated=db.backend==='postgres'&&process.env.NNX_REVIEW_MODE!=='1'?!!db.prepare("SELECT version FROM nnx_migrations WHERE version='sqlite-v1'").get():false;json(res,200,{status:'ok',reviewOnly:process.env.NNX_REVIEW_MODE==='1',database:db.backend||'sqlite',migrationVerified:migrated});}catch{json(res,503,{status:'unavailable'});}return true;}
  if(!name.startsWith('/api/auth/')&&!name.startsWith('/api/catalog')&&!name.startsWith('/api/engine/')&&!['/api/contest','/api/contest/media'].includes(name))return false;
  try{
  if(name==='/api/auth/mail/status'&&req.method==='GET'){json(res,200,{enabled:!!accountMail});return true;}

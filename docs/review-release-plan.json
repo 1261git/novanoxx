@@ -1,0 +1,210 @@
+{
+  "version": "REVIEW_RELEASE_AND_OPERATING_CONNECTION_V1",
+  "revision": 179,
+  "status": "DEPLOYMENT_AUTHORIZED_PREPARING_EXISTING_RESOURCES",
+  "reviewGoal": "Public review site with product checkout and subscription card registration, without payment approval",
+  "notFullStage10Completion": true,
+  "sourceBranch": "codex/stage10-account-saved-20261017",
+  "reviewTarget": {
+    "serviceId": "srv-db6essivcj2c73fu6460",
+    "serviceName": "novanoxx-sandbox-staging",
+    "observedState": "not_suspended",
+    "region": "virginia",
+    "currentBranch": "codex/isolated-staging",
+    "autoDeploy": "off",
+    "currentDockerfile": "Dockerfile.sandbox",
+    "proposedDockerfile": "Dockerfile",
+    "disk": {
+      "id": "dsk-db83ih8n74is73dlco40",
+      "mount": "/var/data",
+      "sizeGB": 5,
+      "proposedNewDirectory": "/var/data/nnx-review-20261018",
+      "currentUsedBytes": null,
+      "currentFreeBytes": 2298068992
+    },
+    "postgresInstance": "dpg-db6esfivcj2c73fu4re0-a",
+    "existingDatabase": "nnx_sandbox_home_20261012",
+    "proposedDedicatedDatabase": "nnx_review_20261018",
+    "existingDatabaseMustRemainUnchanged": true,
+    "sourceAccountsImported": false,
+    "publicOrigin": "https://novanoxx-sandbox-staging.onrender.com",
+    "domainChangeRequired": false,
+    "newPaidResourcesPlanned": 0,
+    "capacityAndBillingVerified": true,
+    "postgresPhysicalUsagePercent": 11.79,
+    "databaseObservedBytes": 15611583,
+    "costObservation": {
+      "existingWebMonthlyUSD": 7,
+      "existingPostgresComputeMonthlyUSD": 6,
+      "storageChargesSeparate": true,
+      "pipelineMinutesUsed": 25,
+      "pipelineMinutesIncluded": 500,
+      "bandwidthUsedGB": 13.39,
+      "bandwidthIncludedGB": 5,
+      "existingBandwidthChargeUSD": 1.35,
+      "newFixedMonthlyChargesPlannedUSD": 0,
+      "zeroVariableCostGuaranteed": false
+    }
+  },
+  "reviewFlow": {
+    "asset": "server quote -> terms confirmation -> test-key CARD window -> unverified return recorded; NO confirm API",
+    "subscription": "server plan price -> terms confirmation -> test-key requestBillingAuth -> unverified return recorded; NO billing-key issue or charge",
+    "callbackNeverMeansPaid": true,
+    "reviewDirectCardNotFinalOperatingPaymentModel": true,
+    "sampleDemo": "explicit optional generated sample accounts/product and TEST credits, isolated files only",
+    "scheduledJobsEnabled": false,
+    "mailSendingEnabled": false,
+    "discoveryCollectionEnabled": false,
+    "existingNeonTopupApprovalAvailable": false
+  },
+  "configuration": {
+    "file": ".env.review.example",
+    "clientKey": "NNX_REVIEW_TOSS_CLIENT_KEY via secret/environment UI, test_ck_ only",
+    "secretKeyAllowed": false,
+    "samplePasswords": "one-off secret environment inputs, not source or command output"
+  },
+  "activationSteps": [
+    {
+      "order": 1,
+      "action": "Read existing TEST DB/disk capacity and preserve current deployment/configuration/backup reference; do not print credentials",
+      "mutation": false
+    },
+    {
+      "order": 2,
+      "action": "After deployment scope approval, publish a pinned candidate commit to a review branch; leave production branch unchanged",
+      "mutation": true
+    },
+    {
+      "order": 3,
+      "action": "Create only the dedicated named database inside the existing TEST Postgres instance; no new instance or scaling",
+      "mutation": true
+    },
+    {
+      "order": 4,
+      "action": "Using pinned candidate code in an authorized one-off session on the existing persistent disk, run prepare-review.cjs --initialize-empty-review-target, then optional seed-review.cjs --seed-owned-review-samples with fresh owner-provided passwords",
+      "mutation": true
+    },
+    {
+      "order": 5,
+      "action": "Switch only the TEST service to the pinned candidate branch/Dockerfile and review environment. Retain all old TEST directories/database/queues untouched. Existing TEST UI will be replaced during review use.",
+      "mutation": true
+    },
+    {
+      "order": 6,
+      "action": "Deploy once and verify deployed commit, health, accounts/catalog/order UI, actual Toss test payment/card-registration windows, return and disabled live operations",
+      "mutation": true
+    },
+    {
+      "order": 7,
+      "action": "Only after external window checks succeed, provide review URL/access and consider novanoxx.com binding separately",
+      "mutation": true
+    }
+  ],
+  "initialization": "Explicit offline target initialization only, never startup auto-migrate. Render pre-deploy cannot access persistent disk; do not put directory initialization there.",
+  "releaseGates": [
+    "DISK_AND_TEST_DATABASE_CAPACITY",
+    "PINNED_REMOTE_COMMIT",
+    "DEDICATED_DATABASE_AND_DIRECTORY_PREPARED",
+    "REAL_TEST_CLIENT_KEY_CONFIGURED",
+    "REVIEWER_ACCESS_AND_REAL_CATALOG_CONTENT",
+    "EXTERNAL_TOSS_WINDOW_AND_RETURN_VERIFIED",
+    "BILLING_PRODUCT_AVAILABILITY_CONFIRMED",
+    "BUSINESS_AND_REFUND_DISCLOSURE_REVIEW",
+    "DEPLOYMENT_SCOPE_APPROVAL"
+  ],
+  "operating": {
+    "version": "OPERATING_CONNECTION_PLAN_V1",
+    "mode": "PREPARED_NOT_BOUND",
+    "liveTrading": false,
+    "realBilling": false,
+    "automaticSchemaApply": false,
+    "schema": {
+      "file": "database/002-operating-engine.sql",
+      "sha256": "25d8ad6402dc6f78eb017dc52d1525c245259c0d5a92bb40f1da19a10354789d",
+      "namespace": "nnx_operating_v1",
+      "existingPublicRowsModified": false
+    },
+    "identities": {
+      "key": "existing immutable users.id",
+      "emailMerge": false
+    },
+    "historicalTest": {
+      "orders": "PRESERVE_IN_PLACE",
+      "balances": "NO_TRANSFER",
+      "entitlements": "NO_PROMOTION",
+      "unmappedOrders": null
+    },
+    "payment": {
+      "currency": "KRW",
+      "feePercent": 12,
+      "fraction": "FLOOR_BELOW_ONE_KRW",
+      "providerVerificationRequired": true,
+      "webhookDeduplication": true,
+      "timeout": "RECONCILE_BEFORE_RETRY",
+      "testPaymentAccepted": false
+    },
+    "neonWallet": {
+      "mode": "CONTRACT_PENDING",
+      "testCreditTransfer": false,
+      "liveWalletLedgerEnabled": false,
+      "reviewDirectCardDoesNotDetermineOperatingPaymentModel": true
+    },
+    "files": {
+      "existingSources": "PRESERVE_IN_PLACE",
+      "release": "VERIFIED_LIVE_PAYMENT_AND_COMPLETED_DELIVERY",
+      "eachDownload": "PARTICIPANT_ENTITLEMENT_REVOCATION_AND_HASH_CHECK",
+      "copy": "OFFLINE_VERIFY_BEFORE_SWITCH"
+    },
+    "subscription": {
+      "testBillingKeysAccepted": false,
+      "providerContractRequired": true,
+      "billingKey": "ENCRYPTED_AT_REST_SERVER_ONLY",
+      "renewal": "UNIQUE_SUBSCRIPTION_AND_PERIOD",
+      "schedulerEnabled": false
+    },
+    "blockers": [
+      "APPROVED_SOURCE_SNAPSHOT_AND_TARGET",
+      "OPERATING_REPOSITORY_AND_PROVIDER_ADAPTER",
+      "VERIFIED_PAYMENT_TO_ORDER_ATOMIC_HANDOFF",
+      "BILLING_ENCRYPTION_KEY_AND_PROVIDER_CONTRACT",
+      "FILE_MAPPING_AND_PHYSICAL_HASH_VERIFICATION",
+      "BACKUP_RESTORE_AND_RECONCILIATION",
+      "EXPLICIT_DEPLOYMENT_APPROVAL"
+    ],
+    "rollback": {
+      "beforeWrites": "REDEPLOY_PREVIOUS_CODE_WITH_NEW_NAMESPACE_UNBOUND",
+      "afterWrites": "QUIESCE_AND_RECONCILE_NOT_STALE_DATABASE_SWITCH",
+      "dropSchemaAutomatically": false
+    }
+  },
+  "sourceObservation178": {
+    "users": 4,
+    "assets": 3,
+    "files": 5,
+    "originals": 2,
+    "testOrders": 3,
+    "testLedger": 3,
+    "unmappedTestOrders": 2,
+    "preserveOnly": true,
+    "notSnapshotForMigration": true
+  },
+  "rollback": {
+    "review": "Restore saved TEST code/config target; keep new review DB/directory for inspection and all old TEST data. Do not merge review users/orders or credits into operations.",
+    "operating": "No operating DDL or runtime binding applied; later writes require quiesce/reconciliation before rollback."
+  },
+  "costBoundary": "Existing plans remain paid as before. Reuse plans no new paid instance, but usage/capacity/billing are not certified zero. Stop before any scaling, paid resource, resume, domain or operating mutation.",
+  "officialReferences": [
+    "https://docs.tosspayments.com/guides/v2/payment-window/integration",
+    "https://docs.tosspayments.com/guides/v2/billing/integration",
+    "https://render.com/docs/postgresql-creating-connecting#adding-multiple-databases-to-a-single-instance",
+    "https://render.com/docs/deploys",
+    "https://render.com/docs/health-checks"
+  ],
+  "tossKeyObservation": {
+    "source": "owner-opened test API-key page",
+    "individualTestClientKeyAvailable": true,
+    "secretKeyRead": false,
+    "liveTabDisabled": true,
+    "noApplicationSubmitted": true
+  }
+}

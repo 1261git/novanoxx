@@ -1,5 +1,5 @@
 {
-  "revision": 178,
+  "revision": 179,
   "status": "LOCAL_SCOPE_INVENTORY_NOT_RELEASE_APPROVAL",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -2522,5 +2522,47 @@
     "rightsGranted": false,
     "newPaidResources": false,
     "deployed": false
+  },
+  "reviewDeployment179": {
+    "status": "LOCAL_CONNECTION_CODE_READY_DEPLOYMENT_AUTHORIZED",
+    "sharedSandboxCore": "sandbox-engine-core.cjs",
+    "sameCoreUsedBy": [
+      "local-test-engine.cjs",
+      "review-engine.cjs"
+    ],
+    "reviewCheckout": "server-priced product checkout and subscription billing-auth window, state-bound returns without approval",
+    "operatingSchema": "database/002-operating-engine.sql",
+    "operatingSchemaApplied": false,
+    "operatingEngineBound": false,
+    "realFinancialAdapterComplete": false,
+    "fullStage10Complete": false,
+    "testResults": {
+      "sqliteAndPostgresReviewGuardsAndReturns": true,
+      "sixLanguageSdkContractTests": 6,
+      "coreRegressionEachBackend": 31,
+      "administratorReadiness": 30,
+      "translationKeys": 1088,
+      "providerCalls": 0
+    },
+    "actualBrowser": {
+      "ownedLocalOnly": true,
+      "productCheckout": "price/terms/refund/contact and consent button",
+      "subscription": "monthly prices, billing-auth entry, return list separation",
+      "languages": [
+        "ko",
+        "en"
+      ],
+      "newTranslationAndLayoutDefectsFixed": true,
+      "providerWindowOpened": false
+    },
+    "deployment": {
+      "authorizedByOwner": true,
+      "newPaidResourcesPlanned": 0,
+      "existingTestPreserved": true,
+      "originalOperatingSiteUnchanged": true,
+      "target": "srv-db6essivcj2c73fu6460",
+      "dataStrategy": "same application core, distinct records from historical TEST; dedicated logical database on existing instance and new directory on existing disk",
+      "liveKeyEnabled": false
+    }
   }
 }

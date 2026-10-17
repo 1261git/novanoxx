@@ -1,0 +1,57 @@
+# Existing TEST resources only. Preserve the original TEST database and /var/data contents.
+services:
+  - type: web
+    name: novanoxx-sandbox-staging
+    runtime: docker
+    repo: https://github.com/1261git/novanoxx
+    branch: codex/stage10-account-saved-20261017
+    dockerfilePath: ./Dockerfile
+    region: virginia
+    plan: starter
+    autoDeployTrigger: off
+    healthCheckPath: /api/health
+    disk:
+      name: disk
+      mountPath: /var/data
+      sizeGB: 5
+    envVars:
+      - key: NNX_SANDBOX_REMOTE
+        value: "1"
+      - key: SANDBOX_PG_URL
+        fromDatabase:
+          name: novanoxx-sandbox-db
+          property: connectionString
+      - key: SANDBOX_ACCESS_PASSWORD
+        generateValue: true
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: "10000"
+      - key: PUBLIC_BASE_URL
+        value: https://novanoxx-sandbox-staging.onrender.com
+      - key: DATA_DIR
+        value: /var/data/nnx-review-20261018
+      - key: DATABASE_BACKEND
+        value: postgres
+      - key: NNX_REVIEW_MODE
+        value: "1"
+      - key: NNX_REVIEW_DATABASE_NAME
+        value: nnx_review_20261018
+      - key: NNX_REVIEW_TOSS_CLIENT_KEY
+        sync: false
+      - key: NNX_MAIL_ENABLED
+        value: "0"
+      - key: NNX_BACKUP_AUTOMATION
+        value: "0"
+databases:
+  - name: novanoxx-sandbox-db
+    databaseName: nnx_sandbox_home_20261012
+    user: nnx_sandbox
+    postgresMajorVersion: "18"
+    region: virginia
+    plan: basic-256mb
+    diskSizeGB: 1
+    storageAutoscalingEnabled: false
+    ipAllowList: []

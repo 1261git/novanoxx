@@ -10,7 +10,7 @@ const mail=auth.mail();
 const mailWorker=mail?require('./mail-worker.cjs').create({mail,gate:backupGate,
   paused:require('./mail-worker.cjs').sendPaused(),
   onError:()=>console.error('NNX_MAIL_WORKER_DEFERRED')}):null;
-const engine=auth.localEngine();const engineWorker=engine?require('./engine-cycle-worker.cjs')({engine,intervalMs:Number(process.env.NNX_TEST_ENGINE_INTERVAL_MS||60000),gate:typeof backupGate.runTask==='function'?backupGate:{runTask:fn=>Promise.resolve().then(fn)},onError:()=>console.error('NNX_TEST_ENGINE_CYCLE_DEFERRED')}):null;
+const engine=auth.localEngine();const engineWorker=engine&&!engine.reviewOnly?require('./engine-cycle-worker.cjs')({engine,intervalMs:Number(process.env.NNX_TEST_ENGINE_INTERVAL_MS||60000),gate:typeof backupGate.runTask==='function'?backupGate:{runTask:fn=>Promise.resolve().then(fn)},onError:()=>console.error('NNX_TEST_ENGINE_CYCLE_DEFERRED')}):null;
 const types = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.jpg':'image/jpeg','.png':'image/png','.webp':'image/webp','.mp4':'video/mp4','.woff2':'font/woff2'};
 const server = http.createServer(backupGate.wrap(async (req,res) => {
   const writeHead=res.writeHead;

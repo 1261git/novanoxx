@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.production.example
+!.env.review.example
 *.sqlite*
 *.jpg
 !assets/**

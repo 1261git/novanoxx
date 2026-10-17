@@ -1,0 +1,11 @@
+.review-checkout-dialog{box-sizing:border-box;width:min(42rem,calc(100vw - 2rem));max-height:calc(100svh - 2rem);overflow:auto;padding:clamp(20px,4vw,36px);border:1px solid var(--line,#444);background:#17191f;color:#f4f4f4}
+.review-checkout-dialog::backdrop{background:#000b;backdrop-filter:blur(4px)}
+.review-checkout-dialog h2{margin:0 0 16px;overflow-wrap:anywhere}
+.review-checkout-dialog p{line-height:1.8;overflow-wrap:anywhere}
+.review-checkout-dialog a{color:var(--accent,#ff6b2b);text-decoration:underline;text-underline-offset:3px}
+.review-checkout-dialog .review-checkout-agreement{display:flex;align-items:flex-start;gap:12px;margin:24px 0;line-height:1.7}
+.review-checkout-dialog .review-checkout-agreement input{width:20px;height:20px;flex:0 0 20px;margin:3px 0 0;accent-color:var(--accent,#ff6b2b)}
+.review-checkout-actions{display:flex;gap:12px;flex-wrap:wrap}
+.review-checkout-actions button{min-height:44px;padding:12px 20px;cursor:pointer}
+.review-checkout-actions button:disabled{opacity:.45;cursor:not-allowed}
+.review-checkout-dialog :focus-visible{outline:2px solid var(--accent,#ff6b2b);outline-offset:4px}
