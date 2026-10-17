@@ -5,7 +5,7 @@ const crypto = require('node:crypto');
 const {promisify} = require('node:util');
 const derive = promisify(crypto.scrypt);
 const dir = process.env.DATA_DIR || path.join(__dirname, '.private');
-if(process.env.NNX_OPERATING_ENGINE==='1')throw Error('OPERATING_ENGINE_ADAPTER_NOT_APPROVED_OR_BOUND');
+
 if(process.env.NNX_REVIEW_MODE!==undefined&&!['0','1'].includes(process.env.NNX_REVIEW_MODE))throw Error('REVIEW_MODE_FLAG_REQUIRED');
 if(process.env.NNX_REVIEW_MODE==='1')require('./review-environment.cjs').verifyDirectory(require('./review-environment.cjs').config());
 fs.mkdirSync(dir, {recursive:true});
@@ -35,6 +35,7 @@ const productionSite=process.env.RENDER_SERVICE_ID==='srv-db5aqunlk1mc739bi0m0'&
 if(productionSite){localEngine=require('./production-runtime.cjs')({db,dir});applicationEngine.configure(localEngine);}
 const previewEnv=productionSite?{productionSite:true,NNX_REVIEW_MODE:'1',NNX_REVIEW_TOSS_CLIENT_KEY:/^test_ck_/.test(process.env.TOSS_CLIENT_KEY||'')?process.env.TOSS_CLIENT_KEY:undefined}:process.env;
 const reviewCheckout=process.env.NNX_REVIEW_MODE==='1'||productionSite?require('./review-checkout.cjs')({db,user,json,origin:deployment.base,env:previewEnv}):null;
+const operatingCheckout=localEngine?.commerce?require('./operating-commerce-http.cjs')({commerce:localEngine.commerce,subscription:localEngine.subscription,user,json,origin:deployment.base}):null;
 accountMail=require('./mail-runtime.cjs').configured({db,origin:deployment.base});
 const attempts = new Map();
 function json(res,status,data,headers={}){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store',...headers});res.end(JSON.stringify(data));}
@@ -48,8 +49,9 @@ module.exports=async function auth(req,res,name){
   const actor=user(req);if(!actor){json(res,401,{error:'로그인이 필요합니다.'});return true;}
   json(res,200,{mode:'OPERATING',ready:false,testBalance:0,history:[],orders:[],testRecordsArchived:true});return true;
  }
+ if(operatingCheckout&&await operatingCheckout(req,res,name))return true;
  if(reviewCheckout&&await reviewCheckout(req,res,name))return true;
- if(name==='/api/health'&&req.method==='GET'){try{db.prepare('SELECT 1 AS ok').get();const migrated=db.backend==='postgres'&&process.env.NNX_REVIEW_MODE!=='1'?!!db.prepare("SELECT version FROM nnx_migrations WHERE version='sqlite-v1'").get():false;json(res,200,{status:'ok',reviewOnly:process.env.NNX_REVIEW_MODE==='1',productionSite,paymentPreview:productionSite,database:db.backend||'sqlite',migrationVerified:migrated});}catch{json(res,503,{status:'unavailable'});}return true;}
+ if(name==='/api/health'&&req.method==='GET'){try{db.prepare('SELECT 1 AS ok').get();const migrated=db.backend==='postgres'&&process.env.NNX_REVIEW_MODE!=='1'?!!db.prepare("SELECT version FROM nnx_migrations WHERE version='sqlite-v1'").get():false;json(res,200,{status:'ok',reviewOnly:process.env.NNX_REVIEW_MODE==='1',productionSite,paymentPreview:productionSite,operatingConnections:!!localEngine?.commerce,discoveryCollection:localEngine?.discoveryBackup?.state().ready===true,database:db.backend||'sqlite',migrationVerified:migrated});}catch{json(res,503,{status:'unavailable'});}return true;}
  if(!name.startsWith('/api/auth/')&&!name.startsWith('/api/catalog')&&!name.startsWith('/api/engine/')&&!['/api/contest','/api/contest/media'].includes(name))return false;
  try{
  if(name==='/api/auth/mail/status'&&req.method==='GET'){json(res,200,{enabled:!!accountMail});return true;}
@@ -74,7 +76,7 @@ module.exports=async function auth(req,res,name){
  if(await kakao(req,res,name,db,session,json,{user:user(req),sessionHash:hashToken(token(req))}))return true;
  if(await naver(req,res,name,db,session,json))return true;
  if(await google(req,res,name,db,session,json))return true;
- if(name==='/api/auth/me'&&req.method==='GET'){const u=user(req);const raw=(req.headers.cookie||'').split(';').map(v=>v.trim()).find(v=>v.startsWith('nnx_recent_login='))?.split('=')[1];const recent=['google','naver','kakao','email'].includes(raw)?raw:null;if(u){db.prepare('INSERT OR IGNORE INTO account_status(user_id) VALUES(?)').run(u.id);const status=db.prepare('SELECT plan,neon_balance FROM account_status WHERE user_id=?').get(u.id);u.plan=status.plan;u.neonBalance=status.neon_balance;u.isAdmin=isScopedAdmin(u);u.adminPermissions=localEngine?.admin.permissions(u.id)||(baseAdmin(u)?['*']:[]);const event=db.prepare('SELECT provider,occurred FROM login_events WHERE token=?').get(hashToken(token(req)));u.loginProvider=event?.provider||null;u.lastLoginAt=event?.occurred||null;u.connectedProviders=db.prepare('SELECT provider FROM identities WHERE user_id=?').all(u.id).map(v=>v.provider);}json(res,200,{user:u,recentLogin:recent});return true;}
+ if(name==='/api/auth/me'&&req.method==='GET'){const u=user(req);const raw=(req.headers.cookie||'').split(';').map(v=>v.trim()).find(v=>v.startsWith('nnx_recent_login='))?.split('=')[1];const recent=['google','naver','kakao','email'].includes(raw)?raw:null;if(u){db.prepare('INSERT OR IGNORE INTO account_status(user_id) VALUES(?)').run(u.id);const status=db.prepare('SELECT plan,neon_balance FROM account_status WHERE user_id=?').get(u.id);u.plan=productionSite&&localEngine?.subscription.plan?localEngine.subscription.plan(u.id).plan:status.plan;u.neonBalance=status.neon_balance;u.isAdmin=isScopedAdmin(u);u.adminPermissions=localEngine?.admin.permissions(u.id)||(baseAdmin(u)?['*']:[]);const event=db.prepare('SELECT provider,occurred FROM login_events WHERE token=?').get(hashToken(token(req)));u.loginProvider=event?.provider||null;u.lastLoginAt=event?.occurred||null;u.connectedProviders=db.prepare('SELECT provider FROM identities WHERE user_id=?').all(u.id).map(v=>v.provider);}json(res,200,{user:u,recentLogin:recent});return true;}
  if(name==='/api/auth/creator-profile'&&req.method==='GET'){const u=user(req);if(!u){json(res,401,{error:'로그인이 필요해요.'});return true;}json(res,200,{profile:db.prepare('SELECT display_name AS displayName,bio,country,language,portfolio,(SELECT updated FROM creator_avatars WHERE user_id=creator_profiles.user_id) AS avatarVersion FROM creator_profiles WHERE user_id=?').get(u.id)||null});return true;}
  if(req.method!=='POST'){json(res,405,{error:'지원하지 않는 요청입니다.'});return true;}
  const origin=req.headers.origin;if(origin!==deployment.base&&(process.env.NODE_ENV==='production'||origin!=='http://127.0.0.1:4317')){json(res,403,{error:'요청 출처를 확인할 수 없습니다.'});return true;}

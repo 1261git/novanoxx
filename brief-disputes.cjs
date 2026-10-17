@@ -1,6 +1,6 @@
 'use strict';
 const crypto=require('node:crypto');
-module.exports=function({db,member,request,order,event,clock,isAdmin,busy,dir,store,usage,tx}){
+module.exports=function({db,member,request,order,event,clock,isAdmin,busy,dir,store,usage,tx,paymentAuthority=null}){
  db.exec(`CREATE TABLE IF NOT EXISTS engine_briefs(id TEXT PRIMARY KEY,owner TEXT NOT NULL,state TEXT NOT NULL,body TEXT NOT NULL,version INTEGER NOT NULL,selected_offer TEXT,created INTEGER NOT NULL,updated INTEGER NOT NULL);
  CREATE TABLE IF NOT EXISTS engine_brief_offers(id TEXT PRIMARY KEY,brief_id TEXT NOT NULL,seller TEXT NOT NULL,state TEXT NOT NULL,body TEXT NOT NULL,version INTEGER NOT NULL,created INTEGER NOT NULL,UNIQUE(brief_id,seller));
  CREATE TABLE IF NOT EXISTS engine_disputes(id TEXT PRIMARY KEY,order_id TEXT NOT NULL,opened_by TEXT NOT NULL,state TEXT NOT NULL,previous_status TEXT NOT NULL,remaining_review INTEGER,version INTEGER NOT NULL,assignee TEXT,summary TEXT NOT NULL,created INTEGER NOT NULL,updated INTEGER NOT NULL);
@@ -8,7 +8,7 @@ module.exports=function({db,member,request,order,event,clock,isAdmin,busy,dir,st
  CREATE TABLE IF NOT EXISTS engine_review_events(id TEXT PRIMARY KEY,target_id TEXT NOT NULL,actor TEXT NOT NULL,kind TEXT NOT NULL,detail TEXT NOT NULL,created INTEGER NOT NULL);`);
  const fail=code=>{throw Error(code);},id=()=>crypto.randomUUID();
  const audit=(target,actor,kind,detail)=>db.prepare('INSERT INTO engine_review_events VALUES(?,?,?,?,?,?)').run(id(),target,actor,kind,JSON.stringify(detail),clock());
- const checkout=require('./brief-checkout.cjs')({db,member,request,clock,audit,event});
+ const checkout=require('./brief-checkout.cjs')({db,member,request,clock,audit,event,paymentAuthority});
  const correspondence=require('./brief-correspondence.cjs')({db,dir,store,usage,member,request,tx,clock,audit});
  const text=(value,max)=>typeof value==='string'&&value.trim().length>0&&value.length<=max;
  const history=target=>db.prepare('SELECT actor,kind,detail,created FROM engine_review_events WHERE target_id=? ORDER BY created,id').all(target).map(e=>({...e,detail:JSON.parse(e.detail)}));
