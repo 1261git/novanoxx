@@ -24,7 +24,7 @@ function operating(options){
  const core=require('./sandbox-engine-core.cjs')({...options,paymentAuthority:commerce.authority});commerce.bind(core);const discoveryEnv={...options.env,NNX_DISCOVERY_BACKUP_ENABLED:options.env.NNX_DISCOVERY_BACKUP_ENABLED||(options.env.NNX_BACKUP_AUTOMATION==='1'?'1':'0')};const discovery=require('./discovery-raw-backup.cjs')({...options,env:discoveryEnv});
  const guard=(fn)=>(actor,i,...rest)=>{commerce.paidOrder(actor,i?.orderId);return fn(actor,i,...rest);};
  const upload=fn=>(actor,req,i)=>{commerce.paidOrder(actor,i?.orderId);return fn(actor,req,i);};
- const attachmentDownload=(actor,id)=>{const f=options.db.prepare('SELECT order_id FROM engine_files WHERE id=?').get(id);commerce.paidOrder(actor,f?.order_id);return core.work.attachmentDownload(actor,id);};
+ const attachmentDownload=(actor,id)=>{const f=options.db.prepare('SELECT order_id FROM engine_order_attachments WHERE id=?').get(id);commerce.paidOrder(actor,f?.order_id);return core.work.attachmentDownload(actor,id);};
  return {...core,environment:'PRODUCTION',billing:'TOSS_CONTRACT_GATED',productionSite:true,scheduledJobsDisabled:false,paymentPreview:!commerce.enabled(),commerce,
   work:{...core.work,state:commerce.workState,purchase:()=>{throw Error('PAYMENT_VERIFICATION_REQUIRED');},act:guard(core.work.act),upload:upload(core.work.upload),attachmentUpload:upload(core.work.attachmentUpload),attachmentDownload,deliver:guard(core.work.deliver),stageRegistered:guard(core.work.stageRegistered),download:commerce.download},
   subscription,
