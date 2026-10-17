@@ -8,6 +8,7 @@ module.exports=function({db,member,request,order,event,clock,isAdmin,busy,dir,st
  CREATE TABLE IF NOT EXISTS engine_review_events(id TEXT PRIMARY KEY,target_id TEXT NOT NULL,actor TEXT NOT NULL,kind TEXT NOT NULL,detail TEXT NOT NULL,created INTEGER NOT NULL);`);
  const fail=code=>{throw Error(code);},id=()=>crypto.randomUUID();
  const audit=(target,actor,kind,detail)=>db.prepare('INSERT INTO engine_review_events VALUES(?,?,?,?,?,?)').run(id(),target,actor,kind,JSON.stringify(detail),clock());
+ const checkout=require('./brief-checkout.cjs')({db,member,request,clock,audit,event});
  const correspondence=require('./brief-correspondence.cjs')({db,dir,store,usage,member,request,tx,clock,audit});
  const text=(value,max)=>typeof value==='string'&&value.trim().length>0&&value.length<=max;
  const history=target=>db.prepare('SELECT actor,kind,detail,created FROM engine_review_events WHERE target_id=? ORDER BY created,id').all(target).map(e=>({...e,detail:JSON.parse(e.detail)}));
@@ -19,9 +20,9 @@ module.exports=function({db,member,request,order,event,clock,isAdmin,busy,dir,st
  }
  function briefState(actor){member(actor);const rows=db.prepare('SELECT * FROM engine_briefs ORDER BY created DESC,id').all();return {environment:'SANDBOX',financialEffects:false,briefs:rows.filter(b=>b.owner===actor||b.state==='OPEN'||db.prepare('SELECT id FROM engine_brief_offers WHERE brief_id=? AND seller=?').get(b.id,actor)).map(b=>{
    const offers=db.prepare('SELECT * FROM engine_brief_offers WHERE brief_id=? ORDER BY created,id').all(b.id).filter(o=>b.owner===actor||o.seller===actor).map(o=>({...o,body:JSON.parse(o.body)}));
-   return {...b,body:JSON.parse(b.body),offers,messages:b.owner===actor||offers.some(o=>o.seller===actor)?correspondence.state(actor,b.id):[],history:b.owner===actor?history(b.id).filter(h=>!['PRIVATE_MESSAGE','ATTACHMENT_STAGED'].includes(h.kind)):[]};
+   return {...b,checkout:checkout.state(actor,b),body:JSON.parse(b.body),offers,messages:b.owner===actor||offers.some(o=>o.seller===actor)?correspondence.state(actor,b.id):[],history:b.owner===actor?history(b.id).filter(h=>!['PRIVATE_MESSAGE','ATTACHMENT_STAGED'].includes(h.kind)):[]};
   })};}
- function briefAct(actor,i){if(i.action==='briefMessage')return correspondence.act(actor,i);return request(actor,i,()=>{
+ function briefAct(actor,i){if(['briefTerms','briefCheckout'].includes(i.action))return checkout.act(actor,i);if(i.action==='briefMessage')return correspondence.act(actor,i);return request(actor,i,()=>{
   let b,result;
   if(i.action==='briefCreate'){const content=body(i.body);b={id:id(),owner:actor,state:'DRAFT',body:JSON.stringify(content),version:1,selected_offer:null,created:clock(),updated:clock()};db.prepare('INSERT INTO engine_briefs VALUES(?,?,?,?,?,?,?,?)').run(...Object.values(b));audit(b.id,actor,'CREATED',{body:content});result={id:b.id,state:b.state,version:1};}
   else{

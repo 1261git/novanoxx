@@ -15,15 +15,15 @@ db.exec("CREATE TABLE IF NOT EXISTS account_status(user_id TEXT PRIMARY KEY,plan
 const google=require('./google-auth.cjs');
 const naver=require('./naver-auth.cjs');
 const kakao=require('./kakao-auth.cjs');
-let localEngine;const checkEngineActivation=asset=>localEngine?.subscription.checkActivation(asset);
-const memberAdmin=require('./member-administration.cjs')({db,user,json,origin:deployment.base});
-const creatorApi=require('./creator-api.cjs')(db,dir,user,json,undefined,{checkActivation:checkEngineActivation,usage:()=>localEngine?.usage()});
+let localEngine;const baseAdmin=require('./admin-policy.cjs'),isScopedAdmin=u=>Boolean(u&&(baseAdmin(u)||localEngine?.admin.hasAny(u.id)));const checkEngineActivation=asset=>localEngine?.subscription.checkActivation(asset);
+const memberAdmin=require('./member-administration.cjs')({db,user,json,origin:deployment.base,isAdmin:isScopedAdmin});
+const creatorApi=require('./creator-api.cjs')(db,dir,user,json,isScopedAdmin,{checkActivation:checkEngineActivation,usage:()=>localEngine?.usage()});
 const savedApi=require('./account-saved.cjs')({db,user,json,origin:deployment.base});
-const catalogAdmin=require('./catalog-admin.cjs')({db,user,json,origin:deployment.base,checkActivation:checkEngineActivation});
-const applicationEngine=require('./application-engine-bridge.cjs')({user,json,origin:deployment.base});
-const integrationReadiness=require('./integration-readiness.cjs')({db,dir,user,json,origin:deployment.base});
-const operationsCases=require('./operations-cases.cjs')({db,user,json,origin:deployment.base});
-const operationsOverview=require('./operations-overview.cjs')({db,user,json});
+const catalogAdmin=require('./catalog-admin.cjs')({db,user,json,origin:deployment.base,isAdmin:isScopedAdmin,checkActivation:checkEngineActivation});
+const applicationEngine=require('./application-engine-bridge.cjs')({user,json,origin:deployment.base,isAdmin:isScopedAdmin});
+const integrationReadiness=require('./integration-readiness.cjs')({db,dir,user,json,origin:deployment.base,isAdmin:isScopedAdmin});
+const operationsCases=require('./operations-cases.cjs')({db,user,json,origin:deployment.base,isAdmin:isScopedAdmin});
+const operationsOverview=require('./operations-overview.cjs')({db,user,json,isAdmin:isScopedAdmin});
 let accountMail;
 const neonPayments=require('./neon-payments.cjs')(db,user,json,{notify:input=>accountMail?.notificationInside(input),orderStatus:(actor,id)=>localEngine?.work.orderStatus(actor,id)});
 if(process.env.NNX_LOCAL_ENGINE_TEST==='1'){localEngine=require('./local-test-engine.cjs')({db,dir});applicationEngine.configure(localEngine);}
@@ -33,7 +33,7 @@ function json(res,status,data,headers={}){res.writeHead(status,{'Content-Type':'
 function token(req){const cookie=(req.headers.cookie||'').split(';').map(x=>x.trim()).find(x=>x.startsWith('nnx_session='));return cookie?cookie.slice(12):'';}
 function hashToken(value){return crypto.createHash('sha256').update(value).digest('hex');}
 function user(req){const t=token(req);if(!t)return null;const u=db.prepare('SELECT u.id,u.name,u.email FROM users u JOIN sessions s ON s.user_id=u.id WHERE s.token=? AND s.expires>?').get(hashToken(t),Date.now())||null;return u&&(memberAdmin.blocked(u.id)||accountMail&&!accountMail.verified(u.id))?null:u;}
-function session(res,u,redirectTo,provider="email"){if(memberAdmin.blocked(u.id)){json(res,403,{error:'이 계정은 이용이 제한되어 있습니다. 고객 지원에 문의해주세요.'});return;}const t=crypto.randomBytes(32).toString('hex');if(!accountMail)db.prepare('DELETE FROM sessions WHERE expires<?').run(Date.now());db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hashToken(t),u.id,Date.now()+7*86400000);db.prepare('INSERT INTO login_events VALUES(?,?,?,?)').run(hashToken(t),u.id,provider,Date.now());const recentCookie='nnx_recent_login='+provider+'; HttpOnly; SameSite=Lax; Path=/; Max-Age=31536000';if(redirectTo){res.writeHead(303,{'Location':redirectTo,'Cache-Control':'no-store','Referrer-Policy':'no-referrer','Set-Cookie':[recentCookie,`nnx_session=${t}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800`,'nnx_oauth=; HttpOnly; SameSite=Lax; Path=/api/auth/google; Max-Age=0']});res.end();return;}json(res,200,{user:{id:u.id,name:u.name,email:u.email,loginProvider:provider,isAdmin:require('./admin-policy.cjs')(u)},recentLogin:provider},{'Set-Cookie':[recentCookie,`nnx_session=${t}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800`]});}
+function session(res,u,redirectTo,provider="email"){if(memberAdmin.blocked(u.id)){json(res,403,{error:'이 계정은 이용이 제한되어 있습니다. 고객 지원에 문의해주세요.'});return;}const t=crypto.randomBytes(32).toString('hex');if(!accountMail)db.prepare('DELETE FROM sessions WHERE expires<?').run(Date.now());db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(hashToken(t),u.id,Date.now()+7*86400000);db.prepare('INSERT INTO login_events VALUES(?,?,?,?)').run(hashToken(t),u.id,provider,Date.now());const recentCookie='nnx_recent_login='+provider+'; HttpOnly; SameSite=Lax; Path=/; Max-Age=31536000';if(redirectTo){res.writeHead(303,{'Location':redirectTo,'Cache-Control':'no-store','Referrer-Policy':'no-referrer','Set-Cookie':[recentCookie,`nnx_session=${t}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800`,'nnx_oauth=; HttpOnly; SameSite=Lax; Path=/api/auth/google; Max-Age=0']});res.end();return;}json(res,200,{user:{id:u.id,name:u.name,email:u.email,loginProvider:provider,isAdmin:isScopedAdmin(u),adminPermissions:localEngine?.admin.permissions(u.id)||(baseAdmin(u)?['*']:[])},recentLogin:provider},{'Set-Cookie':[recentCookie,`nnx_session=${t}; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800`]});}
 async function body(req,{raw=false,max=8192}={}){let size=0,chunks=[];for await(const c of req){size+=c.length;if(size>max)throw new Error('SIZE');chunks.push(c);}const bytes=Buffer.concat(chunks);return raw?bytes:JSON.parse(bytes.toString('utf8'));}
 module.exports=async function auth(req,res,name){
  if(name==='/api/health'&&req.method==='GET'){try{db.prepare('SELECT 1 AS ok').get();const migrated=db.backend==='postgres'?!!db.prepare("SELECT version FROM nnx_migrations WHERE version='sqlite-v1'").get():false;json(res,200,{status:'ok',database:db.backend||'sqlite',migrationVerified:migrated});}catch{json(res,503,{status:'unavailable'});}return true;}
@@ -46,6 +46,7 @@ module.exports=async function auth(req,res,name){
   if(req.headers['content-type']?.split(';')[0]!=='application/json'){json(res,415,{error:'JSON 요청이 필요합니다.'});return true;}
   json(res,200,accountMail.webhook(await body(req,{raw:true,max:65536}),req.headers));return true;
  }
+ if(localEngine?.admin&&(name.startsWith('/api/auth/admin/')||/\/engine\/(?:dispute-admin|subscription-admin|roles|role-action)/.test(name))){const actor=user(req);if(!actor){json(res,401,{error:'로그인이 필요합니다.'});return true;}if(!localEngine.admin.route(actor.id,name,req.method)){json(res,403,{error:'ACCESS_DENIED'});return true;}}
  if(await savedApi(req,res,name))return true;
  if(await catalogAdmin(req,res,name))return true;
  if(await applicationEngine.handle(req,res,name))return true;
@@ -58,7 +59,7 @@ module.exports=async function auth(req,res,name){
  if(await kakao(req,res,name,db,session,json,{user:user(req),sessionHash:hashToken(token(req))}))return true;
  if(await naver(req,res,name,db,session,json))return true;
  if(await google(req,res,name,db,session,json))return true;
- if(name==='/api/auth/me'&&req.method==='GET'){const u=user(req);const raw=(req.headers.cookie||'').split(';').map(v=>v.trim()).find(v=>v.startsWith('nnx_recent_login='))?.split('=')[1];const recent=['google','naver','kakao','email'].includes(raw)?raw:null;if(u){db.prepare('INSERT OR IGNORE INTO account_status(user_id) VALUES(?)').run(u.id);const status=db.prepare('SELECT plan,neon_balance FROM account_status WHERE user_id=?').get(u.id);u.plan=status.plan;u.neonBalance=status.neon_balance;u.isAdmin=require('./admin-policy.cjs')(u);const event=db.prepare('SELECT provider,occurred FROM login_events WHERE token=?').get(hashToken(token(req)));u.loginProvider=event?.provider||null;u.lastLoginAt=event?.occurred||null;u.connectedProviders=db.prepare('SELECT provider FROM identities WHERE user_id=?').all(u.id).map(v=>v.provider);}json(res,200,{user:u,recentLogin:recent});return true;}
+ if(name==='/api/auth/me'&&req.method==='GET'){const u=user(req);const raw=(req.headers.cookie||'').split(';').map(v=>v.trim()).find(v=>v.startsWith('nnx_recent_login='))?.split('=')[1];const recent=['google','naver','kakao','email'].includes(raw)?raw:null;if(u){db.prepare('INSERT OR IGNORE INTO account_status(user_id) VALUES(?)').run(u.id);const status=db.prepare('SELECT plan,neon_balance FROM account_status WHERE user_id=?').get(u.id);u.plan=status.plan;u.neonBalance=status.neon_balance;u.isAdmin=isScopedAdmin(u);u.adminPermissions=localEngine?.admin.permissions(u.id)||(baseAdmin(u)?['*']:[]);const event=db.prepare('SELECT provider,occurred FROM login_events WHERE token=?').get(hashToken(token(req)));u.loginProvider=event?.provider||null;u.lastLoginAt=event?.occurred||null;u.connectedProviders=db.prepare('SELECT provider FROM identities WHERE user_id=?').all(u.id).map(v=>v.provider);}json(res,200,{user:u,recentLogin:recent});return true;}
  if(name==='/api/auth/creator-profile'&&req.method==='GET'){const u=user(req);if(!u){json(res,401,{error:'로그인이 필요해요.'});return true;}json(res,200,{profile:db.prepare('SELECT display_name AS displayName,bio,country,language,portfolio,(SELECT updated FROM creator_avatars WHERE user_id=creator_profiles.user_id) AS avatarVersion FROM creator_profiles WHERE user_id=?').get(u.id)||null});return true;}
  if(req.method!=='POST'){json(res,405,{error:'지원하지 않는 요청입니다.'});return true;}
  const origin=req.headers.origin;if(origin!==deployment.base&&(process.env.NODE_ENV==='production'||origin!=='http://127.0.0.1:4317')){json(res,403,{error:'요청 출처를 확인할 수 없습니다.'});return true;}
