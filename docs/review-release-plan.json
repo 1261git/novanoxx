@@ -273,5 +273,15 @@
       "Separate domain binding decision"
     ],
     "recordedAt": "2026-10-17T19:19:23.246Z"
+  },
+  "supersedingProductionDeployment180": {
+    "origin": "https://novanoxx.com",
+    "serviceId": "srv-db5aqunlk1mc739bi0m0",
+    "deployedCommit": "d986dd7b64e366d93c98bb52f9898b364deaba09",
+    "deployId": "dep-db9sprhsrm7s739t4m80",
+    "reviewHistoryPreserved": true,
+    "operatingDataReused": true,
+    "contractPending": true,
+    "reference": "stage10-readiness.json#productionDeployment180"
   }
 }

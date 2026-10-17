@@ -1,12 +1,12 @@
 {
-  "revision": 179,
-  "status": "REVIEW_DEPLOYED_OPERATING_RELEASE_NOT_COMPLETE",
+  "revision": 180,
+  "status": "ACTUAL_PRODUCTION_DEPLOYED_PRECONTRACT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
     "sha256": "35baf3bcef6b10632787d8661c4a48992e70181267c4e4d5fc6d7070b3b1b339",
     "historicalRowsPreserved": true
   },
-  "policy": "운영 거래 전환은 원래10단계 이후 별도 적용 방침. 회신 외 남은 구현도 있음. 로컬 확인과 운영 승인/계약/부하·전체GUI 인증을 구분.",
+  "policy": "실제 운영 서버와 도메인에 10단계 소스 및 비금융 기능을 배포했습니다. 실결제·유료 주문권한·자동청구·지급은 계약과 운영 연결 검증 전 비활성입니다. 179 TEST 배포 기록과 구분합니다.",
   "groups": [
     {
       "id": "LOCAL_TRANSACTION_GAPS",
@@ -2631,5 +2631,139 @@
       ],
       "recordedAt": "2026-10-17T19:19:23.246Z"
     }
+  },
+  "productionDeployment180": {
+    "revision": 180,
+    "status": "ACTUAL_PRODUCTION_DEPLOYED_PRECONTRACT",
+    "productionOrigin": "https://novanoxx.com",
+    "legacyProductionOrigin": "https://novanoxx.onrender.com",
+    "serviceId": "srv-db5aqunlk1mc739bi0m0",
+    "sourceBranch": "main",
+    "deployedCommit": "d986dd7b64e366d93c98bb52f9898b364deaba09",
+    "deployId": "dep-db9sprhsrm7s739t4m80",
+    "deployStatus": "live",
+    "finishedAt": "2026-10-17T19:32:27.214394Z",
+    "finishedAtKST": "2026-10-18 04:32:27 KST",
+    "health": {
+      "status": "ok",
+      "reviewOnly": false,
+      "productionSite": true,
+      "paymentPreview": true,
+      "database": "postgres",
+      "migrationVerified": true
+    },
+    "corrects179": "179 deployed TEST only due to misunderstanding. 180 explicitly deploys existing operating service and data, not a replacement review database.",
+    "scope": {
+      "allCandidateSourceMerged": true,
+      "uiAndTranslations": true,
+      "adminCatalogAndMemberFunctions": true,
+      "registrationAndFileProtection": true,
+      "briefNegotiationAndContests": true,
+      "coreNonfinancialFunctionsBound": true,
+      "simulatedPurchasesBlockedInProduction": true,
+      "paidWorkflowMutationsBlockedUntilOperatingPaymentHandoff": true,
+      "actualLivePaymentOrPayout": false,
+      "analyticsCollection": false
+    },
+    "preservation": {
+      "serverSnapshot": "/data/.stage10-release180-20261018",
+      "dumpBytes": 760301,
+      "dumpArchiveListChecked": true,
+      "fullRestorePerformed": false,
+      "originalPublicTables": 20,
+      "changedTables": [],
+      "originalUploadedFiles": 5,
+      "changedFiles": [],
+      "verifiedAt": "2026-10-17T19:32:57.764Z",
+      "originalLocalFiles": 675,
+      "changedLocalFiles": [],
+      "testSiteChangedIn180": false,
+      "testBalancesTransferred": false,
+      "testOrdersPromoted": false,
+      "originalDirtyCheckoutCommittedOrReset": false
+    },
+    "schema": {
+      "namespace": "nnx_operating_v1",
+      "explicitlyPrepared": true,
+      "sourceRowsMoved": 0,
+      "repositoryBoundToPaidWorkflow": false,
+      "automaticSchemaMigration": false
+    },
+    "domain": {
+      "names": [
+        "novanoxx.com",
+        "www.novanoxx.com"
+      ],
+      "dnsVerified": true,
+      "certificatesIssued": true,
+      "wwwRedirectsToRoot": true,
+      "renderIncludedBefore": 0,
+      "renderIncludedLimit": 2,
+      "addedDns": [
+        {
+          "type": "A",
+          "name": "@",
+          "value": "216.24.57.1",
+          "proxy": false
+        },
+        {
+          "type": "CNAME",
+          "name": "www",
+          "value": "novanoxx.onrender.com",
+          "proxy": false
+        }
+      ],
+      "existingMailDnsRecordsPreserved": 9,
+      "newDomainMonthlyUSD": 0,
+      "newTlsMonthlyUSD": 0
+    },
+    "cost": {
+      "newPaidResources": 0,
+      "newFixedMonthlyUSD": 0,
+      "existingComputeAndStorageUnchanged": true,
+      "existingBandwidthGB": 13.39,
+      "includedBandwidthGB": 5,
+      "existingBandwidthChargeUSD": 1.35,
+      "variableUsageNotGuaranteedZero": true
+    },
+    "financialPreparation": {
+      "file": "financial-provider.cjs",
+      "paymentApprovalAndReconciliation": true,
+      "billingIssueAndChargeAdapter": true,
+      "refundAdapter": true,
+      "billingCipher": "AES-256-GCM bound to subscription and key version",
+      "fee": "12 percent, exact won floor with BigInt",
+      "settlement": "HELD or RELEASE_REVIEW_REQUIRED, no automatic payout",
+      "providerCallsInTests": 0,
+      "liveKeysReadOrCreated": false,
+      "liveEnabled": false,
+      "liveRoutesOrRenewalSchedulerBound": false
+    },
+    "checks": {
+      "targetedCasesPassed": 13,
+      "productionStartupSQLiteAndEmbeddedPostgres": true,
+      "sourceRowAndFileFingerprintsEqual": true,
+      "publicHttpsAndWwwRedirect": true,
+      "customDomainNormalOriginStatus": 400,
+      "untrustedOriginStatus": 403,
+      "actualPublicLanguageDialog": true,
+      "actualEnglishSwitch": true,
+      "koreanRestored": true,
+      "actualProductionLoginOrPaymentCompleted": false,
+      "wholeGuiCertified": false
+    },
+    "remaining": [
+      "Contract decisions: NEON model/refund/limits/settlement and recurring-billing availability",
+      "Bind verified payment records atomically to operating order/delivery/file rights; reconcile provider failures before retry",
+      "Bind encrypted billing credentials and unique monthly cycles to operating subscriptions; no scheduler active yet",
+      "Actual payout adapter and contract-specific merchant onboarding",
+      "Register custom-domain OAuth callbacks with Google/Naver/Kakao; original onrender login configuration retained, social buttons unavailable on new domain pending configuration",
+      "Production privacy/offsite restore pipeline, remaining accessibility/native-language/legal/document checks"
+    ],
+    "proof": [
+      "production180-domain-language.png",
+      "production180-domains-verified.png"
+    ],
+    "fullStage10Complete": false
   }
 }
