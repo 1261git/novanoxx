@@ -1,6 +1,6 @@
 // Reference translations of existing Korean help and agreement copy. No new payment policy is defined here.
 function renderEnglishGuide(kind){
- if(uiLocale()!=='en-US')return false;
+ if(uiReferenceLanguage()!=='en')return false;
  const link=(url,text)=>'<a class="outline-link" href="#/'+url+'">'+text+'</a>';
  const heading=(tag,title,description)=>pageHeading(tag,title,description);
  const section=(title,text)=>'<section class="page-panel"><h2>'+title+'</h2><p>'+text+'</p></section>';
