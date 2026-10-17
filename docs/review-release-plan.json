@@ -1,7 +1,7 @@
 {
   "version": "REVIEW_RELEASE_AND_OPERATING_CONNECTION_V1",
   "revision": 179,
-  "status": "DEPLOYMENT_AUTHORIZED_PREPARING_EXISTING_RESOURCES",
+  "status": "DEPLOYED_REVIEW_ONLY",
   "reviewGoal": "Public review site with product checkout and subscription card registration, without payment approval",
   "notFullStage10Completion": true,
   "sourceBranch": "codex/stage10-account-saved-20261017",
@@ -10,9 +10,9 @@
     "serviceName": "novanoxx-sandbox-staging",
     "observedState": "not_suspended",
     "region": "virginia",
-    "currentBranch": "codex/isolated-staging",
+    "currentBranch": "codex/stage10-account-saved-20261017",
     "autoDeploy": "off",
-    "currentDockerfile": "Dockerfile.sandbox",
+    "currentDockerfile": "Dockerfile",
     "proposedDockerfile": "Dockerfile",
     "disk": {
       "id": "dsk-db83ih8n74is73dlco40",
@@ -44,7 +44,9 @@
       "existingBandwidthChargeUSD": 1.35,
       "newFixedMonthlyChargesPlannedUSD": 0,
       "zeroVariableCostGuaranteed": false
-    }
+    },
+    "dedicatedDatabase": "nnx_review_20261018",
+    "dedicatedDirectory": "/var/data/nnx-review-20261018"
   },
   "reviewFlow": {
     "asset": "server quote -> terms confirmation -> test-key CARD window -> unverified return recorded; NO confirm API",
@@ -61,7 +63,7 @@
     "file": ".env.review.example",
     "clientKey": "NNX_REVIEW_TOSS_CLIENT_KEY via secret/environment UI, test_ck_ only",
     "secretKeyAllowed": false,
-    "samplePasswords": "one-off secret environment inputs, not source or command output"
+    "samplePasswords": "Generated once in dedicated review database; owner private access file outside Git"
   },
   "activationSteps": [
     {
@@ -81,7 +83,7 @@
     },
     {
       "order": 4,
-      "action": "Using pinned candidate code in an authorized one-off session on the existing persistent disk, run prepare-review.cjs --initialize-empty-review-target, then optional seed-review.cjs --seed-owned-review-samples with fresh owner-provided passwords",
+      "action": "Completed pinned provision-review-target.cjs on existing TEST Web Shell; seeded only synthetic reviewer accounts/product in new review database",
       "mutation": true
     },
     {
@@ -102,15 +104,9 @@
   ],
   "initialization": "Explicit offline target initialization only, never startup auto-migrate. Render pre-deploy cannot access persistent disk; do not put directory initialization there.",
   "releaseGates": [
-    "DISK_AND_TEST_DATABASE_CAPACITY",
-    "PINNED_REMOTE_COMMIT",
-    "DEDICATED_DATABASE_AND_DIRECTORY_PREPARED",
-    "REAL_TEST_CLIENT_KEY_CONFIGURED",
-    "REVIEWER_ACCESS_AND_REAL_CATALOG_CONTENT",
-    "EXTERNAL_TOSS_WINDOW_AND_RETURN_VERIFIED",
+    "SUCCESSFUL_AUTHENTICATION_RETURN_NOT_EXERCISED_NO_CARD_ENTRY",
     "BILLING_PRODUCT_AVAILABILITY_CONFIRMED",
-    "BUSINESS_AND_REFUND_DISCLOSURE_REVIEW",
-    "DEPLOYMENT_SCOPE_APPROVAL"
+    "BUSINESS_AND_REFUND_DISCLOSURE_REVIEW"
   ],
   "operating": {
     "version": "OPERATING_CONNECTION_PLAN_V1",
@@ -206,5 +202,76 @@
     "secretKeyRead": false,
     "liveTabDisabled": true,
     "noApplicationSubmitted": true
+  },
+  "actualDeployment": {
+    "revision": 179,
+    "status": "DEPLOYED_REVIEW_ONLY",
+    "origin": "https://novanoxx-sandbox-staging.onrender.com",
+    "serviceId": "srv-db6essivcj2c73fu6460",
+    "deployedCommit": "372fe7175ed4345b872e10a45c8d0acec2fae63f",
+    "initialDeploy": "dep-db9sfam1egvs738fc350",
+    "deployId": "dep-db9sjsijnfac73dg9khg",
+    "blueprintSync": "exe-db9sf1m1egvs738fb8ng",
+    "health": {
+      "status": "ok",
+      "reviewOnly": true,
+      "database": "postgres",
+      "migrationVerified": false
+    },
+    "providerWindows": {
+      "asset": {
+        "amountKRW": 1000,
+        "actualTestWindowOpened": true,
+        "cancelReturn": "CANCELED_NO_APPROVAL"
+      },
+      "subscription": {
+        "plan": "PLUS",
+        "monthlyKRW": 3000,
+        "actualTestBillingWindowOpened": true,
+        "cardInformationEntered": false,
+        "termsAccepted": false,
+        "billingKeyIssued": false
+      },
+      "billingOverlayDefect": "Fixed requestBillingAuth windowTarget self; targeted six-language SDK checks passed"
+    },
+    "preservation": {
+      "originalLocalFiles": 675,
+      "changedLocalFiles": [],
+      "sourceTestTables": 100,
+      "sourceRowsUnchanged": true,
+      "changedSourceTables": [],
+      "sourceVerifiedAt": "2026-10-17T19:16:26.201Z",
+      "sourceDatabase": "nnx_sandbox_home_20261012",
+      "newLogicalDatabase": "nnx_review_20261018",
+      "newDirectory": "/var/data/nnx-review-20261018",
+      "originalOperatingSiteChanged": false
+    },
+    "cost": {
+      "newPaidResources": 0,
+      "newFixedMonthlyUSD": 0,
+      "existingWebMonthlyUSD": 7,
+      "existingPostgresComputeMonthlyUSD": 6,
+      "storageChargesSeparate": true,
+      "previousBandwidthGB": 13.39,
+      "includedBandwidthGB": 5,
+      "previousBandwidthChargeUSD": 1.35,
+      "variableUsageNotGuaranteedZero": true
+    },
+    "liveFinancialActions": false,
+    "operatingSchemaApplied": false,
+    "operatingAdapterBound": false,
+    "fullStage10Complete": false,
+    "domainChanged": false,
+    "automaticDeploy": false,
+    "blueprintAutoSync": false,
+    "reviewerAccess": "review179-access.private.json (outside Git; do not publish passwords)",
+    "remaining": [
+      "Provider contract and live payment model/refund/limits/settlement",
+      "Operating payment approval, encrypted billing-key storage, recurring charges and settlement adapters",
+      "Operating snapshot/account/order/file/entitlement mapping, schema application, reconciliation and rollback",
+      "Production privacy/backup/restore pipeline and pending legal/accessibility/native-language/document verification",
+      "Separate domain binding decision"
+    ],
+    "recordedAt": "2026-10-17T19:19:23.246Z"
   }
 }

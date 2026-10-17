@@ -1,6 +1,6 @@
 {
   "revision": 179,
-  "status": "LOCAL_SCOPE_INVENTORY_NOT_RELEASE_APPROVAL",
+  "status": "REVIEW_DEPLOYED_OPERATING_RELEASE_NOT_COMPLETE",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
     "sha256": "35baf3bcef6b10632787d8661c4a48992e70181267c4e4d5fc6d7070b3b1b339",
@@ -2524,7 +2524,7 @@
     "deployed": false
   },
   "reviewDeployment179": {
-    "status": "LOCAL_CONNECTION_CODE_READY_DEPLOYMENT_AUTHORIZED",
+    "status": "DEPLOYED_REVIEW_ONLY",
     "sharedSandboxCore": "sandbox-engine-core.cjs",
     "sameCoreUsedBy": [
       "local-test-engine.cjs",
@@ -2545,15 +2545,13 @@
       "providerCalls": 0
     },
     "actualBrowser": {
-      "ownedLocalOnly": true,
-      "productCheckout": "price/terms/refund/contact and consent button",
-      "subscription": "monthly prices, billing-auth entry, return list separation",
-      "languages": [
-        "ko",
-        "en"
-      ],
-      "newTranslationAndLayoutDefectsFixed": true,
-      "providerWindowOpened": false
+      "publicHttps": true,
+      "assetTestPaymentWindow": true,
+      "assetCanceledReturnVerified": true,
+      "subscriptionTestCardRegistrationWindow": true,
+      "noCardEntry": true,
+      "wholeGuiCertified": false,
+      "proof": "review179-toss-billing.png"
     },
     "deployment": {
       "authorizedByOwner": true,
@@ -2562,7 +2560,76 @@
       "originalOperatingSiteUnchanged": true,
       "target": "srv-db6essivcj2c73fu6460",
       "dataStrategy": "same application core, distinct records from historical TEST; dedicated logical database on existing instance and new directory on existing disk",
-      "liveKeyEnabled": false
+      "liveKeyEnabled": false,
+      "revision": 179,
+      "status": "DEPLOYED_REVIEW_ONLY",
+      "origin": "https://novanoxx-sandbox-staging.onrender.com",
+      "serviceId": "srv-db6essivcj2c73fu6460",
+      "deployedCommit": "372fe7175ed4345b872e10a45c8d0acec2fae63f",
+      "initialDeploy": "dep-db9sfam1egvs738fc350",
+      "deployId": "dep-db9sjsijnfac73dg9khg",
+      "blueprintSync": "exe-db9sf1m1egvs738fb8ng",
+      "health": {
+        "status": "ok",
+        "reviewOnly": true,
+        "database": "postgres",
+        "migrationVerified": false
+      },
+      "providerWindows": {
+        "asset": {
+          "amountKRW": 1000,
+          "actualTestWindowOpened": true,
+          "cancelReturn": "CANCELED_NO_APPROVAL"
+        },
+        "subscription": {
+          "plan": "PLUS",
+          "monthlyKRW": 3000,
+          "actualTestBillingWindowOpened": true,
+          "cardInformationEntered": false,
+          "termsAccepted": false,
+          "billingKeyIssued": false
+        },
+        "billingOverlayDefect": "Fixed requestBillingAuth windowTarget self; targeted six-language SDK checks passed"
+      },
+      "preservation": {
+        "originalLocalFiles": 675,
+        "changedLocalFiles": [],
+        "sourceTestTables": 100,
+        "sourceRowsUnchanged": true,
+        "changedSourceTables": [],
+        "sourceVerifiedAt": "2026-10-17T19:16:26.201Z",
+        "sourceDatabase": "nnx_sandbox_home_20261012",
+        "newLogicalDatabase": "nnx_review_20261018",
+        "newDirectory": "/var/data/nnx-review-20261018",
+        "originalOperatingSiteChanged": false
+      },
+      "cost": {
+        "newPaidResources": 0,
+        "newFixedMonthlyUSD": 0,
+        "existingWebMonthlyUSD": 7,
+        "existingPostgresComputeMonthlyUSD": 6,
+        "storageChargesSeparate": true,
+        "previousBandwidthGB": 13.39,
+        "includedBandwidthGB": 5,
+        "previousBandwidthChargeUSD": 1.35,
+        "variableUsageNotGuaranteedZero": true
+      },
+      "liveFinancialActions": false,
+      "operatingSchemaApplied": false,
+      "operatingAdapterBound": false,
+      "fullStage10Complete": false,
+      "domainChanged": false,
+      "automaticDeploy": false,
+      "blueprintAutoSync": false,
+      "reviewerAccess": "review179-access.private.json (outside Git; do not publish passwords)",
+      "remaining": [
+        "Provider contract and live payment model/refund/limits/settlement",
+        "Operating payment approval, encrypted billing-key storage, recurring charges and settlement adapters",
+        "Operating snapshot/account/order/file/entitlement mapping, schema application, reconciliation and rollback",
+        "Production privacy/backup/restore pipeline and pending legal/accessibility/native-language/document verification",
+        "Separate domain binding decision"
+      ],
+      "recordedAt": "2026-10-17T19:19:23.246Z"
     }
   }
 }
