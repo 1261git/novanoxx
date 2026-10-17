@@ -19,6 +19,7 @@ const memberAdmin=require('./member-administration.cjs')({db,user,json,origin:de
 const creatorApi=require('./creator-api.cjs')(db,dir,user,json);
 const savedApi=require('./account-saved.cjs')({db,user,json,origin:deployment.base});
 const catalogAdmin=require('./catalog-admin.cjs')({db,user,json,origin:deployment.base});
+const operationsCases=require('./operations-cases.cjs')({db,user,json,origin:deployment.base});
 const operationsOverview=require('./operations-overview.cjs')({db,user,json});
 let accountMail;
 const neonPayments=require('./neon-payments.cjs')(db,user,json,{notify:input=>accountMail?.notificationInside(input)});
@@ -43,6 +44,7 @@ module.exports=async function auth(req,res,name){
  }
  if(await savedApi(req,res,name))return true;
  if(await catalogAdmin(req,res,name))return true;
+ if(await operationsCases(req,res,name))return true;
  if(await operationsOverview(req,res,name))return true;
  if(await memberAdmin(req,res,name))return true;
  if(await neonPayments(req,res,name))return true;
