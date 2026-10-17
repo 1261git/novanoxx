@@ -31,7 +31,10 @@ let accountMail;
 const neonPayments=require('./neon-payments.cjs')(db,user,json,{notify:input=>accountMail?.notificationInside(input),orderStatus:(actor,id)=>localEngine?.work.orderStatus(actor,id)});
 if(process.env.NNX_LOCAL_ENGINE_TEST==='1'){localEngine=require('./local-test-engine.cjs')({db,dir});applicationEngine.configure(localEngine);}
 if(process.env.NNX_REVIEW_MODE==='1'){localEngine=require('./review-engine.cjs')({db,dir});applicationEngine.configure(localEngine);}
-const reviewCheckout=process.env.NNX_REVIEW_MODE==='1'?require('./review-checkout.cjs')({db,user,json,origin:deployment.base}):null;
+const productionSite=process.env.RENDER_SERVICE_ID==='srv-db5aqunlk1mc739bi0m0'&&process.env.NNX_REVIEW_MODE!=='1';
+if(productionSite){localEngine=require('./production-runtime.cjs')({db,dir});applicationEngine.configure(localEngine);}
+const previewEnv=productionSite?{NNX_REVIEW_MODE:'1',NNX_REVIEW_TOSS_CLIENT_KEY:/^test_ck_/.test(process.env.TOSS_CLIENT_KEY||'')?process.env.TOSS_CLIENT_KEY:undefined}:process.env;
+const reviewCheckout=process.env.NNX_REVIEW_MODE==='1'||productionSite?require('./review-checkout.cjs')({db,user,json,origin:deployment.base,env:previewEnv}):null;
 accountMail=require('./mail-runtime.cjs').configured({db,origin:deployment.base});
 const attempts = new Map();
 function json(res,status,data,headers={}){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store',...headers});res.end(JSON.stringify(data));}
@@ -42,7 +45,7 @@ function session(res,u,redirectTo,provider="email"){if(memberAdmin.blocked(u.id)
 async function body(req,{raw=false,max=8192}={}){let size=0,chunks=[];for await(const c of req){size+=c.length;if(size>max)throw new Error('SIZE');chunks.push(c);}const bytes=Buffer.concat(chunks);return raw?bytes:JSON.parse(bytes.toString('utf8'));}
 module.exports=async function auth(req,res,name){
  if(reviewCheckout&&await reviewCheckout(req,res,name))return true;
- if(name==='/api/health'&&req.method==='GET'){try{db.prepare('SELECT 1 AS ok').get();const migrated=db.backend==='postgres'&&process.env.NNX_REVIEW_MODE!=='1'?!!db.prepare("SELECT version FROM nnx_migrations WHERE version='sqlite-v1'").get():false;json(res,200,{status:'ok',reviewOnly:process.env.NNX_REVIEW_MODE==='1',database:db.backend||'sqlite',migrationVerified:migrated});}catch{json(res,503,{status:'unavailable'});}return true;}
+ if(name==='/api/health'&&req.method==='GET'){try{db.prepare('SELECT 1 AS ok').get();const migrated=db.backend==='postgres'&&process.env.NNX_REVIEW_MODE!=='1'?!!db.prepare("SELECT version FROM nnx_migrations WHERE version='sqlite-v1'").get():false;json(res,200,{status:'ok',reviewOnly:process.env.NNX_REVIEW_MODE==='1',productionSite,paymentPreview:productionSite,database:db.backend||'sqlite',migrationVerified:migrated});}catch{json(res,503,{status:'unavailable'});}return true;}
  if(!name.startsWith('/api/auth/')&&!name.startsWith('/api/catalog')&&!name.startsWith('/api/engine/')&&!['/api/contest','/api/contest/media'].includes(name))return false;
  try{
  if(name==='/api/auth/mail/status'&&req.method==='GET'){json(res,200,{enabled:!!accountMail});return true;}
@@ -61,6 +64,7 @@ module.exports=async function auth(req,res,name){
  if(await operationsCases(req,res,name))return true;
  if(await operationsOverview(req,res,name))return true;
  if(await memberAdmin(req,res,name))return true;
+ if(productionSite&&req.method==='POST'&&name.startsWith('/api/auth/neon/')){json(res,409,{error:'현재는 에셋 임시저장과 심사 제출을 이용할 수 있습니다. 유료 구독은 아직 시작되지 않으며 결제도 발생하지 않습니다.'});return true;}
  if(await neonPayments(req,res,name))return true;
  if(await creatorApi(req,res,name))return true;
  if(await kakao(req,res,name,db,session,json,{user:user(req),sessionHash:hashToken(token(req))}))return true;
