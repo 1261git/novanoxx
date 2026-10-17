@@ -1,5 +1,8 @@
 (function(root){const dictionaries={
   "es": {
+"새 의뢰 작성":"Nuevo encargo",
+"새 의뢰 내용을 입력해주세요.":"Introduzca los detalles del nuevo encargo.",
+"증거 파일":"Archivos de prueba",
 "Ⅱ 무음 재생 중":"Ⅱ Reproduciendo sin sonido",
 "▶ 눌러서 재생":"▶ Pulse para reproducir",
 "영상 로딩 실패":"No se pudo cargar el video",
@@ -893,6 +896,9 @@
     "워터마크 포함 전체화면": "Pantalla completa con marca de agua"
   },
   "zh-Hans": {
+"새 의뢰 작성":"新建委托",
+"새 의뢰 내용을 입력해주세요.":"请输入新委托的内容。",
+"증거 파일":"证据文件",
 "Ⅱ 무음 재생 중":"Ⅱ 正在静音播放",
 "▶ 눌러서 재생":"▶ 点击播放",
 "영상 로딩 실패":"视频加载失败",
@@ -1786,6 +1792,9 @@
     "워터마크 포함 전체화면": "含水印全屏显示"
   },
   "vi": {
+"새 의뢰 작성":"Tạo yêu cầu mới",
+"새 의뢰 내용을 입력해주세요.":"Nhập nội dung yêu cầu mới.",
+"증거 파일":"Tệp bằng chứng",
 "Ⅱ 무음 재생 중":"Ⅱ Đang phát không tiếng",
 "▶ 눌러서 재생":"▶ Nhấn để phát",
 "영상 로딩 실패":"Không thể tải video",
@@ -2679,6 +2688,9 @@
     "워터마크 포함 전체화면": "Toàn màn hình có dấu bản quyền"
   },
   "de": {
+"새 의뢰 작성":"Neuer Auftrag",
+"새 의뢰 내용을 입력해주세요.":"Geben Sie die neuen Auftragsdetails ein.",
+"증거 파일":"Nachweisdateien",
 "Ⅱ 무음 재생 중":"Ⅱ Stummwiedergabe",
 "▶ 눌러서 재생":"▶ Zum Abspielen drücken",
 "영상 로딩 실패":"Video konnte nicht geladen werden",

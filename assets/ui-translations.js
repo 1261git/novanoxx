@@ -1,4 +1,7 @@
 (function(root){const entries={
+"새 의뢰 작성":"New brief",
+"새 의뢰 내용을 입력해주세요.":"Enter the new brief details.",
+"증거 파일":"Evidence files",
 "Ⅱ 무음 재생 중":"Ⅱ Playing muted",
 "▶ 눌러서 재생":"▶ Press to play",
 "영상 로딩 실패":"Video could not load",
