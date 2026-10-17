@@ -68,7 +68,7 @@ function create({db,origin,encryptionKey,transport,webhookSecret,now=Date.now,al
   if(!permitted(user.email))fail('MAIL_RECIPIENT_DENIED');
   return tx(()=>{const digest=hash(JSON.stringify({email:user.email,name:user.name,purpose:'SIGNUP'}));const prior=db.prepare('SELECT digest FROM mail_requests WHERE id=?').get(requestId);if(prior){if(prior.digest!==digest)fail('MAIL_REQUEST_CONFLICT');return {accepted:true,emailVerificationRequired:true};}limit('ip:'+client,30);limit(user.email+':SIGNUP');db.prepare('INSERT INTO mail_requests VALUES(?,?)').run(requestId,digest);
    if(!db.prepare('SELECT id FROM users WHERE email=?').get(user.email)){
-    db.prepare('INSERT INTO users VALUES(?,?,?,?,?)').run(user.id,user.email,user.name,user.salt,user.hash);
+    db.prepare('INSERT INTO users VALUES(?,?,?,?,?)').run(user.id,user.email,user.name,user.salt,user.hash);require('./account-records.cjs').created(db,user.id,'EMAIL_VERIFICATION_FLOW',now());
     db.prepare('INSERT INTO mail_account_state VALUES(?,NULL,0)').run(user.id);issue(user,'VERIFY',requestId);
    }if(injectFailure)fail('MAIL_TEST_ROLLBACK');return {accepted:true,emailVerificationRequired:true};});
  }

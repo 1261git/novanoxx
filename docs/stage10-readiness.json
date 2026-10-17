@@ -1,5 +1,5 @@
 {
-  "revision": 169,
+  "revision": 170,
   "status": "LOCAL_SCOPE_INVENTORY_NOT_RELEASE_APPROVAL",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -47,7 +47,8 @@
         "AD-07",
         "X-04"
       ],
-      "remaining": "169 결정: 일정별 수동 입력, 관리자 수동 수상 선정, 소유자가 상금/혜택을 지정한 뒤 공개. 격리 관리자 초안/공개/수상 상태와 조건 차단·버전·감사 기록 준비. 혜택 실제 지급 없음. 콘테스트별 출품작 연결/공개 화면 및 심사 기준 최종 연계는 잔여. 담당 역할 위임 Phase2 유지."
+      "remaining": "170 격리 엔진에서 콘테스트별 출품작/권리고지/일정/용량/중복 재시도·접수기한 검사, 해당 콘테스트 출품작만 수상 확정, 비회원 공개 목록·미디어·수상 표시, 관리자 실제 작품 선택까지 연결. 상금/혜택·심사 기준은 운영자가 입력한 뒤 공개; 자동 지급 없음. 기존 무소속 출품작/수상 기록을 임의로 새 콘테스트에 편입하지 않음. 실운영 공개/전체 브라우저 최종 검수는 별도. 역할 위임 Phase2 유지.",
+      "operatorInputRequired": "실제 콘테스트 일정·심사 기준·상금/혜택 입력"
     },
     {
       "id": "MINIMUM_DATA_AND_RETENTION",
@@ -65,7 +66,7 @@
         "D-09",
         "D-10"
       ],
-      "remaining": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성."
+      "remaining": "170 검색·유입 고지/선택 설정·기본 수집 차단·허용/철회·현재 기록 삭제와120일 경과 삭제/요청 payload 제거, 타 계정/금융 기록 보존을 연결. 실제 계정 삭제 기능은 없으며 삭제 연계 함수는 준비만 됨. 가입 생성 시각은 신규 이메일/인증메일/Google/Kakao/Naver 경로에 연결; 과거 생성 시각은 UNKNOWN/null. 일반/Brief TEST 구매 시각·선택형 구매국가 코드(구매자 입력/미검증)를 주문 snapshot에 기록; IP 추정/과거값 보충 없음. 운영 개인정보처리방침 완성/법률·모국어 검토, 백업 수집기록 삭제 기준, 제공자 확정 환불사유/실제 결제 국가 연계는 잔여. 운영 수집 비활성."
     },
     {
       "id": "OPERATIONAL_INTEGRATION_AND_GUI",
@@ -1623,9 +1624,12 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "가격 변경 전체 이력 및 노출·조회·회원별 찜·체크아웃·의뢰 전환 이벤트 수집 필요.",
       "current": {
-        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "scope": "170 검색·유입 고지/선택 설정·기본 수집 차단·허용/철회·현재 기록 삭제와120일 경과 삭제/요청 payload 제거, 타 계정/금융 기록 보존을 연결. 실제 계정 삭제 기능은 없으며 삭제 연계 함수는 준비만 됨. 가입 생성 시각은 신규 이메일/인증메일/Google/Kakao/Naver 경로에 연결; 과거 생성 시각은 UNKNOWN/null. 일반/Brief TEST 구매 시각·선택형 구매국가 코드(구매자 입력/미검증)를 주문 snapshot에 기록; IP 추정/과거값 보충 없음. 운영 개인정보처리방침 완성/법률·모국어 검토, 백업 수집기록 삭제 기준, 제공자 확정 환불사유/실제 결제 국가 연계는 잔여. 운영 수집 비활성.",
         "refs": [
-          "HANDOFF169"
+          "HANDOFF170",
+          "bundle170-sqlite-report.json",
+          "bundle170-postgres-report.json",
+          "auth170-report.json"
         ]
       },
       "openGroups": [
@@ -1639,9 +1643,12 @@
       "baselineStatus": "테스트 구현",
       "baselineRemaining": "테스트 충전/구매·잔액 이력 존재. 실제 주문/판매자/수수료/환불과 TEST/LIVE 구분 데이터 필요.",
       "current": {
-        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "scope": "170 검색·유입 고지/선택 설정·기본 수집 차단·허용/철회·현재 기록 삭제와120일 경과 삭제/요청 payload 제거, 타 계정/금융 기록 보존을 연결. 실제 계정 삭제 기능은 없으며 삭제 연계 함수는 준비만 됨. 가입 생성 시각은 신규 이메일/인증메일/Google/Kakao/Naver 경로에 연결; 과거 생성 시각은 UNKNOWN/null. 일반/Brief TEST 구매 시각·선택형 구매국가 코드(구매자 입력/미검증)를 주문 snapshot에 기록; IP 추정/과거값 보충 없음. 운영 개인정보처리방침 완성/법률·모국어 검토, 백업 수집기록 삭제 기준, 제공자 확정 환불사유/실제 결제 국가 연계는 잔여. 운영 수집 비활성.",
         "refs": [
-          "HANDOFF169"
+          "HANDOFF170",
+          "bundle170-sqlite-report.json",
+          "bundle170-postgres-report.json",
+          "auth170-report.json"
         ]
       },
       "openGroups": [
@@ -1655,9 +1662,12 @@
       "baselineStatus": "부분 구현",
       "baselineRemaining": "등록 created/updated와 심사 audit 존재. 최초 공개·PAUSED/RESERVED·검수·완료·권한 제공 시각 전체 이력 필요.",
       "current": {
-        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "scope": "170 검색·유입 고지/선택 설정·기본 수집 차단·허용/철회·현재 기록 삭제와120일 경과 삭제/요청 payload 제거, 타 계정/금융 기록 보존을 연결. 실제 계정 삭제 기능은 없으며 삭제 연계 함수는 준비만 됨. 가입 생성 시각은 신규 이메일/인증메일/Google/Kakao/Naver 경로에 연결; 과거 생성 시각은 UNKNOWN/null. 일반/Brief TEST 구매 시각·선택형 구매국가 코드(구매자 입력/미검증)를 주문 snapshot에 기록; IP 추정/과거값 보충 없음. 운영 개인정보처리방침 완성/법률·모국어 검토, 백업 수집기록 삭제 기준, 제공자 확정 환불사유/실제 결제 국가 연계는 잔여. 운영 수집 비활성.",
         "refs": [
-          "HANDOFF169"
+          "HANDOFF170",
+          "bundle170-sqlite-report.json",
+          "bundle170-postgres-report.json",
+          "auth170-report.json"
         ]
       },
       "openGroups": [
@@ -1671,9 +1681,12 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "구독·검색 이벤트와 KPI 계산 필요. 다회 판매 매출은 주문별 집계, 평균 최초 판매기간은 독점 완료 거래만 계산하는 설계안으로 확정 필요.",
       "current": {
-        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "scope": "170 검색·유입 고지/선택 설정·기본 수집 차단·허용/철회·현재 기록 삭제와120일 경과 삭제/요청 payload 제거, 타 계정/금융 기록 보존을 연결. 실제 계정 삭제 기능은 없으며 삭제 연계 함수는 준비만 됨. 가입 생성 시각은 신규 이메일/인증메일/Google/Kakao/Naver 경로에 연결; 과거 생성 시각은 UNKNOWN/null. 일반/Brief TEST 구매 시각·선택형 구매국가 코드(구매자 입력/미검증)를 주문 snapshot에 기록; IP 추정/과거값 보충 없음. 운영 개인정보처리방침 완성/법률·모국어 검토, 백업 수집기록 삭제 기준, 제공자 확정 환불사유/실제 결제 국가 연계는 잔여. 운영 수집 비활성.",
         "refs": [
-          "HANDOFF169"
+          "HANDOFF170",
+          "bundle170-sqlite-report.json",
+          "bundle170-postgres-report.json",
+          "auth170-report.json"
         ]
       },
       "openGroups": [
@@ -1687,9 +1700,12 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "구독·검색 이벤트와 KPI 계산 필요. 다회 판매 매출은 주문별 집계, 평균 최초 판매기간은 독점 완료 거래만 계산하는 설계안으로 확정 필요.",
       "current": {
-        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "scope": "170 검색·유입 고지/선택 설정·기본 수집 차단·허용/철회·현재 기록 삭제와120일 경과 삭제/요청 payload 제거, 타 계정/금융 기록 보존을 연결. 실제 계정 삭제 기능은 없으며 삭제 연계 함수는 준비만 됨. 가입 생성 시각은 신규 이메일/인증메일/Google/Kakao/Naver 경로에 연결; 과거 생성 시각은 UNKNOWN/null. 일반/Brief TEST 구매 시각·선택형 구매국가 코드(구매자 입력/미검증)를 주문 snapshot에 기록; IP 추정/과거값 보충 없음. 운영 개인정보처리방침 완성/법률·모국어 검토, 백업 수집기록 삭제 기준, 제공자 확정 환불사유/실제 결제 국가 연계는 잔여. 운영 수집 비활성.",
         "refs": [
-          "HANDOFF169"
+          "HANDOFF170",
+          "bundle170-sqlite-report.json",
+          "bundle170-postgres-report.json",
+          "auth170-report.json"
         ]
       },
       "openGroups": [
@@ -1703,9 +1719,12 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "구독·검색 이벤트와 KPI 계산 필요. 다회 판매 매출은 주문별 집계, 평균 최초 판매기간은 독점 완료 거래만 계산하는 설계안으로 확정 필요.",
       "current": {
-        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "scope": "170 검색·유입 고지/선택 설정·기본 수집 차단·허용/철회·현재 기록 삭제와120일 경과 삭제/요청 payload 제거, 타 계정/금융 기록 보존을 연결. 실제 계정 삭제 기능은 없으며 삭제 연계 함수는 준비만 됨. 가입 생성 시각은 신규 이메일/인증메일/Google/Kakao/Naver 경로에 연결; 과거 생성 시각은 UNKNOWN/null. 일반/Brief TEST 구매 시각·선택형 구매국가 코드(구매자 입력/미검증)를 주문 snapshot에 기록; IP 추정/과거값 보충 없음. 운영 개인정보처리방침 완성/법률·모국어 검토, 백업 수집기록 삭제 기준, 제공자 확정 환불사유/실제 결제 국가 연계는 잔여. 운영 수집 비활성.",
         "refs": [
-          "HANDOFF169"
+          "HANDOFF170",
+          "bundle170-sqlite-report.json",
+          "bundle170-postgres-report.json",
+          "auth170-report.json"
         ]
       },
       "openGroups": [
@@ -1719,9 +1738,12 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "구독·검색 이벤트와 KPI 계산 필요. 다회 판매 매출은 주문별 집계, 평균 최초 판매기간은 독점 완료 거래만 계산하는 설계안으로 확정 필요.",
       "current": {
-        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "scope": "170 검색·유입 고지/선택 설정·기본 수집 차단·허용/철회·현재 기록 삭제와120일 경과 삭제/요청 payload 제거, 타 계정/금융 기록 보존을 연결. 실제 계정 삭제 기능은 없으며 삭제 연계 함수는 준비만 됨. 가입 생성 시각은 신규 이메일/인증메일/Google/Kakao/Naver 경로에 연결; 과거 생성 시각은 UNKNOWN/null. 일반/Brief TEST 구매 시각·선택형 구매국가 코드(구매자 입력/미검증)를 주문 snapshot에 기록; IP 추정/과거값 보충 없음. 운영 개인정보처리방침 완성/법률·모국어 검토, 백업 수집기록 삭제 기준, 제공자 확정 환불사유/실제 결제 국가 연계는 잔여. 운영 수집 비활성.",
         "refs": [
-          "HANDOFF169"
+          "HANDOFF170",
+          "bundle170-sqlite-report.json",
+          "bundle170-postgres-report.json",
+          "auth170-report.json"
         ]
       },
       "openGroups": [
@@ -1735,9 +1757,12 @@
       "baselineStatus": "미구현",
       "baselineRemaining": "구독·검색 이벤트와 KPI 계산 필요. 다회 판매 매출은 주문별 집계, 평균 최초 판매기간은 독점 완료 거래만 계산하는 설계안으로 확정 필요.",
       "current": {
-        "scope": "169 결정: 검색어/결과 수·유입 도메인·UTM source/medium/campaign, 계정 연결, IP 수집 안 함, 120일. 격리 API/클라이언트 연결과 기간 만료 시 요청 재시도 payload까지 제거 준비; 원래 거래/감사 기록 보존. 개인정보 패턴 제한은 완전한 개인정보 식별 보장이 아님. 운영 개인정보 고지·동의/계정 삭제 연계, 가입/거래 시각의 전체 경로·구매국가·제공자 확정 환불사유 연계는 별도 잔여. 운영 수집 비활성.",
+        "scope": "170 검색·유입 고지/선택 설정·기본 수집 차단·허용/철회·현재 기록 삭제와120일 경과 삭제/요청 payload 제거, 타 계정/금융 기록 보존을 연결. 실제 계정 삭제 기능은 없으며 삭제 연계 함수는 준비만 됨. 가입 생성 시각은 신규 이메일/인증메일/Google/Kakao/Naver 경로에 연결; 과거 생성 시각은 UNKNOWN/null. 일반/Brief TEST 구매 시각·선택형 구매국가 코드(구매자 입력/미검증)를 주문 snapshot에 기록; IP 추정/과거값 보충 없음. 운영 개인정보처리방침 완성/법률·모국어 검토, 백업 수집기록 삭제 기준, 제공자 확정 환불사유/실제 결제 국가 연계는 잔여. 운영 수집 비활성.",
         "refs": [
-          "HANDOFF169"
+          "HANDOFF170",
+          "bundle170-sqlite-report.json",
+          "bundle170-postgres-report.json",
+          "auth170-report.json"
         ]
       },
       "openGroups": [
@@ -1949,9 +1974,11 @@
       "baselineStatus": "구현",
       "baselineRemaining": "로그인·형식/용량·목록 재조회. 상금/일정·심사·수상 운영은 미확정.",
       "current": {
-        "scope": "169 결정: 일정별 수동 입력, 관리자 수동 수상 선정, 소유자가 상금/혜택을 지정한 뒤 공개. 격리 관리자 초안/공개/수상 상태와 조건 차단·버전·감사 기록 준비. 혜택 실제 지급 없음. 콘테스트별 출품작 연결/공개 화면 및 심사 기준 최종 연계는 잔여. 담당 역할 위임 Phase2 유지.",
+        "scope": "170 격리 엔진에서 콘테스트별 출품작/권리고지/일정/용량/중복 재시도·접수기한 검사, 해당 콘테스트 출품작만 수상 확정, 비회원 공개 목록·미디어·수상 표시, 관리자 실제 작품 선택까지 연결. 상금/혜택·심사 기준은 운영자가 입력한 뒤 공개; 자동 지급 없음. 기존 무소속 출품작/수상 기록을 임의로 새 콘테스트에 편입하지 않음. 실운영 공개/전체 브라우저 최종 검수는 별도. 역할 위임 Phase2 유지.",
         "refs": [
-          "HANDOFF169"
+          "HANDOFF170",
+          "bundle170-sqlite-report.json",
+          "bundle170-postgres-report.json"
         ]
       },
       "openGroups": [
@@ -2230,7 +2257,9 @@
       "collectIp": false,
       "retentionDays": 120,
       "operatingCollectionEnabled": false,
-      "cost": "Storage growth may require capacity upgrade; none provisioned or charged by this work."
+      "cost": "Storage growth may require capacity upgrade; none provisioned or charged by this work.",
+      "preference": "DEFAULT_OFF_USER_CONTROLLED",
+      "currentDataDeletion": "120 days or user erase/revoke; backups require separate launch policy"
     }
   },
   "bundle169": {
@@ -2254,5 +2283,22 @@
       "Contest entries/public results and privacy rollout remain",
       "Unmarked legacy UI/native-language review and final Word/PDF reconciliation remain"
     ]
+  },
+  "bundle170": {
+    "status": "LOCAL_CONTEST_AND_DATA_CONNECTION_IMPLEMENTED_NOT_RELEASE_CERTIFIED",
+    "features": [
+      "CONTEST_SCOPED_ENTRIES_PUBLIC_WINNERS",
+      "EXPLICIT_DISCOVERY_PREFERENCE_ERASE_AND_RETENTION",
+      "NEW_ACCOUNT_CREATION_RECORDS_ALL_SIGNUP_PATHS",
+      "MARKETPLACE_AND_BRIEF_PURCHASE_CONTEXT"
+    ],
+    "tests": {
+      "sqlite": "bundle170-sqlite-report.json",
+      "embeddedPostgres": "bundle170-postgres-report.json",
+      "offlineAuth": "auth170-report.json",
+      "translation": "translation170-report.json"
+    },
+    "operatingDeployment": false,
+    "paidResourcesCreated": false
   }
 }

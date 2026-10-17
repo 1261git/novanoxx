@@ -37,7 +37,7 @@ function session(res,u,redirectTo,provider="email"){if(memberAdmin.blocked(u.id)
 async function body(req,{raw=false,max=8192}={}){let size=0,chunks=[];for await(const c of req){size+=c.length;if(size>max)throw new Error('SIZE');chunks.push(c);}const bytes=Buffer.concat(chunks);return raw?bytes:JSON.parse(bytes.toString('utf8'));}
 module.exports=async function auth(req,res,name){
  if(name==='/api/health'&&req.method==='GET'){try{db.prepare('SELECT 1 AS ok').get();const migrated=db.backend==='postgres'?!!db.prepare("SELECT version FROM nnx_migrations WHERE version='sqlite-v1'").get():false;json(res,200,{status:'ok',database:db.backend||'sqlite',migrationVerified:migrated});}catch{json(res,503,{status:'unavailable'});}return true;}
- if(!name.startsWith('/api/auth/')&&!name.startsWith('/api/catalog')&&!['/api/contest','/api/contest/media'].includes(name))return false;
+ if(!name.startsWith('/api/auth/')&&!name.startsWith('/api/catalog')&&!name.startsWith('/api/engine/')&&!['/api/contest','/api/contest/media'].includes(name))return false;
  try{
  if(name==='/api/auth/mail/status'&&req.method==='GET'){json(res,200,{enabled:!!accountMail});return true;}
  if(name==='/api/auth/mail/webhook'){
@@ -50,6 +50,7 @@ module.exports=async function auth(req,res,name){
  if(await savedApi(req,res,name))return true;
  if(await catalogAdmin(req,res,name))return true;
  if(await applicationEngine.handle(req,res,name))return true;
+ if(localEngine&&name==='/api/auth/contest/submit'){json(res,409,{error:'INVALID_STATE'});return true;}
  if(await integrationReadiness(req,res,name))return true;
  if(await operationsCases(req,res,name))return true;
  if(await operationsOverview(req,res,name))return true;
@@ -79,7 +80,7 @@ module.exports=async function auth(req,res,name){
  if(name.endsWith('/signup')){const nameValue=typeof data.name==='string'?data.name.trim():'';if(!nameValue||nameValue.length>40){json(res,400,{error:'이름을 1~40자로 입력해주세요.'});return true;}
  const salt=crypto.randomBytes(16).toString('hex');const hashed=await derive(password,salt,64);const u={id:crypto.randomUUID(),email,name:nameValue};
  if(accountMail){json(res,200,accountMail.signup({...u,salt,hash:hashed.toString('hex')},{requestId:data.requestId,client:req.socket.remoteAddress||'unknown'}));return true;}
- try{db.prepare('INSERT INTO users VALUES(?,?,?,?,?)').run(u.id,email,nameValue,salt,hashed.toString('hex'));}catch(e){if(e.code==='23505'||e.code?.includes('CONSTRAINT')||e.message.includes('UNIQUE')){json(res,409,{error:'가입할 수 없는 이메일입니다. 기존 계정이라면 로그인해주세요.'});return true;}throw e;}
+ try{db.exec('BEGIN');db.prepare('INSERT INTO users VALUES(?,?,?,?,?)').run(u.id,email,nameValue,salt,hashed.toString('hex'));require('./account-records.cjs').created(db,u.id,'EMAIL');db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');if(e.code==='23505'||e.code?.includes('CONSTRAINT')||e.message.includes('UNIQUE')){json(res,409,{error:'가입할 수 없는 이메일입니다. 기존 계정이라면 로그인해주세요.'});return true;}throw e;}
  session(res,u);return true;}
  const u=db.prepare('SELECT * FROM users WHERE email=?').get(email);const salt=u?.salt||'00000000000000000000000000000000';const calculated=await derive(password,salt,64);const expected=u?.hash?Buffer.from(u.hash,'hex'):Buffer.alloc(64);if(!crypto.timingSafeEqual(calculated,expected)||!u){json(res,401,{error:'이메일 또는 비밀번호가 올바르지 않아요.'});return true;}if(accountMail&&!accountMail.verified(u.id)){json(res,403,{error:'이메일 인증을 완료한 뒤 로그인해주세요.',emailVerificationRequired:true});return true;}session(res,u);return true;
  }catch(e){const messages={PLAN_ACTIVE_LIMIT:'현재 플랜의 판매 중 에셋 한도에 도달했습니다.',PLAN_PERIOD_ENDED:'플랜 기간이 종료되었습니다. 구독 상태를 확인해주세요.',MAIL_RATE_LIMIT:'요청이 많습니다. 잠시 후 다시 시도해주세요.',MAIL_INVALID_LINK:'링크가 만료되었거나 이미 사용되었습니다. 새 메일을 요청해주세요.',MAIL_REQUEST_CONFLICT:'요청 내용이 변경되었습니다. 다시 시도해주세요.',MAIL_WEBHOOK_INVALID:'메일 알림 서명을 확인할 수 없습니다.',MAIL_WEBHOOK_CONFLICT:'이미 처리한 알림과 내용이 다릅니다.',MAIL_INVALID_INPUT:'입력값을 확인해주세요.',SIZE:'요청이 너무 큽니다.'};json(res,e.message==='MAIL_RATE_LIMIT'?429:e.message==='SIZE'?413:e.message==='MAIL_WEBHOOK_CONFLICT'?409:400,{error:messages[e.message]||'요청을 처리하지 못했어요. 다시 시도해주세요.'});return true;}

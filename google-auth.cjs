@@ -29,7 +29,7 @@ module.exports=async function google(req,res,name,db,session,json){
  let u=db.prepare('SELECT u.id,u.name,u.email FROM users u JOIN identities i ON i.user_id=u.id WHERE i.provider=? AND i.subject=?').get('google',profile.sub);
  if(!u){if(db.prepare('SELECT id FROM users WHERE email=?').get(profile.email.toLowerCase())){failure('existing');return true;}
  u={id:crypto.randomUUID(),email:profile.email.toLowerCase(),name:String(profile.name||'Google 회원').slice(0,40)};
- db.exec('BEGIN');try{db.prepare('INSERT INTO users VALUES(?,?,?,?,?)').run(u.id,u.email,u.name,crypto.randomBytes(16).toString('hex'),'');db.prepare('INSERT INTO identities VALUES(?,?,?)').run('google',profile.sub,u.id);db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}}
+ db.exec('BEGIN');try{db.prepare('INSERT INTO users VALUES(?,?,?,?,?)').run(u.id,u.email,u.name,crypto.randomBytes(16).toString('hex'),'');require('./account-records.cjs').created(db,u.id,'GOOGLE');db.prepare('INSERT INTO identities VALUES(?,?,?)').run('google',profile.sub,u.id);db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}}
  session(res,u,base+'/#/'+p.next,'google');return true;
  }catch{failure('failed');return true;}}
  json(res,404,{error:'지원하지 않는 인증 요청입니다.'});return true;
