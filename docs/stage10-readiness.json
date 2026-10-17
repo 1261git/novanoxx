@@ -1,5 +1,5 @@
 {
-  "revision": 176,
+  "revision": 177,
   "status": "LOCAL_SCOPE_INVENTORY_NOT_RELEASE_APPROVAL",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -2432,5 +2432,55 @@
     "최신 동의/삭제 이력의 별도 영속 보관·전송 및 실제 오프사이트/PG 복구·복구 후 기동 연결. 기존 백업 삭제·보존정책 변경 없음.",
     "실제 위탁·보관 위치·국외이전·권리행사 처리 및 법률 확인, 전체 화면·접근성·모국어 검수와 Word 정합성.",
     "운영 계정·주문·잔액·권한·파일 매핑과 전환/배포; 제공자 회신 뒤 실제 금융 계약·환불·정산·정기청구 연결."
-  ]
+  ],
+  "bundle177": {
+    "status": "LOCAL_TRANSLATION_CONTACT_AND_BROWSER_CLOSEOUT_NOT_WHOLE_STAGE_COMPLETE",
+    "implemented": [
+      "PUBLIC_FOOTER_SUPPORT_MAILTO_AND_CONFIRMED_BUSINESS_NAME",
+      "DATA_SETTINGS_LOGIN_LINK_RELOCALIZES_WITHOUT_RELOAD",
+      "AUTH_PROVIDER_BUTTONS_PLACEHOLDERS_VALIDATION_AND_PASSWORD_TOGGLE_LOCALIZED",
+      "LITERAL_KOREAN_SEARCH_BRIEF_CREATOR_PLACEHOLDERS_MARKED_AND_TRANSLATED",
+      "POST_90_DAY_POLICY_REGRESSION_ASSERTION_UPDATED"
+    ],
+    "registeredTranslationKeys": 1059,
+    "validation": {
+      "sqliteRelease": 31,
+      "embeddedPostgresRelease": 31,
+      "extraLocalesMissing": 0,
+      "unmarkedKoreanLiteralPlaceholders": 0,
+      "realBrowserProof": "browser177-report.json",
+      "freshOwnedLocalFixture": true,
+      "temporaryServerStopped": true,
+      "originalFilesPreserved": 675
+    },
+    "browserScope": [
+      "Six-language data-settings/contact and retention notice",
+      "Five-language signup and input hints",
+      "Five-language empty reset-email validation without mail submission",
+      "Language dialog Escape, reload persistence, password toggle and invalid-field semantics"
+    ],
+    "limitations": [
+      "Not a full 123-workflow/browser/WCAG/native-language/legal certification",
+      "No network PostgreSQL or production entitlement migration",
+      "Historical Word/PDF originals preserved; full document reconciliation outstanding"
+    ],
+    "newPaidResources": false,
+    "deployed": false
+  },
+  "releaseBoundary177": {
+    "wholeStageComplete": false,
+    "operatingEngineConnected": false,
+    "productionDataMigrationCompleted": false,
+    "latestPrivacyStateExternalPersistenceConnected": false,
+    "productionBackupRestoreConnected": false,
+    "providerFinancialConditionsConfirmed": false,
+    "additionalCodeAndIntegrationWorkRemains": true,
+    "nextOperatingActionsRequirePriorDeploymentAndCostNotice": true,
+    "remaining": [
+      "운영용 엔진/계정·주문·잔액·원본 권한 매핑과 데이터 전환 연결. 격리 TEST를 LIVE로 승격하지 않음.",
+      "최신 동의/삭제 이력 별도 보관·전송과 실제 운영/offsite/PostgreSQL 복구 및 기동 연결. 신규 원문 백업1회 크기/성장·월전송요청·임시공간 실측.",
+      "실제 위탁·보관 위치·국외이전·권리행사 조건 확정 및 법률 확인, 전체 GUI/접근성/모국어·Word 문서 정합성 검수.",
+      "제공자 회신 및 실제 환불·한도·정산·정기청구 계약/API 연결."
+    ]
+  }
 }
