@@ -11,7 +11,7 @@ module.exports=function(db,user,json,options={}){
  return async(req,res,name)=>{
   if(!name.startsWith('/api/auth/neon/'))return false;
   const u=user(req);if(!u){json(res,401,{error:'로그인이 필요해요.'});return true;}
-  if(name==='/api/auth/neon/orders'&&req.method==='GET'){json(res,200,{testBalance:balance(u.id),orders:db.prepare('SELECT id,asset_id AS assetId,title,price,created FROM neon_test_orders WHERE user_id=? ORDER BY created DESC').all(u.id)});return true;}
+  if(name==='/api/auth/neon/orders'&&req.method==='GET'){json(res,200,{testBalance:balance(u.id),orders:db.prepare('SELECT id,asset_id AS assetId,title,price,created FROM neon_test_orders WHERE user_id=? ORDER BY created DESC').all(u.id).map(row=>({...row,engineStatus:options.orderStatus?.(u.id,row.id)??null}))});return true;}
   if(name==='/api/auth/neon/status'&&req.method==='GET'){json(res,200,{mode:'test',ready:ready(),testBalance:balance(u.id),history:db.prepare("SELECT neon,amount,paid,kind FROM (SELECT neon,amount,paid,'payment' AS kind FROM neon_topups WHERE user_id=? AND state='PAID' UNION ALL SELECT neon,0 AS amount,created AS paid,'admin' AS kind FROM neon_test_grants WHERE user_id=?) ORDER BY paid DESC LIMIT 20").all(u.id,u.id)});return true;}
   if(req.method!=='POST'||req.headers.origin!==base){json(res,403,{error:'요청 출처를 확인해주세요.'});return true;}
   if(req.headers['content-type']?.split(';')[0].trim().toLowerCase()!=='application/json'){json(res,415,{error:'JSON 요청이 필요합니다.'});return true;}

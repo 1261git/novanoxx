@@ -5,7 +5,7 @@ function paintAccountSaved(){
  if(savedOnly)render();
  updateSaved();
  document.querySelectorAll('[data-save]').forEach(button=>{const id=Number(button.dataset.save);button.classList.toggle('saved',saved.has(id));button.textContent=saved.has(id)?'♥':'♡';button.setAttribute('aria-pressed',String(saved.has(id)));button.disabled=savedPending.has(id);});
- const detail=document.getElementById('page-save');if(detail){const id=Number(page.dataset.route?.split('/')[1]);detail.textContent=saved.has(id)?'♥ 찜한 에셋':'♡ 찜하기';detail.setAttribute('aria-pressed',String(saved.has(id)));detail.disabled=savedPending.has(id);}
+ const detail=document.getElementById('page-save');if(detail){const id=Number(page.dataset.route?.split('/')[1]);const label=saved.has(id)?'♥ 찜한 에셋':'♡ 찜하기';detail.setAttribute('data-i18n',label);detail.textContent=typeof uiText==='function'?uiText(label):label;detail.setAttribute('aria-pressed',String(saved.has(id)));detail.disabled=savedPending.has(id);}
 }
 async function refreshAccountSaved(){
  const owner=authUser?.id||null;

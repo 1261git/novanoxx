@@ -15,16 +15,18 @@ db.exec("CREATE TABLE IF NOT EXISTS account_status(user_id TEXT PRIMARY KEY,plan
 const google=require('./google-auth.cjs');
 const naver=require('./naver-auth.cjs');
 const kakao=require('./kakao-auth.cjs');
+let localEngine;const checkEngineActivation=asset=>localEngine?.subscription.checkActivation(asset);
 const memberAdmin=require('./member-administration.cjs')({db,user,json,origin:deployment.base});
-const creatorApi=require('./creator-api.cjs')(db,dir,user,json);
+const creatorApi=require('./creator-api.cjs')(db,dir,user,json,undefined,{checkActivation:checkEngineActivation,usage:()=>localEngine?.usage()});
 const savedApi=require('./account-saved.cjs')({db,user,json,origin:deployment.base});
-const catalogAdmin=require('./catalog-admin.cjs')({db,user,json,origin:deployment.base});
+const catalogAdmin=require('./catalog-admin.cjs')({db,user,json,origin:deployment.base,checkActivation:checkEngineActivation});
 const applicationEngine=require('./application-engine-bridge.cjs')({user,json,origin:deployment.base});
 const integrationReadiness=require('./integration-readiness.cjs')({db,dir,user,json,origin:deployment.base});
 const operationsCases=require('./operations-cases.cjs')({db,user,json,origin:deployment.base});
 const operationsOverview=require('./operations-overview.cjs')({db,user,json});
 let accountMail;
-const neonPayments=require('./neon-payments.cjs')(db,user,json,{notify:input=>accountMail?.notificationInside(input)});
+const neonPayments=require('./neon-payments.cjs')(db,user,json,{notify:input=>accountMail?.notificationInside(input),orderStatus:(actor,id)=>localEngine?.work.orderStatus(actor,id)});
+if(process.env.NNX_LOCAL_ENGINE_TEST==='1'){localEngine=require('./local-test-engine.cjs')({db,dir});applicationEngine.configure(localEngine);}
 accountMail=require('./mail-runtime.cjs').configured({db,origin:deployment.base});
 const attempts = new Map();
 function json(res,status,data,headers={}){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store',...headers});res.end(JSON.stringify(data));}
@@ -79,7 +81,7 @@ module.exports=async function auth(req,res,name){
  try{db.prepare('INSERT INTO users VALUES(?,?,?,?,?)').run(u.id,email,nameValue,salt,hashed.toString('hex'));}catch(e){if(e.code==='23505'||e.code?.includes('CONSTRAINT')||e.message.includes('UNIQUE')){json(res,409,{error:'가입할 수 없는 이메일입니다. 기존 계정이라면 로그인해주세요.'});return true;}throw e;}
  session(res,u);return true;}
  const u=db.prepare('SELECT * FROM users WHERE email=?').get(email);const salt=u?.salt||'00000000000000000000000000000000';const calculated=await derive(password,salt,64);const expected=u?.hash?Buffer.from(u.hash,'hex'):Buffer.alloc(64);if(!crypto.timingSafeEqual(calculated,expected)||!u){json(res,401,{error:'이메일 또는 비밀번호가 올바르지 않아요.'});return true;}if(accountMail&&!accountMail.verified(u.id)){json(res,403,{error:'이메일 인증을 완료한 뒤 로그인해주세요.',emailVerificationRequired:true});return true;}session(res,u);return true;
- }catch(e){const messages={MAIL_RATE_LIMIT:'요청이 많습니다. 잠시 후 다시 시도해주세요.',MAIL_INVALID_LINK:'링크가 만료되었거나 이미 사용되었습니다. 새 메일을 요청해주세요.',MAIL_REQUEST_CONFLICT:'요청 내용이 변경되었습니다. 다시 시도해주세요.',MAIL_WEBHOOK_INVALID:'메일 알림 서명을 확인할 수 없습니다.',MAIL_WEBHOOK_CONFLICT:'이미 처리한 알림과 내용이 다릅니다.',MAIL_INVALID_INPUT:'입력값을 확인해주세요.',SIZE:'요청이 너무 큽니다.'};json(res,e.message==='MAIL_RATE_LIMIT'?429:e.message==='SIZE'?413:e.message==='MAIL_WEBHOOK_CONFLICT'?409:400,{error:messages[e.message]||'요청을 처리하지 못했어요. 다시 시도해주세요.'});return true;}
+ }catch(e){const messages={PLAN_ACTIVE_LIMIT:'현재 플랜의 판매 중 에셋 한도에 도달했습니다.',PLAN_PERIOD_ENDED:'플랜 기간이 종료되었습니다. 구독 상태를 확인해주세요.',MAIL_RATE_LIMIT:'요청이 많습니다. 잠시 후 다시 시도해주세요.',MAIL_INVALID_LINK:'링크가 만료되었거나 이미 사용되었습니다. 새 메일을 요청해주세요.',MAIL_REQUEST_CONFLICT:'요청 내용이 변경되었습니다. 다시 시도해주세요.',MAIL_WEBHOOK_INVALID:'메일 알림 서명을 확인할 수 없습니다.',MAIL_WEBHOOK_CONFLICT:'이미 처리한 알림과 내용이 다릅니다.',MAIL_INVALID_INPUT:'입력값을 확인해주세요.',SIZE:'요청이 너무 큽니다.'};json(res,e.message==='MAIL_RATE_LIMIT'?429:e.message==='SIZE'?413:e.message==='MAIL_WEBHOOK_CONFLICT'?409:400,{error:messages[e.message]||'요청을 처리하지 못했어요. 다시 시도해주세요.'});return true;}
 };
 module.exports.configureMail=factory=>{if(accountMail)throw Error('MAIL_ALREADY_CONFIGURED');accountMail=factory({db,origin:deployment.base,dir});return accountMail;};
 module.exports.mail=()=>accountMail;
@@ -87,3 +89,5 @@ module.exports.close=()=>{accountMail?.close();db.close();};
 
 
 module.exports.configureEngine=services=>applicationEngine.configure(services);
+
+module.exports.localEngine=()=>localEngine;

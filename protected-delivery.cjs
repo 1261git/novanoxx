@@ -1,0 +1,20 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),{execFile}=require('node:child_process');
+module.exports=async function(input,prefix,extension){
+ if(!['png','jpg','jpeg','webp','pdf','mp3','wav','mp4','mov','webm'].includes(extension))throw Error('FULL_REVIEW_UNSUPPORTED');
+ const release=require('./preview-work-slot.cjs')();let temp;const outputs=[];
+ const run=(bin,args)=>new Promise((resolve,reject)=>{const child=execFile(bin,args,{timeout:180000,maxBuffer:1024*1024,windowsHide:true},(error,out)=>{clearInterval(watch);if(error)reject(Error('FULL_REVIEW_FAILED'));else resolve(out);});const watch=setInterval(()=>{try{const total=fs.readdirSync(temp).reduce((n,f)=>{const s=fs.lstatSync(path.join(temp,f));return n+(s.isFile()?s.size:0);},0);if(total>300*1024*1024)child.kill();}catch{child.kill();}},100);});
+ try{temp=await fs.promises.mkdtemp(path.join(path.dirname(prefix),'delivery-work-'));const logo=path.join(__dirname,'assets','novanoxx-brand-logo.png'),graph='[0:v]scale=1280:1280:force_original_aspect_ratio=decrease,pad=1280:1280:(ow-iw)/2:(oh-ih)/2:color=0x202024[base];[1:v]scale=460:-1,format=rgba,colorchannelmixer=aa=0.45[mark];[base][mark]overlay=(W-w)/2:(H-h)/2:format=auto[out]';
+ const output=(name,description)=>{const file=path.join(temp,name);outputs.push({path:file,name,description});return file;};
+ const image=async(source,ext,name,description)=>{const decoder=ext==='png'?'png':ext==='webp'?'webp':'mjpeg',file=output(name,description);await run('ffmpeg',['-nostdin','-y','-v','error','-protocol_whitelist','file,pipe','-f','image2','-pattern_type','none','-c:v',decoder,'-i',source,'-i',logo,'-filter_complex',graph,'-map','[out]','-frames:v','1','-q:v','5','-map_metadata','-1','-f','image2','-update','1',file]);};
+ if(extension==='pdf'){
+  const info=await run('pdfinfo',[input]),pages=Number(/^Pages:\s+(\d+)/m.exec(info)?.[1]);if(!Number.isSafeInteger(pages)||pages<1||pages>50)throw Error('FULL_REVIEW_PDF_LIMIT');await run('pdftoppm',['-f','1','-l',String(pages),'-scale-to','1280','-jpeg',input,path.join(temp,'raw')]);const sources=fs.readdirSync(temp).filter(n=>/^raw-\d+\.jpg$/.test(n)).sort((a,b)=>Number(a.match(/\d+/)[0])-Number(b.match(/\d+/)[0]));if(sources.length!==pages)throw Error('FULL_REVIEW_FAILED');for(let i=0;i<pages;i++)await image(path.join(temp,sources[i]),'jpg','review-page-'+(i+1)+'.jpg','all-pdf-pages-rasterized-with-logo');
+ }else if(['png','jpg','jpeg','webp'].includes(extension))await image(input,extension,'review-image.jpg','full-image-with-logo');
+ else if(['mp3','wav'].includes(extension)){
+  const file=output('review-audio.mp3','full-audio-with-periodic-tone');await run('ffmpeg',['-nostdin','-y','-v','error','-protocol_whitelist','file,pipe','-f',extension,'-i',input,'-f','lavfi','-i','sine=frequency=1100:sample_rate=44100','-filter_complex',"[0:a]asetpts=PTS-STARTPTS,volume=0.8[base];[1:a]volume='if(lt(mod(t,5),0.25),0.08,0)':eval=frame[mark];[base][mark]amix=inputs=2:duration=first:normalize=0[out]",'-map','[out]','-ac','1','-c:a','libmp3lame','-b:a','96k','-map_metadata','-1',file]);
+ }else{
+  const file=output('review-video.mp4','full-video-with-logo');await run('ffmpeg',['-nostdin','-y','-v','error','-protocol_whitelist','file,pipe','-f',extension==='webm'?'matroska':'mov','-i',input,'-i',logo,'-filter_complex',graph,'-map','[out]','-map','0:a?','-c:v','libx264','-pix_fmt','yuv420p','-preset','veryfast','-crf','25','-c:a','aac','-b:a','96k','-map_metadata','-1','-movflags','+faststart',file]);
+ }
+ const result=[];try{for(let i=0;i<outputs.length;i++){const item=outputs[i],target=prefix+'-'+i;if(!fs.statSync(item.path).size)throw Error('FULL_REVIEW_FAILED');await fs.promises.rename(item.path,target);result.push({...item,path:target});}return result;}catch(error){for(const item of result)await fs.promises.unlink(item.path).catch(()=>{});throw error;}
+ }finally{try{if(temp&&path.dirname(path.resolve(temp))===path.dirname(path.resolve(prefix))&&path.basename(temp).startsWith('delivery-work-'))await fs.promises.rm(temp,{recursive:true,force:true});}finally{release();}}
+};
