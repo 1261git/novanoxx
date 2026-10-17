@@ -14,7 +14,7 @@ for(const lang of ['ko','en','es','zh-Hans','vi','de'])test('Review dialog condi
  for(const current of ['ASSET','SUBSCRIPTION']){
   kind=current;await context.openReviewCheckout({kind});const dialog=body.children.at(-1),nodes=flatten(dialog),agree=nodes.find(e=>e.tag==='input'),start=nodes.find(e=>e.tag==='button'&&e.className==='primary'),title=nodes.find(e=>e.tag==='h2');
   assert.equal(start.disabled,true);assert.equal(title.textContent,'Creator original title');assert.equal(title.focused,true);assert.equal(dialog.attributes['aria-labelledby'],title.id);assert.ok(nodes.some(e=>e.textContent===translate('심사용 화면입니다. 결제 승인·자동청구·유료 권한 부여는 실행하지 않습니다.',lang)));
-  const before=loads;await start.onclick();assert.equal(loads,before);agree.checked=true;agree.onchange();assert.equal(start.disabled,false);await start.onclick();assert.equal(loads,before+1);const call=sdkCalls.at(-1);assert.equal(call.kind,kind);assert.equal(call.method,'CARD');if(kind==='ASSET'){assert.equal(call.amount.value,1000);assert.equal(call.orderId,'review_owned');}else assert.equal(call.amount,undefined);
+  const before=loads;await start.onclick();assert.equal(loads,before);agree.checked=true;agree.onchange();assert.equal(start.disabled,false);await start.onclick();assert.equal(loads,before+1);const call=sdkCalls.at(-1);assert.equal(call.kind,kind);assert.equal(call.method,'CARD');assert.equal(call.windowTarget,'self');if(kind==='ASSET'){assert.equal(call.amount.value,1000);assert.equal(call.orderId,'review_owned');}else assert.equal(call.amount,undefined);
   events.hashchange();assert.equal(dialog.isConnected,false);assert.equal(events.hashchange,undefined);
  }
  assert.equal(sdkCalls.length,2);if(lang!=='ko')assert.notEqual(translate('환불 정책',lang),'환불 정책');
