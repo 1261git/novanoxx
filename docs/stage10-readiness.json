@@ -1,6 +1,6 @@
 {
-  "revision": 183,
-  "status": "KAKAO_LINK_AND_ACTUAL_ADMIN_RELOGIN_VERIFIED",
+  "revision": 184,
+  "status": "PRODUCTION_MARKETPLACE_AND_CONTEST_PRESENTATION_RESTORED",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
     "sha256": "35baf3bcef6b10632787d8661c4a48992e70181267c4e4d5fc6d7070b3b1b339",
@@ -2970,6 +2970,67 @@
     "proof": [
       "production183-kakao-linked.png",
       "production183-kakao-login.png"
+    ]
+  },
+  "productionRestoration184": {
+    "revision": 184,
+    "status": "PRODUCTION_MARKETPLACE_AND_CONTEST_PRESENTATION_RESTORED",
+    "origin": "https://novanoxx.com",
+    "deployedCommit": "4c3bdd6b014cf25782536f704b41b89a817b102e",
+    "deployId": "dep-db9tmhh42hec73d30lo0",
+    "deployStatus": "live",
+    "finishedAt": "2026-10-17T20:33:00.212546Z",
+    "finishedAtKST": "2026-10-18 05:33:00 KST",
+    "reason": "The previous TEST visibility change incorrectly omitted the original static marketplace presentation. Separately, an empty connected contest feed replaced the original introduction page.",
+    "restored": {
+      "featuredCards": 3,
+      "awardSlides": 4,
+      "originalAssetCards": 8,
+      "originalMarketplaceBodyMatchesSource": true,
+      "contestIntroduction": true,
+      "contestFilmArea": true,
+      "contestEntrySearchAndList": true
+    },
+    "scope": {
+      "files": [
+        "production-page.cjs",
+        "creator-api.cjs",
+        "assets/contest-workflow.js"
+      ],
+      "databaseMigration": false,
+      "explicitTestListingsStillHidden": 2,
+      "sourceRecordsDeleted": 0,
+      "originalUploadsDeleted": 0,
+      "socialLoginConfigurationChanged": false,
+      "paymentActivation": false,
+      "uncommittedSandboxEngineEditsPreserved": true
+    },
+    "verification": {
+      "productionHealthHTTP": 200,
+      "postgres": true,
+      "legacyMigrationVerified": true,
+      "googleReady": true,
+      "naverReady": true,
+      "kakaoReady": true,
+      "publicCatalogIncludesOriginalPresentation": true,
+      "explicitTestTitlesAbsent": true,
+      "emptyContestFeedPreservesLegacyPage": true,
+      "productionAppErrorLogs": 0,
+      "originalLocalFilesChecked": 675,
+      "originalLocalChanged": []
+    },
+    "cost": {
+      "newPaidResources": 0,
+      "newFixedMonthlyUSD": 0,
+      "deploys": 1,
+      "existingBandwidthUsageMayIncrease": true
+    },
+    "policy": "Do not remove existing marketplace display assets, picks, awards or page design when archiving explicitly identified TEST products.",
+    "fullStage10Complete": false,
+    "otherRemainingWorkUnchanged": true,
+    "proof": [
+      "production184-marketplace-restored.png",
+      "production184-contest-restored.png"
     ]
   }
 }
