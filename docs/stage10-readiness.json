@@ -1,6 +1,6 @@
 {
-  "revision": 182,
-  "status": "PRODUCTION_SOCIAL_AND_CATEGORY_FIX_DEPLOYED_KAKAO_CONSENT_PENDING",
+  "revision": 183,
+  "status": "KAKAO_LINK_AND_ACTUAL_ADMIN_RELOGIN_VERIFIED",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
     "sha256": "35baf3bcef6b10632787d8661c4a48992e70181267c4e4d5fc6d7070b3b1b339",
@@ -2939,6 +2939,37 @@
       "production182-google-login.png",
       "production182-naver-login.png",
       "production182-kakao-consent-required.png"
+    ]
+  },
+  "productionSocialLogin183": {
+    "revision": 183,
+    "status": "KAKAO_LINK_AND_ACTUAL_ADMIN_RELOGIN_VERIFIED",
+    "origin": "https://novanoxx.com",
+    "existingAccount": "novanoxx2026@gmail.com",
+    "authorization": "Owner completed first email consent and separately approved adding Kakao as a login method to the existing administrator at action time.",
+    "linked": true,
+    "newUserCreated": false,
+    "newAdminRoleCreated": false,
+    "googleIdentityRetained": true,
+    "logoutAndKakaoOnlyRelogin": true,
+    "administratorMenuVisible": true,
+    "currentLoginUi": "카카오",
+    "connectedLoginUi": [
+      "구글",
+      "카카오"
+    ],
+    "uiLoginAtKST": "2026-10-18 05:13:14",
+    "deploymentPerformed": false,
+    "newPaidResources": 0,
+    "sourceCodeChanged": false,
+    "existingOperatingAndTestDataDeleted": false,
+    "partialUncommittedEngineEditsPreserved": true,
+    "naverPublicReviewStillRequired": true,
+    "fullStage10Complete": false,
+    "otherRemainingScopeUnchangedFrom182": true,
+    "proof": [
+      "production183-kakao-linked.png",
+      "production183-kakao-login.png"
     ]
   }
 }
