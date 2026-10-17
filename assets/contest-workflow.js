@@ -1,6 +1,8 @@
 async function renderEngineContest(submit=false){
  const route=submit?'contest-submit':'contest',owner=authUser?.id,current=()=>page.dataset.route===route&&(!submit||authUser?.id===owner);let data;
  try{const response=await fetch('/api/engine/contests');if(response.status===404)return false;if(!response.ok)throw Error('ENGINE_UNAVAILABLE');data=await response.json();}catch{if(current())page.innerHTML='<p role="status">'+esc(uiText('콘테스트를 불러오지 못했습니다. 다시 시도해주세요.'))+'</p>';return true;}if(!current())return true;if(!data.connected)return false;
+ // An empty operations feed must not replace the existing introduction and entries.
+ if(!submit&&!data.contests.length)return false;
  page.innerHTML=pageHeading('CONTEST','콘테스트','일정·심사 기준·상금과 혜택을 확인해주세요.');const body=document.createElement('section');body.className='page-panel';page.append(body);
  const line=(parent,key,value)=>{const p=document.createElement('p');if(key){const label=document.createElement('span');label.textContent=uiText(key);label.setAttribute('data-i18n',key);p.append(label,document.createTextNode(' · '));}p.append(document.createTextNode(value));parent.append(p);};
  if(!data.contests.length){line(body,'',''+uiText('현재 공개된 콘테스트가 없습니다.'));return true;}
