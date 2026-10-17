@@ -39,7 +39,10 @@
       "productionPipelineConnected": false,
       "localSqliteCoordinator": "discovery-isolated-restore.cjs"
     },
-    "ownerConfirmedDays": 90
+    "ownerConfirmedDays": 90,
+    "capacityObservation": "docs/backup-capacity-observation.json",
+    "futureGrowthForecast": "discovery-backup-plan.cjs#forecast",
+    "operatingActivationAllowed": false
   },
   "processingRegister": [
     {

@@ -1,5 +1,5 @@
 {
-  "revision": 175,
+  "revision": 176,
   "status": "LOCAL_SCOPE_INVENTORY_NOT_RELEASE_APPROVAL",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -2403,5 +2403,34 @@
     "capacityMeasurementRequired": true,
     "operatingBackupEnabled": false,
     "automaticDeletion": false
-  }
+  },
+  "bundle176": {
+    "status": "LOCAL_CAPACITY_AND_RETENTION_NOTICE_PREPARATION_NOT_DEPLOYED",
+    "capacityObservation": "docs/backup-capacity-observation.json",
+    "bucketSizeDisplay": "8.16 MB",
+    "observationIsLive": false,
+    "discoverySnapshotBytes": null,
+    "existingBackupGrowthIncludedInForecast": true,
+    "forecastAssumptionDailyBaselineBytes": 2700000,
+    "forecastIsCostApproval": false,
+    "operatingActivationAllowed": false,
+    "publicBackupNoticeDays": 90,
+    "registeredTranslationKeys": 1009,
+    "validation": {
+      "capacityAndAdminMinimalDom": 10,
+      "privacyMinimalDom": 36,
+      "readinessApiAndFingerprint": 30,
+      "originalFilesPreserved": 675
+    },
+    "additionalPaidResourcesCreated": false,
+    "remotePayloadDownloads": 0,
+    "existingBackupsDeleted": false,
+    "deployed": false
+  },
+  "currentRemaining176": [
+    "실측 대상: 향후 검색·유입 원문 백업1회 크기 및 지속적 증가량, 요청수·월전송 예산과 서버 임시공간. 현재 R2 8.16MB 읽기전용 확인은 신규 원문 크기 측정 대체 아님.",
+    "최신 동의/삭제 이력의 별도 영속 보관·전송 및 실제 오프사이트/PG 복구·복구 후 기동 연결. 기존 백업 삭제·보존정책 변경 없음.",
+    "실제 위탁·보관 위치·국외이전·권리행사 처리 및 법률 확인, 전체 화면·접근성·모국어 검수와 Word 정합성.",
+    "운영 계정·주문·잔액·권한·파일 매핑과 전환/배포; 제공자 회신 뒤 실제 금융 계약·환불·정산·정기청구 연결."
+  ]
 }

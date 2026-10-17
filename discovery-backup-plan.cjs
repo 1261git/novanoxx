@@ -12,4 +12,14 @@ function inspect(receipt,now,latestDeletionAt){
  const expiresAt=receipt.createdAt+receipt.retentionDays*DAY;if(!Number.isSafeInteger(expiresAt))throw Error('INVALID_INPUT');const expired=now>=expiresAt,deletionFilterRequired=latestDeletionAt>=receipt.createdAt&&latestDeletionAt!==0;
  return {expiresAt,expired,rawAccessAllowed:!expired&&!deletionFilterRequired,verifiedDeletionFilterRequired:deletionFilterRequired,restoreCollectionEnabled:false,legacyBackupDeletionAllowed:false,eligibleForFutureManagedExpiry:expired,automaticDeletion:false};
 }
-module.exports={estimate,inspect};
+function forecast({days,dailyCopies=1,snapshotBytes,existingRetainedBytes,baselineDailyGrowthBytes}){
+ const base=estimate({days,dailyCopies,snapshotBytes,existingRetainedBytes});
+ const common={...base,operatingActivationAllowed:false,automaticDeletion:false,scope:'DISCOVERY_PLUS_EXISTING_BACKUP_GROWTH_PLANNING_V1'};
+ if(baselineDailyGrowthBytes===null||baselineDailyGrowthBytes===undefined)return {...common,allowed:false,status:'BASELINE_GROWTH_MEASUREMENT_REQUIRED',projectedTotalBytes:null};
+ if(!Number.isSafeInteger(baselineDailyGrowthBytes)||baselineDailyGrowthBytes<0)throw Error('INVALID_INPUT');
+ if(base.estimatedBytes===null)return {...common,baselineDailyGrowthBytes,projectedTotalBytes:null};
+ const baselineGrowthBytes=baselineDailyGrowthBytes*days,projectedTotalBytes=base.totalBytes+baselineGrowthBytes;
+ if(!Number.isSafeInteger(projectedTotalBytes))throw Error('INVALID_INPUT');
+ return {...common,baselineDailyGrowthBytes,baselineGrowthBytes,projectedTotalBytes,allowed:projectedTotalBytes<=MAX_STORED_BYTES,status:projectedTotalBytes<=MAX_STORED_BYTES?'PROJECTION_WITHIN_STORAGE_BUDGET_NOT_COST_APPROVAL':'STOP_CAPACITY_EXCEEDED',monthlyTransferAndRequestBudgetsChecked:false};
+}
+module.exports={estimate,inspect,forecast};

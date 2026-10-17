@@ -1,0 +1,23 @@
+{
+  "observedAt": "2026-10-17T16:39:10Z",
+  "source": "Cloudflare authenticated R2 dashboard, Objects and Metrics tabs, read only",
+  "bucket": "novanoxx-private-backups",
+  "bucketSizeDisplay": "8.16 MB",
+  "bucketBytesUpperBound": 8170000,
+  "upperBoundBasis": "Conservative planning bound for rounded dashboard display; not a live object inventory",
+  "storageClass": "Standard",
+  "publicAccess": "Disabled",
+  "last24HoursAverageDisplay": "7.95 MB",
+  "chartLastListedBytes": 8161203,
+  "chartLastListedAt": "2026-10-17T01:00:00Z",
+  "chartDailyIncreaseBytes": 2694449,
+  "dailyIncreaseIsFutureGuarantee": false,
+  "discoverySnapshotBytes": null,
+  "existingBackupsDeleted": false,
+  "newBackupsCreated": false,
+  "costCertified": false,
+  "operatingCollectionEnabled": false,
+  "references": [
+    "https://developers.cloudflare.com/r2/pricing/"
+  ]
+}
