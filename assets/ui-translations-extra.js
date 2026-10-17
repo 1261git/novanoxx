@@ -1,5 +1,14 @@
 (function(root){const dictionaries={
   "es": {
+"최대 10개 원본을 납품할 수 있습니다. 직접 변환할 수 없는 원본에는 별도 검수 자료가 필요합니다.":"Entregue hasta 10 originales. Los que no se puedan convertir requieren material de revisión separado.",
+"원본 검수 자료":"Material de revisión del original",
+"최대 10개 파일, 파일당 300MB 이하로 선택해주세요.":"Seleccione hasta 10 archivos de un máximo de 300 MB cada uno.",
+"원본 검수 자료가 필요합니다.":"Se requiere material de revisión del original.",
+"별도 검수 자료는 원본 전체의 내용이나 실행 결과를 보증하지 않습니다. 자동 확정하지 않으며 직접 확인이 필요합니다.":"El material separado no garantiza todo el contenido original ni los resultados de ejecución. No hay confirmación automática; se requiere revisión manual.",
+"별도 검수 자료":"Material de revisión separado",
+"전체 변환 검수본":"Copia de revisión convertida completa",
+"원본 목록과 별도 검수 범위를 확인했습니다.":"He revisado la lista de originales y el alcance de la revisión separada.",
+"원본 목록과 별도 검수 범위를 확인해주세요.":"Revise la lista de originales y el alcance de la revisión separada.",
     "마켓플레이스": "Mercado",
     "콘테스트": "Concursos",
     "크리에이터": "Creadores",
@@ -807,6 +816,15 @@
     "워터마크 포함 전체화면": "Pantalla completa con marca de agua"
   },
   "zh-Hans": {
+"최대 10개 원본을 납품할 수 있습니다. 직접 변환할 수 없는 원본에는 별도 검수 자료가 필요합니다.":"最多交付10个原始文件。无法直接转换的文件需要单独的审阅材料。",
+"원본 검수 자료":"原始文件审阅材料",
+"최대 10개 파일, 파일당 300MB 이하로 선택해주세요.":"请选择最多10个文件，每个不超过300 MB。",
+"원본 검수 자료가 필요합니다.":"需要原始文件审阅材料。",
+"별도 검수 자료는 원본 전체의 내용이나 실행 결과를 보증하지 않습니다. 자동 확정하지 않으며 직접 확인이 필요합니다.":"单独的审阅材料不保证原始文件的全部内容或执行结果。不会自动确认，必须手动审核。",
+"별도 검수 자료":"单独审阅材料",
+"전체 변환 검수본":"完整转换审阅副本",
+"원본 목록과 별도 검수 범위를 확인했습니다.":"我已确认原始文件列表及单独审阅的范围。",
+"원본 목록과 별도 검수 범위를 확인해주세요.":"请确认原始文件列表及单独审阅的范围。",
     "마켓플레이스": "市场",
     "콘테스트": "竞赛",
     "크리에이터": "创作者",
@@ -1614,6 +1632,15 @@
     "워터마크 포함 전체화면": "含水印全屏显示"
   },
   "vi": {
+"최대 10개 원본을 납품할 수 있습니다. 직접 변환할 수 없는 원본에는 별도 검수 자료가 필요합니다.":"Giao tối đa 10 tệp gốc. Tệp không thể chuyển đổi cần tài liệu xem xét riêng.",
+"원본 검수 자료":"Tài liệu xem xét tệp gốc",
+"최대 10개 파일, 파일당 300MB 이하로 선택해주세요.":"Chọn tối đa 10 tệp, mỗi tệp không quá 300 MB.",
+"원본 검수 자료가 필요합니다.":"Cần tài liệu xem xét tệp gốc.",
+"별도 검수 자료는 원본 전체의 내용이나 실행 결과를 보증하지 않습니다. 자동 확정하지 않으며 직접 확인이 필요합니다.":"Tài liệu riêng không bảo đảm toàn bộ nội dung hoặc kết quả chạy của tệp gốc. Không tự xác nhận; cần kiểm tra thủ công.",
+"별도 검수 자료":"Tài liệu xem xét riêng",
+"전체 변환 검수본":"Bản xem xét được chuyển đổi đầy đủ",
+"원본 목록과 별도 검수 범위를 확인했습니다.":"Tôi đã kiểm tra danh sách tệp gốc và phạm vi xem xét riêng.",
+"원본 목록과 별도 검수 범위를 확인해주세요.":"Vui lòng kiểm tra danh sách tệp gốc và phạm vi xem xét riêng.",
     "마켓플레이스": "Chợ tài nguyên",
     "콘테스트": "Cuộc thi",
     "크리에이터": "Nhà sáng tạo",
@@ -2421,6 +2448,15 @@
     "워터마크 포함 전체화면": "Toàn màn hình có dấu bản quyền"
   },
   "de": {
+"최대 10개 원본을 납품할 수 있습니다. 직접 변환할 수 없는 원본에는 별도 검수 자료가 필요합니다.":"Bis zu 10 Originaldateien. Nicht konvertierbare Originale benötigen gesondertes Prüfmaterial.",
+"원본 검수 자료":"Prüfmaterial zum Original",
+"최대 10개 파일, 파일당 300MB 이하로 선택해주세요.":"Wählen Sie bis zu 10 Dateien mit jeweils höchstens 300 MB.",
+"원본 검수 자료가 필요합니다.":"Prüfmaterial zum Original ist erforderlich.",
+"별도 검수 자료는 원본 전체의 내용이나 실행 결과를 보증하지 않습니다. 자동 확정하지 않으며 직접 확인이 필요합니다.":"Gesondertes Prüfmaterial garantiert weder den gesamten Originalinhalt noch Ausführungsergebnisse. Keine automatische Bestätigung; manuelle Prüfung erforderlich.",
+"별도 검수 자료":"Gesondertes Prüfmaterial",
+"전체 변환 검수본":"Vollständig konvertierte Prüfkopie",
+"원본 목록과 별도 검수 범위를 확인했습니다.":"Ich habe die Originalliste und den Umfang der gesonderten Prüfung geprüft.",
+"원본 목록과 별도 검수 범위를 확인해주세요.":"Prüfen Sie die Originalliste und den Umfang der gesonderten Prüfung.",
     "마켓플레이스": "Marktplatz",
     "콘테스트": "Wettbewerbe",
     "크리에이터": "Kreative",

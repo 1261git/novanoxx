@@ -3,7 +3,7 @@ const {serialize,deserialize}=require('node:v8');
 const path=require('node:path');
 class PostgresDatabase {
  constructor(options={}){
-  this.backend='postgres';this.closed=false;this.fatal=false;
+  this.backend='postgres';this.embeddedTest=options.pglite===true&&!options.url&&!options.migrateSource;this.engineSandbox=options.engineSandbox===true;this.closed=false;this.fatal=false;
   this.worker=new Worker(path.join(__dirname,'postgres-worker.cjs'),{workerData:options});
   this.worker.on('error',()=>{this.fatal=true});this.worker.unref();
   try{this.call({operation:'ready'});}catch(error){this.worker.terminate();throw error;}

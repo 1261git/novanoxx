@@ -1,4 +1,13 @@
 (function(root){const entries={
+"최대 10개 원본을 납품할 수 있습니다. 직접 변환할 수 없는 원본에는 별도 검수 자료가 필요합니다.":"Deliver up to 10 originals. Originals that cannot be converted require separate review material.",
+"원본 검수 자료":"Original review material",
+"최대 10개 파일, 파일당 300MB 이하로 선택해주세요.":"Choose up to 10 files, each no larger than 300 MB.",
+"원본 검수 자료가 필요합니다.":"Original review material is required.",
+"별도 검수 자료는 원본 전체의 내용이나 실행 결과를 보증하지 않습니다. 자동 확정하지 않으며 직접 확인이 필요합니다.":"Separate review material does not guarantee all original content or execution results. Automatic confirmation is disabled; manual review is required.",
+"별도 검수 자료":"Separate review material",
+"전체 변환 검수본":"Full converted review copy",
+"원본 목록과 별도 검수 범위를 확인했습니다.":"I have reviewed the original list and the separate review scope.",
+"원본 목록과 별도 검수 범위를 확인해주세요.":"Review the original list and the separate review scope.",
   "무제한": "Unlimited",
   "판매 중 에셋": "Active assets",
   "제작 지시사항": "Production instructions",
