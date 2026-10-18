@@ -1,6 +1,6 @@
 {
-  "revision": 199,
-  "status": "AVAILABLE_NONFINANCIAL_BROWSER_REVIEW_COMPLETED_NAVER_REVIEW_RESULT_PENDING",
+  "revision": 200,
+  "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
     "sha256": "35baf3bcef6b10632787d8661c4a48992e70181267c4e4d5fc6d7070b3b1b339",
@@ -6181,18 +6181,18 @@
       "originalDirtyFilesChanged": 0
     },
     "naver": {
-      "appStatus": "개발 중",
-      "status": "OWNER_REPORTED_SUBMITTED_REVIEW_RESULT_PENDING",
+      "appStatus": "검수요청",
+      "status": "REVIEW_REQUESTED_RESULT_PENDING",
       "requiredData": [
         "email",
         "nickname"
       ],
       "existingAccountLoginVerified": true,
       "newAccountRegistrationExercised": false,
-      "filesUploaded": false,
+      "filesUploaded": true,
       "submitted": true,
       "pack": "NovaNoxX_네이버검수자료_2026-10-18.zip",
-      "submissionEvidence": "User reported submission on 2026-10-19 Asia/Seoul; portal receipt not independently rechecked"
+      "submissionEvidence": "Owner submitted 2026-10-19; subsequent browser observation confirmed 검수요청 and 최종 검수 요청일 2026.10.19. Not rechecked or resubmitted in revision200."
     },
     "limits": [
       "Native screen-reader speech, iOS/Safari and actual browser 200% zoom not verified; zoom tool had no effect and was reset",
@@ -6448,5 +6448,269 @@
       "manifestRetained": true,
       "freeBytes": 5115461632
     }
-  }
+  },
+  "productionNotes200": {
+    "revision": 200,
+    "commit": "07828690ee3f5940cf742375fb52fe59452e5566",
+    "deployment": {
+      "id": "dep-dbafbcjrjlhs73ci9h10",
+      "status": "live",
+      "finishedAt": "2026-10-18T16:37:52.150371Z"
+    },
+    "scope": "Developer notes and current remaining-work classification only",
+    "source": {
+      "commit": "07828690ee3f5940cf742375fb52fe59452e5566",
+      "observedAt": "2026-10-18T16:38:31.194Z",
+      "checked": [
+        {
+          "file": "assets/developer-notes-data.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/developer-notes.js",
+          "status": 200,
+          "match": true
+        }
+      ],
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "reviewOnly": false,
+          "productionSite": true,
+          "paymentPreview": true,
+          "operatingConnections": true,
+          "financeConnected": true,
+          "payoutsConnected": true,
+          "subscriptionRefundsConnected": true,
+          "transactionNotificationsConnected": true,
+          "withdrawalConnected": true,
+          "recoveryConnected": true,
+          "analyticsConnected": true,
+          "discoveryCollection": true,
+          "database": "postgres",
+          "migrationVerified": true
+        }
+      },
+      "mail": {
+        "status": 200,
+        "body": {
+          "enabled": true
+        }
+      },
+      "scope": "Developer notes only; no financial/backend/schema changes"
+    },
+    "browser": {
+      "checklist": [
+        {
+          "symbol": "✓",
+          "title": "구독 결제 환불 · 구현·운영 반영"
+        },
+        {
+          "symbol": "✓",
+          "title": "판매자 정산 화면 · 구현·운영 반영"
+        },
+        {
+          "symbol": "✓",
+          "title": "관리자 실거래 관리 · 구현·운영 반영"
+        },
+        {
+          "symbol": "✓",
+          "title": "홈페이지 환불 처리 · 구현·운영 반영"
+        },
+        {
+          "symbol": "✓",
+          "title": "결제 상태 자동 반영 · 구현·운영 반영"
+        },
+        {
+          "symbol": "✓",
+          "title": "구독 실패 후 복구 · 구현·운영 반영"
+        },
+        {
+          "symbol": "✓",
+          "title": "크리에이터 성과 화면 · 구현·운영 반영"
+        },
+        {
+          "symbol": "✓",
+          "title": "회원 탈퇴 처리 · 구현·운영 반영"
+        },
+        {
+          "symbol": "✓",
+          "title": "판매자 계좌 등록·실제 송금 · 구현·연결 준비 반영"
+        },
+        {
+          "symbol": "✓",
+          "title": "주요 화면 키보드·모바일 접근성 · 범위 검수·보완 반영"
+        },
+        {
+          "symbol": "○",
+          "title": "NEON 유상 충전·잔액·환급 원장 · 추가 개발 필요 · 계약 조건 대기"
+        },
+        {
+          "symbol": "○",
+          "title": "지급 완료 후 환불금 회수·상계 · 추가 개발 필요 · 계약 조건 대기"
+        },
+        {
+          "symbol": "○",
+          "title": "일반 결제·자동청구·환불·지급 활성화 · 연결 구현 · 운영 활성화 대기"
+        },
+        {
+          "symbol": "○",
+          "title": "네이버 일반 이용자 로그인 승인 · 검수 요청 제출 · 결과 대기"
+        },
+        {
+          "symbol": "○",
+          "title": "소유자 복구키를 이용한 실제 복원 · 백업 완료 · 소유자 참여 검수 필요"
+        },
+        {
+          "symbol": "○",
+          "title": "실제 기기·접근성·전문 검수 · 주요 화면 보완 · 추가 확인 필요"
+        },
+        {
+          "symbol": "○",
+          "title": "실제 콘테스트 공개 조건 · 기능 구현 · 운영자 입력 대기"
+        },
+        {
+          "symbol": "○",
+          "title": "관리자 담당 계정별 역할 위임 · Phase 2 · 후속 작업"
+        },
+        {
+          "symbol": "○",
+          "title": "TEST 서버 중지·자료 보존 · 분리 확인 · 중지 미실행"
+        }
+      ],
+      "journal": "남은 개발을 구분하고 네이버 제출·전체 사이트 백업을 기록했습니다",
+      "pageWidth": 930,
+      "title": "개발자 노트 — NovaNoxX",
+      "updated": "2026-10-19",
+      "viewport": 945
+    },
+    "audit": {
+      "revision": 200,
+      "reviewDate": "2026-10-19",
+      "scope": "Existing MVP readiness, code gates and deployed revision compared; not a new exhaustive PRD or legal certification",
+      "notesUpdated": "2026-10-19",
+      "currentStage": 10,
+      "remaining": [
+        {
+          "feature": "NEON 유상 충전·잔액·환급 원장",
+          "status": "추가 개발 필요 · 계약 조건 대기",
+          "detail": "현재 TEST 지갑과 별개입니다. 선불 충전·보관·환급 허용 여부와 한도·부분 사용·정산 조건을 확정한 뒤 운영 원장과 주문 연결을 추가 구현합니다. 키 교체만으로 완료되지 않습니다."
+        },
+        {
+          "feature": "지급 완료 후 환불금 회수·상계",
+          "status": "추가 개발 필요 · 계약 조건 대기",
+          "detail": "회수 주체·판매자 책임과 동의·충당금·잔액 부족·차지백 조건과 API 확정 후 회수/부채 원장·대사를 구현합니다. 현재 송금 중·완료 건은 자동 환불을 차단하고 운영 검토합니다."
+        },
+        {
+          "feature": "일반 결제·자동청구·환불·지급 활성화",
+          "status": "연결 구현 · 운영 활성화 대기",
+          "detail": "일반 PG·자동결제·지급대행 각각의 계약, 운영 키·웹훅·암호화/복구 설정과 판매자 인증이 필요합니다. 소유자 첫 실제 구매→납품 권한→환불·청구·지급 결과를 대조해야 하며 계약 API 차이는 추가 반영합니다."
+        },
+        {
+          "feature": "네이버 일반 이용자 로그인 승인",
+          "status": "검수 요청 제출 · 결과 대기",
+          "detail": "2026년 10월 19일 검수 요청 접수를 확인했습니다. 기존 계정 로그인 성공과 일반 이용자 검수 승인은 구분하며, 결과에 보완 요청이 있으면 해당 항목을 수정합니다."
+        },
+        {
+          "feature": "소유자 복구키를 이용한 실제 복원",
+          "status": "백업 완료 · 소유자 참여 검수 필요",
+          "detail": "최신 약 78.6MB 암호화 백업과 외부 재읽기 무결성은 확인했습니다. 오프라인 개인키를 소유자 기기에서 잠금 해제하고 새 격리 환경에 복원하는 검증은 남아 있습니다."
+        },
+        {
+          "feature": "실제 기기·접근성·전문 검수",
+          "status": "주요 화면 보완 · 추가 확인 필요",
+          "detail": "키보드·모바일·6언어 표시 등 확인 범위는 반영했습니다. 실제 화면읽기 음성·iOS/Safari·200% 확대, 전체 거래 동선 및 법률·모국어 검수는 완료로 표시하지 않습니다."
+        },
+        {
+          "feature": "실제 콘테스트 공개 조건",
+          "status": "기능 구현 · 운영자 입력 대기",
+          "detail": "콘테스트별 일정·심사 기준·상금/혜택·수상자 등 실제 운영 내용을 정한 뒤 공개합니다. 임의로 상금이나 일정을 만들지 않습니다."
+        },
+        {
+          "feature": "관리자 담당 계정별 역할 위임",
+          "status": "Phase 2 · 후속 작업",
+          "detail": "현재는 단일 최고관리자 운영입니다. 심사·편집·고객지원/분쟁·지갑/구독·조회 전용 담당 계정 위임은 Phase 2로 둡니다."
+        },
+        {
+          "feature": "TEST 서버 중지·자료 보존",
+          "status": "분리 확인 · 중지 미실행",
+          "detail": "운영과 다른 DB·디스크의 TEST 자료 약 2.89GB를 보존 중입니다. 웹 서버만 중지할 수 있으나 아직 실행하지 않았으며, 별도 TEST DB·디스크 유지 요금은 남습니다."
+        }
+      ],
+      "implementedChecklistCount": 10,
+      "additionalImplementationAfterContractRequired": [
+        "NEON operating stored-value ledger and order balance/refund integration",
+        "Post-payout fund recovery, liabilities/offset and reconciliation according to contract",
+        "Provider API changes where final agreement differs from prepared adapter"
+      ],
+      "newPaidResources": 0,
+      "newFixedMonthlyFees": 0,
+      "ordinaryBuildUsageApplies": true,
+      "stage10Complete": false
+    },
+    "changedFrontendFiles": 2,
+    "backendOrSchemaChanged": false,
+    "financialSettingsChanged": false,
+    "operatingBusinessDataChanged": false,
+    "newPaidResources": 0,
+    "newFixedMonthlyFees": 0,
+    "ordinaryBuildUsageApplies": true,
+    "originalDirtyCheckout": {
+      "checked": 675,
+      "changed": []
+    },
+    "backup199RemainsPreserved": true,
+    "backup199RuntimeCommit": "d1a552f52874ad321ce0baa2e474edc6b2ec7951",
+    "latestNotesStoredInGit": true,
+    "stage10Complete": false
+  },
+  "currentRemaining200": [
+    {
+      "id": "NEON_OPERATING_WALLET",
+      "status": "TEST_WALLET_ONLY_OPERATING_MONEY_LEDGER_NOT_IMPLEMENTED",
+      "detail": "선불 충전·보관·환급 허용 여부, 한도/부분 사용/환불/정산/해외 결제 조건을 계약으로 먼저 결정. 허용되는 모델에 맞춰 실운영 충전 원장·잔액 차감/환급·주문 정산 연결을 추가 구현. 직접 원화 PG 구매 경로와 별개이며 키 교체로 완료되지 않음."
+    },
+    {
+      "id": "POST_PAYOUT_RECOVERY",
+      "status": "AUTOMATIC_RECOVERY_NOT_IMPLEMENTED_CONTRACT_POLICY_PENDING",
+      "detail": "회수 주체·판매자 동의/책임·충당금·잔액 부족·차지백/상계 조건과 API를 확정한 뒤 필요한 회수·부채 원장/대사 처리를 추가 구현. 지금은 송금 중/완료 주문 자동 환불 차단과 운영 검토 유지."
+    },
+    {
+      "id": "CONTRACTED_FEATURE_ACTIVATION",
+      "status": "CONTRACT_SETTINGS_AND_OWNER_TRANSACTION_PENDING",
+      "detail": "이미 배포된 일반 PG·빌링·상품/구독 환불·지급 공통 연결은 계약된 MID·키·웹훅·암호화/복구키·KYC 확인 후 단계적으로 활성화. 계약 API 차이는 추가 반영 필요."
+    },
+    {
+      "id": "NAVER_PUBLIC_REVIEW",
+      "status": "REVIEW_REQUESTED_RESULT_PENDING",
+      "detail": "2026-10-19 사용자가 직접 제출했고 이후 실제 포털 검수요청/최종요청일2026.10.19를 확인함. 현재 결과 대기, 이번200에서 재신청/새 상태 재조회 없음. 앞선 사용자 보고만으로 적힌 문구를 후속 직접 접수 확인으로 보완."
+    },
+    {
+      "id": "CONTENT_AND_LAUNCH_REVIEW",
+      "status": "AVAILABLE_NONFINANCIAL_BROWSER_REVIEW_COMPLETED_DEVICE_AND_SPECIALIST_REVIEW_REMAIN",
+      "detail": "196 모바일/6언어 검수에 이어197 실제 운영 크리에이터7·관리자 금융4·정책/보호7 화면, 내부 링크76개, 메뉴 클릭/키보드와 관리자 입력 이름 보완 확인. 실제 보조기기·iOS/Safari·200% 확대·전체123동선/WCAG 인증·법률/모국어 감수는 미확인."
+    },
+    {
+      "id": "OWNER_OFFLINE_RECOVERY",
+      "status": "OWNER_PARTICIPATION_REQUIRED",
+      "detail": "199 최신 약78.64MB 암호화 백업과 외부 재읽기 지문/아카이브 판독 완료. 소유자 오프라인 개인키로 실제 복호화·새 격리대상 전체 복구는 미실행. 기존 격리 복원 증거와 구분."
+    },
+    {
+      "id": "CONTEST_PUBLICATION_INPUT",
+      "status": "OPERATOR_CONTENT_PENDING_NOT_CODE_GAP",
+      "detail": "기능은 연결됨. 실제 콘테스트 일정·심사 기준·상금/혜택·수상자 입력은 운영자 업무이며 임의 생성/공개/상금 지급하지 않음."
+    },
+    {
+      "id": "PHASE2",
+      "status": "DEFERRED_BY_OWNER",
+      "detail": "관리자 담당 계정별 역할 위임은 Phase2. 최근 본 목록/선택형 마케팅 이메일/검색 결과 없음 분석 등 후순위 항목은 현재 MVP 필수 개발에 포함하지 않음. 혼합결제·AI자동화/의미검색/실시간3D·채팅·앱 추가 없음."
+    },
+    {
+      "id": "TEST_SERVICE_SUSPENSION",
+      "status": "ISOLATION_VERIFIED_NOT_SUSPENDED",
+      "detail": "199 운영과 분리 확인. TEST 웹 서비스만 중지 가능하나 아직 중지하지 않음. 전용DB/디스크2.89GB 및 기록 보존, 유지 요금은 별도. 삭제/TEST 자료 외부 반출 완료로 확대하지 않음."
+    }
+  ]
 }
