@@ -1,6 +1,6 @@
 {
-  "revision": 196,
-  "status": "TARGETED_LAUNCH_ACCESSIBILITY_FIXES_DEPLOYED_OWNER_AND_FULL_RELEASE_CHECKS_REMAIN",
+  "revision": 197,
+  "status": "AVAILABLE_NONFINANCIAL_BROWSER_REVIEW_COMPLETED_NAVER_OWNER_SUBMISSION_PENDING",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
     "sha256": "35baf3bcef6b10632787d8661c4a48992e70181267c4e4d5fc6d7070b3b1b339",
@@ -6080,6 +6080,161 @@
       "id": "CONTENT_AND_LAUNCH_REVIEW",
       "status": "TARGETED_BROWSER_KEYBOARD_MOBILE_CHECKS_COMPLETED_FULL_REVIEW_PENDING",
       "detail": "196 운영 데스크톱9/모바일5, 로컬320px7개 화면·6언어, 입력 오류/메뉴/언어창 초점과 대비 보완 확인. 실제 보조기기·iOS/Safari·실제200% 확대·사설 금융/전체123동선·법률/모국어 감수는 미실행."
+    },
+    {
+      "id": "OWNER_OFFLINE_RECOVERY",
+      "status": "OWNER_PARTICIPATION_REQUIRED",
+      "detail": "기존 격리 복원과 암호화 USB 사본 보존 확인은 완료. 소유자 오프라인 개인키로 실제 복호화·재해 복구는 미실행. 운영 DB 교체 없이 소유자 참여 검수가 필요."
+    },
+    {
+      "id": "CONTEST_PUBLICATION_INPUT",
+      "status": "OPERATOR_CONTENT_PENDING_NOT_CODE_GAP",
+      "detail": "기능은 연결됨. 실제 콘테스트 일정·심사 기준·상금/혜택·수상자 입력은 운영자 업무이며 임의 생성/공개/상금 지급하지 않음."
+    },
+    {
+      "id": "PHASE2",
+      "status": "DEFERRED_BY_OWNER",
+      "detail": "관리자 담당 계정별 역할 위임은 Phase2. 최근 본 목록/선택형 마케팅 이메일/검색 결과 없음 분석 등 후순위 항목은 현재 MVP 필수 개발에 포함하지 않음. 혼합결제·AI자동화/의미검색/실시간3D·채팅·앱 추가 없음."
+    }
+  ],
+  "productionLaunch197": {
+    "revision": 197,
+    "commit": "d1a552f52874ad321ce0baa2e474edc6b2ec7951",
+    "deployment": {
+      "id": "dep-dbadr83m8hqs73b9p1dg",
+      "status": "live",
+      "finishedAt": "2026-10-18T14:55:23.299556Z"
+    },
+    "scope": "Remaining available nonfinancial launch browser checks and Naver submission preparation",
+    "source": {
+      "commit": "d1a552f52874ad321ce0baa2e474edc6b2ec7951",
+      "observedAt": "2026-10-18T14:56:06.734Z",
+      "checked": [
+        {
+          "file": "assets/accessibility.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/operations-cases.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/developer-notes-data.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/ui-translations.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/ui-translations-extra.js",
+          "status": 200,
+          "match": true
+        }
+      ],
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "reviewOnly": false,
+          "productionSite": true,
+          "paymentPreview": true,
+          "operatingConnections": true,
+          "financeConnected": true,
+          "payoutsConnected": true,
+          "subscriptionRefundsConnected": true,
+          "transactionNotificationsConnected": true,
+          "withdrawalConnected": true,
+          "recoveryConnected": true,
+          "analyticsConnected": true,
+          "discoveryCollection": true,
+          "database": "postgres",
+          "migrationVerified": true
+        }
+      },
+      "mail": {
+        "status": 200,
+        "body": {
+          "enabled": true
+        }
+      },
+      "runtimeFinancialCodeChanged": false,
+      "operatingDatabaseSchemaChanged": false
+    },
+    "browserEvidence": "release197-browser-report.json",
+    "checks": {
+      "creatorViews": 7,
+      "adminFinanceViews": 4,
+      "policiesAndGuards": 7,
+      "internalLinkCandidates": 76,
+      "unknownRoutes": 0,
+      "unnamedAdminControls": 0,
+      "registeredTranslationKeys": 1286,
+      "extraLocaleMissing": 0,
+      "staticGuideLanguageRouteChecks": 20,
+      "postDeployErrorLogs": 0,
+      "originalDirtyFingerprintsChecked": 675,
+      "originalDirtyFilesChanged": 0
+    },
+    "naver": {
+      "appStatus": "개발 중",
+      "status": "PREPARED_OWNER_SUBMISSION_PENDING",
+      "requiredData": [
+        "email",
+        "nickname"
+      ],
+      "existingAccountLoginVerified": true,
+      "newAccountRegistrationExercised": false,
+      "filesUploaded": false,
+      "submitted": false,
+      "pack": "NovaNoxX_네이버검수자료_2026-10-18.zip"
+    },
+    "limits": [
+      "Native screen-reader speech, iOS/Safari and actual browser 200% zoom not verified; zoom tool had no effect and was reset",
+      "Full WCAG/123-flow certification and professional legal/native-language review not performed",
+      "Owner offline private-key unlock and isolated disaster recovery remain owner tasks",
+      "NEON operating monetary ledger and post-payout recovery depend on contract terms; general PG/billing/payout activation requires contracted settings and owner first transaction"
+    ],
+    "financialCodeOrFlagsChanged": false,
+    "databaseSchemaChanged": false,
+    "realFinancialCalls": 0,
+    "newRealAccountsCreated": 0,
+    "businessRecordsMutated": false,
+    "normalLoginAndReadAuditRecordsGenerated": true,
+    "newPaidResources": 0,
+    "newFixedMonthlyFees": 0,
+    "ordinaryUsageStillApplies": true,
+    "stage10Complete": false
+  },
+  "currentRemaining197": [
+    {
+      "id": "NEON_OPERATING_WALLET",
+      "status": "TEST_WALLET_ONLY_OPERATING_MONEY_LEDGER_NOT_IMPLEMENTED",
+      "detail": "선불 충전·보관·환급 허용 여부, 한도/부분 사용/환불/정산/해외 결제 조건을 계약으로 먼저 결정. 허용되는 모델에 맞춰 실운영 충전 원장·잔액 차감/환급·주문 정산 연결을 추가 구현. 직접 원화 PG 구매 경로와 별개이며 키 교체로 완료되지 않음."
+    },
+    {
+      "id": "POST_PAYOUT_RECOVERY",
+      "status": "AUTOMATIC_RECOVERY_NOT_IMPLEMENTED_CONTRACT_POLICY_PENDING",
+      "detail": "회수 주체·판매자 동의/책임·충당금·잔액 부족·차지백/상계 조건과 API를 확정한 뒤 필요한 회수·부채 원장/대사 처리를 추가 구현. 지금은 송금 중/완료 주문 자동 환불 차단과 운영 검토 유지."
+    },
+    {
+      "id": "CONTRACTED_FEATURE_ACTIVATION",
+      "status": "CONTRACT_SETTINGS_AND_OWNER_TRANSACTION_PENDING",
+      "detail": "이미 배포된 일반 PG·빌링·상품/구독 환불·지급 공통 연결은 계약된 MID·키·웹훅·암호화/복구키·KYC 확인 후 단계적으로 활성화. 계약 API 차이는 추가 반영 필요."
+    },
+    {
+      "id": "NAVER_PUBLIC_REVIEW",
+      "status": "PREPARED_OWNER_SUBMISSION_PENDING",
+      "detail": "197 기존 앱 실제 개발 중 확인. 기존 네이버 계정 로그인 성공, 이메일/닉네임 활용과 로그인 절차 PNG3개·제출안내·압축자료 준비. 업로드/최종 검수 요청은 소유자 직접 진행, 아직 제출하지 않음."
+    },
+    {
+      "id": "CONTENT_AND_LAUNCH_REVIEW",
+      "status": "AVAILABLE_NONFINANCIAL_BROWSER_REVIEW_COMPLETED_DEVICE_AND_SPECIALIST_REVIEW_REMAIN",
+      "detail": "196 모바일/6언어 검수에 이어197 실제 운영 크리에이터7·관리자 금융4·정책/보호7 화면, 내부 링크76개, 메뉴 클릭/키보드와 관리자 입력 이름 보완 확인. 실제 보조기기·iOS/Safari·200% 확대·전체123동선/WCAG 인증·법률/모국어 감수는 미확인."
     },
     {
       "id": "OWNER_OFFLINE_RECOVERY",
