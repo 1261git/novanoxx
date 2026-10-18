@@ -1,6 +1,6 @@
 {
-  "revision": 186,
-  "status": "PRODUCTION_FINANCE_UI_AND_RECONCILIATION_DEPLOYED_CONTRACT_GATED",
+  "revision": 187,
+  "status": "PRODUCTION_RECOVERY_ANALYTICS_DEPLOYED_FINANCIAL_ACTIVATION_PENDING",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
     "sha256": "35baf3bcef6b10632787d8661c4a48992e70181267c4e4d5fc6d7070b3b1b339",
@@ -3297,6 +3297,140 @@
     {
       "id": "SELLER_PAYOUT_PROVIDER",
       "detail": "수수료 원 미만 버림·정산 보류/검토 기록 연결 완료. 판매자 계좌 송금은 계약된 지급 방식·판매자 확인/KYC·계좌·취소/차지백 조건과 제공자 API 확정 후 별도 연결/활성화. 일반 PG 승인만으로 지급대행까지 완료되는 것은 아님."
+    },
+    {
+      "id": "EXISTING_RELEASE_CONDITIONS",
+      "detail": "네이버 일반 사용자 검수(개발 멤버 로그인만 검증), 공식 개인정보 위탁/국외이전 등 법률·모국어·전체 접근성/전체123동선 검수는 별도. 운영자 개인키를 사용하는 실제 오프사이트 재해 복호화와 운영 DB 교체는 실행하지 않음. 기존 백업 키 갱신/모니터링 유지."
+    }
+  ],
+  "productionRecoveryAnalytics187": {
+    "deployment": {
+      "id": "dep-dba5vu2vcj2c739tabt0",
+      "commit": "5b347d96159a1c245d57d705db3ff0fc3482eb3f",
+      "finishedAt": "2026-10-18T05:59:11.210617Z",
+      "status": "live",
+      "actualDeployments": 2
+    },
+    "schema": {
+      "file": "database/005-recovery-analytics.sql",
+      "additive": true,
+      "before": {
+        "snapshot": "/data/.stage10-release187-20261018",
+        "tables": 88,
+        "files": 5,
+        "dumpBytes": 871131
+      },
+      "existingRowsMoved": 0
+    },
+    "validation": {
+      "newIntegration": "PASS",
+      "emptyStateUi": "PASS",
+      "providerNotFoundClassification": "PASS",
+      "priorFinanceAndBuyer": "PASS",
+      "priorPurchaseBriefDeliverySubscription": "PASS",
+      "providerContractVaultAndSettlement": "PASS",
+      "syntaxFiles": 18,
+      "uiTranslationKeys": 44,
+      "additionalLocalesMissing": 0,
+      "externalFinancialCalls": 0
+    },
+    "browserVerification": {
+      "analyticsPeriods": [
+        7,
+        30,
+        120
+      ],
+      "dailyRowsAt120Days": 120,
+      "noUnpublishedDraftRows": true,
+      "subscriptionRecoveryEmptyState": true,
+      "noTestArchiveQuotaConsumption": true,
+      "marketplaceAssets": 8,
+      "picks": 3,
+      "awardSlides": 4,
+      "contestPreserved": true,
+      "consoleErrors": 0
+    },
+    "preservation": {
+      "verifiedAt": "2026-10-18T06:00:30.133Z",
+      "originalTables": 88,
+      "changedTables": [
+        "nnx_operating_v1.schema_version"
+      ],
+      "originalFiles": 5,
+      "changedFiles": [],
+      "newTables": [
+        "nnx_operating_v1.asset_view_days",
+        "nnx_operating_v1.billing_card_requests",
+        "nnx_operating_v1.billing_recovery_attempts"
+      ],
+      "originalTestRowsPromoted": 0
+    },
+    "realFinancialCalls": 0,
+    "newPaidResources": 0,
+    "additionalFixedMonthlyFees": 0,
+    "proof": [
+      "production187-creator-analytics.png",
+      "production187-subscription-recovery.png"
+    ]
+  },
+  "developmentChecklist187": [
+    {
+      "feature": "판매자 정산 화면",
+      "status": "IMPLEMENTED_DEPLOYED",
+      "detail": "186 완료. 승인 거래·환불·수수료 원 미만 버림·예상 실수령액·보류/미지급 표시. 실제 송금 제외."
+    },
+    {
+      "feature": "관리자 실거래 관리",
+      "status": "IMPLEMENTED_DEPLOYED",
+      "detail": "186 완료. 실제 주문·결제·환불·구독·금융 처리 기록과 TEST 보관 조회 분리."
+    },
+    {
+      "feature": "홈페이지 환불 처리",
+      "status": "IMPLEMENTED_DEPLOYED_CONTRACT_GATED",
+      "detail": "186 완료. 신청→관리자 검토→전액/부분 환불·권한·정산 반영. 실제 실행 활성화는 계약 후."
+    },
+    {
+      "feature": "결제 상태 자동 반영",
+      "status": "IMPLEMENTED_DEPLOYED_LIVE_MID_PENDING",
+      "detail": "186 완료. 제공자 조회/수신 큐 연결. 운영 MID webhook 등록과 운영 키 활성화는 별도."
+    },
+    {
+      "feature": "구독 실패 후 복구",
+      "status": "IMPLEMENTED_DEPLOYED_CONTRACT_GATED",
+      "detail": "187 이번 완료. 카드 변경(청구 없음)·미납 안내·실패 확정 회차의 본인 재결제·불명 결과 GET 대사. 실제 자동결제 활성화 별도."
+    },
+    {
+      "feature": "크리에이터 성과 화면",
+      "status": "IMPLEMENTED_DEPLOYED",
+      "detail": "187 이번 완료. 7/30/120일·일별/에셋별 실제 매출·현재 찜·적용 이후 조회 집계. 임시저장/TEST 보관 목록 제외."
+    },
+    {
+      "feature": "회원 탈퇴 처리",
+      "status": "NOT_IMPLEMENTED",
+      "detail": "탈퇴 신청·로그인 차단·일반 개인정보 정리와 보존할 거래/분쟁/보안 기록의 분리 흐름 미구현. 다음 필수 개발."
+    },
+    {
+      "feature": "판매자 계좌 등록·실제 송금",
+      "status": "NOT_IMPLEMENTED_PROVIDER_CONTRACT_PENDING",
+      "detail": "계좌 등록/확인 공통 화면과 지급 결과 처리 미구현. 실제 제공자·KYC/계좌·차지백 연결은 계약 방식 확정 후."
+    }
+  ],
+  "currentRemaining187": [
+    {
+      "id": "MEMBER_WITHDRAWAL_IMPLEMENTATION",
+      "detail": "탈퇴 신청·로그인 차단·일반 개인정보 정리와 보존할 거래/분쟁/보안 기록의 분리 흐름 미구현. 다음 필수 개발."
+    },
+    {
+      "id": "TOSS_CONTRACT_AND_LIVE_ACTIVATION",
+      "detail": "10월20일 회신 후 NEON·환불·한도·정산 방식 확정, 계약된 운영 MID의 일반결제 키와 승인/대사 설정 확인. 실제 첫 결제는 소유자가 직접 진행. 실제 Toss 운영 MID의 webhook URL 등록과 NNX_LIVE_REFUNDS 활성화 여부 확인. 실환불은 소유자가 직접 실행."
+    },
+    {
+      "id": "RECURRING_BILLING_ACTIVATION",
+      "detail": "자동결제 추가 계약, 해당 빌링 MID 운영 키, 빌링키 암호화 키의 별도 복구 보관을 설정한 뒤 소유자 카드 등록·첫 청구 확인. 현재 자동청구 미실행."
+    },
+    {
+      "id": "SELLER_PAYOUT_PROVIDER",
+      "detail": "계좌 등록/확인 공통 화면과 지급 결과 처리 미구현. 실제 제공자·KYC/계좌·차지백 연결은 계약 방식 확정 후."
     },
     {
       "id": "EXISTING_RELEASE_CONDITIONS",
