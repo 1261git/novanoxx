@@ -1,6 +1,6 @@
 {
-  "revision": 185,
-  "status": "PRODUCTION_OPERATING_CONNECTIONS_DEPLOYED_CONTRACT_GATED",
+  "revision": 186,
+  "status": "PRODUCTION_FINANCE_UI_AND_RECONCILIATION_DEPLOYED_CONTRACT_GATED",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
     "sha256": "35baf3bcef6b10632787d8661c4a48992e70181267c4e4d5fc6d7070b3b1b339",
@@ -3185,5 +3185,122 @@
       "currentBriefRegression": "brief185-regression-report.json",
       "originalTranslation171AndBrief162ReportsRestoredFromPreservedManifest": true
     }
-  }
+  },
+  "productionFinance186": {
+    "deployment": {
+      "id": "dep-dba5h3142hec73d9arbg",
+      "status": "live",
+      "finishedAt": "2026-10-18T05:27:39.837837Z",
+      "commit": "738e58e42a87aa04ac657d7ce2ca74f6ab115cff"
+    },
+    "scope": [
+      "SELLER_PAYOUT_VIEW",
+      "ADMIN_OPERATING_TRANSACTIONS",
+      "BUYER_REFUND_REQUEST_REVIEW_EXECUTION_PREPARED",
+      "PROVIDER_STATUS_RECONCILIATION"
+    ],
+    "schema": "database/004-operating-finance.sql",
+    "payoutTransferred": false,
+    "liveRefundsEnabled": false,
+    "webhook": {
+      "path": "/api/auth/finance/webhook",
+      "providerLookupRequired": true,
+      "liveMidRegistrationPending": true,
+      "pollingFallbackPrepared": true
+    },
+    "validation": {
+      "financialIntegration": "PASS",
+      "httpAccess": "PASS",
+      "buyerEntry": "PASS",
+      "buyerPagination": "PASS",
+      "previousPurchaseDeliverySubscription": "PASS",
+      "externalFinancialCalls": 0,
+      "translationKeys": 86,
+      "additionalLocalesMissing": 0,
+      "originalLocalFilesChecked": 675,
+      "originalLocalFilesChanged": 0,
+      "marketplace": {
+        "assets": 8,
+        "picks": 3,
+        "awards": 4
+      },
+      "contestPreserved": true,
+      "buyerRefundDisabledWithoutPaidOrders": true
+    },
+    "preservation": {
+      "commit": "738e58e42a87aa04ac657d7ce2ca74f6ab115cff",
+      "health": {
+        "status": "ok",
+        "reviewOnly": false,
+        "productionSite": true,
+        "paymentPreview": true,
+        "operatingConnections": true,
+        "financeConnected": true,
+        "discoveryCollection": true,
+        "database": "postgres",
+        "migrationVerified": true
+      },
+      "changed": [
+        {
+          "table": "nnx_operating_v1.schema_version",
+          "before": 2,
+          "after": 3
+        },
+        {
+          "table": "public.admin_access_audit",
+          "before": 3,
+          "after": 9
+        }
+      ],
+      "changedFiles": [],
+      "counts": {
+        "orders": 0,
+        "payments": 0,
+        "entitlements": 0,
+        "subscriptions": 0,
+        "refunds": 0,
+        "finance_events": 0,
+        "payment_inbox": 0
+      },
+      "webhook": {
+        "status": 200,
+        "result": {
+          "accepted": true,
+          "ignored": true
+        }
+      },
+      "flags": {
+        "payments": false,
+        "refunds": false,
+        "billing": false,
+        "payout": false
+      }
+    },
+    "additionalFixedMonthlyFees": 0,
+    "newPaidResources": 0,
+    "proof": [
+      "production186-admin-finance.png",
+      "production186-seller-payout.png",
+      "production186-buyer-refund.png"
+    ],
+    "wholeStageComplete": false
+  },
+  "currentRemaining186": [
+    {
+      "id": "TOSS_CONTRACT_AND_LIVE_ACTIVATION",
+      "detail": "10월20일 회신 후 NEON·환불·한도·정산 방식 확정, 계약된 운영 MID의 일반결제 키와 승인/대사 설정 확인. 실제 첫 결제는 소유자가 직접 진행. 실제 Toss 운영 MID의 webhook URL 등록과 NNX_LIVE_REFUNDS 활성화 여부 확인. 실환불은 소유자가 직접 실행."
+    },
+    {
+      "id": "RECURRING_BILLING_ACTIVATION",
+      "detail": "자동결제 추가 계약, 해당 빌링 MID 운영 키, 빌링키 암호화 키의 별도 복구 보관을 설정한 뒤 소유자 카드 등록·첫 청구 확인. 현재 자동청구 미실행."
+    },
+    {
+      "id": "SELLER_PAYOUT_PROVIDER",
+      "detail": "수수료 원 미만 버림·정산 보류/검토 기록 연결 완료. 판매자 계좌 송금은 계약된 지급 방식·판매자 확인/KYC·계좌·취소/차지백 조건과 제공자 API 확정 후 별도 연결/활성화. 일반 PG 승인만으로 지급대행까지 완료되는 것은 아님."
+    },
+    {
+      "id": "EXISTING_RELEASE_CONDITIONS",
+      "detail": "네이버 일반 사용자 검수(개발 멤버 로그인만 검증), 공식 개인정보 위탁/국외이전 등 법률·모국어·전체 접근성/전체123동선 검수는 별도. 운영자 개인키를 사용하는 실제 오프사이트 재해 복호화와 운영 DB 교체는 실행하지 않음. 기존 백업 키 갱신/모니터링 유지."
+    }
+  ]
 }
