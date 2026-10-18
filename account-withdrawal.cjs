@@ -18,6 +18,7 @@ module.exports=function({db,user,json,origin,isAdmin,sessionHash,clock=Date.now}
   if(rows('nnx_operating_v1.seller_accounts',"user_id=? AND state IN ('REGISTERING','REGISTRATION_UNKNOWN','UPDATING','UPDATE_UNKNOWN')",[actor.id]).length)out.push('PAYMENT_REVIEW');
   const ids=new Set(orders.map(o=>o.id));
   if(rows('nnx_operating_v1.refunds',"state IN ('REQUESTED','APPROVED','PROCESSING','RECONCILE_REQUIRED','FAILED')").some(r=>ids.has(r.order_id)))out.push('OPEN_REFUND');
+  if(rows('nnx_operating_v1.subscription_refunds',"state IN ('REQUESTED','APPROVED','PROCESSING','RECONCILE_REQUIRED','FAILED')").some(r=>r.user_id===actor.id)||rows('nnx_operating_v1.billing_payment_sync',"review_required=true OR error_code IS NOT NULL").some(r=>rows('nnx_operating_v1.subscriptions','true').some(s=>s.id===r.subscription_id&&s.user_id===actor.id)))out.push('OPEN_REFUND');
   if(rows('nnx_operating_v1.payments',"state IN ('AUTHENTICATED','APPROVAL_PENDING','RECONCILE_REQUIRED')").some(r=>ids.has(r.order_id)))out.push('PAYMENT_REVIEW');
   if(rows('engine_disputes',"state<>'RESOLVED'").some(r=>ids.has(r.order_id)||r.opened_by===actor.id))out.push('OPEN_DISPUTE');
   const subs=rows('nnx_operating_v1.subscriptions','user_id=?',[actor.id]),sid=new Set(subs.map(s=>s.id));

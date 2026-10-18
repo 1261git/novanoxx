@@ -29,7 +29,7 @@ async function renderCreatorWorkspace(current,profile){
  await NNXFinanceUI.seller(content);if(typeof NNXPayoutUI!=='undefined')await NNXPayoutUI.seller(content);
  }else if(current==='creator-plan'){
  content.innerHTML='<div class="page-panel"><h2><span data-i18n="플랜 안내">플랜 안내</span></h2><p><span data-i18n="현재는 에셋 임시저장과 심사 제출을 이용할 수 있습니다. 유료 구독은 아직 시작되지 않으며 결제도 발생하지 않습니다.">현재는 에셋 임시저장과 심사 제출을 이용할 수 있습니다. 유료 구독은 아직 시작되지 않으며 결제도 발생하지 않습니다.</span></p></div><div class="plans">'+[['FREE',0,1],['PLUS',3000,3],['ULTRA',6900,7],['PRO',9900,'무제한']].map(([n,p,c])=>`<section class="page-panel"><h2>${n}</h2><p>₩${p.toLocaleString(uiLocale())} <span data-i18n="/ 월">/ 월</span></p><p><span data-i18n="판매 중 에셋">판매 중 에셋</span> ${c==='무제한'?'<span data-i18n="무제한">무제한</span>':c}</p><p><span data-i18n="거래 수수료 12% (PG·수수료 부가세 포함)">거래 수수료 12% (PG·수수료 부가세 포함)</span></p></section>`).join('')+'</div>';
- await renderApplicationEngine(content,'subscription');
+ await renderApplicationEngine(content,'subscription');if(typeof NNXSubscriptionRefundUI!=='undefined')await NNXSubscriptionRefundUI.own(content);
  }else if(current==='creator-analytics'){
  await NNXCreatorOperations.analytics(content);
  }
