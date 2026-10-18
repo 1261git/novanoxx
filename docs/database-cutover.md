@@ -160,3 +160,66 @@ Owner approved member requests and administrator review of amount/access with no
 Member creator-plan and administrator operations finance panels expose the workflow. Requests explicitly stop future renewal. Shared subscription holds block renewal/retry/card changes; duplicate or uncertain cancellation results reconcile through provider GET. Full refunds end only their matching paid period, partial refunds require an access decision, and old-cycle refunds cannot end newer paid access. External cancellation hints use the existing finance webhook and require provider proof. Pending refunds/external-review obligations prevent withdrawal. Only the nominated owner can review or execute.
 
 Twenty-three necessary isolated checks and1283-key translation coverage passed; private financial UI/money execution is not claimed as fully verified on operating provider accounts. Runtime253 files match plus two deliberately excluded environment examples. No TEST source path was lost. Existing contract/MID/key/webhook/KYC/first-owner-transaction, post-payout recovery terms and release/legal/offline-restore conditions remain. See production194-report.json and handoff194; this supersedes193 subscription-refund policy/development pending statements without rewriting historical evidence.
+
+
+## 195 — Common MVP completion audit and exact post-contract work
+
+확정된 공통 MVP 기능의 추가 필수 코드/배포 누락은 이번 대조에서 발견하지 않음. 계약 의존 미구현과 독립 출시 검수/소유자 참여 항목은 아래처럼 별도 유지.
+
+Current runtime a189e64dd4772a77c3a29d135c50563cac43f4b5 / dep-dbabksflk1mc73cm59m0 remains LIVE. Current source after that runtime differs only in documentation; no newly missing runtime/TEST source paths were found. Public health, all existing connections, provider-configuration flags and mail status returned200. These GETs do not replace real financial or Naver-public-review evidence. No runtime edits, deployments, new tests, payment/provider calls, emails, infrastructure or data changes were needed in this audit. Existing194 isolated checks/source fingerprints are reused, not claimed as newly rerun.
+
+### After the contract reply
+
+**일반 상품·Brief 직접 결제 — IMPLEMENTED_DEPLOYED**
+계약된 자금 흐름과 MID/결제창형 연동 권한·운영 키를 확인하고 일반 결제 승인/조회·환불을 활성화. 기존 TOSS_* TEST 키를 운영 키로 덮어써서 활성화하지 않음.
+Configuration names (never paste secret values into chat/repo): NNX_TOSS_LIVE_CLIENT_KEY, NNX_TOSS_LIVE_SECRET_KEY, NNX_PAYMENT_CONTRACT_APPROVED, NNX_OPERATING_RECONCILIATION_APPROVED, NNX_LIVE_PAYMENTS, NNX_LIVE_REFUNDS
+Provider webhook: https://novanoxx.com/api/auth/finance/webhook
+https://novanoxx.com/api/auth/commerce/return (서버가 회차/요청별 successUrl/failUrl 생성)
+Owner verification: 본인이 첫 결제·취소/환불 실행, 주문1개/권한/수수료 원 미만 버림/정산 보류와 제공자 내역 대조.
+
+**구독 자동결제·실패 복구 — IMPLEMENTED_DEPLOYED**
+자동결제 계약과 해당 MID의 운영 키를 일반 결제와 구분해 등록. 별도 빌링키 암호화 키 및 복구 사본을 보존한 뒤 자동결제 동의·카드 등록·첫 청구 확인.
+Configuration names (never paste secret values into chat/repo): NNX_BILLING_CONTRACT_APPROVED, NNX_TOSS_BILLING_LIVE_CLIENT_KEY, NNX_TOSS_BILLING_LIVE_SECRET_KEY, NNX_BILLING_ENCRYPTION_KEY, NNX_BILLING_ENCRYPTION_KEY_ID
+Provider webhook: https://novanoxx.com/api/auth/finance/webhook (해당 빌링 MID에도 등록)
+
+Owner verification: 최초 등록/회차 청구/다음 청구일/해지 예약/한도, 실패 확정 후 본인 재결제와 불명 결과 조회. 일반 결제 활성화도 선행. 키 하나로 자동 활성화하지 않음.
+
+**구독 결제 환불 — IMPLEMENTED_DEPLOYED**
+일반 환불·빌링 활성화와 계약 확인 후 구독 환불 전용 승인 설정. 회원 신청→관리자 금액/이용 기간 검토→승인액만 환불, 자동 일할 계산 없음.
+Configuration names (never paste secret values into chat/repo): NNX_LIVE_SUBSCRIPTION_REFUNDS
+Provider webhook: https://novanoxx.com/api/auth/finance/webhook
+
+Owner verification: 부분/전액 결과 및 해당 기간 권한 확인. 진행 중인 환불 중복 POST·자동갱신 방지 확인.
+
+**판매자 계좌·지급 — COMMON_ADAPTER_IMPLEMENTED_DEPLOYED_CONTRACT_COMPATIBILITY_PENDING**
+지급대행 계약·권한·지급 가능 자금 출처/주기 확인. 전용 운영·JWE 보안키 및 별도 계좌 암호화키/복구 사본, 판매자 신원·계좌 인증(KYC) 확인. 계약 API가 준비된 v2와 다르면 해당 차이 추가 반영.
+Configuration names (never paste secret values into chat/repo): NNX_SETTLEMENT_CONTRACT_APPROVED, NNX_PAYOUTS_CONTRACT_APPROVED, NNX_TOSS_PAYOUT_SECRET_KEY, NNX_TOSS_PAYOUT_SECURITY_KEY, NNX_PAYOUT_DATA_ENCRYPTION_KEY, NNX_PAYOUT_DATA_KEY_ID, NNX_PAYOUT_KEY_RECOVERY_CONFIRMED, NNX_LIVE_PAYOUTS
+Provider webhook: https://novanoxx.com/api/auth/payouts/webhook
+
+Owner verification: 판매자 인증·계좌 등록 후 본인이 첫 지급 실행. 제공자 이체 결과/정산 내역 일치와 불명 결과 재송금 차단 확인. 수수료/예치·지급 자금/정산일은 계약 확인 전 임의 확정 금지.
+
+**실운영 NEON 충전·잔액 결제·잔액 환급 — TEST_WALLET_ONLY_OPERATING_MONEY_LEDGER_NOT_IMPLEMENTED**
+선불 충전·보관·환급 허용 여부, 한도/부분 사용/환불/정산/해외 결제 조건을 계약으로 먼저 결정. 허용되는 모델에 맞춰 실운영 충전 원장·잔액 차감/환급·주문 정산 연결을 추가 구현. 직접 원화 PG 구매 경로와 별개이며 키 교체로 완료되지 않음.
+Contract-dependent implementation; there is no activation flag that completes this feature.
+
+
+Owner verification: TEST 잔액/기록을 실운영 유상 잔액/권한으로 이관하지 않음. 일반 직접 결제 허용 계약만으로 NEON 선불 충전을 활성화하지 않음.
+
+**송금 완료 후 환불금 회수·차지백/상계 — AUTOMATIC_RECOVERY_NOT_IMPLEMENTED_CONTRACT_POLICY_PENDING**
+회수 주체·판매자 동의/책임·충당금·잔액 부족·차지백/상계 조건과 API를 확정한 뒤 필요한 회수·부채 원장/대사 처리를 추가 구현. 지금은 송금 중/완료 주문 자동 환불 차단과 운영 검토 유지.
+Contract-dependent implementation; there is no activation flag that completes this feature.
+
+
+Owner verification: 무조건 환불/송금 우회 버튼을 추가하지 않음. 일반 환불 활성화가 회수 기능 완료를 의미하지 않음.
+
+### Independent launch and owner items
+
+- NAVER_PUBLIC_REVIEW: 설정·개발 멤버 로그인 확인과 일반 이용자 대상 검수/승인은 구분. 임의 신청/제출하지 않음.
+- CONTENT_AND_LAUNCH_REVIEW: 정식 개인정보 위탁·국외이전 등 법률/모국어 감수, 전체 브라우저·접근성/123동선 검수는 완료 주장 없음. 등록 번역1283키 누락0은 모든 미표시 레거시 문구와 모국어 감수 완료를 뜻하지 않음.
+- OWNER_OFFLINE_RECOVERY: 기존 격리 복원과 암호화 USB 사본 보존 확인은 완료. 소유자 오프라인 개인키로 실제 복호화·재해 복구는 미실행. 운영 DB 교체 없이 소유자 참여 검수가 필요.
+- CONTEST_PUBLICATION_INPUT: 기능은 연결됨. 실제 콘테스트 일정·심사 기준·상금/혜택·수상자 입력은 운영자 업무이며 임의 생성/공개/상금 지급하지 않음.
+- PHASE2: 관리자 담당 계정별 역할 위임은 Phase2. 최근 본 목록/선택형 마케팅 이메일/검색 결과 없음 분석 등 후순위 항목은 현재 MVP 필수 개발에 포함하지 않음. 혼합결제·AI자동화/의미검색/실시간3D·채팅·앱 추가 없음.
+
+Activation order: agree money model and fees/limits → preserve current database/files and existing keys → configure the contracted ordinary MID and its webhook → owner confirms first purchase/order/rights and refund → configure separate billing credentials/encryption/recovery and owner billing/refund checks → configure payouts/KYC/funding/webhook and owner first payout. Keep all inactive gates off until their own prerequisites pass. NEON and post-payout recovery need agreed design/code before activation. Use actual contracted API/key type; this site uses payment-window payment(), so do not substitute an unrelated widget-only key.
+
+This audit creates no new paid resource or fixed fee. Contract fees, card/PG processing fees, billing/payout charges, funding and any storage/compute expansion must be checked and announced before activation. Existing ordinary resource usage still applies. Mail is already enabled; preserve its key/webhook and pause rather than disable if maintenance is needed.
