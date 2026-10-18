@@ -2,7 +2,7 @@
 const crypto=require('node:crypto'),fail=c=>{throw Error(c);},sha=s=>crypto.createHash('sha256').update(s).digest('hex'),parse=s=>typeof s==='string'?JSON.parse(s):s;
 const banks=[['004','06','KB국민은행'],['088','88','신한은행'],['020','20','우리은행'],['081','81','하나은행'],['011','11','NH농협은행'],['012','12','지역농축협'],['003','03','IBK기업은행'],['090','90','카카오뱅크'],['089','89','케이뱅크'],['092','92','토스뱅크'],['023','23','SC제일은행'],['002','02','한국산업은행'],['007','07','Sh수협은행'],['030','30','수협중앙회'],['031','31','iM뱅크'],['032','32','부산은행'],['034','34','광주은행'],['035','35','제주은행'],['037','37','전북은행'],['039','39','경남은행'],['045','45','새마을금고'],['048','48','신협'],['050','50','저축은행중앙회'],['064','64','산림조합'],['071','71','우체국예금보험'],['027','27','씨티은행'],['060','60','Bank of America']];
 const bankCode=s=>banks.find(b=>b[0]===s||b[1]===s)?.[0],openStates=['PROCESSING','REQUESTED','IN_PROGRESS','RECONCILE_REQUIRED'];
-module.exports=function({db,finance,env=process.env,clock=Date.now,isAdmin=require('./admin-policy.cjs'),provider=require('./payout-provider.cjs').create({env,clock})}){
+module.exports=function({db,finance,env=process.env,clock=Date.now,isAdmin=(u=>u?.email?.trim().toLowerCase()==='novanoxx2026@gmail.com'),provider=require('./payout-provider.cjs').create({env,clock})}){
  if(!db.prepare("SELECT version FROM nnx_operating_v1.schema_version WHERE version='OPERATING_PAYOUTS_V1'").get())fail('PAYOUT_SCHEMA_REQUIRED');
  const busy=new Set();let ticking=false;
  const tx=fn=>{db.exec('BEGIN IMMEDIATE');try{const r=fn();db.exec('COMMIT');return r;}catch(e){db.exec('ROLLBACK');throw e;}};
