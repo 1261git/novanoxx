@@ -1,5 +1,5 @@
 {
-  "revision": 188,
+  "revision": 189,
   "status": "PRODUCTION_WITHDRAWAL_AND_DEVELOPER_NOTES_DEPLOYED",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -3595,5 +3595,29 @@
       "detail": "네이버 일반 사용자 검수(개발 멤버 로그인만 검증), 공식 개인정보 위탁/국외이전 등 법률·모국어·전체 접근성/전체123동선 검수는 별도. 운영자 개인키를 사용하는 실제 오프사이트 재해 복호화와 운영 DB 교체는 실행하지 않음. 기존 백업 키 갱신/모니터링 유지."
     }
   ],
-  "stage10Complete": false
+  "stage10Complete": false,
+  "productionLayoutRelease189": {
+    "revision": 189,
+    "commit": "ab226706f0b63cd5341eab3ebe0ba8201d5bcc06",
+    "deployId": "dep-dba7p5jrjlhs73carsh0",
+    "status": "live",
+    "finishedAt": "2026-10-18T08:01:33.271918Z",
+    "scope": "Only withdrawal page CSS: max-width 600px and auto inline margins",
+    "databaseChanges": 0,
+    "actualAccountsWithdrawn": 0,
+    "newPaidResources": 0,
+    "additionalFixedFees": 0,
+    "originalDirtyCheckout": {
+      "checked": 675,
+      "changed": []
+    },
+    "layout": {
+      "pageWidth": 600,
+      "panelWidth": 600,
+      "centerOffset": 0,
+      "horizontalOverflow": false
+    },
+    "screenshot": "production189-withdrawal-centered.png",
+    "verification": "Live operating page measured and visually recorded; no transaction tests or data changes; browser direct API health blocked by client and not bypassed"
+  }
 }
