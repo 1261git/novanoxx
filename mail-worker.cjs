@@ -10,7 +10,7 @@ function sendPaused(env = process.env) {
   return value !== '0';
 }
 
-function create({ mail, gate, paused = true, intervalMs = 5000, onError = () => {} }) {
+function create({ mail, gate, paused = true, intervalMs = 5000, onError = () => {}, beforeDispatch = () => {} }) {
   if (typeof mail?.recover !== 'function' || typeof mail?.dispatch !== 'function' ||
       typeof gate?.runTask !== 'function' || typeof paused !== 'boolean' ||
       !Number.isSafeInteger(intervalMs) || intervalMs < 1 || typeof onError !== 'function') {
@@ -22,6 +22,7 @@ function create({ mail, gate, paused = true, intervalMs = 5000, onError = () => 
     if (stopped || paused) return Promise.resolve({ skipped: stopped ? 'STOPPED' : 'PAUSED' });
     if (inFlight) return inFlight;
     inFlight = gate.runTask(async () => {
+      await beforeDispatch();
       mail.recover();
       return mail.dispatch({ limit: 5 });
     }).finally(() => { inFlight = null; });

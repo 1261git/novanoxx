@@ -2,7 +2,7 @@
 const crypto=require('node:crypto');
 const sha=s=>crypto.createHash('sha256').update(s).digest('hex'),fail=code=>{throw Error(code);},json=x=>typeof x==='string'?JSON.parse(x):x;
 const stable=v=>JSON.stringify(v,(_,x)=>x&&typeof x==='object'&&!Array.isArray(x)?Object.fromEntries(Object.keys(x).sort().map(k=>[k,x[k]])):x);
-module.exports=function({db,commerce,env=process.env,clock=Date.now,provider=require('./financial-provider.cjs').create({env}),isAdmin=require('./admin-policy.cjs')}){
+module.exports=function({db,commerce,env=process.env,clock=Date.now,provider=require('./financial-provider.cjs').create({env}),isAdmin=require('./operating-admin-policy.cjs'),notify=()=>{}}){
  if(!db.prepare("SELECT version FROM nnx_operating_v1.schema_version WHERE version='OPERATING_FINANCE_V1'").get())fail('FINANCE_SCHEMA_REQUIRED');
  const busy=new Set();let ticking=false,payouts=null;
  const order=id=>db.prepare('SELECT * FROM nnx_operating_v1.orders WHERE id=?').get(id),payment=id=>db.prepare('SELECT * FROM nnx_operating_v1.payments WHERE order_id=?').get(id),syncRow=id=>db.prepare('SELECT * FROM nnx_operating_v1.payment_sync WHERE order_id=?').get(id),refund=id=>db.prepare('SELECT * FROM nnx_operating_v1.refunds WHERE id=?').get(id);
@@ -10,7 +10,7 @@ module.exports=function({db,commerce,env=process.env,clock=Date.now,provider=req
  function admin(id){if(!isAdmin(member(id)))fail('ACCESS_DENIED');}
  const tx=fn=>{db.exec('BEGIN IMMEDIATE');try{const r=fn();db.exec('COMMIT');return r;}catch(e){db.exec('ROLLBACK');throw e;}};
  const requestId=i=>{if(!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(i?.requestId||''))fail('INVALID_INPUT');};
- const event=(kind,actor,orderId,refundId,detail={},i=null)=>db.prepare('INSERT INTO nnx_operating_v1.finance_events(id,order_id,refund_id,actor_id,kind,detail,request_id,request_digest,created) VALUES(?,?,?,?,?,?,?,?,?)').run(crypto.randomUUID(),orderId||null,refundId||null,actor||null,kind,JSON.stringify(detail),i?.requestId||null,i?sha(stable({actor,input:i})):null,clock());
+ const event=(kind,actor,orderId,refundId,detail={},i=null)=>{const id=crypto.randomUUID();db.prepare('INSERT INTO nnx_operating_v1.finance_events(id,order_id,refund_id,actor_id,kind,detail,request_id,request_digest,created) VALUES(?,?,?,?,?,?,?,?,?)').run(id,orderId||null,refundId||null,actor||null,kind,JSON.stringify(detail),i?.requestId||null,i?sha(stable({actor,input:i})):null,clock());if(orderId&&(/^REFUND_/.test(kind)||kind==='PROVIDER_STATUS_VERIFIED'&&detail.refundedKrw>0))notify({kind:'REFUND',reference:orderId,source:'finance:'+id});};
  function remembered(actor,i){const r=db.prepare('SELECT request_digest,refund_id FROM nnx_operating_v1.finance_events WHERE request_id=?').get(i.requestId);if(!r)return null;if(r.request_digest!==sha(stable({actor,input:i})))fail('REQUEST_CONFLICT');return refund(r.refund_id);}
  const openRefund=id=>db.prepare("SELECT * FROM nnx_operating_v1.refunds WHERE order_id=? AND state IN ('REQUESTED','APPROVED','PROCESSING','RECONCILE_REQUIRED')").get(id);
  function hold(id,reason){db.prepare("INSERT INTO nnx_operating_v1.settlement_holds(order_id,reason,state) VALUES(?,?,'REFUND_PENDING') ON CONFLICT(order_id) DO UPDATE SET state='REFUND_PENDING',reason=excluded.reason,updated_at=now()").run(id,reason);db.prepare("UPDATE nnx_operating_v1.settlement_reviews SET state='HELD' WHERE order_id=?").run(id);}

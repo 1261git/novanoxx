@@ -85,9 +85,10 @@ function create({db,origin,encryptionKey,transport,webhookSecret,now=Date.now,al
    audit(u.id,'TOKEN_CONSUMED_'+purpose);return {ok:true};});
  }
  function notificationInside({sourceKey,userId,kind,orderId}){
-  if(typeof sourceKey!=='string'||sourceKey.length>300||typeof orderId!=='string'||orderId.length>100||!['ORDER','DELIVERY','REFUND','ORDER_UPDATE'].includes(kind))fail('MAIL_INVALID_INPUT');
+  if(typeof sourceKey!=='string'||sourceKey.length>300||typeof orderId!=='string'||orderId.length>100||!['ORDER','DELIVERY','REFUND','ORDER_UPDATE','PAYOUT','SUBSCRIPTION'].includes(kind))fail('MAIL_INVALID_INPUT');
   const user=db.prepare('SELECT * FROM users WHERE id=?').get(userId);if(!user||withdrawn(userId))return null;
   if(policy&&!permitted(user.email)){audit(user.id,'TEST_RECIPIENT_SKIPPED');return null;}
+  const extra={PAYOUT:{subject:'NovaNoxX 정산 지급 상태 안내',text:'정산 지급 상태가 갱신되었습니다.',route:'creator-payout'},SUBSCRIPTION:{subject:'NovaNoxX 구독 결제 상태 안내',text:'구독 결제 상태가 갱신되었습니다.',route:'creator-plan'}}[kind];if(extra)return queue(user,kind,sourceKey,{subject:extra.subject,text:extra.text+'\n참조 번호: '+orderId+'\n로그인 후 확인해 주세요.\n'+base.origin+'/#/'+extra.route});
   return queue(user,kind,sourceKey,{subject:({ORDER:'NovaNoxX 주문 접수',DELIVERY:'NovaNoxX 납품·검수 안내',REFUND:'NovaNoxX 환불 처리 안내',ORDER_UPDATE:'NovaNoxX 주문 상태 안내'})[kind],text:'참여 중인 주문의 새 안내가 있습니다.\n주문 번호: '+orderId+'\n자세한 내용은 로그인 후 주문 페이지에서 확인해 주세요.\n'+base.origin+'/#/orders'});
  }
  const notification=input=>tx(()=>notificationInside(input));
