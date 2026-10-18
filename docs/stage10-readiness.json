@@ -1,6 +1,6 @@
 {
-  "revision": 189,
-  "status": "PRODUCTION_WITHDRAWAL_AND_DEVELOPER_NOTES_DEPLOYED",
+  "revision": 190,
+  "status": "PRODUCTION_PAYOUT_PREPARATION_DEPLOYED_EXTERNAL_ACTIVATION_PENDING",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
     "sha256": "35baf3bcef6b10632787d8661c4a48992e70181267c4e4d5fc6d7070b3b1b339",
@@ -3619,5 +3619,1477 @@
     },
     "screenshot": "production189-withdrawal-centered.png",
     "verification": "Live operating page measured and visually recorded; no transaction tests or data changes; browser direct API health blocked by client and not bypassed"
-  }
+  },
+  "productionRelease190": {
+    "commit": "870f011ccae3850cb6f6994c4bbe5972f053cb8e",
+    "source": {
+      "checked": 246,
+      "missing": [
+        ".env.production.example",
+        ".env.review.example"
+      ],
+      "changed": []
+    },
+    "health": {
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "reviewOnly": false,
+        "productionSite": true,
+        "paymentPreview": true,
+        "operatingConnections": true,
+        "financeConnected": true,
+        "payoutsConnected": true,
+        "withdrawalConnected": true,
+        "recoveryConnected": true,
+        "analyticsConnected": true,
+        "discoveryCollection": true,
+        "database": "postgres",
+        "migrationVerified": true
+      }
+    },
+    "mail": {
+      "status": 200,
+      "body": {
+        "enabled": false
+      }
+    },
+    "providers": {
+      "status": 200,
+      "body": {
+        "google": true,
+        "naver": true,
+        "kakao": true
+      }
+    },
+    "counts": {
+      "orders": 0,
+      "payments": 0,
+      "entitlements": 0,
+      "subscriptions": 0,
+      "subscription_cycles": 0,
+      "refunds": 0,
+      "account_withdrawals": 0,
+      "seller_accounts": 0,
+      "seller_requests": 0,
+      "payouts": 0,
+      "payout_events": 0
+    },
+    "flags": {
+      "livePayments": false,
+      "liveRefunds": false,
+      "billing": false,
+      "payouts": false,
+      "payoutContract": false,
+      "mail": false,
+      "backupAutomation": true
+    },
+    "mailConfigurationPresent": {
+      "providerKey": false,
+      "dataKey": false,
+      "webhookSecret": false
+    },
+    "freeBytes": 5199036416,
+    "preservation": {
+      "verifiedAt": "2026-10-18T08:27:58.111Z",
+      "originalTables": 93,
+      "changedTables": [
+        "nnx_operating_v1.schema_version"
+      ],
+      "originalFiles": 5,
+      "changedFiles": [],
+      "newTables": [
+        "nnx_operating_v1.payout_events",
+        "nnx_operating_v1.payout_inbox",
+        "nnx_operating_v1.payouts",
+        "nnx_operating_v1.seller_accounts",
+        "nnx_operating_v1.seller_requests"
+      ],
+      "originalTestRowsPromoted": 0
+    },
+    "snapshot": {
+      "tables": 93,
+      "files": 5,
+      "dumpBytes": 885030,
+      "dumpSha256": "b027ba48de28e257aaed5222310ff5704b625dfe9f509656163d188fbf8a3802"
+    },
+    "revision": 190,
+    "deployment": {
+      "id": "dep-dba855rrjlhs73cb4tq0",
+      "status": "live",
+      "finishedAt": "2026-10-18T08:26:54.219879Z",
+      "runtimeCommit": "870f011ccae3850cb6f6994c4bbe5972f053cb8e",
+      "deploymentsThisBundle": 2,
+      "newPaidResources": 0,
+      "newFixedMonthlyFees": 0
+    },
+    "verification": {
+      "essentialLocalChecks": 12,
+      "translationKeys": 1270,
+      "missingExtraLanguageKeys": 0,
+      "realProviderCalls": 0,
+      "actualBankRegistrations": 0,
+      "actualPayouts": 0,
+      "all123FlowsManuallyExercised": false,
+      "postDeployErrorLogs": 0
+    },
+    "ui": {
+      "developerNotes": {
+        "centerOffset": 0,
+        "width": 1040,
+        "overflow": false
+      },
+      "marketplace": {
+        "assets": 8,
+        "picks": 3,
+        "awardSlides": 4
+      },
+      "sellerAccountForm": {
+        "visible": true,
+        "disabledPendingContract": true
+      },
+      "adminPayouts": {
+        "ownerEmail": "novanoxx2026@gmail.com",
+        "ownerServerReadPassed": true,
+        "browserAccountWasDifferent": true,
+        "otherAccountDenied": true
+      }
+    },
+    "testCoverage": {
+      "testCommit": "372fe7175ed4345b872e10a45c8d0acec2fae63f",
+      "operatingCommit": "870f011ccae3850cb6f6994c4bbe5972f053cb8e",
+      "testAncestor": true,
+      "counts": {
+        "testTracked": 208,
+        "identical": 172,
+        "updated": 36,
+        "missing": 0,
+        "added": 38
+      },
+      "matrix": [
+        {
+          "path": ".dockerignore",
+          "testBlob": "2766cbd998a80d247a13219bd15c683f6fd1d376",
+          "operatingBlob": "2766cbd998a80d247a13219bd15c683f6fd1d376",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": ".env.production.example",
+          "testBlob": "dd88e57c9b743ea4ef99e70c1eae73932d26054d",
+          "operatingBlob": "5f1f1926fb025fe07586c2e146d02303f593877a",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": ".env.review.example",
+          "testBlob": "4163ef8d0bb1b5f02ddb58eb49b9ea6195ff9f86",
+          "operatingBlob": "4163ef8d0bb1b5f02ddb58eb49b9ea6195ff9f86",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": ".gitignore",
+          "testBlob": "924270154f2a7c6624bb447b5809bcd935733d95",
+          "operatingBlob": "924270154f2a7c6624bb447b5809bcd935733d95",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "Dockerfile",
+          "testBlob": "5b9a9bded97fe1b920bb1755e20ccfacb9530482",
+          "operatingBlob": "5b9a9bded97fe1b920bb1755e20ccfacb9530482",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "account-mail.cjs",
+          "testBlob": "e79a848e3e23491aaae1f0d44ec0b59c3fb299d4",
+          "operatingBlob": "160d906bce8d1e5782a1f621ba72e6135a88d6fa",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "account-records.cjs",
+          "testBlob": "49cba060d40b387c1234712598da90099b1bbb86",
+          "operatingBlob": "49cba060d40b387c1234712598da90099b1bbb86",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "account-saved.cjs",
+          "testBlob": "64bcd0ddf3e29610991737063f9d721116d43adb",
+          "operatingBlob": "64bcd0ddf3e29610991737063f9d721116d43adb",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "account-saved.test.cjs",
+          "testBlob": "834ebabc5afc20f93887cf5e33eeec85f61dad46",
+          "operatingBlob": "834ebabc5afc20f93887cf5e33eeec85f61dad46",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "admin-policy.cjs",
+          "testBlob": "12872bfb6ddb7fcdbeae7ca1e6f9a24c3caddd52",
+          "operatingBlob": "12872bfb6ddb7fcdbeae7ca1e6f9a24c3caddd52",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "admin-roles.cjs",
+          "testBlob": "bea7b00c0b87376301cc7faf33d6078801422821",
+          "operatingBlob": "bea7b00c0b87376301cc7faf33d6078801422821",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "admin-test-grant.cjs",
+          "testBlob": "631fb1bd1107f3a33298b19857ede4285b0c5db0",
+          "operatingBlob": "631fb1bd1107f3a33298b19857ede4285b0c5db0",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "application-engine-bridge.cjs",
+          "testBlob": "12b4802357421331d432fcf344d2516926ec1190",
+          "operatingBlob": "621a771195d88040bdc16cfa9a2d7b27005f8c40",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "application-engine-bridge.test.cjs",
+          "testBlob": "8a739e4ba63bdaaa80ecf333a5b6da13d6cdf303",
+          "operatingBlob": "8a739e4ba63bdaaa80ecf333a5b6da13d6cdf303",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/about-faq.js",
+          "testBlob": "c3ee09f8e20429a953ec37b1962f186c609ac278",
+          "operatingBlob": "c3ee09f8e20429a953ec37b1962f186c609ac278",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/abstract.jpg",
+          "testBlob": "69d4a2e09c192437daa4ee610d3b98b55f7bd92d",
+          "operatingBlob": "69d4a2e09c192437daa4ee610d3b98b55f7bd92d",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/account-saved.js",
+          "testBlob": "5910131d92131b2d971e9577a4097c61209130a3",
+          "operatingBlob": "5910131d92131b2d971e9577a4097c61209130a3",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/application-engine.js",
+          "testBlob": "0a5314585fc83d11ce8fac929454acd8d497f0fc",
+          "operatingBlob": "99a827ef4abadc3dd6dcbe7f391546da3f8b245a",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/architecture.jpg",
+          "testBlob": "dff5fd0d67340e90118dc25cca0df7e28aa17841",
+          "operatingBlob": "dff5fd0d67340e90118dc25cca0df7e28aa17841",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/brief-review.js",
+          "testBlob": "9f327ad5172c73a988fdfdaafe6d534e51860db8",
+          "operatingBlob": "a40ca26e075a4f777d9ca0f1d5863d5b42eff2a3",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/brief-rights-policy.js",
+          "testBlob": "be221cdb5d2c61ff9dfddc81d4e421e6c0db853e",
+          "operatingBlob": "be221cdb5d2c61ff9dfddc81d4e421e6c0db853e",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/brief-terms.js",
+          "testBlob": "0c2733af996ccd40e2c76af351eb4624c091a64d",
+          "operatingBlob": "0c2733af996ccd40e2c76af351eb4624c091a64d",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/car.jpg",
+          "testBlob": "a23d88cb5140908c431e4f3ce69e5046c4decb0d",
+          "operatingBlob": "a23d88cb5140908c431e4f3ce69e5046c4decb0d",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/catalog-admin.js",
+          "testBlob": "3cc3a6631ab39324a1279b78499257a08dcc963e",
+          "operatingBlob": "3cc3a6631ab39324a1279b78499257a08dcc963e",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/catalog-editorial.js",
+          "testBlob": "a6fdc064355f7510e4c446e4d66bd6535d4d4471",
+          "operatingBlob": "a6fdc064355f7510e4c446e4d66bd6535d4d4471",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/city.jpg",
+          "testBlob": "25b3dfcb2685ce87f3e67856916ae644dcee7ee0",
+          "operatingBlob": "25b3dfcb2685ce87f3e67856916ae644dcee7ee0",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/content-protection.js",
+          "testBlob": "9919606a2c45721becab62ab85f325776640d97e",
+          "operatingBlob": "9919606a2c45721becab62ab85f325776640d97e",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/contest-workflow.js",
+          "testBlob": "194503e1d72409a6a21ea02ae0ae14978ccb3529",
+          "operatingBlob": "6e8234b124ac9c07096dbda9983ca0521f38229b",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/contest.js",
+          "testBlob": "2529b523d26e7a2460f9f51404d4cebb7583a249",
+          "operatingBlob": "2529b523d26e7a2460f9f51404d4cebb7583a249",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/creator-draft-wizard.js",
+          "testBlob": "836ac09aad00a610c3cc446542cd04c8db960af9",
+          "operatingBlob": "836ac09aad00a610c3cc446542cd04c8db960af9",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/creator-metadata-schema.js",
+          "testBlob": "0abb26163480899499d331343b0847617eabfb72",
+          "operatingBlob": "0abb26163480899499d331343b0847617eabfb72",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/creator-workspace.js",
+          "testBlob": "852c841e15be3ce9fac47aa804dd0f2b86bff489",
+          "operatingBlob": "e5f2686ef23aa8e6d3ec254dff0aea1e2ecd79d4",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/design-refresh.css",
+          "testBlob": "20405bb6206af34583ca86901500d5724a6009a4",
+          "operatingBlob": "20405bb6206af34583ca86901500d5724a6009a4",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/developer-notes-data.js",
+          "testBlob": "4c600cc1370251d5cbfe6f981f36aef3edb7d41f",
+          "operatingBlob": "04464ebd4fc6385a72034e1251e37440d6ed805c",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/developer-notes.css",
+          "testBlob": "438e63129ca4eaf2c1edc0713b0d486d38ac977d",
+          "operatingBlob": "438e63129ca4eaf2c1edc0713b0d486d38ac977d",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/developer-notes.js",
+          "testBlob": "bc12a88f851de67aa5d36c29db5dc0e308bef6b1",
+          "operatingBlob": "59c106daa675d58e319c19981fde4c91a14ab1b8",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/discovery-events.js",
+          "testBlob": "264ee09b29babdf35d16f948f86336065a4fbe14",
+          "operatingBlob": "264ee09b29babdf35d16f948f86336065a4fbe14",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/discovery-privacy.js",
+          "testBlob": "1a5b14d0e3fc9624108f9dfe4144119e30be35e6",
+          "operatingBlob": "0ffebe73734967c891596293aee935d0ffab290d",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/english-guides.js",
+          "testBlob": "4c4fc5b499cd1256047447029871c4ad5e5327a4",
+          "operatingBlob": "4c4fc5b499cd1256047447029871c4ad5e5327a4",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/featured-motion.js",
+          "testBlob": "78eb8c904d4b66cb9c81eab8286cd2ba2d795791",
+          "operatingBlob": "c76475f1c1066c8be7746e4bc6f2959aa768b4fa",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/fonts.css",
+          "testBlob": "2111a54817ed9b0dd24d30c462994c79bd364cad",
+          "operatingBlob": "2111a54817ed9b0dd24d30c462994c79bd364cad",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/fonts/Pretendard-LICENSE.txt",
+          "testBlob": "c0592ca0072da4537bdc064eb935d88e9bb4361d",
+          "operatingBlob": "c0592ca0072da4537bdc064eb935d88e9bb4361d",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/fonts/PretendardVariable.woff2",
+          "testBlob": "49c54b5152a184a243e85f7281ed338b6569987e",
+          "operatingBlob": "49c54b5152a184a243e85f7281ed338b6569987e",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/forest.jpg",
+          "testBlob": "d45e9e2d3deb511aeab00092e1337365c32c6bc8",
+          "operatingBlob": "d45e9e2d3deb511aeab00092e1337365c32c6bc8",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/integration-readiness.js",
+          "testBlob": "c6b7c5329881098a966dc0254547129626274c12",
+          "operatingBlob": "c6b7c5329881098a966dc0254547129626274c12",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/korean-font.css",
+          "testBlob": "b49cb7309d62ad6129c50b4d95be5f4cbebe2d3b",
+          "operatingBlob": "b49cb7309d62ad6129c50b4d95be5f4cbebe2d3b",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/market-menu.css",
+          "testBlob": "5170d34b110488cd2bd1454254eceacc6d137acd",
+          "operatingBlob": "ddd4426158618577a67a083a7c1026fed8dafd1c",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/market-menu.js",
+          "testBlob": "5e05f8db8fee25ed8e5694ac0f91716e31165e4b",
+          "operatingBlob": "7320bd2af201ed67d223a4b08c2e7f1ab90ec265",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/market-search.js",
+          "testBlob": "273cd1877aaa6d60c3ffc064c63400b1d16fdfba",
+          "operatingBlob": "273cd1877aaa6d60c3ffc064c63400b1d16fdfba",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/marketplace-page.css",
+          "testBlob": "7fcff0bdac8a0c0a7be095a3c0746a8b2fbe2baa",
+          "operatingBlob": "7fcff0bdac8a0c0a7be095a3c0746a8b2fbe2baa",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/marketplace-page.js",
+          "testBlob": "1a23dde5cc564147a7f082547e40cbb7a912e3f9",
+          "operatingBlob": "1a23dde5cc564147a7f082547e40cbb7a912e3f9",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/member-administration.js",
+          "testBlob": "ca1aee3c6345c16df5e133e12b6de3834fff7e08",
+          "operatingBlob": "ca1aee3c6345c16df5e133e12b6de3834fff7e08",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/monthly-awards.js",
+          "testBlob": "5582930ec9b7f28e5c5ef2cbcd9f4402c3d3cc37",
+          "operatingBlob": "39b3a6a399a96b8888048a59a914186353adb461",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/motion-01.mp4",
+          "testBlob": "e88808d0a80a049dec92a006f5efbb7731db1baf",
+          "operatingBlob": "e88808d0a80a049dec92a006f5efbb7731db1baf",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/motion-02.mp4",
+          "testBlob": "c6107a693d224d512687575754bf43bf43604661",
+          "operatingBlob": "c6107a693d224d512687575754bf43bf43604661",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/neon-wallet.js",
+          "testBlob": "6fe59548e1545f9500b60f2d1765e4dad2fe16cf",
+          "operatingBlob": "0e14b8b2fc4fe4f030f9d660fc64bd6e02508dd2",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/novanoxx-app-icon.png",
+          "testBlob": "d7ad4f1ac049c1575f91f96722b6a96ffba0ff66",
+          "operatingBlob": "d7ad4f1ac049c1575f91f96722b6a96ffba0ff66",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/novanoxx-brand-logo.png",
+          "testBlob": "b2c8be61686723dd5c616516f3600de115177012",
+          "operatingBlob": "b2c8be61686723dd5c616516f3600de115177012",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/novanoxx-kakao-icon-square.png",
+          "testBlob": "044c4eb8a08f1c13c61cfdefbb6ade9bd6b5a736",
+          "operatingBlob": "044c4eb8a08f1c13c61cfdefbb6ade9bd6b5a736",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/novanoxx-kakao-icon.png",
+          "testBlob": "a576798e020f4dede070137ba578261edbb241f1",
+          "operatingBlob": "a576798e020f4dede070137ba578261edbb241f1",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/operating-policy.js",
+          "testBlob": "dd18a7230b7af2c7be0a67cbfc262d6a10751e13",
+          "operatingBlob": "dd18a7230b7af2c7be0a67cbfc262d6a10751e13",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/operations-cases.js",
+          "testBlob": "28aa9f6b35d9c282525b32127201efab1472cb26",
+          "operatingBlob": "28aa9f6b35d9c282525b32127201efab1472cb26",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/operations-overview.js",
+          "testBlob": "c7092e49797a4493c5dfd5219232113fa17222f3",
+          "operatingBlob": "5d9397108b3804ef848ebe0aaf415f1622ee9da2",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/option-quote.js",
+          "testBlob": "2c2ad98a9557dc5fab88aaf7b0c337417945e3ff",
+          "operatingBlob": "2c2ad98a9557dc5fab88aaf7b0c337417945e3ff",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/perfume-face.png",
+          "testBlob": "8e1faa8f0afb8cc9e13d34327d1d4c359b49fc66",
+          "operatingBlob": "8e1faa8f0afb8cc9e13d34327d1d4c359b49fc66",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/perfume1.mp4",
+          "testBlob": "42eb329017efe874d9213981ee1bf3ddb52a4cce",
+          "operatingBlob": "42eb329017efe874d9213981ee1bf3ddb52a4cce",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/privacy-operator.js",
+          "testBlob": "1971e6b9fd6f0602c3225f1aa939221103561c07",
+          "operatingBlob": "1971e6b9fd6f0602c3225f1aa939221103561c07",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/review-checkout.css",
+          "testBlob": "e713e3f66747f4b4433143457fca16693f2e3275",
+          "operatingBlob": "e713e3f66747f4b4433143457fca16693f2e3275",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/review-checkout.js",
+          "testBlob": "69779e4100e58707352b6bb19f185a5105a5e6d6",
+          "operatingBlob": "a345363bb63c2a8e0052d80cf9ad351347b42fb0",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/social-share-icon.png",
+          "testBlob": "044c4eb8a08f1c13c61cfdefbb6ade9bd6b5a736",
+          "operatingBlob": "044c4eb8a08f1c13c61cfdefbb6ade9bd6b5a736",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/social-share-rounded.png",
+          "testBlob": "71a15ee974c50426811e8e4f77ae4559e08f2a5d",
+          "operatingBlob": "71a15ee974c50426811e8e4f77ae4559e08f2a5d",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/space.jpg",
+          "testBlob": "7db438766c8da8ac1fb851f0a06493de68333be1",
+          "operatingBlob": "7db438766c8da8ac1fb851f0a06493de68333be1",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/ui-language.js",
+          "testBlob": "04811f740c8802fd2af5d57af18ffe16e4b3174c",
+          "operatingBlob": "04811f740c8802fd2af5d57af18ffe16e4b3174c",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "assets/ui-translations-extra.js",
+          "testBlob": "daa0a14f9512b2759832993a7be12b405c0a88fb",
+          "operatingBlob": "73ab268938e3e70e5610f4c424fcd308fe49325a",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "assets/ui-translations.js",
+          "testBlob": "c053725b79eb9449201b22ebeeb6c2599b1d00dd",
+          "operatingBlob": "e99afb7de6d3cd003383978c6cea27a907f80ebe",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "auth.cjs",
+          "testBlob": "c089fa15fc340c5f8914fa55d65fd69d23239b8a",
+          "operatingBlob": "23feafcfe9e9d676d0a837da6a6f2534db3ed666",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "backup-automation-integration.test.cjs",
+          "testBlob": "57c397cf72e7288735453124eb63a07b0dc9f9ff",
+          "operatingBlob": "57c397cf72e7288735453124eb63a07b0dc9f9ff",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-automation-job.cjs",
+          "testBlob": "12e7a8aadc152d4ab64a7fdd83111baac9d4d20c",
+          "operatingBlob": "12e7a8aadc152d4ab64a7fdd83111baac9d4d20c",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-automation-policy.cjs",
+          "testBlob": "b4a691f1161f496b9e03f86acdca8c53a84aaa3a",
+          "operatingBlob": "b4a691f1161f496b9e03f86acdca8c53a84aaa3a",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-automation-store.cjs",
+          "testBlob": "7fd5717338a48aef8c985777c710aa108b50731a",
+          "operatingBlob": "7fd5717338a48aef8c985777c710aa108b50731a",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-automation.cjs",
+          "testBlob": "ca40574ec55708a18fe21e3caa4c1e1e75d7fe39",
+          "operatingBlob": "ca40574ec55708a18fe21e3caa4c1e1e75d7fe39",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-automation.test.cjs",
+          "testBlob": "58ce6f265cf3299cfa62222c33b5d1e89275295f",
+          "operatingBlob": "58ce6f265cf3299cfa62222c33b5d1e89275295f",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-capacity-observation.cjs",
+          "testBlob": "65919060ecfe4f7ed2b1e7037a1ee4dfcddbef3e",
+          "operatingBlob": "65919060ecfe4f7ed2b1e7037a1ee4dfcddbef3e",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-capacity-planning.test.cjs",
+          "testBlob": "a5c48d842099252e473fda339997bdcba02c20e3",
+          "operatingBlob": "a5c48d842099252e473fda339997bdcba02c20e3",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-gate-client.cjs",
+          "testBlob": "bf5afa23fd3c3558b9655c6dc8a3b1c057ce153e",
+          "operatingBlob": "bf5afa23fd3c3558b9655c6dc8a3b1c057ce153e",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-gate-proof.cjs",
+          "testBlob": "6f38e70d03f54ded58feb45dd79f31ebbd9d12bc",
+          "operatingBlob": "6f38e70d03f54ded58feb45dd79f31ebbd9d12bc",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-gate-proof.test.cjs",
+          "testBlob": "2cc92e363b2e01db6d3554061ae5be514dcecc09",
+          "operatingBlob": "2cc92e363b2e01db6d3554061ae5be514dcecc09",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-offsite-package.cjs",
+          "testBlob": "73c551efd7d7530cf42b1c679b7d7ccca65a4ce3",
+          "operatingBlob": "73c551efd7d7530cf42b1c679b7d7ccca65a4ce3",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-offsite-package.test.cjs",
+          "testBlob": "741c72c32b592e143880456d1214be1a34e3fa37",
+          "operatingBlob": "741c72c32b592e143880456d1214be1a34e3fa37",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-pg-readonly.cjs",
+          "testBlob": "4881a67f25c6bda49c31008c7bada984749be451",
+          "operatingBlob": "4881a67f25c6bda49c31008c7bada984749be451",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-pg18-runtime.cjs",
+          "testBlob": "2adfa341ee3f3022f2f9f3d934cebf016a0a45b8",
+          "operatingBlob": "2adfa341ee3f3022f2f9f3d934cebf016a0a45b8",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-quiesce-gate.cjs",
+          "testBlob": "73af3dccb2a7582073af02081d0fc4fa0a17615d",
+          "operatingBlob": "73af3dccb2a7582073af02081d0fc4fa0a17615d",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-r2-transport.cjs",
+          "testBlob": "24e09cdbcb7a6a15ec8d7cd1684b7c7908bf4194",
+          "operatingBlob": "24e09cdbcb7a6a15ec8d7cd1684b7c7908bf4194",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-r2-transport.test.cjs",
+          "testBlob": "518e55d6b51e5d640fe0c568b0dc1cda0b2dd4ab",
+          "operatingBlob": "518e55d6b51e5d640fe0c568b0dc1cda0b2dd4ab",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "backup-recovery-key.cjs",
+          "testBlob": "87c20562e6481c8bbc58406c6666480080e15d22",
+          "operatingBlob": "87c20562e6481c8bbc58406c6666480080e15d22",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "brief-checkout-roles.test.cjs",
+          "testBlob": "52ba06f2c6deb20ee1d9d29390d5d2317f820e51",
+          "operatingBlob": "52ba06f2c6deb20ee1d9d29390d5d2317f820e51",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "brief-checkout.cjs",
+          "testBlob": "7eeda463ecb3b4de6693c8dae7091d1180add12f",
+          "operatingBlob": "676fc470f7cbe9e97f55fe0aef35e3285755cf53",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "brief-correspondence.cjs",
+          "testBlob": "4e85248692040050f84a4af8be45ffbd5535d6a2",
+          "operatingBlob": "4e85248692040050f84a4af8be45ffbd5535d6a2",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "brief-disputes.cjs",
+          "testBlob": "1c0b3442d5e95d8f883044a2995924c3bce3ffa2",
+          "operatingBlob": "fd1fe2a5d9a90270550d406f97569d227e1cea3e",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "brief-disputes.test.cjs",
+          "testBlob": "4da8c995bf43d4c292e4200e49c153fd9cad10e5",
+          "operatingBlob": "4da8c995bf43d4c292e4200e49c153fd9cad10e5",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "brief-rights.test.cjs",
+          "testBlob": "2040c6f7d33d67ff767f7d2166f43e35611610bb",
+          "operatingBlob": "2040c6f7d33d67ff767f7d2166f43e35611610bb",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "catalog-admin.cjs",
+          "testBlob": "b5489756327d778cf45e4b697daf126c13aa4d79",
+          "operatingBlob": "b5489756327d778cf45e4b697daf126c13aa4d79",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "catalog-admin.test.cjs",
+          "testBlob": "a169d6061e3af5d953a90297e7a757ad4444b629",
+          "operatingBlob": "a169d6061e3af5d953a90297e7a757ad4444b629",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "catalog-editorial.cjs",
+          "testBlob": "359b98e768fdb54aaf3b001c5b9c9dc111eecc81",
+          "operatingBlob": "359b98e768fdb54aaf3b001c5b9c9dc111eecc81",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "checkout-correspondence.test.cjs",
+          "testBlob": "6bcb654fef5f3d11aa99840456e9537d7b709229",
+          "operatingBlob": "6bcb654fef5f3d11aa99840456e9537d7b709229",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "contest-api.cjs",
+          "testBlob": "04dbf197082f7c17d55e6791001f7441cc8524e0",
+          "operatingBlob": "04dbf197082f7c17d55e6791001f7441cc8524e0",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "contest-api.test.cjs",
+          "testBlob": "192d41c7f06494032d2e739dd914f6100c67f69f",
+          "operatingBlob": "192d41c7f06494032d2e739dd914f6100c67f69f",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "creator-api.cjs",
+          "testBlob": "ffd627c41392266cb2c48eb1d2ac1d6645e45d64",
+          "operatingBlob": "2b26be167e13981e3b23a665be21025dab4dd1b2",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "creator-api.test.cjs",
+          "testBlob": "b2c1a81f959661a693cd310faf5ef1446afba735",
+          "operatingBlob": "b2c1a81f959661a693cd310faf5ef1446afba735",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "creator-options.cjs",
+          "testBlob": "2068a5e2ec0d30e612226c471e348bcf7938d0b4",
+          "operatingBlob": "2068a5e2ec0d30e612226c471e348bcf7938d0b4",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "creator-workflow.test.cjs",
+          "testBlob": "a92bc5e1116dbed4204ccc7220d2df4e6084a12a",
+          "operatingBlob": "a92bc5e1116dbed4204ccc7220d2df4e6084a12a",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "database.cjs",
+          "testBlob": "76e6cd9db994c6cc51a9181b4a58c71af6a9ea5b",
+          "operatingBlob": "76e6cd9db994c6cc51a9181b4a58c71af6a9ea5b",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "database/001-foundation.sql",
+          "testBlob": "d6f716dbf1558c549d81c6c332b85a54e9fe337d",
+          "operatingBlob": "d6f716dbf1558c549d81c6c332b85a54e9fe337d",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "database/002-operating-engine.sql",
+          "testBlob": "34e0c7b9801c072a7ea47a6178d5559650403e26",
+          "operatingBlob": "34e0c7b9801c072a7ea47a6178d5559650403e26",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "database/pg-types.cjs",
+          "testBlob": "8e35681142c4b4686c212400123fa4a2b7f706f8",
+          "operatingBlob": "8e35681142c4b4686c212400123fa4a2b7f706f8",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "database/postgres-worker.cjs",
+          "testBlob": "49d869bba4609be227315f1e80a4a095d4efe2be",
+          "operatingBlob": "49d869bba4609be227315f1e80a4a095d4efe2be",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "database/postgres.cjs",
+          "testBlob": "c568fc2029777871e6332dcc499214313f9935ce",
+          "operatingBlob": "c568fc2029777871e6332dcc499214313f9935ce",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "database/sql-dialect.cjs",
+          "testBlob": "e2a4ea982b766ae6e446fd4ee90fef36ade7b727",
+          "operatingBlob": "e2a4ea982b766ae6e446fd4ee90fef36ade7b727",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "deploy/backup-monitor/backup-monitor.yml",
+          "testBlob": "42d856c24d138b08c00cd01ad6527a607731bedf",
+          "operatingBlob": "42d856c24d138b08c00cd01ad6527a607731bedf",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "deployment-config.cjs",
+          "testBlob": "c3cbf609558104745579743d236fb69a4ced046d",
+          "operatingBlob": "e3ee29e77550efe97b78d0de6a6b0da2794409b3",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "discovery-backup-plan.cjs",
+          "testBlob": "f0d93ae8b5b3a9bc96c3fd9c55b3ff3cb4a06b28",
+          "operatingBlob": "f0d93ae8b5b3a9bc96c3fd9c55b3ff3cb4a06b28",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "discovery-isolated-restore.cjs",
+          "testBlob": "77c6e7283fd09d7e67012608cbffe77833d65a8c",
+          "operatingBlob": "77c6e7283fd09d7e67012608cbffe77833d65a8c",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "discovery-isolated-restore.test.cjs",
+          "testBlob": "27222dae3eb99b195f396fc36815792dadc4b2a5",
+          "operatingBlob": "27222dae3eb99b195f396fc36815792dadc4b2a5",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "discovery-restore-filter.cjs",
+          "testBlob": "4b2055bdc4871928231e0595fee57299c7f8968e",
+          "operatingBlob": "4b2055bdc4871928231e0595fee57299c7f8968e",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "discovery-restore-filter.test.cjs",
+          "testBlob": "1055ba44a45a175b63598e1b3f7b4e7a3800fc29",
+          "operatingBlob": "1055ba44a45a175b63598e1b3f7b4e7a3800fc29",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "docs/backup-capacity-observation.json",
+          "testBlob": "1fedef03a7e09a1707d5d0265e180e98336917f4",
+          "operatingBlob": "1fedef03a7e09a1707d5d0265e180e98336917f4",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "docs/database-cutover.md",
+          "testBlob": "878ac454cd3224a3b25bb20b84b5c5310f185f01",
+          "operatingBlob": "e7186237981f44d59c7d16155a71f5e7ec70d9ad",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "docs/privacy-release-plan.json",
+          "testBlob": "94a69f6a360bd36ade381abd41504b9e7c39a74c",
+          "operatingBlob": "94a69f6a360bd36ade381abd41504b9e7c39a74c",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "docs/review-release-plan.json",
+          "testBlob": "4aa8fee9125f7b4436ed254f896f6d58ae05d4e0",
+          "operatingBlob": "7f547eb0c482b980766404bdba75bb2f0bd9477c",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "docs/stage10-readiness.json",
+          "testBlob": "2f36f1930fc87e21b1d5d9d6d01bdbe303daa211",
+          "operatingBlob": "7862140a9a0c56cb9d0f3cea37f18c3d71500f1c",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "engine-contest-entries.cjs",
+          "testBlob": "3ac7ae4bec2f6ad67b3c11d38bf7e06c14a7b0e2",
+          "operatingBlob": "3ac7ae4bec2f6ad67b3c11d38bf7e06c14a7b0e2",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "engine-cycle-worker.cjs",
+          "testBlob": "7c65db610a61b74abdcd82fb598c4aaa8882bfac",
+          "operatingBlob": "7c65db610a61b74abdcd82fb598c4aaa8882bfac",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "engine-cycle-worker.test.cjs",
+          "testBlob": "6060b7598a1089a61734490c5c6e3f66f67e440a",
+          "operatingBlob": "6060b7598a1089a61734490c5c6e3f66f67e440a",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "engine-discovery-privacy.cjs",
+          "testBlob": "ad53bd56134d350a15b026920a7c04a60659b39b",
+          "operatingBlob": "ad53bd56134d350a15b026920a7c04a60659b39b",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "engine-operating-policy.cjs",
+          "testBlob": "2a4ef72f04f9f2bf2360e629e8eaac0e7b20247e",
+          "operatingBlob": "2a4ef72f04f9f2bf2360e629e8eaac0e7b20247e",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "engine-postgres-test-config.cjs",
+          "testBlob": "49061f9ef38e871208fbd4fd5f6367700d9061ac",
+          "operatingBlob": "49061f9ef38e871208fbd4fd5f6367700d9061ac",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "engine-private-store.cjs",
+          "testBlob": "3a4a70423cde2a7cf0f2ff2b35ec0050c14ab927",
+          "operatingBlob": "3a4a70423cde2a7cf0f2ff2b35ec0050c14ab927",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "engine-storage-integration.test.cjs",
+          "testBlob": "bec721be2537c0e67cd08ddd4d0fa1f360e9dd03",
+          "operatingBlob": "bec721be2537c0e67cd08ddd4d0fa1f360e9dd03",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "google-auth.cjs",
+          "testBlob": "488850da4882b55fe1805ae6607ccc0de8d2636c",
+          "operatingBlob": "488850da4882b55fe1805ae6607ccc0de8d2636c",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "guide-translations.test.cjs",
+          "testBlob": "3c814b989339c3c7797cd9fb72d198a485b35f22",
+          "operatingBlob": "3c814b989339c3c7797cd9fb72d198a485b35f22",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "index.html",
+          "testBlob": "17c362b618fff8f38e493326e312e06bddfcbb4d",
+          "operatingBlob": "58caa51b011e5805c8c653336a6b48edfdb0a477",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "integration-readiness-ui.test.cjs",
+          "testBlob": "421cee2f424a58ee6bd47e03ce39430e2118d916",
+          "operatingBlob": "421cee2f424a58ee6bd47e03ce39430e2118d916",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "integration-readiness.cjs",
+          "testBlob": "48a3a7b3c5160df38c24ebbc599172489a50006c",
+          "operatingBlob": "48a3a7b3c5160df38c24ebbc599172489a50006c",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "integration-readiness.test.cjs",
+          "testBlob": "b681fabc82bbcf6724744f8f2fb6d94307f6cdc1",
+          "operatingBlob": "b681fabc82bbcf6724744f8f2fb6d94307f6cdc1",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "kakao-auth.cjs",
+          "testBlob": "5f7855454982ad7a542fb65aab6294ae32052d76",
+          "operatingBlob": "5f7855454982ad7a542fb65aab6294ae32052d76",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "landing.css",
+          "testBlob": "e2ee936fdb4331df85290ed76347eb386e043432",
+          "operatingBlob": "affaa588269bef13234eb9d15fd81430acf37c3f",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "language-operations.test.cjs",
+          "testBlob": "5b67b334cb5e401c031c843762ec9d716aafb9a9",
+          "operatingBlob": "5b67b334cb5e401c031c843762ec9d716aafb9a9",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "local-test-engine.cjs",
+          "testBlob": "eb8eec1e1c8ce5f23169dae5cf9a0ac4364ca4d4",
+          "operatingBlob": "eb8eec1e1c8ce5f23169dae5cf9a0ac4364ca4d4",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "local-test-engine.test.cjs",
+          "testBlob": "4e818c281e25b6a7488bf5db5d522c439be29495",
+          "operatingBlob": "4e818c281e25b6a7488bf5db5d522c439be29495",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "mail-runtime.cjs",
+          "testBlob": "dfa0f344d0bfa2a781a80adb8a1713a431394723",
+          "operatingBlob": "dfa0f344d0bfa2a781a80adb8a1713a431394723",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "mail-worker.cjs",
+          "testBlob": "49aee8df73f26cce503e6d31e8ef04cc86c01aa7",
+          "operatingBlob": "49aee8df73f26cce503e6d31e8ef04cc86c01aa7",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "market-search.test.cjs",
+          "testBlob": "24e3a67c760a2340cf42b91212d2e813afb9f262",
+          "operatingBlob": "24e3a67c760a2340cf42b91212d2e813afb9f262",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "member-administration.cjs",
+          "testBlob": "16a417ddb4e0576f9ff6dfee2f53ebec7123ce0a",
+          "operatingBlob": "165a5dc4cbb6a35f614be6525182c54bbdba625c",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "migration.test.cjs",
+          "testBlob": "6c045fb4704214006b8e4a63d41e16d374b4b955",
+          "operatingBlob": "6c045fb4704214006b8e4a63d41e16d374b4b955",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "naver-auth.cjs",
+          "testBlob": "218fd984f3d2bb351a6a13387494cd489fff1787",
+          "operatingBlob": "218fd984f3d2bb351a6a13387494cd489fff1787",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "neon-payments.cjs",
+          "testBlob": "f4b86dc45e24e8ed1cc4734332b387267b2e7874",
+          "operatingBlob": "f4b86dc45e24e8ed1cc4734332b387267b2e7874",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "neon-payments.test.cjs",
+          "testBlob": "80db81c581aee478ef159a18b2007831ef6bae94",
+          "operatingBlob": "80db81c581aee478ef159a18b2007831ef6bae94",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "operating-engine-plan.cjs",
+          "testBlob": "ae23591c906d49660c6d6075ebb5d8dbf515be47",
+          "operatingBlob": "aab7d3402da554e04ce898442bf0c13af5944b92",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "operating-freeze-proof.cjs",
+          "testBlob": "d5cccb14a5703e2316a74eb1c9a81b97e0228127",
+          "operatingBlob": "d5cccb14a5703e2316a74eb1c9a81b97e0228127",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "operating-freeze-proof.test.cjs",
+          "testBlob": "bc93f44e8d3a087056c4be8d63075e051277164f",
+          "operatingBlob": "bc93f44e8d3a087056c4be8d63075e051277164f",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "operating-readonly-backup.cjs",
+          "testBlob": "acc44609b242d1e68a6bafcb92f97a5e40b63939",
+          "operatingBlob": "0286be22664bdb1c8b3f977973aa3985327d218e",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "operating-transition-audit.cjs",
+          "testBlob": "e7546412fb5be2cb0f0525186364e88a16a274c3",
+          "operatingBlob": "e7546412fb5be2cb0f0525186364e88a16a274c3",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "operating-transition-audit.test.cjs",
+          "testBlob": "f7ddf58e46c2765b632ba8b617600b44c0ed6702",
+          "operatingBlob": "f7ddf58e46c2765b632ba8b617600b44c0ed6702",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "operations-cases.cjs",
+          "testBlob": "b6b62d1f4d78a500047f79140f9f5cc4affe76a7",
+          "operatingBlob": "b6b62d1f4d78a500047f79140f9f5cc4affe76a7",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "operations-cases.test.cjs",
+          "testBlob": "a2c3a24f65ec8693a7a452ca731ebe26a92f8618",
+          "operatingBlob": "a2c3a24f65ec8693a7a452ca731ebe26a92f8618",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "operations-overview.cjs",
+          "testBlob": "9254ccaab5a544db422443b611244e6f3959ee49",
+          "operatingBlob": "9254ccaab5a544db422443b611244e6f3959ee49",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "order-correspondence.cjs",
+          "testBlob": "187b92f8713d04823826ad0dabd5aa77716f89d9",
+          "operatingBlob": "187b92f8713d04823826ad0dabd5aa77716f89d9",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "original-access.cjs",
+          "testBlob": "5b21e6834af1fe3566a3b5d1693318ed8b44dedb",
+          "operatingBlob": "5b21e6834af1fe3566a3b5d1693318ed8b44dedb",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "original-access.test.cjs",
+          "testBlob": "c621aad2cc6f86786226ffca21ea686c6a17866e",
+          "operatingBlob": "c621aad2cc6f86786226ffca21ea686c6a17866e",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "package.json",
+          "testBlob": "59a5475eedac78b87f938bb4f9bcceb6e886a615",
+          "operatingBlob": "59a5475eedac78b87f938bb4f9bcceb6e886a615",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "page-routing.js",
+          "testBlob": "635fbe5638f674885b5951db0bc240d1a288b748",
+          "operatingBlob": "4dfb04e8736f7d88dcf2def92983fa472d5cb511",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "pnpm-lock.yaml",
+          "testBlob": "943a74e315c54ace3746bebafba9fb39ae7cea95",
+          "operatingBlob": "943a74e315c54ace3746bebafba9fb39ae7cea95",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "postgres.test.cjs",
+          "testBlob": "d38761407b9ba15f026bffe74d9c47a6a39811ba",
+          "operatingBlob": "d38761407b9ba15f026bffe74d9c47a6a39811ba",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "preview-protection.cjs",
+          "testBlob": "999926d85bd0e2084acade4e82d4b2dafc68d3d0",
+          "operatingBlob": "999926d85bd0e2084acade4e82d4b2dafc68d3d0",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "preview-work-slot.cjs",
+          "testBlob": "491eb6a214777cc707ed4a4b25a3fda5b8efe920",
+          "operatingBlob": "491eb6a214777cc707ed4a4b25a3fda5b8efe920",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "privacy-release-readiness.cjs",
+          "testBlob": "fbcfff0e65921f307719f96786bb6d71f33ead50",
+          "operatingBlob": "fbcfff0e65921f307719f96786bb6d71f33ead50",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "protected-delivery.cjs",
+          "testBlob": "05a35750c911403943ab98d7dc1da4045eb57f42",
+          "operatingBlob": "05a35750c911403943ab98d7dc1da4045eb57f42",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "protected-delivery.test.cjs",
+          "testBlob": "e4ba808558670613f547a56e349d5be53c0cfa25",
+          "operatingBlob": "e4ba808558670613f547a56e349d5be53c0cfa25",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "protected-preview.cjs",
+          "testBlob": "c445450e67884a74a4c687f8b8c688c9517b6076",
+          "operatingBlob": "c445450e67884a74a4c687f8b8c688c9517b6076",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "protected-preview.test.cjs",
+          "testBlob": "f4909c99fc9631239588c84855b23c88f1d8995f",
+          "operatingBlob": "f4909c99fc9631239588c84855b23c88f1d8995f",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "registered-instant.cjs",
+          "testBlob": "6e65a598c016cc47aecb7368447dce68059771cd",
+          "operatingBlob": "6e65a598c016cc47aecb7368447dce68059771cd",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "render.yaml",
+          "testBlob": "b4e10251ae09fee2e6165cc1337faa7fd8c3ca9a",
+          "operatingBlob": "b4e10251ae09fee2e6165cc1337faa7fd8c3ca9a",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "review-checkout-ui.test.cjs",
+          "testBlob": "e8aa0298c236961fba5ca36c461db6a719205f92",
+          "operatingBlob": "e8aa0298c236961fba5ca36c461db6a719205f92",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "review-checkout.cjs",
+          "testBlob": "4d9a998f4a511e909eea4b8aeb32fcec41c19ffe",
+          "operatingBlob": "687a7048f2eb72cbcdd90c79f0bc70b9d53aee16",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "review-engine.cjs",
+          "testBlob": "ed80e46a5e53d4b64ce104519477453177806474",
+          "operatingBlob": "ed80e46a5e53d4b64ce104519477453177806474",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "review-environment.cjs",
+          "testBlob": "99e9ae1363f180bb757fcd787b657bcf5c8d6dc7",
+          "operatingBlob": "99e9ae1363f180bb757fcd787b657bcf5c8d6dc7",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "review-release.test.cjs",
+          "testBlob": "288a6a2f1b252c5d736e5b6091a1e454e819d045",
+          "operatingBlob": "288a6a2f1b252c5d736e5b6091a1e454e819d045",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "review-sample.cjs",
+          "testBlob": "d24bc7573dad225b493a0b9c646c0232dcaedb69",
+          "operatingBlob": "d24bc7573dad225b493a0b9c646c0232dcaedb69",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "sale-policy.cjs",
+          "testBlob": "00ca16a2f7a9f6f4741c7614d4023b33f74ae992",
+          "operatingBlob": "00ca16a2f7a9f6f4741c7614d4023b33f74ae992",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "sale-policy.test.cjs",
+          "testBlob": "1edabdda798c6b225baf868e1bcedd369b51d9ee",
+          "operatingBlob": "1edabdda798c6b225baf868e1bcedd369b51d9ee",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "sandbox-engine-core.cjs",
+          "testBlob": "af73cf9e9fb088cc04719bfcea96ac6a34b137c1",
+          "operatingBlob": "9fb47c2789f1e46b4ea142566d4b5c57f94d4669",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "scripts/backup-sqlite.cjs",
+          "testBlob": "075029bef5ea64c7e7de9f87c808bc1acb054923",
+          "operatingBlob": "075029bef5ea64c7e7de9f87c808bc1acb054923",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "scripts/build-stage10-pdf.py",
+          "testBlob": "6f20b32c5d49f7287fc3b38569c7797e859dc19b",
+          "operatingBlob": "6f20b32c5d49f7287fc3b38569c7797e859dc19b",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "scripts/monitor-backup-automation.cjs",
+          "testBlob": "ae1bd27edbe940e2157c311ed5bda1316fdf06da",
+          "operatingBlob": "ae1bd27edbe940e2157c311ed5bda1316fdf06da",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "scripts/prepare-review.cjs",
+          "testBlob": "0ec230fc1952e936089e31e152577faac0758526",
+          "operatingBlob": "0ec230fc1952e936089e31e152577faac0758526",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "scripts/provision-review-target.cjs",
+          "testBlob": "e820d58341aca83958d95d5ddcd96754ba8e3d6a",
+          "operatingBlob": "e820d58341aca83958d95d5ddcd96754ba8e3d6a",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "scripts/review-release-check.cjs",
+          "testBlob": "83a5bf84a3593e2f25458777e0b17ee39c0539ec",
+          "operatingBlob": "83a5bf84a3593e2f25458777e0b17ee39c0539ec",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "scripts/seed-review.cjs",
+          "testBlob": "0705fa9cfdcc90909ac261e0b1e97b3d43d98f46",
+          "operatingBlob": "0705fa9cfdcc90909ac261e0b1e97b3d43d98f46",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "scripts/test-postgres-apis.cjs",
+          "testBlob": "278fc1fae28450a5d69a0326718076dfd5e10701",
+          "operatingBlob": "278fc1fae28450a5d69a0326718076dfd5e10701",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "server.cjs",
+          "testBlob": "48de93810646477651acd08e18e9d1667f273a02",
+          "operatingBlob": "8d559891847991f5fbe037e5930182fc13ec2d55",
+          "status": "UPDATED_IN_OPERATING"
+        },
+        {
+          "path": "stage10-bundle.test.cjs",
+          "testBlob": "6d483710036ab5b80789957fd6fe34c8e8b95d46",
+          "operatingBlob": "6d483710036ab5b80789957fd6fe34c8e8b95d46",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "stage10-closure.test.cjs",
+          "testBlob": "44d3a00a99e6f32aea8795834841e2891c5eb7bd",
+          "operatingBlob": "44d3a00a99e6f32aea8795834841e2891c5eb7bd",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "stage10-policy-ui.test.cjs",
+          "testBlob": "0319787d687a7b974346d01a7e9c7720e5296030",
+          "operatingBlob": "0319787d687a7b974346d01a7e9c7720e5296030",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "stage10-release.test.cjs",
+          "testBlob": "3514f615496c2a1262f25e385292c5d2dcd65b65",
+          "operatingBlob": "3514f615496c2a1262f25e385292c5d2dcd65b65",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "test-purchase-assets.json",
+          "testBlob": "16b5d4f8763e583671d858c6445832b202494778",
+          "operatingBlob": "16b5d4f8763e583671d858c6445832b202494778",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "translation-coverage.test.cjs",
+          "testBlob": "bfaf46dd4e06dcd9a2676d54fbbcc05a95506fda",
+          "operatingBlob": "bfaf46dd4e06dcd9a2676d54fbbcc05a95506fda",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "video-preview.cjs",
+          "testBlob": "2d8afc64867eaa2f6312301e5ac004816365174e",
+          "operatingBlob": "2d8afc64867eaa2f6312301e5ac004816365174e",
+          "status": "IDENTICAL"
+        },
+        {
+          "path": "video-preview.test.cjs",
+          "testBlob": "aa9bdf2248934b788875ea16dc730fe6dd78fcbe",
+          "operatingBlob": "aa9bdf2248934b788875ea16dc730fe6dd78fcbe",
+          "status": "IDENTICAL"
+        }
+      ],
+      "intentionalDifferences": [
+        "Operating PostgreSQL verified-payment authority replaces simulated TEST charging; TEST fixtures and transactions never become real entitlements.",
+        "Operating monthly billing replaces simulation/trial worker actions; live contract flags remain off.",
+        "Explicit TEST archive assets remain hidden; original demo marketplace and contest presentation remain.",
+        "Normal backup raw-event exclusion and separately encrypted consent-based discovery records; existing backup files preserved.",
+        "No source deletes; environment example files are excluded by Docker configuration in both deployments."
+      ],
+      "coverageLimit": "Source/runtime deployment comparison and essential flow checks, not a claim that every legacy page and every user combination was manually exercised.",
+      "initialOperatingCommit": "49d2f4b487a069475fc41eabe709271eafa647ac",
+      "currentRuntimeExpectedFiles": 246
+    }
+  },
+  "developmentChecklist190": [
+    {
+      "feature": "판매자 정산 화면",
+      "status": "IMPLEMENTED_DEPLOYED",
+      "detail": "186 완료. 승인 거래·환불·수수료 원 미만 버림·예상 실수령액·보류/미지급 표시. 실제 송금 제외."
+    },
+    {
+      "feature": "관리자 실거래 관리",
+      "status": "IMPLEMENTED_DEPLOYED",
+      "detail": "186 완료. 실제 주문·결제·환불·구독·금융 처리 기록과 TEST 보관 조회 분리."
+    },
+    {
+      "feature": "홈페이지 환불 처리",
+      "status": "IMPLEMENTED_DEPLOYED_CONTRACT_GATED",
+      "detail": "186 완료. 신청→관리자 검토→전액/부분 환불·권한·정산 반영. 실제 실행 활성화는 계약 후."
+    },
+    {
+      "feature": "결제 상태 자동 반영",
+      "status": "IMPLEMENTED_DEPLOYED_LIVE_MID_PENDING",
+      "detail": "186 완료. 제공자 조회/수신 큐 연결. 운영 MID webhook 등록과 운영 키 활성화는 별도."
+    },
+    {
+      "feature": "구독 실패 후 복구",
+      "status": "IMPLEMENTED_DEPLOYED_CONTRACT_GATED",
+      "detail": "187 이번 완료. 카드 변경(청구 없음)·미납 안내·실패 확정 회차의 본인 재결제·불명 결과 GET 대사. 실제 자동결제 활성화 별도."
+    },
+    {
+      "feature": "크리에이터 성과 화면",
+      "status": "IMPLEMENTED_DEPLOYED",
+      "detail": "187 이번 완료. 7/30/120일·일별/에셋별 실제 매출·현재 찜·적용 이후 조회 집계. 임시저장/TEST 보관 목록 제외."
+    },
+    {
+      "feature": "회원 탈퇴 처리",
+      "status": "IMPLEMENTED_DEPLOYED",
+      "detail": "188 완료. 본인·최근 로그인·명시 확인, 미완료 거래/환불/분쟁/구독·미정산 안내, 전체 세션/소셜/메일 토큰 폐기·계정정보 익명화·검색 철회, 최소 법정보존 신원 분리와 만료 정리, 복원 시 현재 탈퇴 목록 재적용. 실제 계정 탈퇴 실행0."
+    },
+    {
+      "feature": "판매자 계좌 등록·실제 송금",
+      "status": "IMPLEMENTED_DEPLOYED_CONTRACT_GATED",
+      "detail": "190 운영 반영. 계좌 등록·변경·암호화·마스킹·판매자 인증 상태, 단독 관리자 검토·지급 요청·결과 재조회·확인 완료액·환불 상호보류 연결. 계약/전용 키/보안·복구키/판매자 KYC/소유자 첫 실거래 확인 전 실제 계좌 등록·송금 비활성. 계약별 추가 조건 확인 필요."
+    }
+  ],
+  "currentRemaining190": [
+    {
+      "id": "TOSS_CONTRACT_AND_LIVE_ACTIVATION",
+      "detail": "10월20일 회신 후 NEON·환불·한도·정산 방식 확정, 계약된 운영 MID의 일반결제 키와 승인/대사 설정 확인. 실제 첫 결제는 소유자가 직접 진행. 실제 Toss 운영 MID의 webhook URL 등록과 NNX_LIVE_REFUNDS 활성화 여부 확인. 실환불은 소유자가 직접 실행."
+    },
+    {
+      "id": "RECURRING_BILLING_ACTIVATION",
+      "detail": "자동결제 추가 계약, 해당 빌링 MID 운영 키, 빌링키 암호화 키의 별도 복구 보관을 설정한 뒤 소유자 카드 등록·첫 청구 확인. 현재 자동청구 미실행."
+    },
+    {
+      "id": "SELLER_PAYOUT_PROVIDER",
+      "detail": "공통 계좌·지급 연결은 190 구현/배포 완료. 지급대행 계약/해당 MID 권한, 전용 운영·JWE 보안키, 독립 계좌 암호화키와 복구 사본, webhook, 판매자 인증 및 소유자 첫 실제 지급 확인이 남음. 송금 후 환불/차지백 회수 조건은 계약에 따라 별도 검토. 실제 송금0."
+    },
+    {
+      "id": "EXISTING_RELEASE_CONDITIONS",
+      "detail": "네이버 일반 사용자 검수(개발 멤버 로그인만 검증), 공식 개인정보 위탁/국외이전 등 법률·모국어·전체 접근성/전체123동선 검수는 별도. 운영자 개인키를 사용하는 실제 오프사이트 재해 복호화와 운영 DB 교체는 실행하지 않음. 기존 백업 키 갱신/모니터링 유지."
+    },
+    {
+      "id": "MAIL_PROVIDER_ACTIVATION",
+      "detail": "메일 발송 코드는 배포되어 있으나 운영 서버의 RESEND_API_KEY, NNX_MAIL_ENCRYPTION_KEY, RESEND_WEBHOOK_SECRET 미설정으로 enabled=false. 발송 도메인과 외부 업체 설정 확인 필요. 실제 메일 발송0. support 수신 설정과 발송 설정은 별개."
+    }
+  ]
 }
