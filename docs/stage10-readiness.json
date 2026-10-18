@@ -1,6 +1,6 @@
 {
-  "revision": 197,
-  "status": "AVAILABLE_NONFINANCIAL_BROWSER_REVIEW_COMPLETED_NAVER_OWNER_SUBMISSION_PENDING",
+  "revision": 199,
+  "status": "AVAILABLE_NONFINANCIAL_BROWSER_REVIEW_COMPLETED_NAVER_REVIEW_RESULT_PENDING",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
     "sha256": "35baf3bcef6b10632787d8661c4a48992e70181267c4e4d5fc6d7070b3b1b339",
@@ -6182,7 +6182,7 @@
     },
     "naver": {
       "appStatus": "개발 중",
-      "status": "PREPARED_OWNER_SUBMISSION_PENDING",
+      "status": "OWNER_REPORTED_SUBMITTED_REVIEW_RESULT_PENDING",
       "requiredData": [
         "email",
         "nickname"
@@ -6190,8 +6190,9 @@
       "existingAccountLoginVerified": true,
       "newAccountRegistrationExercised": false,
       "filesUploaded": false,
-      "submitted": false,
-      "pack": "NovaNoxX_네이버검수자료_2026-10-18.zip"
+      "submitted": true,
+      "pack": "NovaNoxX_네이버검수자료_2026-10-18.zip",
+      "submissionEvidence": "User reported submission on 2026-10-19 Asia/Seoul; portal receipt not independently rechecked"
     },
     "limits": [
       "Native screen-reader speech, iOS/Safari and actual browser 200% zoom not verified; zoom tool had no effect and was reset",
@@ -6228,8 +6229,8 @@
     },
     {
       "id": "NAVER_PUBLIC_REVIEW",
-      "status": "PREPARED_OWNER_SUBMISSION_PENDING",
-      "detail": "197 기존 앱 실제 개발 중 확인. 기존 네이버 계정 로그인 성공, 이메일/닉네임 활용과 로그인 절차 PNG3개·제출안내·압축자료 준비. 업로드/최종 검수 요청은 소유자 직접 진행, 아직 제출하지 않음."
+      "status": "OWNER_REPORTED_SUBMITTED_REVIEW_RESULT_PENDING",
+      "detail": "2026-10-19 사용자 직접 검수 요청 제출 확인. 네이버 결과 대기, 접수/승인 상태 직접 재조회는 하지 않음. 중복 제출 금지."
     },
     {
       "id": "CONTENT_AND_LAUNCH_REVIEW",
@@ -6251,5 +6252,201 @@
       "status": "DEFERRED_BY_OWNER",
       "detail": "관리자 담당 계정별 역할 위임은 Phase2. 최근 본 목록/선택형 마케팅 이메일/검색 결과 없음 분석 등 후순위 항목은 현재 MVP 필수 개발에 포함하지 않음. 혼합결제·AI자동화/의미검색/실시간3D·채팅·앱 추가 없음."
     }
-  ]
+  ],
+  "productionBackup199": {
+    "revision": 199,
+    "observedAt": "2026-10-18T16:32:08.326Z",
+    "scope": "Current operating site encrypted backup plus TEST web-service suspend suitability audit; no suspension/deletion",
+    "backup": {
+      "tag": "FULL199_COMPLETE",
+      "createdAt": "2026-10-18T16:29:25.506Z",
+      "commit": "d1a552f52874ad321ce0baa2e474edc6b2ec7951",
+      "captureRoot": "/data/.private-nnx-backups/full199-SI5AOY",
+      "packageRoot": "/data/.private-nnx-backups/packet199-aGTrG7",
+      "indexAnchor": "01f4f3b4e5bb724ddfe77d3e7bb852157fc491aaee74452eaf4eb3849a34d1e0",
+      "receipt": {
+        "bucket": "novanoxx-private-backups",
+        "scope": "OPERATING_READONLY_CANDIDATE_RESTORE_NOT_VERIFIED",
+        "id": "a35dd932-c81c-40b4-b776-322546e63bb7",
+        "indexAnchor": "01f4f3b4e5bb724ddfe77d3e7bb852157fc491aaee74452eaf4eb3849a34d1e0",
+        "prefix": "bundles/operating-candidate/a35dd932-c81c-40b4-b776-322546e63bb7/",
+        "objects": 12,
+        "encryptedBytes": 78637977,
+        "created": 12,
+        "reused": 0
+      },
+      "discoveryRaw": {
+        "key": "discovery-v1/1792340935712.json.enc",
+        "events": 0,
+        "expires": "2027-01-16T16:28:55.712Z",
+        "bytes": 716,
+        "sha256": "8c7a9505859d12c4ccafb7fa3a5720429a3a5cba3966f6825d297e58199e07dd"
+      },
+      "verification": {
+        "sqliteIntegrity": true,
+        "dumpArchiveReadable": true,
+        "dumpAllSectionsDecoded": true,
+        "sourceBusinessRowsUnchanged": true,
+        "sourceUploadsUnchanged": true
+      },
+      "sourceFiles": 255,
+      "dataFiles": 5,
+      "tables": 114,
+      "ciphertextAndPlaintextDigestsVerified": true,
+      "offsiteObjectsReadBackVerified": true,
+      "ownerPrivateKeyUnlockExercised": false,
+      "newPaidResources": 0,
+      "previousBackupsDeleted": false,
+      "testServerStopped": false,
+      "captureRootStatus": "AUDIT_MANIFEST_ONLY_AFTER_VERIFIED_DUPLICATE_CIPHERTEXT_CLEANUP",
+      "primaryLocalRestoreSource": "/data/.private-nnx-backups/packet199-aGTrG7"
+    },
+    "productionPostcheck": {
+      "tag": "FULL199_POSTCHECK",
+      "freeBytes": 5037412352,
+      "operatingConfigReferencesTest": false,
+      "financialFlags": [
+        {
+          "name": "NNX_LIVE_PAYMENTS",
+          "enabled": false
+        },
+        {
+          "name": "NNX_LIVE_REFUNDS",
+          "enabled": false
+        },
+        {
+          "name": "NNX_LIVE_PAYOUTS",
+          "enabled": false
+        },
+        {
+          "name": "NNX_LIVE_SUBSCRIPTION_REFUNDS",
+          "enabled": false
+        }
+      ],
+      "mailConfigured": true,
+      "temporaryPlaintextDirectories": []
+    },
+    "publicStatus": {
+      "observedAt": "2026-10-18T16:31:06.020Z",
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "reviewOnly": false,
+          "productionSite": true,
+          "paymentPreview": true,
+          "operatingConnections": true,
+          "financeConnected": true,
+          "payoutsConnected": true,
+          "subscriptionRefundsConnected": true,
+          "transactionNotificationsConnected": true,
+          "withdrawalConnected": true,
+          "recoveryConnected": true,
+          "analyticsConnected": true,
+          "discoveryCollection": true,
+          "database": "postgres",
+          "migrationVerified": true
+        }
+      },
+      "mail": {
+        "status": 200,
+        "body": {
+          "enabled": true
+        }
+      },
+      "providers": {
+        "status": 200,
+        "body": {
+          "google": true,
+          "naver": true,
+          "kakao": true
+        }
+      }
+    },
+    "testIsolation": {
+      "tag": "TEST199_EFFECTIVE",
+      "dbHost": "dpg-db6esfivcj2c73fu4re0-a",
+      "dbName": "nnx_review_20261018",
+      "dataDir": "/var/data/nnx-review-20261018",
+      "origin": "https://novanoxx-sandbox-staging.onrender.com",
+      "storage": [
+        {
+          "name": "nnx-isolated",
+          "bytes": 2886273585
+        },
+        {
+          "name": "nnx-mail-evidence",
+          "bytes": 2451445
+        },
+        {
+          "name": "nnx-review-20261018",
+          "bytes": 16492
+        }
+      ],
+      "mailEnabled": false,
+      "mailPaused": true,
+      "backupAutomation": false,
+      "liveMoneyFlags": []
+    },
+    "resources": {
+      "operatingService": "srv-db5aqunlk1mc739bi0m0",
+      "operatingDisk": "dsk-db5aqunlk1mc739bi140",
+      "testService": "srv-db6essivcj2c73fu6460",
+      "testDisk": "dsk-db83ih8n74is73dlco40",
+      "testDiskMount": "/var/data",
+      "testDiskGB": 5,
+      "testDatabaseHost": "dpg-db6esfivcj2c73fu4re0-a",
+      "testDatabaseGB": 1,
+      "testServiceAutoDeploy": false,
+      "otherTwoTemporaryServicesAlreadySuspended": true
+    },
+    "conclusion": {
+      "testWebServiceCanBeSuspendedWithDiskAndDatabaseRetained": true,
+      "testWebServiceSuspendedThisTask": false,
+      "testDatabaseOrDiskDeletionSafe": false,
+      "testRecordsPreserved": true,
+      "operatingBackupDoesNotIncludeTestOnly2_89GB": true,
+      "ownerOfflineRecoveryKeyStillRequired": true,
+      "fullIsolatedRestoreNotPerformed": true
+    },
+    "cost": {
+      "newPaidResources": 0,
+      "capacityIncreaseGB": 0,
+      "remoteStorageBeforeBytes": 10854097,
+      "addedRemoteBytes": 78638693,
+      "projectBucketBytesAfterExpected": 89492790,
+      "newFixedMonthlyFee": 0,
+      "existingTestDatabaseAndDiskChargesRemain": true,
+      "allAccountInvoiceNotCertified": true,
+      "references": [
+        "https://developers.cloudflare.com/r2/pricing/",
+        "https://render.com/docs/disks",
+        "https://render.com/docs/postgresql-backups"
+      ],
+      "finalLocalFreeBytes": 5115461632
+    },
+    "preservation": {
+      "originalDirtyCheckout": {
+        "checked": 675,
+        "changed": []
+      },
+      "priorBackupsOverwritten": false,
+      "priorBackupsDeleted": false,
+      "operatingBusinessRowsOrFilesChanged": false,
+      "deploymentPerformed": false,
+      "privateSettingsOnlyEncrypted": true,
+      "manualBackupSeparateFromAutomaticDailyRetention": true,
+      "discoveryRawSeparateRetentionDays": 90
+    },
+    "intermediateCleanup": {
+      "tag": "FULL199_INTERMEDIATE_CLEANUP",
+      "intermediateArtifactsRemoved": 10,
+      "releasedBytes": 78027442,
+      "completedPacketRetained": true,
+      "offsitePacketRetained": true,
+      "olderBackupArtifactsTouched": false,
+      "manifestRetained": true,
+      "freeBytes": 5115461632
+    }
+  }
 }
