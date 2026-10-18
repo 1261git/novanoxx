@@ -6,7 +6,7 @@ module.exports=function({db,env=process.env,clock=Date.now,provider=require('./f
  if(!db.prepare("SELECT version FROM nnx_operating_v1.schema_version WHERE version='OPERATING_CONNECTIONS_V1'").get())fail('OPERATING_CONNECTION_SCHEMA_REQUIRED');
  let engine,financeSync;const receipts=new Map(),dirty=new Set(),busy=new Set();
  const tx=fn=>{db.exec('BEGIN IMMEDIATE');try{const r=fn();db.exec('COMMIT');return r;}catch(e){db.exec('ROLLBACK');throw e;}};
- const member=id=>{const u=db.prepare('SELECT id,email,name FROM users WHERE id=?').get(id);if(!u||db.prepare('SELECT state FROM member_restrictions WHERE user_id=?').get(id)?.state==='SUSPENDED')fail('ACCESS_DENIED');return u;};
+ const member=id=>{const u=db.prepare('SELECT id,email,name FROM users WHERE id=?').get(id);if(!u||['SUSPENDED','WITHDRAWN'].includes(db.prepare('SELECT state FROM member_restrictions WHERE user_id=?').get(id)?.state))fail('ACCESS_DENIED');return u;};
  const get=id=>db.prepare('SELECT * FROM nnx_operating_v1.orders WHERE id=?').get(id),payment=id=>db.prepare('SELECT * FROM nnx_operating_v1.payments WHERE order_id=?').get(id),checkout=id=>db.prepare('SELECT * FROM nnx_operating_v1.checkouts WHERE order_id=?').get(id);
  const enabled=()=>env.NNX_LIVE_PAYMENTS==='1'&&env.NNX_PAYMENT_CONTRACT_APPROVED==='1'&&env.NNX_OPERATING_RECONCILIATION_APPROVED==='1'&&/^live_ck_[A-Za-z0-9_-]+$/.test(env.NNX_TOSS_LIVE_CLIENT_KEY||'')&&/^live_sk_[A-Za-z0-9_-]+$/.test(env.NNX_TOSS_LIVE_SECRET_KEY||'');
  const quoteBase=require('./commerce-quote.cjs')({db,fail,version:'OPERATING_SALE_V1',allowReserved:(actor,i,a)=>{const c=checkout('live_'+i.requestId);return !!c?.reserved&&c.actor_id===actor.id&&get(c.order_id)?.asset_id===a.id;}});

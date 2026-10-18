@@ -6,7 +6,7 @@ module.exports=function({db,commerce,env=process.env,clock=Date.now,provider=req
  if(!db.prepare("SELECT version FROM nnx_operating_v1.schema_version WHERE version='OPERATING_FINANCE_V1'").get())fail('FINANCE_SCHEMA_REQUIRED');
  const busy=new Set();let ticking=false;
  const order=id=>db.prepare('SELECT * FROM nnx_operating_v1.orders WHERE id=?').get(id),payment=id=>db.prepare('SELECT * FROM nnx_operating_v1.payments WHERE order_id=?').get(id),syncRow=id=>db.prepare('SELECT * FROM nnx_operating_v1.payment_sync WHERE order_id=?').get(id),refund=id=>db.prepare('SELECT * FROM nnx_operating_v1.refunds WHERE id=?').get(id);
- function member(id){const u=db.prepare('SELECT id,email,name FROM users WHERE id=?').get(id);if(!u||db.prepare('SELECT state FROM member_restrictions WHERE user_id=?').get(id)?.state==='SUSPENDED')fail('ACCESS_DENIED');return u;}
+ function member(id){const u=db.prepare('SELECT id,email,name FROM users WHERE id=?').get(id);if(!u||['SUSPENDED','WITHDRAWN'].includes(db.prepare('SELECT state FROM member_restrictions WHERE user_id=?').get(id)?.state))fail('ACCESS_DENIED');return u;}
  function admin(id){if(!isAdmin(member(id)))fail('ACCESS_DENIED');}
  const tx=fn=>{db.exec('BEGIN IMMEDIATE');try{const r=fn();db.exec('COMMIT');return r;}catch(e){db.exec('ROLLBACK');throw e;}};
  const requestId=i=>{if(!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(i?.requestId||''))fail('INVALID_INPUT');};

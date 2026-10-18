@@ -2,7 +2,7 @@
 const crypto=require('node:crypto');
 module.exports=function({db,user,json,origin,isAdmin=require('./admin-policy.cjs')}){
  db.exec("CREATE TABLE IF NOT EXISTS member_restrictions(user_id TEXT PRIMARY KEY,state TEXT NOT NULL,reason TEXT NOT NULL,updated INTEGER NOT NULL);CREATE TABLE IF NOT EXISTS admin_member_events(id TEXT PRIMARY KEY,actor_id TEXT NOT NULL,user_id TEXT NOT NULL,action TEXT NOT NULL,reason TEXT NOT NULL,payload_hash TEXT NOT NULL,result TEXT NOT NULL,created INTEGER NOT NULL);CREATE TABLE IF NOT EXISTS admin_test_wallet_adjustments(id TEXT PRIMARY KEY,actor_id TEXT NOT NULL,user_id TEXT NOT NULL,delta INTEGER NOT NULL,balance_before INTEGER NOT NULL,balance_after INTEGER NOT NULL,reason TEXT NOT NULL,payload_hash TEXT NOT NULL,created INTEGER NOT NULL);");
- const blocked=id=>db.prepare('SELECT state FROM member_restrictions WHERE user_id=?').get(id)?.state==='SUSPENDED';
+ const blocked=id=>['SUSPENDED','WITHDRAWN'].includes(db.prepare('SELECT state FROM member_restrictions WHERE user_id=?').get(id)?.state);
  async function handle(req,res,name){
   if(!['/api/auth/admin/member-state','/api/auth/admin/member-wallet','/api/auth/admin/test-wallet-adjust'].includes(name))return false;
   const actor=user(req);if(!actor){json(res,401,{error:'로그인이 필요합니다.'});return true;}if(!isAdmin(actor)){json(res,403,{error:'관리자 권한이 필요합니다.'});return true;}
@@ -23,6 +23,7 @@ module.exports=function({db,user,json,origin,isAdmin=require('./admin-policy.cjs
   db.exec('BEGIN IMMEDIATE');try{
    const existing=db.prepare('SELECT * FROM '+table+' WHERE id=?').get(input.requestId);if(existing){db.exec('ROLLBACK');if(existing.payload_hash!==payloadHash){json(res,409,{error:'요청 내용이 변경되었습니다. 새 요청으로 처리해주세요.'});return true;}json(res,200,stateAction?JSON.parse(existing.result):{ok:true,mode:'TEST',balance:existing.balance_after});return true;}
    const target=db.prepare('SELECT id,email FROM users WHERE id=?').get(input.userId);if(!target){db.exec('ROLLBACK');json(res,404,{error:'회원을 찾을 수 없습니다.'});return true;}
+   if(db.prepare('SELECT state FROM member_restrictions WHERE user_id=?').get(target.id)?.state==='WITHDRAWN'){db.exec('ROLLBACK');json(res,409,{error:'탈퇴한 계정은 다시 활성화하거나 잔액을 변경할 수 없습니다.'});return true;}
    const now=Date.now();let result;
    if(stateAction){if(target.id===actor.id||isAdmin(target)){db.exec('ROLLBACK');json(res,409,{error:'관리자 계정은 이 화면에서 정지할 수 없습니다.'});return true;}const prior=blocked(target.id)?'SUSPENDED':'ACTIVE';if(prior===input.state){db.exec('ROLLBACK');json(res,409,{error:'이미 같은 회원 상태입니다.'});return true;}
     db.prepare('INSERT INTO member_restrictions VALUES(?,?,?,?) ON CONFLICT(user_id) DO UPDATE SET state=excluded.state,reason=excluded.reason,updated=excluded.updated').run(target.id,input.state,reason,now);if(input.state==='SUSPENDED')db.prepare('DELETE FROM sessions WHERE user_id=?').run(target.id);result={ok:true,state:input.state};db.prepare('INSERT INTO admin_member_events VALUES(?,?,?,?,?,?,?,?)').run(input.requestId,actor.id,target.id,prior+'→'+input.state,reason,payloadHash,JSON.stringify(result),now);

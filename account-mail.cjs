@@ -36,7 +36,8 @@ function create({db,origin,encryptionKey,transport,webhookSecret,now=Date.now,al
  const audit=(user,action)=>db.prepare('INSERT INTO mail_audit VALUES(?,?,?,?)').run(uid(),user,action,now());
  function crypt(id,purpose,payload){const iv=crypto.randomBytes(12),c=crypto.createCipheriv('aes-256-gcm',key,iv);c.setAAD(Buffer.from(id+':'+purpose));return Buffer.concat([iv,c.update(JSON.stringify(payload)),c.final(),c.getAuthTag()]).toString('base64');}
  function decrypt(r){const b=Buffer.from(r.ciphertext,'base64'),c=crypto.createDecipheriv('aes-256-gcm',key,b.subarray(0,12));c.setAAD(Buffer.from(r.id+':'+r.template));c.setAuthTag(b.subarray(-16));const text=Buffer.concat([c.update(b.subarray(12,-16)),c.final()]);try{if(hash(text)!==r.payload_digest)fail('MAIL_PAYLOAD_CHANGED');return JSON.parse(text);}finally{text.fill(0);}}
- function verified(id){const s=db.prepare('SELECT verified_at FROM mail_account_state WHERE user_id=?').get(id);return !s||s.verified_at!==null;}
+ const withdrawn=id=>!!db.prepare("SELECT name FROM sqlite_master WHERE name='member_restrictions'").get()&&db.prepare('SELECT state FROM member_restrictions WHERE user_id=?').get(id)?.state==='WITHDRAWN';
+ function verified(id){if(withdrawn(id))return false;const s=db.prepare('SELECT verified_at FROM mail_account_state WHERE user_id=?').get(id);return !s||s.verified_at!==null;}
  function limit(bucket,max=3){const k=hash(bucket),r=db.prepare('SELECT * FROM mail_limits WHERE bucket=?').get(k),t=now();if(r&&t-r.started<3600000&&r.count>=max)fail('MAIL_RATE_LIMIT');db.prepare('INSERT INTO mail_limits VALUES(?,?,?) ON CONFLICT(bucket) DO UPDATE SET started=excluded.started,count=excluded.count').run(k,r&&t-r.started<3600000?r.started:t,r&&t-r.started<3600000?r.count+1:1);}
  function queue(user,template,sourceKey,payload,tokenDigest=null){
   if(!permitted(user.email)||!address(user.email))fail('MAIL_RECIPIENT_DENIED');
@@ -77,7 +78,7 @@ function create({db,origin,encryptionKey,transport,webhookSecret,now=Date.now,al
   let salt,calculated;if(purpose==='RESET'){if(typeof password!=='string'||password.length<8||password.length>128)fail('MAIL_INVALID_INPUT');salt=crypto.randomBytes(16).toString('hex');calculated=(await derive(password,salt,64)).toString('hex');}
   return tx(()=>{const t=db.prepare('SELECT * FROM mail_tokens WHERE digest=?').get(hash(token));if(!t||t.state!=='ACTIVE'||t.purpose!==purpose||t.expires<=now())fail('MAIL_INVALID_LINK');
    const u=db.prepare('SELECT * FROM users WHERE id=?').get(t.user_id),s=db.prepare('SELECT * FROM mail_account_state WHERE user_id=?').get(t.user_id);
-   if(!u||!s||t.generation!==s.generation||purpose==='RESET'&&!u.hash)fail('MAIL_INVALID_LINK');
+   if(!u||withdrawn(u.id)||!s||t.generation!==s.generation||purpose==='RESET'&&!u.hash)fail('MAIL_INVALID_LINK');
    db.prepare("UPDATE mail_tokens SET state='USED' WHERE digest=?").run(t.digest);
    if(purpose==='VERIFY')db.prepare('UPDATE mail_account_state SET verified_at=? WHERE user_id=?').run(now(),u.id);
    else{db.prepare('UPDATE users SET salt=?,hash=? WHERE id=?').run(salt,calculated,u.id);db.prepare('UPDATE mail_account_state SET generation=generation+1 WHERE user_id=?').run(u.id);db.prepare('UPDATE sessions SET expires=CASE WHEN expires>? THEN ? ELSE expires END WHERE user_id=?').run(now(),now(),u.id);db.prepare("UPDATE mail_tokens SET state='REVOKED' WHERE user_id=? AND state='ACTIVE'").run(u.id);db.prepare("UPDATE mail_outbox SET state='CANCELLED' WHERE user_id=? AND state IN ('READY','RETRY','UNKNOWN') AND token_digest IS NOT NULL").run(u.id);}
@@ -85,7 +86,7 @@ function create({db,origin,encryptionKey,transport,webhookSecret,now=Date.now,al
  }
  function notificationInside({sourceKey,userId,kind,orderId}){
   if(typeof sourceKey!=='string'||sourceKey.length>300||typeof orderId!=='string'||orderId.length>100||!['ORDER','DELIVERY','REFUND','ORDER_UPDATE'].includes(kind))fail('MAIL_INVALID_INPUT');
-  const user=db.prepare('SELECT * FROM users WHERE id=?').get(userId);if(!user)return null;
+  const user=db.prepare('SELECT * FROM users WHERE id=?').get(userId);if(!user||withdrawn(userId))return null;
   if(policy&&!permitted(user.email)){audit(user.id,'TEST_RECIPIENT_SKIPPED');return null;}
   return queue(user,kind,sourceKey,{subject:({ORDER:'NovaNoxX 주문 접수',DELIVERY:'NovaNoxX 납품·검수 안내',REFUND:'NovaNoxX 환불 처리 안내',ORDER_UPDATE:'NovaNoxX 주문 상태 안내'})[kind],text:'참여 중인 주문의 새 안내가 있습니다.\n주문 번호: '+orderId+'\n자세한 내용은 로그인 후 주문 페이지에서 확인해 주세요.\n'+base.origin+'/#/orders'});
  }
@@ -106,7 +107,7 @@ function create({db,origin,encryptionKey,transport,webhookSecret,now=Date.now,al
   let processed=0;
   for(const {id} of ids){const claim=tx(()=>{
    const row=db.prepare('SELECT * FROM mail_outbox WHERE id=?').get(id);if(!['READY','RETRY','UNKNOWN'].includes(row.state)||row.available_at>now())return null;
-   const u=db.prepare('SELECT email FROM users WHERE id=?').get(row.user_id);if(!u||u.email!==row.recipient||!permitted(row.recipient)||db.prepare('SELECT recipient FROM mail_suppressions WHERE recipient=?').get(row.recipient)){db.prepare("UPDATE mail_outbox SET state='SUPPRESSED' WHERE id=?").run(id);return null;}
+   const u=db.prepare('SELECT email FROM users WHERE id=?').get(row.user_id);if(!u||withdrawn(row.user_id)||u.email!==row.recipient||!permitted(row.recipient)||db.prepare('SELECT recipient FROM mail_suppressions WHERE recipient=?').get(row.recipient)){db.prepare("UPDATE mail_outbox SET state='SUPPRESSED' WHERE id=?").run(id);return null;}
    if(row.token_digest){const t=db.prepare('SELECT * FROM mail_tokens WHERE digest=?').get(row.token_digest);if(!t||t.state!=='ACTIVE'||t.expires<=now()){db.prepare("UPDATE mail_outbox SET state='CANCELLED' WHERE id=?").run(id);return null;}}
    else if(!verified(row.user_id))return null;
    if(row.attempts>=5||row.first_attempt!==null&&now()-row.first_attempt>=23*3600000){db.prepare("UPDATE mail_outbox SET state='MANUAL_REVIEW' WHERE id=?").run(id);return null;}
