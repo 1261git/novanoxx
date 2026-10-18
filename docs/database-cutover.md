@@ -223,3 +223,30 @@ Owner verification: 무조건 환불/송금 우회 버튼을 추가하지 않음
 Activation order: agree money model and fees/limits → preserve current database/files and existing keys → configure the contracted ordinary MID and its webhook → owner confirms first purchase/order/rights and refund → configure separate billing credentials/encryption/recovery and owner billing/refund checks → configure payouts/KYC/funding/webhook and owner first payout. Keep all inactive gates off until their own prerequisites pass. NEON and post-payout recovery need agreed design/code before activation. Use actual contracted API/key type; this site uses payment-window payment(), so do not substitute an unrelated widget-only key.
 
 This audit creates no new paid resource or fixed fee. Contract fees, card/PG processing fees, billing/payout charges, funding and any storage/compute expansion must be checked and announced before activation. Existing ordinary resource usage still applies. Mail is already enabled; preserve its key/webhook and pause rather than disable if maintenance is needed.
+
+
+## 196 — Targeted launch/accessibility review
+
+Runtime febe712c5a583cafaaadd8682137b2de07d248e4 / dep-dbaclpu7bikc73eg8re0 live 2026-10-18T13:35:30.465851Z. Frontend-only: translated skip link, route-heading focus (including asynchronous/early-return pages), profile disclosure state/Escape return, keyboard outlines and Brief placeholder contrast3.97→7.947. Operating desktop9/mobile390px5 screens and local320px7 screens plus six languages were checked. Relevant UI12 checks and1284-key translation coverage passed. Public file fingerprints match; index is compared after the existing production-page canonical transform. Health/mail remain healthy; no financial/DB settings or operating accounts changed. No new paid resource/fixed fee. This is not a full123-flow/WCAG/native-screen-reader/iOS/Safari/200%-zoom certification.
+
+Owner actions:
+
+**NAVER_REVIEW**
+
+1. 네이버 개발자센터→Application→내 애플리케이션→기존 NovaNoxX 앱에서 현재 검수 상태 확인. 이미 승인됐다면 중복 신청하지 않음.
+2. 개발 중/반려 상태라면 앱 소유자 또는 기존 테스터로 novanoxx.com의 네이버 로그인 버튼부터 로그인 완료까지 진행하고 각 화면 캡처. 본인 비밀번호/추가 정보제공 동의는 직접 처리.
+3. 앱 이름/브랜드 로고, 서비스 URL https://novanoxx.com, 기존 callback https://novanoxx.com/api/auth/naver/callback 확인. 조회 권한을 임의 추가하지 않음. 코드가 사용하는 식별자·이메일·닉네임의 실제 계정/화면 활용처 자료 준비.
+4. 검수 상태 탭에 로그인 과정·정보 활용처 자료를 첨부한 뒤 소유자께서 최종 검수 요청과 결과 확인. 반려 사유가 있으면 해당 부분만 수정.
+
+이번에 앱 설정 변경·OAuth 동의·계정 연결·검수 신청은 실행하지 않음. 설정 true나 개발 멤버 로그인은 일반 이용자 승인 증거가 아님. 네이버 로그인에 별도 서비스 비밀번호를 요구하지 않는 현재 OAuth 흐름 유지.
+
+Official reference: https://developers.naver.com/docs/login/verify/verify.md
+
+**OWNER_RECOVERY**
+
+1. 보관 중인 암호화 USB 사본과 소유자 오프라인 복구 개인키/암호문 및 잠금 암호를 소유자 기기에 준비. 키/암호는 채팅·저장소·서버 환경변수에 전달하지 않음.
+2. 소유자께서 로컬에서 복구키 잠금을 해제한 뒤 암호화 사본을 빈 비공개 대상 폴더로 복호화. 파일 목록·무결성 지문을 대조하고 암호키 값은 로그에 남기지 않음.
+3. 복호화 결과는 격리 복구 대상으로만 검수. 현재 탈퇴·수집 철회 목록을 재적용하고 수집/메일 발송/금융 작업을 비활성으로 유지. 운영 DB 주소나 파일 경로를 복구본으로 바꾸지 않음.
+4. 최종적으로 사본 읽기·복호화·DB/원본 파일 무결성 및 복원 제외 조건이 확인됐는지 기록. 추가 저장 공간/서비스가 필요하면 먼저 용량·비용 안내. 실제 장애 복구 전환은 별도 결정.
+
+이번에는 복구키 잠금 해제·실제 복호화·복원본 생성/운영 교체를 실행하지 않음. 기존 보존본 읽기와 격리 복구 증거를 새 소유자 복구 확인으로 대체하지 않음.
