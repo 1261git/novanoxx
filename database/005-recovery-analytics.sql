@@ -1,0 +1,8 @@
+-- Apply explicitly after the operating preservation snapshot; existing rows remain in place.
+BEGIN;
+CREATE TABLE nnx_operating_v1.billing_card_requests(id text PRIMARY KEY,user_id text NOT NULL REFERENCES public.users(id),subscription_id text NOT NULL REFERENCES nnx_operating_v1.subscriptions(id),request_id text NOT NULL,return_hash text NOT NULL,expires bigint NOT NULL,state text NOT NULL CHECK(state IN ('STARTED','PROCESSING','COMPLETED','FAILED','UNKNOWN')),created bigint NOT NULL,UNIQUE(user_id,request_id));
+CREATE TABLE nnx_operating_v1.billing_recovery_attempts(id text PRIMARY KEY,subscription_id text NOT NULL REFERENCES nnx_operating_v1.subscriptions(id),user_id text NOT NULL REFERENCES public.users(id),request_id text NOT NULL,source_period timestamptz NOT NULL,target_period timestamptz NOT NULL,amount_krw bigint NOT NULL CHECK(amount_krw>0),order_id text NOT NULL UNIQUE,idempotency_key text NOT NULL UNIQUE,provider_payment_key text UNIQUE,state text NOT NULL CHECK(state IN ('PROCESSING','APPROVED','FAILED','RECONCILE_REQUIRED')),created bigint NOT NULL,UNIQUE(user_id,request_id));
+CREATE UNIQUE INDEX operating_billing_recovery_open ON nnx_operating_v1.billing_recovery_attempts(subscription_id) WHERE state IN ('PROCESSING','RECONCILE_REQUIRED');
+CREATE TABLE nnx_operating_v1.asset_view_days(asset_id text NOT NULL REFERENCES public.creator_assets(id),day text NOT NULL CHECK(day ~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'),views bigint NOT NULL CHECK(views>=0 AND views<=9007199254740991),PRIMARY KEY(asset_id,day));
+INSERT INTO nnx_operating_v1.schema_version(version) VALUES('OPERATING_RECOVERY_ANALYTICS_V1');
+COMMIT;
