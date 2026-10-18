@@ -135,3 +135,10 @@ Official references: https://docs.tosspayments.com/guides/v2/payouts ; https://d
 
 
 190 최종 운영 반영: 870f011 / dep-dba855rrjlhs73cb4tq0, 2026-10-18 17:26:54 KST LIVE. 기존 93개 테이블 중 schema_version 표식만 변경, 파일 5개 변경 없음, 빈 지급 테이블 5개 추가. 운영 메일은 발송 키·암호화키·webhook 비밀값이 없어 비활성 상태이며 별도 외부 설정 대기. 지정 금융 관리자 계정의 지급 목록 서버 조회 정상, 다른 로그인 계정 접근 제한. 개발자노트 중앙 오차 0px/1040px, 기존 마켓 8/3/4 보존. 자세한 증빙은 production190-report.json 및 두 기존 인수인계 190번 참조.
+
+
+## 191 — Operating mail enabled (2026-10-18)
+
+Owner approved the existing domain-scoped sending credential and single free webhook cutover from TEST to https://novanoxx.com/api/auth/mail/webhook. Dashboard added seven mail variables and redeployed the existing 870f011 image once: dep-dbaa0sjrjlhs739foqd0 live 10:33:55Z. Public HTTPS mail status is enabled=true and the worker is unpaused. From no-reply@notify.novanoxx.com, Reply-To support@novanoxx.com. No messages were sent in this activation, so new delivery receipts remain unverified.
+
+Pre-activation snapshot /data/.stage10-release191-20261018 contains 98 tables, five files and an 898577-byte database dump. All original table/file fingerprints match after activation. Twelve new public mail tables were created by the existing runtime. TEST remains unchanged with its current mail disabled and send paused. Production encryption key is separate, Windows-DPAPI protected and has a verified encrypted USB copy; actual offline private-key recovery was not exercised. Never disable enabled verification; pause sending instead. Preserve mail configuration/key fingerprint, tokens, queues and TEST budgets. No new paid resources or fixed fees; provider Free limits and paid-overage-off retained. See mail191-report.json and handoff191 for precise boundaries.
