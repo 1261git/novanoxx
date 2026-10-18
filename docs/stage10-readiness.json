@@ -1,6 +1,6 @@
 {
-  "revision": 187,
-  "status": "PRODUCTION_RECOVERY_ANALYTICS_DEPLOYED_FINANCIAL_ACTIVATION_PENDING",
+  "revision": 188,
+  "status": "PRODUCTION_WITHDRAWAL_AND_DEVELOPER_NOTES_DEPLOYED",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
     "sha256": "35baf3bcef6b10632787d8661c4a48992e70181267c4e4d5fc6d7070b3b1b339",
@@ -3436,5 +3436,164 @@
       "id": "EXISTING_RELEASE_CONDITIONS",
       "detail": "네이버 일반 사용자 검수(개발 멤버 로그인만 검증), 공식 개인정보 위탁/국외이전 등 법률·모국어·전체 접근성/전체123동선 검수는 별도. 운영자 개인키를 사용하는 실제 오프사이트 재해 복호화와 운영 DB 교체는 실행하지 않음. 기존 백업 키 갱신/모니터링 유지."
     }
-  ]
+  ],
+  "productionRelease188": {
+    "commit": "e63d9c589c9272bd8087b83c5bd61c6cb8db7c13",
+    "health": {
+      "status": "ok",
+      "reviewOnly": false,
+      "productionSite": true,
+      "paymentPreview": true,
+      "operatingConnections": true,
+      "financeConnected": true,
+      "withdrawalConnected": true,
+      "recoveryConnected": true,
+      "analyticsConnected": true,
+      "discoveryCollection": true,
+      "database": "postgres",
+      "migrationVerified": true
+    },
+    "counts": {
+      "orders": 0,
+      "payments": 0,
+      "entitlements": 0,
+      "subscriptions": 0,
+      "subscription_cycles": 0,
+      "refunds": 0,
+      "account_withdrawals": 0
+    },
+    "flags": {
+      "livePayments": false,
+      "liveRefunds": false,
+      "billing": false
+    },
+    "freeBytes": 5200535552,
+    "preservation": {
+      "verifiedAt": "2026-10-18T07:34:19.537Z",
+      "originalTables": 91,
+      "changedTables": [
+        "nnx_operating_v1.schema_version"
+      ],
+      "originalFiles": 5,
+      "changedFiles": [],
+      "newTables": [
+        "nnx_operating_v1.account_withdrawals",
+        "nnx_retention_v1.withdrawn_identity"
+      ],
+      "originalTestRowsPromoted": 0
+    },
+    "snapshot": {
+      "tables": 91,
+      "files": 5,
+      "dumpBytes": 881110,
+      "dumpSha256": "8ade7ce4e5369970b2e005f5ca4fb0fed9075d62b06c30caa8a7c9dae633a889"
+    },
+    "revision": 188,
+    "status": "PRODUCTION_WITHDRAWAL_AND_DEVELOPER_NOTES_DEPLOYED",
+    "deployment": {
+      "id": "dep-dba7bv5g1s2s73b1s6lg",
+      "commit": "e63d9c589c9272bd8087b83c5bd61c6cb8db7c13",
+      "status": "live",
+      "finishedAt": "2026-10-18T07:33:08.681015Z",
+      "url": "https://novanoxx.com"
+    },
+    "localChecks": {
+      "essentialDistinctChecksPassed": 9,
+      "providerCalls": 0,
+      "actualAccountsWithdrawn": 0,
+      "registeredTranslationKeys": 1232,
+      "additionalLocaleMissing": 0,
+      "restoreTombstoneReapplied": true,
+      "optionalSavedHttpCheck": "SYSTEM_EACCES_LOCALHOST_NOT_COMPLETED",
+      "historicalSavedReportRestoredSha256": "52f70f7bec14c45f66dd9fb122f8c0caf3861c56b85e1aa8b76f5b3b156509a9",
+      "automaticReview": "optional elevated rerun rejected for historical evidence overwrite risk; no retry; original evidence restored from SHA-matching preserved copy"
+    },
+    "ui": {
+      "withdrawalMenu": true,
+      "administratorDeletionPrevented": true,
+      "noActualDeletionSubmitted": true,
+      "developerStage": 10,
+      "developerUpdated": "2026-10-18",
+      "completedChecklistItems": 7,
+      "unimplementedChecklistItems": 1,
+      "marketplaceAssets": 8,
+      "picks": 3,
+      "awardSlides": 4,
+      "contestIntroAndEmptyListPreserved": true,
+      "consoleErrors": 0
+    },
+    "appErrorLogs": 0,
+    "newPaidResources": 0,
+    "additionalFixedMonthlyFees": 0,
+    "existingUsageChargesRemainPossible": true,
+    "proof": [
+      "production188-withdrawal.png",
+      "production188-developer-checklist.png"
+    ],
+    "legalReferences": [
+      "https://law.go.kr/LSW/lsSideInfoP.do?docCls=jo&joBrNo=00&joNo=0021&lsiSeq=283839&urlMode=lsScJoRltInfoR",
+      "https://www.law.go.kr/LSW/lsSideInfoP.do?docCls=jo&joBrNo=00&joNo=0006&lsiSeq=269055&urlMode=lsScJoRltInfoR"
+    ]
+  },
+  "developmentChecklist188": [
+    {
+      "feature": "판매자 정산 화면",
+      "status": "IMPLEMENTED_DEPLOYED",
+      "detail": "186 완료. 승인 거래·환불·수수료 원 미만 버림·예상 실수령액·보류/미지급 표시. 실제 송금 제외."
+    },
+    {
+      "feature": "관리자 실거래 관리",
+      "status": "IMPLEMENTED_DEPLOYED",
+      "detail": "186 완료. 실제 주문·결제·환불·구독·금융 처리 기록과 TEST 보관 조회 분리."
+    },
+    {
+      "feature": "홈페이지 환불 처리",
+      "status": "IMPLEMENTED_DEPLOYED_CONTRACT_GATED",
+      "detail": "186 완료. 신청→관리자 검토→전액/부분 환불·권한·정산 반영. 실제 실행 활성화는 계약 후."
+    },
+    {
+      "feature": "결제 상태 자동 반영",
+      "status": "IMPLEMENTED_DEPLOYED_LIVE_MID_PENDING",
+      "detail": "186 완료. 제공자 조회/수신 큐 연결. 운영 MID webhook 등록과 운영 키 활성화는 별도."
+    },
+    {
+      "feature": "구독 실패 후 복구",
+      "status": "IMPLEMENTED_DEPLOYED_CONTRACT_GATED",
+      "detail": "187 이번 완료. 카드 변경(청구 없음)·미납 안내·실패 확정 회차의 본인 재결제·불명 결과 GET 대사. 실제 자동결제 활성화 별도."
+    },
+    {
+      "feature": "크리에이터 성과 화면",
+      "status": "IMPLEMENTED_DEPLOYED",
+      "detail": "187 이번 완료. 7/30/120일·일별/에셋별 실제 매출·현재 찜·적용 이후 조회 집계. 임시저장/TEST 보관 목록 제외."
+    },
+    {
+      "feature": "회원 탈퇴 처리",
+      "status": "IMPLEMENTED_DEPLOYED",
+      "detail": "188 완료. 본인·최근 로그인·명시 확인, 미완료 거래/환불/분쟁/구독·미정산 안내, 전체 세션/소셜/메일 토큰 폐기·계정정보 익명화·검색 철회, 최소 법정보존 신원 분리와 만료 정리, 복원 시 현재 탈퇴 목록 재적용. 실제 계정 탈퇴 실행0."
+    },
+    {
+      "feature": "판매자 계좌 등록·실제 송금",
+      "status": "NOT_IMPLEMENTED_PROVIDER_CONTRACT_PENDING",
+      "detail": "계좌 등록/확인 공통 화면과 지급 결과 처리 미구현. 실제 제공자·KYC/계좌·차지백 연결은 계약 방식 확정 후."
+    }
+  ],
+  "currentRemaining188": [
+    {
+      "id": "TOSS_CONTRACT_AND_LIVE_ACTIVATION",
+      "detail": "10월20일 회신 후 NEON·환불·한도·정산 방식 확정, 계약된 운영 MID의 일반결제 키와 승인/대사 설정 확인. 실제 첫 결제는 소유자가 직접 진행. 실제 Toss 운영 MID의 webhook URL 등록과 NNX_LIVE_REFUNDS 활성화 여부 확인. 실환불은 소유자가 직접 실행."
+    },
+    {
+      "id": "RECURRING_BILLING_ACTIVATION",
+      "detail": "자동결제 추가 계약, 해당 빌링 MID 운영 키, 빌링키 암호화 키의 별도 복구 보관을 설정한 뒤 소유자 카드 등록·첫 청구 확인. 현재 자동청구 미실행."
+    },
+    {
+      "id": "SELLER_PAYOUT_PROVIDER",
+      "detail": "계좌 등록/확인 공통 화면과 지급 결과 처리 미구현. 실제 제공자·KYC/계좌·차지백 연결은 계약 방식 확정 후."
+    },
+    {
+      "id": "EXISTING_RELEASE_CONDITIONS",
+      "detail": "네이버 일반 사용자 검수(개발 멤버 로그인만 검증), 공식 개인정보 위탁/국외이전 등 법률·모국어·전체 접근성/전체123동선 검수는 별도. 운영자 개인키를 사용하는 실제 오프사이트 재해 복호화와 운영 DB 교체는 실행하지 않음. 기존 백업 키 갱신/모니터링 유지."
+    }
+  ],
+  "stage10Complete": false
 }
