@@ -35,6 +35,7 @@ const productionSite=process.env.RENDER_SERVICE_ID==='srv-db5aqunlk1mc739bi0m0'&
 if(productionSite){localEngine=require('./production-runtime.cjs')({db,dir});applicationEngine.configure(localEngine);}
 const previewEnv=productionSite?{productionSite:true,NNX_REVIEW_MODE:'1',NNX_REVIEW_TOSS_CLIENT_KEY:/^test_ck_/.test(process.env.TOSS_CLIENT_KEY||'')?process.env.TOSS_CLIENT_KEY:undefined}:process.env;
 const reviewCheckout=process.env.NNX_REVIEW_MODE==='1'||productionSite?require('./review-checkout.cjs')({db,user,json,origin:deployment.base,env:previewEnv}):null;
+const operatingFinance=require('./operating-finance-http.cjs')({finance:localEngine?.finance,user,json,origin:deployment.base});
 const operatingCheckout=localEngine?.commerce?require('./operating-commerce-http.cjs')({commerce:localEngine.commerce,subscription:localEngine.subscription,user,json,origin:deployment.base}):null;
 accountMail=require('./mail-runtime.cjs').configured({db,origin:deployment.base});
 const attempts = new Map();
@@ -49,9 +50,10 @@ module.exports=async function auth(req,res,name){
   const actor=user(req);if(!actor){json(res,401,{error:'로그인이 필요합니다.'});return true;}
   json(res,200,{mode:'OPERATING',ready:false,testBalance:0,history:[],orders:[],testRecordsArchived:true});return true;
  }
+ if(await operatingFinance(req,res,name))return true;
  if(operatingCheckout&&await operatingCheckout(req,res,name))return true;
  if(reviewCheckout&&await reviewCheckout(req,res,name))return true;
- if(name==='/api/health'&&req.method==='GET'){try{db.prepare('SELECT 1 AS ok').get();const migrated=db.backend==='postgres'&&process.env.NNX_REVIEW_MODE!=='1'?!!db.prepare("SELECT version FROM nnx_migrations WHERE version='sqlite-v1'").get():false;json(res,200,{status:'ok',reviewOnly:process.env.NNX_REVIEW_MODE==='1',productionSite,paymentPreview:productionSite,operatingConnections:!!localEngine?.commerce,discoveryCollection:localEngine?.discoveryBackup?.state().ready===true,database:db.backend||'sqlite',migrationVerified:migrated});}catch{json(res,503,{status:'unavailable'});}return true;}
+ if(name==='/api/health'&&req.method==='GET'){try{db.prepare('SELECT 1 AS ok').get();const migrated=db.backend==='postgres'&&process.env.NNX_REVIEW_MODE!=='1'?!!db.prepare("SELECT version FROM nnx_migrations WHERE version='sqlite-v1'").get():false;json(res,200,{status:'ok',reviewOnly:process.env.NNX_REVIEW_MODE==='1',productionSite,paymentPreview:productionSite,operatingConnections:!!localEngine?.commerce,financeConnected:!!localEngine?.finance,discoveryCollection:localEngine?.discoveryBackup?.state().ready===true,database:db.backend||'sqlite',migrationVerified:migrated});}catch{json(res,503,{status:'unavailable'});}return true;}
  if(!name.startsWith('/api/auth/')&&!name.startsWith('/api/catalog')&&!name.startsWith('/api/engine/')&&!['/api/contest','/api/contest/media'].includes(name))return false;
  try{
  if(name==='/api/auth/mail/status'&&req.method==='GET'){json(res,200,{enabled:!!accountMail});return true;}

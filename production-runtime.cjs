@@ -22,13 +22,14 @@ module.exports.validate=validate;
 function operating(options){
  const subscription=require('./operating-subscriptions.cjs')(options),commerce=require('./operating-commerce.cjs')(options);commerce.authority.plan=subscription.plan;
  const core=require('./sandbox-engine-core.cjs')({...options,paymentAuthority:commerce.authority});commerce.bind(core);const discoveryEnv={...options.env,NNX_DISCOVERY_BACKUP_ENABLED:options.env.NNX_DISCOVERY_BACKUP_ENABLED||(options.env.NNX_BACKUP_AUTOMATION==='1'?'1':'0')};const discovery=require('./discovery-raw-backup.cjs')({...options,env:discoveryEnv});
+ let finance=null;try{if(options.db.prepare("SELECT version FROM nnx_operating_v1.schema_version WHERE version='OPERATING_FINANCE_V1'").get()){finance=require('./operating-finance.cjs')({...options,commerce});commerce.bindFinance(finance.sync);}}catch(error){if(error.message==='FINANCE_SCHEMA_REQUIRED')throw error;throw error;}
  const guard=(fn)=>(actor,i,...rest)=>{commerce.paidOrder(actor,i?.orderId);return fn(actor,i,...rest);};
  const upload=fn=>(actor,req,i)=>{commerce.paidOrder(actor,i?.orderId);return fn(actor,req,i);};
  const attachmentDownload=(actor,id)=>{const f=options.db.prepare('SELECT order_id FROM engine_order_attachments WHERE id=?').get(id);commerce.paidOrder(actor,f?.order_id);return core.work.attachmentDownload(actor,id);};
- return {...core,environment:'PRODUCTION',billing:'TOSS_CONTRACT_GATED',productionSite:true,scheduledJobsDisabled:false,paymentPreview:!commerce.enabled(),commerce,
+ return {...core,environment:'PRODUCTION',billing:'TOSS_CONTRACT_GATED',productionSite:true,scheduledJobsDisabled:false,paymentPreview:!commerce.enabled(),commerce,finance,
   work:{...core.work,state:commerce.workState,purchase:()=>{throw Error('PAYMENT_VERIFICATION_REQUIRED');},act:guard(core.work.act),upload:upload(core.work.upload),attachmentUpload:upload(core.work.attachmentUpload),attachmentDownload,deliver:guard(core.work.deliver),stageRegistered:guard(core.work.stageRegistered),download:commerce.download},
   subscription,
   briefs:{...core.briefs,act:(actor,i)=>{if(i.action==='briefCheckout')throw Error('PAYMENT_CONTRACT_PENDING');return core.briefs.act(actor,i);}},
   operations:{...core.operations,policy:{...core.operations.policy,liveCollectionEnabled:discoveryEnv.NNX_DISCOVERY_BACKUP_ENABLED==='1'},collect:(actor,i)=>{if(!discovery.state().ready)throw Error('DISCOVERY_PERMISSION_REQUIRED');const count=Number(options.db.prepare('SELECT COUNT(*) n FROM engine_discovery_events').get().n);if(count>=9000)throw Error('DISCOVERY_PERMISSION_REQUIRED');return core.operations.collect(actor,i);},privacy:{...core.operations.privacy,act:(actor,i)=>{if(i.allowed===true&&!discovery.state().ready)throw Error('DISCOVERY_PERMISSION_REQUIRED');return core.operations.privacy.act(actor,i);}}},discoveryBackup:discovery,
-  async tick(){const result=core.tick();await subscription.tick();await discovery.tick();return result;}};
+  async tick(){const result=core.tick();await subscription.tick();await finance?.tick();await discovery.tick();return result;}};
 }
