@@ -99,3 +99,6 @@ body.info-view{background:#0b0c10}.info-view main{background:radial-gradient(ell
 
 .social-login{display:grid;gap:10px;margin:20px 0}.social-login button{border:1px solid #49394a;background:#17131c;padding:13px 16px;text-align:left;color:#c1b7ce;cursor:default}.social-login small{float:right;font-size:10px;color:#857c91;margin-top:2px}.login-divider{font-size:10px;color:#857c91;text-align:center;margin:24px 0;border-bottom:1px solid #342c3d;padding-bottom:16px}
 .social-login button:not(:disabled){cursor:pointer;color:#eee8f4;border-color:#655073}.social-login button:not(:disabled):hover{border-color:#ff6b2b;color:#ff9c71}
+
+/* Keep the withdrawal heading and account panel centered together. */
+.route-page[data-route="account-withdrawal"]{max-width:600px;margin-inline:auto}
