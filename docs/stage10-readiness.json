@@ -6715,16 +6715,16 @@
   ],
   "productionImageProtection201": {
     "revision": 201,
-    "commit": "6040e416f92272d6b83f25f3f491ac70841dd98a",
+    "commit": "ace0bf95764188ea9ea72287c2ffa6a70b230c07",
     "deployment": {
-      "id": "dep-dbanat0ae00c739v9pig",
+      "id": "dep-dbancr142hec73dqgut0",
       "status": "live",
-      "finishedAt": "2026-10-19T01:43:03.914881Z"
+      "finishedAt": "2026-10-19T01:47:20.059031Z"
     },
     "scope": "Public catalog image derivatives only, preserving paid originals",
     "public": {
-      "commit": "6040e416f92272d6b83f25f3f491ac70841dd98a",
-      "observedAt": "2026-10-19T01:43:32.015Z",
+      "commit": "ace0bf95764188ea9ea72287c2ffa6a70b230c07",
+      "observedAt": "2026-10-19T01:47:45.441Z",
       "images": [
         {
           "name": "abstract.jpg",
@@ -6822,6 +6822,11 @@
         "status": 200,
         "published": 0
       },
+      "normalizedAlias": {
+        "status": 200,
+        "version": "image-baked-960-v2"
+      },
+      "nonGetStatus": 405,
       "sourceAssetsChangedByCommit": ""
     },
     "preservation": {
@@ -6835,7 +6840,7 @@
     },
     "local": {
       "passed": true,
-      "dir": "D:/AI asset market/novanoxx-stage10-evidence-20261017/image201-9bnZOQ",
+      "dir": "D:/AI asset market/novanoxx-stage10-evidence-20261017/image201-HD42lm",
       "largeDimensions": {
         "width": 960,
         "height": 576
@@ -6853,7 +6858,9 @@
         "head": true,
         "corruptFailsClosed": true,
         "logoExcluded": true,
-        "directStaticProtected": true
+        "directStaticProtected": true,
+        "nonGetCannotRetrieveSource": true,
+        "normalizedAliasProtected": true
       },
       "cacheReuse": true,
       "publicUploadAndStaticCovered": true,
@@ -6929,7 +6936,9 @@
       "paidOriginalAndOwnerAdminRoutesUnchanged": true,
       "videoAudioPdfRoutesUnchanged": true,
       "logoIconSocialShareImagesExcluded": true,
-      "osScreenshotBlocking": false
+      "osScreenshotBlocking": false,
+      "nonGetCanReturnSource": false,
+      "staticPathAliasesNormalized": true
     },
     "operatingCatalogPublishedUploadImages": 0,
     "publishedUploadLiveDataNotMutated": true,
@@ -6943,6 +6952,14 @@
       "checked": 675,
       "changed": []
     },
-    "stage10Complete": false
+    "stage10Complete": false,
+    "initialDeployment": {
+      "id": "dep-dbanat0ae00c739v9pig",
+      "status": "live",
+      "finishedAt": "2026-10-19T01:43:03.914881Z"
+    },
+    "deploymentsThisTask": 2,
+    "finalMethodAliasHardening": true,
+    "postFinalDeployErrorLogs": 0
   }
 }
