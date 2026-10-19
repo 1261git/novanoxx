@@ -1,5 +1,5 @@
 {
-  "revision": 200,
+  "revision": 201,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -6712,5 +6712,237 @@
       "status": "ISOLATION_VERIFIED_NOT_SUSPENDED",
       "detail": "199 운영과 분리 확인. TEST 웹 서비스만 중지 가능하나 아직 중지하지 않음. 전용DB/디스크2.89GB 및 기록 보존, 유지 요금은 별도. 삭제/TEST 자료 외부 반출 완료로 확대하지 않음."
     }
-  ]
+  ],
+  "productionImageProtection201": {
+    "revision": 201,
+    "commit": "6040e416f92272d6b83f25f3f491ac70841dd98a",
+    "deployment": {
+      "id": "dep-dbanat0ae00c739v9pig",
+      "status": "live",
+      "finishedAt": "2026-10-19T01:43:03.914881Z"
+    },
+    "scope": "Public catalog image derivatives only, preserving paid originals",
+    "public": {
+      "commit": "6040e416f92272d6b83f25f3f491ac70841dd98a",
+      "observedAt": "2026-10-19T01:43:32.015Z",
+      "images": [
+        {
+          "name": "abstract.jpg",
+          "status": 200,
+          "version": "image-baked-960-v2",
+          "mime": "image/jpeg",
+          "bytes": 39507,
+          "width": 640,
+          "height": 960
+        },
+        {
+          "name": "architecture.jpg",
+          "status": 200,
+          "version": "image-baked-960-v2",
+          "mime": "image/jpeg",
+          "bytes": 46933,
+          "width": 960,
+          "height": 640
+        },
+        {
+          "name": "car.jpg",
+          "status": 200,
+          "version": "image-baked-960-v2",
+          "mime": "image/jpeg",
+          "bytes": 36003,
+          "width": 960,
+          "height": 640
+        },
+        {
+          "name": "city.jpg",
+          "status": 200,
+          "version": "image-baked-960-v2",
+          "mime": "image/jpeg",
+          "bytes": 43545,
+          "width": 960,
+          "height": 640
+        },
+        {
+          "name": "forest.jpg",
+          "status": 200,
+          "version": "image-baked-960-v2",
+          "mime": "image/jpeg",
+          "bytes": 103287,
+          "width": 960,
+          "height": 639
+        },
+        {
+          "name": "space.jpg",
+          "status": 200,
+          "version": "image-baked-960-v2",
+          "mime": "image/jpeg",
+          "bytes": 37583,
+          "width": 960,
+          "height": 912
+        },
+        {
+          "name": "perfume-face.png",
+          "status": 200,
+          "version": "image-baked-960-v2",
+          "mime": "image/jpeg",
+          "bytes": 15646,
+          "width": 960,
+          "height": 463
+        }
+      ],
+      "noteMatch": true,
+      "health": {
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "reviewOnly": false,
+          "productionSite": true,
+          "paymentPreview": true,
+          "operatingConnections": true,
+          "financeConnected": true,
+          "payoutsConnected": true,
+          "subscriptionRefundsConnected": true,
+          "transactionNotificationsConnected": true,
+          "withdrawalConnected": true,
+          "recoveryConnected": true,
+          "analyticsConnected": true,
+          "discoveryCollection": true,
+          "database": "postgres",
+          "migrationVerified": true
+        }
+      },
+      "mail": {
+        "status": 200,
+        "body": {
+          "enabled": true
+        }
+      },
+      "anonymousOriginalDownloadStatus": 401,
+      "catalog": {
+        "status": 200,
+        "published": 0
+      },
+      "sourceAssetsChangedByCommit": ""
+    },
+    "preservation": {
+      "tag": "IMAGE201_PRESERVATION",
+      "uploadedFilesChecked": 5,
+      "changedUploads": 0,
+      "cacheFiles": 7,
+      "cacheBytes": 322504,
+      "commit": "6040e416f92272d6b83f25f3f491ac70841dd98a",
+      "paidResourcesCreated": 0
+    },
+    "local": {
+      "passed": true,
+      "dir": "D:/AI asset market/novanoxx-stage10-evidence-20261017/image201-9bnZOQ",
+      "largeDimensions": {
+        "width": 960,
+        "height": 576
+      },
+      "smallNotUpscaled": true,
+      "watermarkColoredPixelsByThird": [
+        2292,
+        2424,
+        2412
+      ],
+      "sourceHashesUnchanged": true,
+      "http": {
+        "imageJpeg": true,
+        "rangeCannotRetrieveSource": true,
+        "head": true,
+        "corruptFailsClosed": true,
+        "logoExcluded": true,
+        "directStaticProtected": true
+      },
+      "cacheReuse": true,
+      "publicUploadAndStaticCovered": true,
+      "paidServicesUsed": 0
+    },
+    "browser": {
+      "cards": 8,
+      "images": [
+        {
+          "height": 960,
+          "loaded": true,
+          "src": "assets/abstract.jpg",
+          "width": 640
+        },
+        {
+          "height": 912,
+          "loaded": true,
+          "src": "assets/space.jpg",
+          "width": 960
+        },
+        {
+          "height": 463,
+          "loaded": true,
+          "src": "assets/perfume-face.png",
+          "width": 960
+        },
+        {
+          "height": 960,
+          "loaded": true,
+          "src": "assets/abstract.jpg",
+          "width": 640
+        },
+        {
+          "height": 639,
+          "loaded": true,
+          "src": "assets/forest.jpg",
+          "width": 960
+        },
+        {
+          "height": 912,
+          "loaded": true,
+          "src": "assets/space.jpg",
+          "width": 960
+        },
+        {
+          "height": 640,
+          "loaded": true,
+          "src": "assets/car.jpg",
+          "width": 960
+        },
+        {
+          "height": 640,
+          "loaded": true,
+          "src": "assets/architecture.jpg",
+          "width": 960
+        }
+      ],
+      "pageWidth": 930,
+      "title": "마켓플레이스 — NovaNoxX",
+      "viewport": 945
+    },
+    "policy": {
+      "longEdgeMaxPx": 960,
+      "upscale": false,
+      "bakedBrandLogoPositions": 3,
+      "jpegQuality": 8,
+      "metadataStripped": true,
+      "cacheMaxBytes": 33554432,
+      "cacheMaxFiles": 96,
+      "sourceWrites": false,
+      "cacheUsesPrivateDerivativeDirectory": true,
+      "conversionFailureServesOriginal": false,
+      "paidOriginalAndOwnerAdminRoutesUnchanged": true,
+      "videoAudioPdfRoutesUnchanged": true,
+      "logoIconSocialShareImagesExcluded": true,
+      "osScreenshotBlocking": false
+    },
+    "operatingCatalogPublishedUploadImages": 0,
+    "publishedUploadLiveDataNotMutated": true,
+    "livePublishedUploadCoverage": "Public upload serving branch reviewed; shared converter and HTTP verified locally. No published product was created just for verification.",
+    "newPaidResources": 0,
+    "newFixedMonthlyFees": 0,
+    "ordinaryBuildAndComputeUsageApplies": true,
+    "databaseSchemaChanged": false,
+    "financialFlagsChanged": false,
+    "originalDirtyCheckout": {
+      "checked": 675,
+      "changed": []
+    },
+    "stage10Complete": false
+  }
 }

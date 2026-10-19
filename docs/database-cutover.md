@@ -287,3 +287,14 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 네이버 이력 정리:197 추가 당시 사용자 제출 보고만 있었지만, 후속 브라우저에서 검수요청/최종요청2026.10.19와 계정설정 마스킹 이메일을 직접 확인했음. readiness의 미제출/직접미조회 오래된 표현을 해당 접수 확인으로 보완. 이번 새 신청/설정변경 없음, 일반 이용자 승인 완료 아님.
 - 기존199 전체백업은 노트 게시 전 운영 코드d1a552f를 보존하며, 오늘 노트2파일 변경은 이번 Git커밋에 보관. 작은 노트 갱신 때문에 전체백업을 다시 만들거나 기존 사본을 덮어쓰지 않음. 실제 전체PRD/출시/WCAG·소유자키복원 완료로 판정하지 않음.
 - 증빙 production200-report.json/production200-source-report.json/developer-notes200-audit.json/developer-notes200-browser.json/developer-notes200.png. 기존 두 인수인계에200추가, 새로운 인수인계 파일 없음.
+
+
+## 201. 2026-10-19 — 공개 이미지 워터마크·해상도 제한 강화 운영 반영
+
+- 사용자 승인 범위: 공개 미리보기 이미지에 워터마크·저해상도 보호, 구매 원본 보존, 비용 사전 안내·개발자노트 갱신. 기존 서버/FFmpeg만 이용, 새 유료자원·증설·추가 고정요금0(일반 빌드·변환 사용량 적용). 운영 코드 6040e416f92272d6b83f25f3f491ac70841dd98a / dep-dbanat0ae00c739v9pig LIVE 2026-10-19 10:43:03 KST. server.cjs/creator-api.cjs/public-image-preview.cjs/assets/developer-notes-data.js 4파일 배포, TEST배포/금융설정/DB스키마 변경0.
+- 공개 미리보기만 실제 이미지픽셀에 로고3위치 합성, 긴변960px 이하·입력보다 확대하지 않는JPEG/q8·메타데이터 제거. 기존 CSS워터마크는 유지. 정적 마켓이미지7개(/assets의 abstract/architecture/car/city/forest/space/perfume-face) 및 승인된 preview/thumbnail의 /api/catalog/file 이미지응답에 적용. 기존 주소·추천/어워드/카드/상세·포스터가 보호응답을 사용. 브랜드로고/아이콘/소셜공유이미지 제외. 영상/음원/PDF 응답은 이번 변경하지 않음. OS스크린샷 차단/DRM으로 설명 금지.
+- 구매원본 /api/auth/original/download의 인증·구매권한·private/no-store·Content-Disposition·원본 스트림 코드 동일(줄바꿈정규화 후대조), 관리자/판매자 원본경로도 미변경. 기존업로드5개SHA256이199백업과 모두동일. 정적 소스이미지도Git상 변경0. 공개파일id는 기존 preview/thumbnail+공개상태+보호증명 검사를 통과해야 하며 original kind를 공개하지 않음. 실패시503/Retry-After·원본fallback없음.
+- 파생캐시 DATA_DIR/.public-image-previews-v2, 버전+원본내용지문 기반 재사용·동일요청중복합침·직렬변환·최대대기16·FFmpeg1스레드,96파일/32MiB상한·최소여유128MiB. 오래된 생성캐시만 정리, 원본/과거백업 삭제없음. 검수 후cache7개322,504bytes(약0.32MB). 캐시는 재생성 가능하며 원본에 덮어쓰지 않음.
+- 필요한 실제 로컬확인: 합성2000x1200→960x576,320x180확대없음,3영역 로고색픽셀2292/2424/2412, 원본지문불변·캐시재사용, 공개GET/HEAD/Range로 원본우회안됨·직접정적주소보호·로고대상제외·손상입력failclosed. 최초일반sandbox localhostfetch권한실패는 실행권한확인후 동일검수재실행PASS. 초기다운로드코드prefix비교는CRLF/LF차이로거짓불일치였고 줄바꿈정규화후동일확인. 새 유료시험없음.
+- 운영 실제Linux확인:7이미지200/image/jpeg/image-baked-960-v2/모두960이하(640x960·960x640·960x639·960x912·960x463), 노트원문일치, health200/production/postgres기존연결true·mailenabledtrue, 비로그인 원본401. 현재공개업로드상품0이므로 실제상품 생성/업로드·구매없이 해당공개분기코드+공통변환HTTP로 검증. 합성검수를 실제유료구매증거로확대하지않음. 마켓카드8·표시이미지정상·가로넘침0, 스크린샷market201-protected.png. 기존미커밋675지문변경0.
+- 개발자노트2026-10-19에 이번보호기록/체크항목추가, 기존구현·계약·추가개발·승인/복구/기기검수잔여유지. 최신전체백업199와노트200기록보존. 기존두인수인계에201추가, 새인수인계파일없음. 증빙 production201-report.json/production201-public-report.json/image201-test-report.json/image201-preservation.json/image201-browser.json.
