@@ -1,0 +1,37 @@
+'use strict';
+// Optional account features. No IP or implicit marketing opt-in.
+module.exports=function({db,user,json,origin,isAdmin,clock=Date.now}){
+ const DAY=86400000,version='OPTIONAL_EMAIL_V1';let lastTick=0;
+ db.exec('CREATE TABLE IF NOT EXISTS account_email_preferences(user_id TEXT PRIMARY KEY,price INTEGER NOT NULL,sold INTEGER NOT NULL,new_assets INTEGER NOT NULL,version TEXT NOT NULL,updated INTEGER NOT NULL,last_scan INTEGER NOT NULL);CREATE TABLE IF NOT EXISTS account_email_observations(user_id TEXT NOT NULL,asset_id TEXT NOT NULL,price INTEGER NOT NULL,status TEXT NOT NULL,PRIMARY KEY(user_id,asset_id));');
+ function preference(id){const r=db.prepare('SELECT * FROM account_email_preferences WHERE user_id=?').get(id);return {version,price:r?.price===1,sold:r?.sold===1,newAssets:r?.new_assets===1,updated:r?.updated||null};}
+ function permitted(id,kind){const p=preference(id);return !!({MARKET_PRICE:p.price,MARKET_SOLD:p.sold,MARKET_NEW:p.newAssets}[kind]);}
+ const published=()=>db.prepare("SELECT a.id,a.user_id,a.metadata,a.status,a.created,l.public_id,(SELECT MIN(r.occurred) FROM review_audit r WHERE r.asset_id=a.id AND r.decision='approve') published_at FROM creator_assets a JOIN catalog_links l ON l.asset_id=a.id LEFT JOIN asset_publication_policy p ON p.asset_id=a.id WHERE a.status IN ('ACTIVE','SOLD') AND COALESCE(p.visibility,'PUBLIC')='PUBLIC'").all().map(a=>({...a,meta:JSON.parse(a.metadata)}));
+ function save(id,i){if(Object.keys(i).some(k=>!['version','price','sold','newAssets'].includes(k))||i.version!==version||['price','sold','newAssets'].some(k=>typeof i[k]!=='boolean'))throw Error('INVALID_INPUT');
+  // Changing consent starts a fresh baseline; no historical promotions are sent.
+  db.exec('BEGIN IMMEDIATE');try{db.prepare('INSERT INTO account_email_preferences VALUES(?,?,?,?,?,?,?) ON CONFLICT(user_id) DO UPDATE SET price=excluded.price,sold=excluded.sold,new_assets=excluded.new_assets,version=excluded.version,updated=excluded.updated,last_scan=excluded.last_scan').run(id,Number(i.price),Number(i.sold),Number(i.newAssets),version,clock(),clock());db.prepare('DELETE FROM account_email_observations WHERE user_id=?').run(id);for(const a of watched(id,published()))db.prepare('INSERT INTO account_email_observations VALUES(?,?,?,?)').run(id,a.id,Number(a.meta.price),a.status);db.exec('COMMIT');}catch(e){db.exec('ROLLBACK');throw e;}return preference(id);}
+ function watched(id,all){const ids=new Set(db.prepare('SELECT asset_id FROM account_saved_assets WHERE user_id=?').all(id).map(r=>Number(r.asset_id)));return all.filter(a=>ids.has(Number(a.public_id)+1000));}
+ function tick(mail){const hour=new Date(clock()+9*3600000).getUTCHours();if(!mail||clock()-lastTick<60000||hour<8||hour>=21)return {queued:0};lastTick=clock();let queued=0;
+  mail.tx(()=>{const all=published();for(const p of db.prepare('SELECT * FROM account_email_preferences WHERE price=1 OR sold=1 OR new_assets=1 ORDER BY last_scan,user_id LIMIT 25').all()){
+   const restricted=db.prepare('SELECT state FROM member_restrictions WHERE user_id=?').get(p.user_id);if(['WITHDRAWN','SUSPENDED'].includes(restricted?.state)){db.prepare('UPDATE account_email_preferences SET last_scan=? WHERE user_id=?').run(clock(),p.user_id);continue;}
+   const favorites=watched(p.user_id,all),creators=new Set(favorites.map(a=>a.user_id));let changedPrice=false,changedSold=false;
+   for(const a of favorites){const old=db.prepare('SELECT * FROM account_email_observations WHERE user_id=? AND asset_id=?').get(p.user_id,a.id);if(old){changedPrice||=Number(old.price)!==Number(a.meta.price);changedSold||=old.status!=='SOLD'&&a.status==='SOLD';}db.prepare('INSERT INTO account_email_observations VALUES(?,?,?,?) ON CONFLICT(user_id,asset_id) DO UPDATE SET price=excluded.price,status=excluded.status').run(p.user_id,a.id,Number(a.meta.price),a.status);}
+   const kinds=[changedPrice&&p.price&&'MARKET_PRICE',changedSold&&p.sold&&'MARKET_SOLD',p.new_assets&&all.some(a=>a.status==='ACTIVE'&&creators.has(a.user_id)&&a.published_at!=null&&Number(a.published_at)>Number(p.last_scan)&&Number(a.published_at)>Number(p.updated))&&'MARKET_NEW'].filter(Boolean);
+   for(const kind of kinds){const key='optional:'+p.user_id+':'+kind+':'+Math.floor(clock()/DAY);if(mail.notificationInside({sourceKey:key,userId:p.user_id,kind,orderId:'marketplace'}))queued++;}
+   db.prepare('UPDATE account_email_preferences SET last_scan=? WHERE user_id=?').run(clock(),p.user_id);
+   // Observations exist only for current favorites; removal also stops watching.
+   const keep=new Set(favorites.map(a=>a.id));for(const o of db.prepare('SELECT asset_id FROM account_email_observations WHERE user_id=?').all(p.user_id))if(!keep.has(o.asset_id))db.prepare('DELETE FROM account_email_observations WHERE user_id=? AND asset_id=?').run(p.user_id,o.asset_id);
+  }});return {queued};}
+ function insights(days){if(![7,30,120].includes(days))throw Error('INVALID_INPUT');const since=clock()-days*DAY;
+  const searches=new Map(),sources=new Map();let searchCount=0,zeroCount=0;
+  // Aggregate at the database; never return account identifiers or individual events.
+  const grouped=db.prepare("SELECT kind,detail,COUNT(*) AS n FROM engine_discovery_events WHERE created>=? GROUP BY kind,detail").all(since);
+  for(const row of grouped){const d=typeof row.detail==='string'?JSON.parse(row.detail):row.detail,n=Number(row.n);if(row.kind==='SEARCH'){searchCount+=n;if(d.resultCount===0){zeroCount+=n;searches.set(d.query,(searches.get(d.query)||0)+n);}}else if(row.kind==='ARRIVAL'){const key=d.referrerDomain||'(direct)';sources.set(key,(sources.get(key)||0)+n);}}
+  const top=m=>[...m].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])).slice(0,50).map(([label,count])=>({label,count}));
+  const operating=db.backend==='postgres'?require('./operating-insights.cjs')({db,clock})(days):null;
+  return {days,retentionDays:120,searchCount,zeroCount,noResults:top(searches),referrers:top(sources),operating,scope:'CONSENTED_RECORDS_ONLY',ipCollected:false};}
+ async function handle(req,res,name){if(!['/api/auth/email-preferences','/api/auth/admin/discovery-insights'].includes(name))return false;const actor=user(req);if(!actor){json(res,401,{error:'ACCESS_DENIED'});return true;}try{
+   if(name.endsWith('discovery-insights')){if(!isAdmin(actor)){json(res,403,{error:'ACCESS_DENIED'});return true;}if(req.method!=='GET'){json(res,405,{error:'METHOD_REQUIRED'});return true;}json(res,200,insights(Number(new URL(req.url,origin).searchParams.get('days')||30)));return true;}
+   if(req.method==='GET'){json(res,200,preference(actor.id));return true;}if(req.method!=='POST'){json(res,405,{error:'METHOD_REQUIRED'});return true;}if(req.headers.origin!==origin){json(res,403,{error:'ORIGIN_REQUIRED'});return true;}if(req.headers['content-type']?.split(';')[0].trim()!=='application/json'){json(res,415,{error:'JSON_REQUIRED'});return true;}let size=0,chunks=[];for await(const c of req){size+=c.length;if(size>1024){json(res,413,{error:'INVALID_INPUT'});return true;}chunks.push(c);}json(res,200,save(actor.id,JSON.parse(Buffer.concat(chunks))));
+  }catch{json(res,400,{error:'INVALID_INPUT'});}return true;}
+ return {handle,tick,preference,permitted,save,insights};
+};

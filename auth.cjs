@@ -22,6 +22,7 @@ let localEngine;const baseAdmin=require('./admin-policy.cjs'),isScopedAdmin=u=>B
 const memberAdmin=require('./member-administration.cjs')({db,user,json,origin:deployment.base,isAdmin:isScopedAdmin});
 const creatorApi=require('./creator-api.cjs')(db,dir,user,json,isScopedAdmin,{checkActivation:checkEngineActivation,usage:()=>localEngine?.usage()});
 const savedApi=require('./account-saved.cjs')({db,user,json,origin:deployment.base});
+const engagement=require('./engagement.cjs')({db,user,json,origin:deployment.base,isAdmin:baseAdmin});
 const catalogAdmin=require('./catalog-admin.cjs')({db,user,json,origin:deployment.base,isAdmin:isScopedAdmin,checkActivation:checkEngineActivation});
 const applicationEngine=require('./application-engine-bridge.cjs')({user,json,origin:deployment.base,isAdmin:isScopedAdmin});
 const integrationReadiness=require('./integration-readiness.cjs')({db,dir,user,json,origin:deployment.base,isAdmin:isScopedAdmin});
@@ -63,6 +64,7 @@ module.exports=async function auth(req,res,name){
  if(!name.startsWith('/api/auth/')&&!name.startsWith('/api/catalog')&&!name.startsWith('/api/engine/')&&!['/api/contest','/api/contest/media'].includes(name))return false;
  try{
  if(name==='/api/auth/mail/status'&&req.method==='GET'){json(res,200,{enabled:!!accountMail});return true;}
+ if(name==='/api/auth/mail/optional-unsubscribe'){if(!accountMail||req.method!=='POST'){json(res,405,{error:'METHOD_REQUIRED'});return true;}const query=new URL(req.url,deployment.base).searchParams;if(query.has('token')){const raw=await body(req,{raw:true,max:2048});if(raw.toString()!=='List-Unsubscribe=One-Click'){json(res,400,{error:'INVALID_INPUT'});return true;}json(res,200,accountMail.optionalUnsubscribe(query.get('token')));return true;}if(req.headers.origin!==deployment.base){json(res,403,{error:'ORIGIN_REQUIRED'});return true;}const input=await body(req,{max:2048});json(res,200,accountMail.optionalUnsubscribe(input.token));return true;}
  if(name==='/api/auth/mail/webhook'){
   if(!accountMail){json(res,404,{error:'메일 연결을 준비 중입니다.'});return true;}
   if(req.method!=='POST'){json(res,405,{error:'지원하지 않는 요청입니다.'});return true;}
@@ -71,6 +73,7 @@ module.exports=async function auth(req,res,name){
  }
  if(localEngine?.admin&&(name.startsWith('/api/auth/admin/')||/\/engine\/(?:dispute-admin|subscription-admin|roles|role-action)/.test(name))){const actor=user(req);if(!actor){json(res,401,{error:'로그인이 필요합니다.'});return true;}if(!localEngine.admin.route(actor.id,name,req.method)){json(res,403,{error:'ACCESS_DENIED'});return true;}}
  if(await savedApi(req,res,name))return true;
+ if(await engagement.handle(req,res,name))return true;
  if(await catalogAdmin(req,res,name))return true;
  if(await applicationEngine.handle(req,res,name))return true;
  if(localEngine&&name==='/api/auth/contest/submit'){json(res,409,{error:'INVALID_STATE'});return true;}
@@ -111,6 +114,7 @@ module.exports=async function auth(req,res,name){
 };
 module.exports.configureMail=factory=>{if(accountMail)throw Error('MAIL_ALREADY_CONFIGURED');accountMail=factory({db,origin:deployment.base,dir});return accountMail;};
 module.exports.mail=()=>accountMail;
+module.exports.engagement=()=>engagement;
 module.exports.close=()=>{accountMail?.close();db.close();};
 
 

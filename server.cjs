@@ -10,7 +10,7 @@ const mail=auth.mail();
 const engine=auth.localEngine();
 const mailWorker=mail?require('./mail-worker.cjs').create({mail,gate:backupGate,
   paused:require('./mail-worker.cjs').sendPaused(),
-  beforeDispatch:()=>engine?.notifications?.sync(mail),
+  beforeDispatch:()=>{engine?.notifications?.sync(mail);try{auth.engagement()?.tick(mail);}catch{console.error('NNX_OPTIONAL_MAIL_DEFERRED');}},
   onError:()=>console.error('NNX_MAIL_WORKER_DEFERRED')}):null;
 const engineWorker=engine&&!engine.reviewOnly&&!engine.scheduledJobsDisabled?require('./engine-cycle-worker.cjs')({engine,intervalMs:Number(process.env.NNX_TEST_ENGINE_INTERVAL_MS||60000),gate:typeof backupGate.runTask==='function'?backupGate:{runTask:fn=>Promise.resolve().then(fn)},onError:()=>console.error('NNX_TEST_ENGINE_CYCLE_DEFERRED')}):null;
 const types = {'.html':'text/html; charset=utf-8','.css':'text/css','.js':'text/javascript','.jpg':'image/jpeg','.png':'image/png','.webp':'image/webp','.mp4':'video/mp4','.woff2':'font/woff2'};

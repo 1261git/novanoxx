@@ -85,13 +85,18 @@ function create({db,origin,encryptionKey,transport,webhookSecret,now=Date.now,al
    audit(u.id,'TOKEN_CONSUMED_'+purpose);return {ok:true};});
  }
  function notificationInside({sourceKey,userId,kind,orderId}){
-  if(typeof sourceKey!=='string'||sourceKey.length>300||typeof orderId!=='string'||orderId.length>100||!['ORDER','DELIVERY','REFUND','ORDER_UPDATE','PAYOUT','SUBSCRIPTION'].includes(kind))fail('MAIL_INVALID_INPUT');
+  if(typeof sourceKey!=='string'||sourceKey.length>300||typeof orderId!=='string'||orderId.length>100||!['ORDER','DELIVERY','REFUND','ORDER_UPDATE','PAYOUT','SUBSCRIPTION','MARKET_PRICE','MARKET_SOLD','MARKET_NEW'].includes(kind))fail('MAIL_INVALID_INPUT');
   const user=db.prepare('SELECT * FROM users WHERE id=?').get(userId);if(!user||withdrawn(userId))return null;
+  if(kind.startsWith('MARKET_')){if(!optionalAllowed(userId,kind)||!optionalBudget())return null;const token=optionalToken(userId),oneClick=base.origin+'/api/auth/mail/optional-unsubscribe?token='+encodeURIComponent(token);return queue(user,kind,sourceKey,{headers:{'List-Unsubscribe':'<'+oneClick+'>','List-Unsubscribe-Post':'List-Unsubscribe=One-Click'},subject:'(광고) NovaNoxX 선택한 에셋 소식',text:'직접 신청하신 에셋 소식이 있습니다.\n'+({MARKET_PRICE:'찜한 에셋의 가격이 변경되었습니다.',MARKET_SOLD:'찜한 에셋이 판매 완료되었습니다.',MARKET_NEW:'찜한 에셋의 크리에이터가 새 에셋을 공개했습니다.'})[kind]+'\n'+base.origin+'/#/marketplace\n로그인 없이 수신 철회: '+base.origin+'/#/email-unsubscribe?token='+encodeURIComponent(token)+'\n선택형 알림 설정: '+base.origin+'/#/email-settings\n거래·계정 필수 메일과는 별도입니다.\nNovaNoxx(노바녹스) · 문의 support@novanoxx.com'});}
   if(policy&&!permitted(user.email)){audit(user.id,'TEST_RECIPIENT_SKIPPED');return null;}
   const extra={PAYOUT:{subject:'NovaNoxX 정산 지급 상태 안내',text:'정산 지급 상태가 갱신되었습니다.',route:'creator-payout'},SUBSCRIPTION:{subject:'NovaNoxX 구독 결제 상태 안내',text:'구독 결제 상태가 갱신되었습니다.',route:'creator-plan'}}[kind];if(extra)return queue(user,kind,sourceKey,{subject:extra.subject,text:extra.text+'\n참조 번호: '+orderId+'\n로그인 후 확인해 주세요.\n'+base.origin+'/#/'+extra.route});
   return queue(user,kind,sourceKey,{subject:({ORDER:'NovaNoxX 주문 접수',DELIVERY:'NovaNoxX 납품·검수 안내',REFUND:'NovaNoxX 환불 처리 안내',ORDER_UPDATE:'NovaNoxX 주문 상태 안내'})[kind],text:'참여 중인 주문의 새 안내가 있습니다.\n주문 번호: '+orderId+'\n자세한 내용은 로그인 후 주문 페이지에서 확인해 주세요.\n'+base.origin+'/#/orders'});
  }
  const notification=input=>tx(()=>notificationInside(input));
+ function optionalBudget(){const day=now()-86400000,month=now()-31*86400000;const optional=Number(db.prepare("SELECT COUNT(*) n FROM mail_outbox WHERE template IN ('MARKET_PRICE','MARKET_SOLD','MARKET_NEW') AND created>=?").get(day).n),daily=Number(db.prepare('SELECT COALESCE(SUM(CASE WHEN attempts>0 THEN attempts ELSE 1 END),0) n FROM mail_outbox WHERE created>=?').get(day).n),monthly=Number(db.prepare('SELECT COALESCE(SUM(CASE WHEN attempts>0 THEN attempts ELSE 1 END),0) n FROM mail_outbox WHERE created>=?').get(month).n);return optional<5&&daily<80&&monthly<2400;}
+ function optionalToken(id){const data=Buffer.from(JSON.stringify({id,at:now()})).toString('base64url');return data+'.'+crypto.createHmac('sha256',secret).update('optional-unsubscribe:'+data).digest('base64url');}
+ function optionalUnsubscribe(token){if(typeof token!=='string'||token.length>1200)fail('MAIL_INVALID_LINK');const [data,sig,...rest]=token.split('.'),expected=crypto.createHmac('sha256',secret).update('optional-unsubscribe:'+data).digest(),given=Buffer.from(sig||'','base64url');if(rest.length||given.length!==expected.length||!crypto.timingSafeEqual(given,expected))fail('MAIL_INVALID_LINK');let p;try{p=JSON.parse(Buffer.from(data,'base64url'));}catch{fail('MAIL_INVALID_LINK');}if(typeof p.id!=='string'||!Number.isSafeInteger(p.at)||p.at>now()||now()-p.at>120*86400000)fail('MAIL_INVALID_LINK');return tx(()=>{db.prepare('UPDATE account_email_preferences SET price=0,sold=0,new_assets=0,updated=? WHERE user_id=?').run(now(),p.id);db.prepare('DELETE FROM account_email_observations WHERE user_id=?').run(p.id);db.prepare("UPDATE mail_outbox SET state='CANCELLED' WHERE user_id=? AND template IN ('MARKET_PRICE','MARKET_SOLD','MARKET_NEW') AND state IN ('READY','RETRY','UNKNOWN')").run(p.id);return {ok:true};});}
+ function optionalAllowed(id,kind,created){if(!db.prepare("SELECT name FROM sqlite_master WHERE name='account_email_preferences'").get())return false;if(db.prepare("SELECT name FROM sqlite_master WHERE name='member_restrictions'").get()&&['WITHDRAWN','SUSPENDED'].includes(db.prepare('SELECT state FROM member_restrictions WHERE user_id=?').get(id)?.state))return false;const p=db.prepare('SELECT * FROM account_email_preferences WHERE user_id=?').get(id);return p&&p.version==='OPTIONAL_EMAIL_V1'&&Number(p[({MARKET_PRICE:'price',MARKET_SOLD:'sold',MARKET_NEW:'new_assets'})[kind]])===1&&(created===undefined||created>=p.updated);}
  function receiptFor(row){
   const receipts=db.prepare('SELECT * FROM mail_receipts WHERE provider_id=? ORDER BY created,id').all(row.provider_id);
   let state=row.state;
@@ -104,16 +109,19 @@ function create({db,origin,encryptionKey,transport,webhookSecret,now=Date.now,al
  }
  async function dispatch({limit:batch=10}={}){
   if(!Number.isInteger(batch)||batch<1||batch>50)fail('MAIL_BATCH_LIMIT');
-  const ids=db.prepare("SELECT id FROM mail_outbox WHERE state IN ('READY','RETRY','UNKNOWN') AND available_at<=? ORDER BY created,id LIMIT ?").all(now(),batch);
+  const optionalWindow=()=>{const h=new Date(now()+9*3600000).getUTCHours();return h>=8&&h<21&&Number(db.prepare("SELECT COUNT(*) n FROM mail_audit WHERE action='OPTIONAL_SUBMISSION' AND created>=?").get(now()-86400000).n)<5&&Number(db.prepare("SELECT COUNT(*) n FROM mail_audit WHERE action='OPTIONAL_SUBMISSION' AND created>=?").get(now()-31*86400000).n)<100;};
+  const ids=db.prepare("SELECT id FROM mail_outbox WHERE state IN ('READY','RETRY','UNKNOWN') AND available_at<=? AND (template NOT IN ('MARKET_PRICE','MARKET_SOLD','MARKET_NEW') OR ?=1) ORDER BY created,id LIMIT ?").all(now(),Number(optionalWindow()),batch);
   let processed=0;
   for(const {id} of ids){const claim=tx(()=>{
    const row=db.prepare('SELECT * FROM mail_outbox WHERE id=?').get(id);if(!['READY','RETRY','UNKNOWN'].includes(row.state)||row.available_at>now())return null;
+   if(row.template.startsWith('MARKET_')&&!optionalWindow())return null;
+   if(row.template.startsWith('MARKET_')&&!optionalAllowed(row.user_id,row.template,row.created)){db.prepare("UPDATE mail_outbox SET state='CANCELLED' WHERE id=?").run(id);return null;}
    const u=db.prepare('SELECT email FROM users WHERE id=?').get(row.user_id);if(!u||withdrawn(row.user_id)||u.email!==row.recipient||!permitted(row.recipient)||db.prepare('SELECT recipient FROM mail_suppressions WHERE recipient=?').get(row.recipient)){db.prepare("UPDATE mail_outbox SET state='SUPPRESSED' WHERE id=?").run(id);return null;}
    if(row.token_digest){const t=db.prepare('SELECT * FROM mail_tokens WHERE digest=?').get(row.token_digest);if(!t||t.state!=='ACTIVE'||t.expires<=now()){db.prepare("UPDATE mail_outbox SET state='CANCELLED' WHERE id=?").run(id);return null;}}
    else if(!verified(row.user_id))return null;
    if(row.attempts>=5||row.first_attempt!==null&&now()-row.first_attempt>=23*3600000){db.prepare("UPDATE mail_outbox SET state='MANUAL_REVIEW' WHERE id=?").run(id);return null;}
    if(policy){const reserved=db.prepare('SELECT outbox_id FROM mail_test_budget WHERE outbox_id=?').get(id);if(now()>=policy.deadline||!reserved&&Number(db.prepare('SELECT count(*) AS n FROM mail_test_budget').get().n)>=policy.maximum){db.prepare("UPDATE mail_outbox SET state='TEST_HELD' WHERE id=?").run(id);return null;}if(!reserved)db.prepare('INSERT INTO mail_test_budget VALUES(?)').run(id);}
-   let p;try{p=decrypt(row);}catch{db.prepare("UPDATE mail_outbox SET state='MANUAL_REVIEW' WHERE id=?").run(id);audit(row.user_id,'PAYLOAD_REVIEW_REQUIRED');return null;}db.prepare("UPDATE mail_outbox SET state='SUBMITTING',attempts=attempts+1,first_attempt=COALESCE(first_attempt,?),available_at=? WHERE id=?").run(now(),now()+60000,id);return {row,p};
+   let p;try{p=decrypt(row);}catch{db.prepare("UPDATE mail_outbox SET state='MANUAL_REVIEW' WHERE id=?").run(id);audit(row.user_id,'PAYLOAD_REVIEW_REQUIRED');return null;}db.prepare("UPDATE mail_outbox SET state='SUBMITTING',attempts=attempts+1,first_attempt=COALESCE(first_attempt,?),available_at=? WHERE id=?").run(now(),now()+60000,id);if(row.template.startsWith('MARKET_'))audit(row.user_id,'OPTIONAL_SUBMISSION');return {row,p};
   });if(!claim)continue;processed++;
    try{const result=await transport.send({id,recipient:claim.row.recipient,...claim.p,idempotencyKey:'nnx-mail/'+id});if(!uuid(result?.id))fail('MAIL_RESULT_UNKNOWN');
     tx(()=>{const current=db.prepare('SELECT * FROM mail_outbox WHERE id=?').get(id);if(current.provider_id&&current.provider_id!==result.id)fail('MAIL_PROVIDER_CONFLICT');db.prepare("UPDATE mail_outbox SET provider_id=?,state=CASE WHEN state='SUBMITTING' THEN 'ACCEPTED' ELSE state END WHERE id=?").run(result.id,id);receiptFor(db.prepare('SELECT * FROM mail_outbox WHERE id=?').get(id));});
@@ -133,6 +141,6 @@ function create({db,origin,encryptionKey,transport,webhookSecret,now=Date.now,al
    db.prepare('INSERT INTO mail_receipts VALUES(?,?,?,?,?,?)').run(id,digest,providerId,event.type,recipients?.[0]||null,now());
    const row=db.prepare('SELECT * FROM mail_outbox WHERE provider_id=?').get(providerId);if(row)receiptFor(row);return {ok:true};});
  }
- return {signup,request,consume,notification,notificationInside,dispatch,recover,webhook,verified,tx,db,origin:base.origin,throttle:client=>tx(()=>limit('consume:'+client,30)),close(){key.fill(0);secret.fill(0);}};
+ return {signup,request,consume,notification,notificationInside,optionalUnsubscribe,dispatch,recover,webhook,verified,tx,db,origin:base.origin,throttle:client=>tx(()=>limit('consume:'+client,30)),close(){key.fill(0);secret.fill(0);}};
 }
 module.exports={create};

@@ -1,5 +1,5 @@
 {
-  "revision": 201,
+  "revision": 203,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -6961,5 +6961,30 @@
     "deploymentsThisTask": 2,
     "finalMethodAliasHardening": true,
     "postFinalDeployErrorLogs": 0
+  },
+  "current203": {
+    "scope": "Non-contract v1.8 follow-up",
+    "implemented": [
+      "SH-01 device-local account-specific recent assets",
+      "SH-02 explicit optional email preferences, favorite changes/new publications, consent recheck, signed unsubscribe and caps",
+      "SH-04 consented no-result search analysis",
+      "D-09/D-10 recorded LIVE transaction durations with missing histories excluded",
+      "Current operator/API guide"
+    ],
+    "corrected": [
+      "A-06 browser autosave already implemented; no automatic file/legal consent upload"
+    ],
+    "remaining": [
+      "Operating NEON and post-payout recovery require contract policy",
+      "Provider activation, KYC and first real transactions",
+      "Overseas providers/currencies scope",
+      "Additional individual behavioral tracking requires a separate collection decision",
+      "External approval, owner offline key restore, specialist device/legal review and Figma/ownership deliverable verification"
+    ],
+    "noNewPaidResources": true,
+    "existingBandwidthOverageObservedUsd": 1.8,
+    "pipelineMinutesUsed": 34,
+    "pipelineMinutesIncluded": 500,
+    "paymentFlagsChanged": false
   }
 }

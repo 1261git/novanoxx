@@ -2,7 +2,7 @@
 const {create}=require('./account-mail.cjs');
 function resendTransport({apiKey,sender='NovaNoxX <no-reply@notify.novanoxx.com>',reply='support@novanoxx.com',request=fetch}){
  if(!/^re_[A-Za-z0-9_-]{20,200}$/.test(apiKey)||sender!=='NovaNoxX <no-reply@notify.novanoxx.com>'||reply!=='support@novanoxx.com')throw Error('MAIL_RUNTIME_CONFIGURATION_REQUIRED');
- return {async send(message){const response=await request('https://api.resend.com/emails',{method:'POST',redirect:'error',signal:AbortSignal.timeout(15000),headers:{Authorization:'Bearer '+apiKey,'Content-Type':'application/json','Idempotency-Key':message.idempotencyKey},body:JSON.stringify({from:sender,to:[message.recipient],reply_to:reply,subject:message.subject,text:message.text})});
+ return {async send(message){const response=await request('https://api.resend.com/emails',{method:'POST',redirect:'error',signal:AbortSignal.timeout(15000),headers:{Authorization:'Bearer '+apiKey,'Content-Type':'application/json','Idempotency-Key':message.idempotencyKey},body:JSON.stringify({from:sender,to:[message.recipient],reply_to:reply,subject:message.subject,text:message.text,...(message.headers?{headers:message.headers}:{})})});
   if(!response.ok){const e=Error('MAIL_PROVIDER_RESPONSE');e.definiteReject=response.status>=400&&response.status<500&&![408,409,429].includes(response.status);throw e;}return response.json();}};
 }
 function configured({db,origin},env=process.env,{testDelivery,transport,localTest=false}={}){
