@@ -6985,6 +6985,20 @@
     "existingBandwidthOverageObservedUsd": 1.8,
     "pipelineMinutesUsed": 34,
     "pipelineMinutesIncluded": 500,
-    "paymentFlagsChanged": false
+    "paymentFlagsChanged": false,
+    "deployment": {
+      "commit": "a949a7db5da37e9234f5962f52c1633ba890b668",
+      "id": "dep-dbap0nh42hec73drrv9g",
+      "status": "live",
+      "finishedAt": "2026-10-19T03:37:53Z"
+    },
+    "operatingVerification": {
+      "uploadsChecked": 5,
+      "uploadsChanged": 0,
+      "optionalMailSent": 0,
+      "existingCards": 8,
+      "localTargetedTests": 9,
+      "translationKeys": 1323
+    }
   }
 }
