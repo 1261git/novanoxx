@@ -25,6 +25,7 @@ const server = http.createServer(backupGate.wrap((req,res)=>deployment.withReque
   }
   if(await backupAutomation.handle(req,res,name)) return;
   if(await auth(req,res,name)) return;
+  if(await require('./public-image-preview.cjs').staticHandle(req,res,name,{dir:process.env.DATA_DIR||path.join(root,'.private')})) return;
   if(name.split('/').some(p=>p.startsWith('.')) || !['/','/index.html','/landing.css','/page-routing.js'].includes(name)&&!name.startsWith('/assets/')) {res.writeHead(404).end();return;}
   const file = path.resolve(root, '.' + (name === '/' ? '/index.html' : name));
   if (!file.startsWith(root + path.sep)) { res.writeHead(403).end(); return; }

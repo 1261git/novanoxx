@@ -1,0 +1,29 @@
+'use strict';
+// Public derivatives only. Never called by owner/admin/purchased original downloads.
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),{execFile}=require('node:child_process');
+const VERSION='image-baked-960-v2',MAX_BYTES=32*1024*1024,MAX_FILES=96,pending=new Map();let tail=Promise.resolve();
+const STATIC=new Set(['abstract.jpg','architecture.jpg','car.jpg','city.jpg','forest.jpg','space.jpg','perfume-face.png']);
+const digest=async p=>{const h=crypto.createHash('sha256');for await(const c of fs.createReadStream(p))h.update(c);return h.digest('hex')};
+function dimensions(b){if(b[0]!==255||b[1]!==216)throw Error('PREVIEW_JPEG_REQUIRED');let i=2;while(i+8<b.length){if(b[i++]!==255)continue;const marker=b[i++];if(marker===216||marker===217)continue;const n=b.readUInt16BE(i);if([192,193,194].includes(marker))return {width:b.readUInt16BE(i+5),height:b.readUInt16BE(i+3)};if(n<2)break;i+=n;}throw Error('PREVIEW_DIMENSIONS_REQUIRED');}
+const run=(args)=>new Promise((resolve,reject)=>execFile(process.env.NNX_PREVIEW_FFMPEG||'ffmpeg',args,{timeout:60000,maxBuffer:512*1024,windowsHide:true},err=>err?reject(Error('PUBLIC_PREVIEW_CONVERSION_FAILED')):resolve()));
+const common=['-nostdin','-y','-v','error','-threads','1','-filter_threads','1','-filter_complex_threads','1','-protocol_whitelist','file,pipe'];
+async function convert(input,output,extension){
+ if(!['jpg','jpeg','png','webp'].includes(extension)||path.resolve(input)===path.resolve(output))throw Error('PUBLIC_PREVIEW_SCOPE');
+ const temp=await fs.promises.mkdtemp(path.join(path.dirname(output),'image-work-'));let release;
+ try{release=require('./preview-work-slot.cjs')();const decoder=extension==='png'?'png':extension==='webp'?'webp':'mjpeg',base=path.join(temp,'base.jpg');
+ await run([...common,'-f','image2','-pattern_type','none','-c:v',decoder,'-i',input,'-vf',"scale=w='min(960,iw)':h='min(960,ih)':force_original_aspect_ratio=decrease",'-frames:v','1','-q:v','7','-map_metadata','-1','-threads','1',base]);
+ const d=dimensions(fs.readFileSync(base)),w=Math.max(8,Math.round(Math.min(d.width*.38,d.height*1.1,320))),logo=path.join(__dirname,'assets','novanoxx-brand-logo.png');
+ const graph='[1:v]scale='+w+':-1,format=rgba,colorchannelmixer=aa=0.42,split=3[m1][m2][m3];[0:v][m1]overlay=(W-w)*0.12:(H-h)*0.15[p1];[p1][m2]overlay=(W-w)*0.5:(H-h)*0.5[p2];[p2][m3]overlay=(W-w)*0.88:(H-h)*0.85,format=yuvj420p[out]';
+ await run([...common,'-i',base,'-i',logo,'-filter_complex',graph,'-map','[out]','-frames:v','1','-q:v','8','-map_metadata','-1','-threads','1','-f','image2','-update','1',output]);
+ const size=fs.statSync(output).size,actual=dimensions(fs.readFileSync(output));if(!size||size>1024*1024||actual.width>960||actual.height>960)throw Error('PUBLIC_PREVIEW_LIMIT');return {version:VERSION,...actual,bytes:size};
+ }finally{release?.();if(path.dirname(path.resolve(temp))===path.dirname(path.resolve(output))&&path.basename(temp).startsWith('image-work-'))await fs.promises.rm(temp,{recursive:true,force:true});}
+}
+function cacheRoot(dir){const root=path.join(dir,'.public-image-previews-v2');fs.mkdirSync(root,{recursive:true,mode:0o700});if(fs.lstatSync(root).isSymbolicLink()||!fs.statSync(root).isDirectory())throw Error('PUBLIC_PREVIEW_CACHE');return root;}
+function trim(root,needed){const rows=fs.readdirSync(root).filter(n=>/^[a-f0-9]{64}\.jpg$/.test(n)).map(n=>{const p=path.join(root,n),s=fs.lstatSync(p);if(!s.isFile()||s.isSymbolicLink())throw Error('PUBLIC_PREVIEW_CACHE');return {p,size:s.size,mtime:s.mtimeMs}}).sort((a,b)=>a.mtime-b.mtime);let bytes=rows.reduce((n,r)=>n+r.size,0),count=rows.length;while(rows.length&&(bytes+needed>MAX_BYTES||count>=MAX_FILES)){const r=rows.shift();fs.unlinkSync(r.p);bytes-=r.size;count--;}if(bytes+needed>MAX_BYTES)throw Error('PUBLIC_PREVIEW_CACHE_FULL');}
+async function derivative({input,extension,dir}){
+ const st=fs.lstatSync(input);if(!st.isFile()||st.isSymbolicLink())throw Error('PUBLIC_PREVIEW_SOURCE');const sourceDigest=await digest(input),key=crypto.createHash('sha256').update(VERSION+':'+sourceDigest).digest('hex'),root=cacheRoot(dir),file=path.join(root,key+'.jpg');if(fs.existsSync(file))return file;if(pending.has(file))return pending.get(file);if(pending.size>=16)throw Error('PUBLIC_PREVIEW_BUSY');
+ const job=tail.catch(()=>{}).then(async()=>{if(fs.existsSync(file))return file;const stat=fs.statfsSync(root);if(Number(stat.bavail)*Number(stat.bsize)<128*1024*1024)throw Error('PUBLIC_PREVIEW_SPACE');const stage=path.join(root,crypto.randomUUID()+'.tmp');try{trim(root,1024*1024);await convert(input,stage,extension);if(await digest(input)!==sourceDigest)throw Error('PUBLIC_PREVIEW_SOURCE_CHANGED');fs.renameSync(stage,file);return file;}finally{if(fs.existsSync(stage))fs.unlinkSync(stage);}});tail=job;pending.set(file,job);try{return await job}finally{pending.delete(file)}
+}
+async function serve(req,res,options){try{const file=await derivative(options),s=fs.statSync(file);res.writeHead(200,{'Content-Type':'image/jpeg','Content-Length':s.size,'Cache-Control':'no-cache','X-Content-Type-Options':'nosniff','X-NovaNoxX-Preview':VERSION,'Accept-Ranges':'none'});if(req.method==='HEAD')res.end();else{const stream=fs.createReadStream(file);stream.once('error',()=>res.destroy());stream.pipe(res);}}catch{res.writeHead(503,{'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store','Retry-After':'2'});res.end(req.method==='HEAD'?undefined:'미리보기를 준비 중입니다. 잠시 후 다시 시도해주세요.');}return true;}
+async function staticHandle(req,res,name,{dir,appRoot=__dirname}={}){if(!['GET','HEAD'].includes(req.method)||!name.startsWith('/assets/')||!STATIC.has(name.slice(8)))return false;return serve(req,res,{input:path.join(appRoot,name.slice(1)),extension:path.extname(name).slice(1),dir});}
+module.exports={VERSION,STATIC,dimensions,convert,derivative,serve,staticHandle};
