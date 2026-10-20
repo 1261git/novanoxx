@@ -1,5 +1,5 @@
 {
-  "revision": 207,
+  "revision": 208,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7145,5 +7145,38 @@
     },
     "newFixedCharges": 0,
     "newCloudServices": 0
+  },
+  "faqContentPolicy208": {
+    "revision": 208,
+    "commit": "7378361638136e021e1b981943fc4732e9e43fb9",
+    "deployment": {
+      "id": "dep-dbbgnhrm8hqs738tq820",
+      "status": "LIVE",
+      "durationSeconds": 56.1
+    },
+    "source": {
+      "file": "1-NovaNoxX_Naver_Login_Service_Overview.pdf",
+      "page": 4,
+      "totalPages": 5,
+      "sha256": "fc22c754da833782ec152aa1bbb591fc5e27ad71bd6e02dd7a5eeca8c0909768",
+      "originalUnmodified": true
+    },
+    "verification": {
+      "syntax": true,
+      "translationKeys": 1397,
+      "translationMissing": 0,
+      "faqQuestionsAdded": 6,
+      "totalFaqGroups": 5,
+      "firstGroup": "faq-content-policy",
+      "reportLink": "mailto:support@novanoxx.com",
+      "reportDetailsExpanded": true,
+      "mobileViewport": 390,
+      "mobileDocumentWidth": 375,
+      "mobileSectionWidth": 337.5,
+      "consoleErrors": 0,
+      "preservedDirtyFiles": 675
+    },
+    "newFixedCharges": 0,
+    "backendOrContractChanged": false
   }
 }
