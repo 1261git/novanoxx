@@ -11,6 +11,8 @@ module.exports=function({db,current,isolatedRestoreConfirmed=false,now=Date.now(
   // A restore must not revive old promotional consent. The isolation guard
   // above is required; live data and existing backup files are untouched.
   if(exists('public.account_email_preferences'))db.prepare('UPDATE account_email_preferences SET price=0,sold=0,new_assets=0,updated=?').run(now);
+  if(exists('public.visitor_browser_daily'))db.exec('DELETE FROM visitor_browser_daily');
+  if(exists('public.visitor_daily_totals'))db.prepare('DELETE FROM visitor_daily_totals WHERE date_key<?').run(require('./visitor-analytics.cjs').day(now-119*86400000));
   if(exists('public.account_email_observations'))db.exec('DELETE FROM account_email_observations');
   db.exec('COMMIT');
  }catch(e){db.exec('ROLLBACK');throw e;}

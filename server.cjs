@@ -8,6 +8,7 @@ const backupGate = require('./backup-quiesce-gate.cjs').configured();
 const backupAutomation = require('./backup-automation.cjs').configured({gate:backupGate});
 const mail=auth.mail();
 const engine=auth.localEngine();
+const visitorPrune=setInterval(()=> (typeof backupGate.runTask==='function'?backupGate.runTask(()=>auth.visitors().prune()):Promise.resolve().then(()=>auth.visitors().prune())).catch(()=>console.error('NNX_VISITOR_PRUNE_DEFERRED')),3600000);visitorPrune.unref();
 const mailWorker=mail?require('./mail-worker.cjs').create({mail,gate:backupGate,
   paused:require('./mail-worker.cjs').sendPaused(),
   beforeDispatch:()=>{engine?.notifications?.sync(mail);try{auth.engagement()?.tick(mail);}catch{console.error('NNX_OPTIONAL_MAIL_DEFERRED');}},

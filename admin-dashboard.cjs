@@ -5,7 +5,7 @@ function range(days,now){if(![7,30,120].includes(days))throw Error('INVALID_INPU
 module.exports=function({db,clock=Date.now}){
  const exists=t=>!!db.prepare("SELECT name FROM sqlite_master WHERE name='"+t+"'").get();
  return function dashboard(days){
-  const period=range(days,clock()),series=Array.from({length:days},(_,i)=>({date:dateKey(period.start+i*DAY),signups:0,searches:0,arrivals:0,salesKrw:0,currentRefundsKrw:0})),byDate=new Map(series.map(r=>[r.date,r]));
+  const period=range(days,clock()),series=Array.from({length:days},(_,i)=>({date:dateKey(period.start+i*DAY),signups:0,searches:0,arrivals:0,salesKrw:0,currentRefundsKrw:0,dailyBrowsers:0,visits:0})),byDate=new Map(series.map(r=>[r.date,r]));
   const restriction=exists('member_restrictions'),records=exists('account_creation_records');
   const where=restriction?"COALESCE(r.state,'ACTIVE')<>'WITHDRAWN'":'1=1',join=restriction?' LEFT JOIN member_restrictions r ON r.user_id=u.id':'';
   const total=Number(db.prepare('SELECT COUNT(*) n FROM users u'+join+' WHERE '+where).get().n);
@@ -17,7 +17,8 @@ module.exports=function({db,clock=Date.now}){
   if(db.backend==='postgres'){
    for(const r of db.prepare("SELECT to_char(p.approved_at AT TIME ZONE 'Asia/Seoul','YYYY-MM-DD') bucket_date,SUM(o.amount_krw) gross,SUM(COALESCE(s.refunded_krw,0)) refunded FROM nnx_operating_v1.orders o JOIN nnx_operating_v1.payments p ON p.order_id=o.id LEFT JOIN nnx_operating_v1.payment_sync s ON s.order_id=o.id WHERE p.environment='LIVE' AND p.state IN ('APPROVED','REFUNDED') AND p.approved_at>=? AND p.approved_at<=? GROUP BY 1 ORDER BY 1").all(new Date(period.start).toISOString(),new Date(period.end).toISOString())){const row=byDate.get(r.bucket_date);if(row){row.salesKrw=Number(r.gross);row.currentRefundsKrw=Number(r.refunded);}}
   }
-  return {period,members:{total,withdrawn,unknownCreation:unknown,signups:series.reduce((n,r)=>n+r.signups,0),basis:'OPERATING_DB_ACCOUNTS_INCLUDING_ADMIN_AND_LEGACY_TEST;WITHDRAWN_EXCLUDED_FROM_TOTAL;RECORDED_SIGNUPS_INCLUDE_LATER_WITHDRAWALS'},series,financialSeriesReady:db.backend==='postgres',visitors:{enabled:false,uniqueBrowsers:null,sessions:null},financialSeriesBasis:'LIVE_PAYMENT_APPROVAL_DAY_CURRENT_CUMULATIVE_REFUND_NOT_REFUND_EXECUTION_DAY',signupBasis:'RECORDED_ACCOUNT_CREATION_ONLY_NO_LEGACY_DATE_INFERENCE'};
+  const visitorReady=exists('visitor_daily_totals')&&process.env.RENDER_SERVICE_ID==='srv-db5aqunlk1mc739bi0m0'&&process.env.NNX_REVIEW_MODE!=='1';if(visitorReady){for(const r of db.prepare('SELECT date_key,browsers,sessions FROM visitor_daily_totals WHERE date_key>=? AND date_key<=? ORDER BY date_key').all(series[0].date,series.at(-1).date)){const row=byDate.get(r.date_key);if(row){row.dailyBrowsers=Number(r.browsers);row.visits=Number(r.sessions);}}}
+  return {period,members:{total,withdrawn,unknownCreation:unknown,signups:series.reduce((n,r)=>n+r.signups,0),basis:'OPERATING_DB_ACCOUNTS_INCLUDING_ADMIN_AND_LEGACY_TEST;WITHDRAWN_EXCLUDED_FROM_TOTAL;RECORDED_SIGNUPS_INCLUDE_LATER_WITHDRAWALS'},series,financialSeriesReady:db.backend==='postgres',visitors:{enabled:visitorReady,dailyBrowsersSum:visitorReady?series.reduce((n,r)=>n+r.dailyBrowsers,0):null,sessions:visitorReady?series.reduce((n,r)=>n+r.visits,0):null,uniqueBrowsers:null,basis:'CONSENTED_BROWSER_DAILY_SUM_NOT_PERIOD_UNIQUE',ipCollected:false,accountLinked:false},financialSeriesBasis:'LIVE_PAYMENT_APPROVAL_DAY_CURRENT_CUMULATIVE_REFUND_NOT_REFUND_EXECUTION_DAY',signupBasis:'RECORDED_ACCOUNT_CREATION_ONLY_NO_LEGACY_DATE_INFERENCE'};
  };
 };
 module.exports.range=range;

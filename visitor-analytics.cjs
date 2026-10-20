@@ -1,0 +1,26 @@
+'use strict';
+const crypto=require('node:crypto'),DAY=86400000,KST=9*3600000,IDLE=30*60000;
+const day=t=>new Date(t+KST).toISOString().slice(0,10),hash=(token,date)=>crypto.createHash('sha256').update('NNX_VISIT_V1:'+date+':'+token).digest('hex');
+module.exports=function({db,user,json,origin,isAdmin,clock=Date.now,enabled=true}){
+ db.exec('CREATE TABLE IF NOT EXISTS visitor_browser_daily(date_key TEXT NOT NULL,browser_hash TEXT NOT NULL,last_seen BIGINT NOT NULL,PRIMARY KEY(date_key,browser_hash));CREATE TABLE IF NOT EXISTS visitor_daily_totals(date_key TEXT PRIMARY KEY,browsers BIGINT NOT NULL,sessions BIGINT NOT NULL);');const revoked=new Map();let pruned=0,windowAt=0,requests=0;
+ function prune(force=false){const now=clock();for(const [k,expires]of revoked)if(expires<=now)revoked.delete(k);if(!force&&pruned&&now-pruned<3600000)return;db.prepare('DELETE FROM visitor_browser_daily WHERE last_seen<=?').run(now-2*DAY);db.prepare('DELETE FROM visitor_daily_totals WHERE date_key<?').run(day(now-119*DAY));pruned=now;}
+ function collect(token,erase=false){const now=clock(),today=day(now),yesterday=day(now-DAY),h=hash(token,today),prev=hash(token,yesterday),revokeKey=crypto.createHash('sha256').update(token).digest('hex');prune();if(!erase&&revoked.has(revokeKey))return {recorded:false,excluded:true};if(erase){if(revoked.size>=5000)revoked.delete(revoked.keys().next().value);revoked.set(revokeKey,now+2*DAY);}db.exec('BEGIN IMMEDIATE');try{
+  if(db.backend==='postgres')db.prepare('SELECT pg_advisory_xact_lock(hashtext(?))').get(crypto.createHash('sha256').update(token).digest('hex'));
+  if(erase){for(let n=0;n<3;n++){const date=day(now-n*DAY);db.prepare('DELETE FROM visitor_browser_daily WHERE date_key=? AND browser_hash=?').run(date,hash(token,date));}db.exec('COMMIT');return {erased:true};}
+  const existing=db.prepare('SELECT last_seen FROM visitor_browser_daily WHERE date_key=? AND browser_hash=?').get(today,h),previous=db.prepare('SELECT last_seen FROM visitor_browser_daily WHERE date_key=? AND browser_hash=?').get(yesterday,prev),last=Math.max(Number(existing?.last_seen||0),Number(previous?.last_seen||0));
+  if(existing&&now-last<30000){db.exec('COMMIT');return {recorded:true};}
+  const total=db.prepare('SELECT browsers FROM visitor_daily_totals WHERE date_key=?').get(today);if(!existing&&Number(total?.browsers||0)>=100000){db.exec('COMMIT');return {recorded:false,limited:true};}
+  const browser=existing?0:1,session=!last||now-last>=IDLE?1:0;
+  db.prepare('INSERT INTO visitor_browser_daily VALUES(?,?,?) ON CONFLICT(date_key,browser_hash) DO UPDATE SET last_seen=excluded.last_seen').run(today,h,now);
+  db.prepare('INSERT INTO visitor_daily_totals VALUES(?,?,?) ON CONFLICT(date_key) DO UPDATE SET browsers=visitor_daily_totals.browsers+excluded.browsers,sessions=visitor_daily_totals.sessions+excluded.sessions').run(today,browser,session);db.exec('COMMIT');return {recorded:true};
+ }catch(e){db.exec('ROLLBACK');throw e;}}
+ async function handle(req,res,name){if(name==='/api/auth/visitor-policy'){if(req.method!=='GET'){json(res,405,{error:'METHOD_REQUIRED'});return true;}json(res,200,{enabled,version:'VISIT_V1',dailyTimezone:'Asia/Seoul',idleMinutes:30,temporaryHours:48,aggregateDays:120,ipCollected:false,accountLinked:false});return true;}if(name!=='/api/auth/visitor-action')return false;if(req.method!=='POST'){json(res,405,{error:'METHOD_REQUIRED'});return true;}if(req.headers.origin!==origin){json(res,403,{error:'ORIGIN_REQUIRED'});return true;}if(req.headers['content-type']?.split(';')[0].trim()!=='application/json'){json(res,415,{error:'JSON_REQUIRED'});return true;}
+  try{let size=0,chunks=[];for await(const c of req){size+=c.length;if(size>512){json(res,413,{error:'INVALID_INPUT'});return true;}chunks.push(c);}const i=JSON.parse(Buffer.concat(chunks));if(Object.keys(i).some(k=>!['token','action','consentVersion'].includes(k))||!['visit','erase'].includes(i.action)||i.consentVersion!=='VISIT_V1'||!/^v1_[a-f0-9]{64}$/.test(i.token||''))throw Error('INVALID_INPUT');
+   const now=clock();if(now-windowAt>=60000){windowAt=now;requests=0;}if(++requests>300){json(res,429,{error:'CAPACITY_LIMIT'});return true;}
+   if(i.action==='erase'){json(res,200,collect(i.token,true));return true;}
+   if(!enabled||isAdmin(user(req))||/bot|crawler|spider|headless|monitor|uptime/i.test(req.headers['user-agent']||'')){json(res,200,{recorded:false,excluded:true});return true;}
+   json(res,200,collect(i.token));
+  }catch{json(res,400,{error:'INVALID_INPUT'});}return true;}
+ return {handle,collect,prune};
+};
+module.exports.day=day;module.exports.hash=hash;

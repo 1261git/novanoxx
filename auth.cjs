@@ -22,6 +22,7 @@ let localEngine;const baseAdmin=require('./admin-policy.cjs'),isScopedAdmin=u=>B
 const memberAdmin=require('./member-administration.cjs')({db,user,json,origin:deployment.base,isAdmin:isScopedAdmin});
 const creatorApi=require('./creator-api.cjs')(db,dir,user,json,isScopedAdmin,{checkActivation:checkEngineActivation,usage:()=>localEngine?.usage()});
 const savedApi=require('./account-saved.cjs')({db,user,json,origin:deployment.base});
+const visitors=require('./visitor-analytics.cjs')({db,user,json,origin:deployment.base,isAdmin:isScopedAdmin,enabled:process.env.RENDER_SERVICE_ID==='srv-db5aqunlk1mc739bi0m0'&&process.env.NNX_REVIEW_MODE!=='1'});
 const engagement=require('./engagement.cjs')({db,user,json,origin:deployment.base,isAdmin:baseAdmin});
 const catalogAdmin=require('./catalog-admin.cjs')({db,user,json,origin:deployment.base,isAdmin:isScopedAdmin,checkActivation:checkEngineActivation});
 const applicationEngine=require('./application-engine-bridge.cjs')({user,json,origin:deployment.base,isAdmin:isScopedAdmin});
@@ -73,6 +74,7 @@ module.exports=async function auth(req,res,name){
  }
  if(localEngine?.admin&&(name.startsWith('/api/auth/admin/')||/\/engine\/(?:dispute-admin|subscription-admin|roles|role-action)/.test(name))){const actor=user(req);if(!actor){json(res,401,{error:'로그인이 필요합니다.'});return true;}if(!localEngine.admin.route(actor.id,name,req.method)){json(res,403,{error:'ACCESS_DENIED'});return true;}}
  if(await savedApi(req,res,name))return true;
+ if(await visitors.handle(req,res,name))return true;
  if(await engagement.handle(req,res,name))return true;
  if(await catalogAdmin(req,res,name))return true;
  if(await applicationEngine.handle(req,res,name))return true;
@@ -121,3 +123,5 @@ module.exports.close=()=>{accountMail?.close();db.close();};
 module.exports.configureEngine=services=>applicationEngine.configure(services);
 
 module.exports.localEngine=()=>localEngine;
+
+module.exports.visitors=()=>visitors;
