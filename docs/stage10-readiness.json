@@ -1,5 +1,5 @@
 {
-  "revision": 208,
+  "revision": 211,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7178,5 +7178,27 @@
     },
     "newFixedCharges": 0,
     "backendOrContractChanged": false
+  },
+  "adminDashboardDetails211": {
+    "date": "2026-10-20",
+    "status": "DEPLOYED_READ_ONLY_ADMIN_DETAILS",
+    "commit": "9bbc13eb4908a07e68813ecde263b4bba5dd2f30",
+    "deploy": "dep-dbbjedjm8hqs7390mfvg",
+    "scope": [
+      "members",
+      "signups",
+      "existing_login_counts",
+      "LIVE_order_details",
+      "current_order_refunds",
+      "approved_subscription_cycles",
+      "current_subscription_refunds"
+    ],
+    "newTracking": false,
+    "countryBasis": "EXISTING_PROFILE_SELF_REPORTED_UNVERIFIED_NOT_INFERRED",
+    "visitorBasis": "ANONYMOUS_BROWSER_AGGREGATES_UNCHANGED_LOGIN_COUNTS_ARE_NOT_VISITS",
+    "schemaChanged": false,
+    "newPaidResources": false,
+    "existingDataPreserved": true,
+    "checks": "SQLite/PostgreSQL authorization/paging/search/LIVE-only/date filtering/no-secret-return and aggregate regression: 4 PASS; synthetic UI all cards and mobile; operating member details 4 rows and finance/login empty states without error; 6 languages1422 keys"
   }
 }
