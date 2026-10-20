@@ -21,16 +21,16 @@ module.exports=function({db,user,json,origin,isAdmin,clock=Date.now}){
    // Observations exist only for current favorites; removal also stops watching.
    const keep=new Set(favorites.map(a=>a.id));for(const o of db.prepare('SELECT asset_id FROM account_email_observations WHERE user_id=?').all(p.user_id))if(!keep.has(o.asset_id))db.prepare('DELETE FROM account_email_observations WHERE user_id=? AND asset_id=?').run(p.user_id,o.asset_id);
   }});return {queued};}
- function insights(days){if(![7,30,120].includes(days))throw Error('INVALID_INPUT');const since=clock()-days*DAY;
+ function insights(days,period){if(![7,30,120].includes(days))throw Error('INVALID_INPUT');const since=period?.start??clock()-days*DAY;
   const searches=new Map(),sources=new Map();let searchCount=0,zeroCount=0;
   // Aggregate at the database; never return account identifiers or individual events.
-  const grouped=db.prepare("SELECT kind,detail,COUNT(*) AS n FROM engine_discovery_events WHERE created>=? GROUP BY kind,detail").all(since);
+  const grouped=db.prepare("SELECT kind,detail,COUNT(*) AS n FROM engine_discovery_events WHERE created>=? AND created<=? GROUP BY kind,detail").all(since,clock());
   for(const row of grouped){const d=typeof row.detail==='string'?JSON.parse(row.detail):row.detail,n=Number(row.n);if(row.kind==='SEARCH'){searchCount+=n;if(d.resultCount===0){zeroCount+=n;searches.set(d.query,(searches.get(d.query)||0)+n);}}else if(row.kind==='ARRIVAL'){const key=d.referrerDomain||'(direct)';sources.set(key,(sources.get(key)||0)+n);}}
   const top=m=>[...m].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])).slice(0,50).map(([label,count])=>({label,count}));
-  const operating=db.backend==='postgres'?require('./operating-insights.cjs')({db,clock})(days):null;
+  const operating=db.backend==='postgres'?require('./operating-insights.cjs')({db,clock})(days,period):null;
   return {days,retentionDays:120,searchCount,zeroCount,noResults:top(searches),referrers:top(sources),operating,scope:'CONSENTED_RECORDS_ONLY',ipCollected:false};}
- async function handle(req,res,name){if(!['/api/auth/email-preferences','/api/auth/admin/discovery-insights'].includes(name))return false;const actor=user(req);if(!actor){json(res,401,{error:'ACCESS_DENIED'});return true;}try{
-   if(name.endsWith('discovery-insights')){if(!isAdmin(actor)){json(res,403,{error:'ACCESS_DENIED'});return true;}if(req.method!=='GET'){json(res,405,{error:'METHOD_REQUIRED'});return true;}json(res,200,insights(Number(new URL(req.url,origin).searchParams.get('days')||30)));return true;}
+ async function handle(req,res,name){if(!['/api/auth/email-preferences','/api/auth/admin/discovery-insights','/api/auth/admin/dashboard'].includes(name))return false;const actor=user(req);if(!actor){json(res,401,{error:'ACCESS_DENIED'});return true;}try{
+   if(name.endsWith('discovery-insights')||name.endsWith('/dashboard')){if(!isAdmin(actor)){json(res,403,{error:'ACCESS_DENIED'});return true;}if(req.method!=='GET'){json(res,405,{error:'METHOD_REQUIRED'});return true;}const days=Number(new URL(req.url,origin).searchParams.get('days')||30);if(name.endsWith('/dashboard')){const dashboard=require('./admin-dashboard.cjs')({db,clock})(days);json(res,200,{...insights(days,dashboard.period),dashboard});}else json(res,200,insights(days));return true;}
    if(req.method==='GET'){json(res,200,preference(actor.id));return true;}if(req.method!=='POST'){json(res,405,{error:'METHOD_REQUIRED'});return true;}if(req.headers.origin!==origin){json(res,403,{error:'ORIGIN_REQUIRED'});return true;}if(req.headers['content-type']?.split(';')[0].trim()!=='application/json'){json(res,415,{error:'JSON_REQUIRED'});return true;}let size=0,chunks=[];for await(const c of req){size+=c.length;if(size>1024){json(res,413,{error:'INVALID_INPUT'});return true;}chunks.push(c);}json(res,200,save(actor.id,JSON.parse(Buffer.concat(chunks))));
   }catch{json(res,400,{error:'INVALID_INPUT'});}return true;}
  return {handle,tick,preference,permitted,save,insights};
