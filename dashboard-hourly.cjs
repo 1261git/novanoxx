@@ -1,0 +1,15 @@
+'use strict';
+const HOUR=3600000,KST=9*HOUR;
+module.exports=function({db,period,date,visitorEnabled=false}){
+ const key=t=>new Date(t+KST).toISOString().slice(0,10),selected=date||key(period.end),start=Date.parse(selected+'T00:00:00+09:00');
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(selected)||!Number.isFinite(start)||key(start)!==selected||start<period.start||start>period.end)throw Error('INVALID_INPUT');
+ const exists=t=>!!db.prepare("SELECT name FROM sqlite_master WHERE name='"+t+"'").get(),end=Math.min(start+24*HOUR-1,period.end),series=Array.from({length:24},(_,i)=>({date:String(i).padStart(2,'0')+':00',signups:0,searches:0,arrivals:0,salesKrw:0,currentRefundsKrw:0,dailyBrowsers:0,visits:0,future:start+i*HOUR>period.end}));
+ const hourExpr=c=>db.backend==='postgres'?"to_char(to_timestamp("+c+"/1000.0) AT TIME ZONE 'Asia/Seoul','HH24')":"strftime('%H',"+c+"/1000.0,'unixepoch','+9 hours')";
+ if(exists('account_creation_records'))for(const r of db.prepare('SELECT '+hourExpr('c.created')+' bucket_hour,COUNT(*) n FROM account_creation_records c JOIN users u ON u.id=c.user_id WHERE c.created>=? AND c.created<=? GROUP BY 1').all(start,end))series[Number(r.bucket_hour)].signups=Number(r.n);
+ for(const r of db.prepare('SELECT '+hourExpr('created')+' bucket_hour,kind,COUNT(*) n FROM engine_discovery_events WHERE created>=? AND created<=? GROUP BY 1,kind').all(start,end)){if(r.kind==='SEARCH')series[Number(r.bucket_hour)].searches=Number(r.n);if(r.kind==='ARRIVAL')series[Number(r.bucket_hour)].arrivals=Number(r.n);}
+ if(db.backend==='postgres')for(const r of db.prepare("SELECT to_char(p.approved_at AT TIME ZONE 'Asia/Seoul','HH24') bucket_hour,SUM(o.amount_krw) gross,SUM(COALESCE(s.refunded_krw,0)) refunded FROM nnx_operating_v1.orders o JOIN nnx_operating_v1.payments p ON p.order_id=o.id LEFT JOIN nnx_operating_v1.payment_sync s ON s.order_id=o.id WHERE p.environment='LIVE' AND p.state IN ('APPROVED','REFUNDED') AND p.approved_at>=? AND p.approved_at<=? GROUP BY 1").all(new Date(start).toISOString(),new Date(end).toISOString())){series[Number(r.bucket_hour)].salesKrw=Number(r.gross);series[Number(r.bucket_hour)].currentRefundsKrw=Number(r.refunded);}
+ const visitorReady=visitorEnabled&&exists('visitor_hourly_totals')&&exists('visitor_analytics_meta'),coverage=visitorReady?Number(db.prepare("SELECT started FROM visitor_analytics_meta WHERE id='HOURLY_V1'").get()?.started||0):null;
+ if(visitorReady)for(const r of db.prepare('SELECT date_hour,browsers,sessions FROM visitor_hourly_totals WHERE date_hour>=? AND date_hour<=? ORDER BY date_hour').all(selected+'T00',selected+'T23')){series[Number(r.date_hour.slice(-2))].dailyBrowsers=Number(r.browsers);series[Number(r.date_hour.slice(-2))].visits=Number(r.sessions);}
+ for(let i=0;i<24;i++)series[i].visitorUnavailable=!visitorReady||!coverage||start+(i+1)*HOUR<=coverage;
+ return {date:selected,series,visitorCoverageStartedAt:coverage,visitorReady,timezone:'Asia/Seoul',browserBasis:'FIRST_DAILY_BROWSER_HOUR_NOT_HOURLY_ACTIVE_UNIQUE',visitBasis:'SESSION_START_HOUR'};
+};
