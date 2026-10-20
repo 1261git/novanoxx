@@ -1,5 +1,5 @@
 {
-  "revision": 203,
+  "revision": 205,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7000,5 +7000,46 @@
       "localTargetedTests": 9,
       "translationKeys": 1323
     }
+  },
+  "adminDashboard205": {
+    "revision": 205,
+    "commit": "373fed1a417eee543caab81e747a127821d1a81c",
+    "deployment": "dep-dbbb8nqvcj2c739ldr30",
+    "status": "DEPLOY_SUCCEEDED_RUNNING_COMMIT_VERIFIED",
+    "checks": {
+      "health": 200,
+      "anonymousDashboard": 401,
+      "assetResponse": 200,
+      "ordinaryMemberUI": "ACCESS_DENIED",
+      "readOnlyOperatingSQL": {
+        "members": 4,
+        "unknownCreation": 4,
+        "recordedSignups": 0,
+        "days": 30,
+        "timezone": "Asia/Seoul",
+        "approvedOrders": 0,
+        "grossKrw": 0,
+        "refundKrw": 0,
+        "visitorsEnabled": false
+      },
+      "targetedTests": 5,
+      "translationKeys": 1345,
+      "translationMissing": 0,
+      "syntheticUI": {
+        "charts": 4,
+        "sevenDayRows": 7,
+        "unsafeImages": 0,
+        "mobileWidth": 390,
+        "documentWidth": 375
+      },
+      "originalDirtyFiles": {
+        "checked": 675,
+        "changed": []
+      }
+    },
+    "newPaidResources": 0,
+    "newDatabaseTables": 0,
+    "newTrackingEnabled": false,
+    "operatingAdminSessionUsed": false
   }
 }
