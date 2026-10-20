@@ -1,5 +1,5 @@
 {
-  "revision": 206,
+  "revision": 207,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7098,5 +7098,52 @@
       "usageBasedChargesUnchanged": true
     },
     "existingTestEnvironmentChanged": false
+  },
+  "dashboardHourly207": {
+    "revision": 207,
+    "commit": "5b9829b07873c5ad3ed305a38c41b892e41cbc47",
+    "deployment": {
+      "id": "dep-dbbc7uhsrm7s7382ndc0",
+      "status": "LIVE",
+      "durationSeconds": 52.3
+    },
+    "verification": {
+      "targetedTests": 9,
+      "translationKeys": 1383,
+      "missingTranslations": 0,
+      "syntheticUI": {
+        "hourlyRows": 24,
+        "charts": 1,
+        "metricSwitch": true,
+        "dateSwitch": true,
+        "futureShownAsDash": true,
+        "preCoverageVisitorShownAsDash": true,
+        "mobileViewport": 390,
+        "mobileDocumentWidth": 375,
+        "mobileKpiColumns": 2
+      },
+      "productionUI": {
+        "authorizedExistingAdmin": true,
+        "hourlyRows": 24,
+        "charts": 1,
+        "selectedDate": "2026-10-20",
+        "previousDateRead": "2026-10-19",
+        "preCoverageFirstRow": "00:00 — — 0 0 0 0 0",
+        "hourlyVisitorCoverageStartedKst": "2026-10-20 10:30:15",
+        "consoleErrors": 0,
+        "syntheticVisitsSent": 0
+      },
+      "preservedDirtyFiles": 675
+    },
+    "policy": {
+      "newPersonalFields": 0,
+      "visitorDailyCountsPreserved": true,
+      "hourlyVisitorHistoryNotEstimated": true,
+      "hourlyVisitorBasis": "FIRST_DAILY_BROWSER_HOUR",
+      "visitBasis": "SESSION_START_HOUR",
+      "aggregateRetentionDays": 120
+    },
+    "newFixedCharges": 0,
+    "newCloudServices": 0
   }
 }
