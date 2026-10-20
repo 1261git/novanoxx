@@ -1,5 +1,5 @@
 {
-  "revision": 211,
+  "revision": 212,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7200,5 +7200,32 @@
     "newPaidResources": false,
     "existingDataPreserved": true,
     "checks": "SQLite/PostgreSQL authorization/paging/search/LIVE-only/date filtering/no-secret-return and aggregate regression: 4 PASS; synthetic UI all cards and mobile; operating member details 4 rows and finance/login empty states without error; 6 languages1422 keys"
+  },
+  "optionalStatisticsPrompt212": {
+    "revision": 212,
+    "date": "2026-10-20",
+    "commit": "bdbffee8d5b922af952d1a5d6aa274aec7435af2",
+    "deploy": "dep-dbbjsqu7bikc73apdph0",
+    "liveSeconds": 57.9,
+    "change": "Remove initial optional visitor consent prompt; retain saved consent and explicit settings; retain automatic operational aggregates",
+    "operatingChecks": {
+      "dashboardPresent": true,
+      "bannerCount": 0,
+      "settingsLinkPresent": true,
+      "visitorAllowRejectControlsPresent": true,
+      "discoveryChoicePresent": true
+    },
+    "clientScenarios": [
+      "fresh",
+      "allowed",
+      "denied",
+      "expired",
+      "blockedStorage"
+    ],
+    "autoConsentWrites": 0,
+    "newPaidResources": 0,
+    "databaseChanges": 0,
+    "preservedFiles": 675,
+    "changedPreservedFiles": []
   }
 }
