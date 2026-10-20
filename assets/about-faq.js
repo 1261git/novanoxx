@@ -45,5 +45,5 @@ function appendContentPolicyFaq(host){
  ['플랫폼의 검토가 제3자 권리를 보증하나요?','아닙니다. 판매자는 제3자 소재의 이용 허락과 판매·납품 권한을 확보하고 제한 사항을 사전에 고지해야 합니다. NovaNoxX는 신고 접수 시 관련 자료를 요청하고 게시·거래를 검토할 수 있지만, 이러한 검토가 제3자 권리를 보증한다는 뜻은 아닙니다. 이 안내는 관련 법령상 운영자의 의무와 책임을 배제하지 않습니다.']
  ];
  items.forEach(([question,answer],i)=>{const details=node('details'),summary=node('summary',question),icon=node('span');icon.setAttribute('aria-hidden','true');icon.textContent='＋';summary.append(icon);const p=node('p',answer);if(i===3){const a=node('a');a.href='mailto:support@novanoxx.com';a.textContent='support@novanoxx.com';a.setAttribute('translate','no');p.append(document.createTextNode(' '),a);}details.append(summary,p);list.append(details);});
- const first=host.querySelector('.faq-group');if(first)first.before(section);else host.append(section);
+ const brief=host.querySelector('[data-brief-rights-notice]');if(brief)brief.before(section);else host.append(section);
 }
