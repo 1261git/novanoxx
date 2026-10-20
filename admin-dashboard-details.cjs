@@ -5,7 +5,7 @@ module.exports=function({db,clock=Date.now}){
   const kind=params.get('kind'),days=Number(params.get('days')||30),offset=Number(params.get('offset')||0),q=(params.get('q')||'').trim();
   if(!['members','signups','visits','sales','refunds','subscriptions','subscriptionRefunds'].includes(kind)||!Number.isSafeInteger(offset)||offset<0||offset>100000||q.length>150)throw Error('INVALID_INPUT');
   const period=require('./admin-dashboard.cjs').range(days,clock()),from=new Date(period.start).toISOString(),until=new Date(period.end).toISOString();
-  const args=[],filters=[],exists=t=>!!db.prepare("SELECT name FROM sqlite_master WHERE name=?").get(t);
+  const args=[],filters=[],exists=t=>!!db.prepare("SELECT name FROM sqlite_master WHERE name='"+t+"'").get();
   const search=(columns)=>{if(q){filters.push('('+columns.map(c=>"LOWER("+c+") LIKE ? ESCAPE '!'").join(' OR ')+')');const pattern='%'+q.toLowerCase().replace(/[!%_]/g,m=>'!'+m)+'%';args.push(...columns.map(()=>pattern));}};
   const result=(select,join,sort,map=x=>x)=>{const where=filters.length?' WHERE '+filters.join(' AND '):'',total=Number(db.prepare('SELECT COUNT(*) n '+join+where).get(...args).n),rows=db.prepare(select+' '+join+where+' ORDER BY '+sort+' LIMIT 50 OFFSET ?').all(...args,offset).map(map);return {kind,days,period,offset,limit:50,total,hasMore:offset+rows.length<total,rows};};
   if(['members','signups','visits'].includes(kind)){
