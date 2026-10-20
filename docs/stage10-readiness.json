@@ -1,5 +1,5 @@
 {
-  "revision": 212,
+  "revision": 213,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7227,5 +7227,65 @@
     "databaseChanges": 0,
     "preservedFiles": 675,
     "changedPreservedFiles": []
+  },
+  "dashboardVisuals213": {
+    "revision": 213,
+    "date": "2026-10-20",
+    "commit": "fbde6228889e1dd3185f3d227e1421d1b97ba903",
+    "deploy": "dep-dbbk4567bikc73apn4k0",
+    "liveSeconds": 49.7,
+    "features": [
+      "8 real-data KPI sparklines",
+      "daily/hourly line-bar switching and immediate pointer/focus/touch tooltip including zero/missing",
+      "detail charts for all KPI kinds",
+      "existing login and approved billing series",
+      "existing asset view category pie and top/bottom10",
+      "PostgreSQL member-detail table detection correction"
+    ],
+    "definitions": {
+      "memberSparkline": "RECORDED_SIGNUPS_NOT_INFERRED_HISTORICAL_MEMBER_TOTAL",
+      "assetViews": "RECORDED_SIGNED_IN_ASSET_VIEWS_NOT_UNIQUE_VISITORS_OR_ALL_CLICKS",
+      "category": "CURRENT_PUBLIC_CLASSIFICATION",
+      "rankZero": "INCLUDED_WITH_STABLE_PUBLIC_ID_TIES",
+      "refunds": "CURRENT_CUMULATIVE_REFUND_BY_ORIGINAL_PAYMENT_APPROVAL_OR_BILLING_PERIOD"
+    },
+    "tests": {
+      "core": 6,
+      "passed": 6,
+      "textMetadataCompatibilityRetest": 2,
+      "translationKeys": 1433,
+      "missingTranslations": 0
+    },
+    "operatingChecks": {
+      "sparklines": 8,
+      "dailyHitPoints": 30,
+      "tooltip": "2026-10-20 · 방문 수 · 4",
+      "detailLineCharts": 1,
+      "detailBars": 30,
+      "memberRows": 4,
+      "memberRowsWithProviders": 4,
+      "memberRowsWithCountry": 3,
+      "memberRowsWithLogins": 4,
+      "categoryAndRanks": "NO_CURRENT_ELIGIBLE_ASSET_RECORDS_HONEST_EMPTY_STATE",
+      "consoleErrors": 0,
+      "consentBanners": 0
+    },
+    "syntheticUI": {
+      "zeroTooltip": true,
+      "keyboardTooltip": true,
+      "pieTooltip": "영상 · 5 · 71.43%",
+      "mobileViewport": 390,
+      "documentWidth": 375,
+      "documentScrollWidth": 375,
+      "zeroRankIncluded": true
+    },
+    "noNewTracking": true,
+    "schemaChanges": 0,
+    "newPaidResources": 0,
+    "preservation": {
+      "checked": 675,
+      "changed": []
+    },
+    "initialProductionIssue": "Legacy metadata is TEXT. Initial category operator caused dashboard aggregation failure; fixed with explicit jsonb cast without modifying stored data, retested TEXT fixture and operating screen."
   }
 }
