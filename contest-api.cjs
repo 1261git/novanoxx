@@ -1,11 +1,11 @@
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
-module.exports=(db,dir,user,json)=>{
+module.exports=(db,dir,user,json,options={})=>{
  db.exec('CREATE TABLE IF NOT EXISTS contest_entries(id TEXT PRIMARY KEY,user_id TEXT NOT NULL,title TEXT NOT NULL,description TEXT NOT NULL,creator TEXT NOT NULL,ext TEXT NOT NULL,size INTEGER NOT NULL,created INTEGER NOT NULL)');
  const folder=path.join(dir,'contest');fs.mkdirSync(folder,{recursive:true});
  return async(req,res,name)=>{
  if(!['/api/contest','/api/contest/media','/api/auth/contest/submit'].includes(name))return false;
  const url=new URL(req.url,'http://localhost');
- if(name==='/api/contest'&&req.method==='GET'){json(res,200,{entries:db.prepare('SELECT id,title,description,creator,ext,created FROM contest_entries ORDER BY created DESC').all()});return true;}
+ if(name==='/api/contest'&&req.method==='GET'){json(res,200,{entries:db.prepare('SELECT id,user_id,title,description,creator,ext,created FROM contest_entries ORDER BY created DESC').all().map(({user_id,...entry})=>{const profile=options.profileForUser?.(user_id);return {...entry,creator:profile?.displayName||entry.creator,creatorPublicId:profile?.publicId||null};})});return true;}
  if(name==='/api/contest/media'&&req.method==='GET'){
  const f=db.prepare('SELECT * FROM contest_entries WHERE id=?').get(url.searchParams.get('id'));if(!f){json(res,404,{error:'출품작을 찾을 수 없어요.'});return true;}
  const headers={'Content-Type':{png:'image/png',jpg:'image/jpeg',mp4:'video/mp4',webm:'video/webm'}[f.ext],'Content-Length':f.size,'X-Content-Type-Options':'nosniff','Accept-Ranges':'bytes','Cache-Control':'no-cache'};

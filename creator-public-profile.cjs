@@ -21,8 +21,9 @@ module.exports=function({db,json,assets}){
    if(!photo||!['image/png','image/jpeg','image/webp'].includes(photo.mime)){json(res,404,{error:'공개 프로필을 찾을 수 없습니다.'});return true;}
    res.writeHead(200,{'Content-Type':photo.mime,'Content-Length':photo.data.length,'Cache-Control':'no-cache','X-Content-Type-Options':'nosniff'});res.end(Buffer.from(photo.data));return true;
   }
-  const items=assets(profile.user_id).filter(a=>!a.sold);
+  const items=assets(profile.user_id).map(a=>a.sold?{id:a.id,title:a.title,creator:a.creator,creatorPublicId:a.creatorPublicId,cat:a.cat,subcategory:a.subcategory,sold:true,imgUrl:a.imgUrl,clip:a.clip,clipUrl:a.clipUrl,previewDuration:a.previewDuration}:a);
   json(res,200,{profile:{publicId:id,displayName:profile.display_name,bio:profile.bio,country:profile.country,language:profile.language,avatarUrl:profile.avatar_version?'/api/catalog/creator/avatar?id='+encodeURIComponent(id)+'&v='+profile.avatar_version:null},assets:items});return true;
  }
- return {ensure,find,handle};
+ function link(userId){const p=db.prepare("SELECT p.display_name FROM creator_profiles p JOIN users u ON u.id=p.user_id LEFT JOIN member_restrictions r ON r.user_id=p.user_id WHERE p.user_id=? AND COALESCE(r.state,'ACTIVE') NOT IN ('SUSPENDED','WITHDRAWN')").get(userId);return p?{publicId:ensure(userId),displayName:p.display_name}:null;}
+ return {ensure,find,handle,link};
 };
