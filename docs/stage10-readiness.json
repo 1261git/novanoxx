@@ -1,5 +1,5 @@
 {
-  "revision": 221,
+  "revision": 222,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7712,5 +7712,94 @@
     "newPaidResources": 0,
     "planChanges": 0,
     "existingLiveCodeUnchanged": true
+  },
+  "dramaTheater222": {
+    "revision": 222,
+    "date": "2026-10-22",
+    "status": "READY_FOR_DEPLOY",
+    "policy": {
+      "menu": "theater",
+      "creatorStudio": "drama-studio",
+      "priorAdminApproval": false,
+      "creatorDirectPublish": true,
+      "freeEpisodes": [
+        1,
+        2
+      ],
+      "paidFromEpisode": 3,
+      "suggestedDefaultNeon": 3,
+      "creatorPriceEditable": true
+    },
+    "runtime": {
+      "productionVideoUploadEnabled": false,
+      "productionNeonAdapterConnected": false,
+      "thirdPartyVideoServiceConnected": false,
+      "mode": "Bounded local MP4 candidate; operating storage/delivery connection pending cost approval",
+      "maxEpisodeMinutes": 20,
+      "maxFileMB": 300,
+      "candidateStoreMB": 600,
+      "captions": "WebVTT up to 8 languages per episode",
+      "resume": "Device-only 30 days/100 episodes; account-scoped; no server watch tracking"
+    },
+    "validation": {
+      "focusedTestsPassed": 3,
+      "backends": [
+        "SQLite",
+        "PostgreSQL (PGlite)"
+      ],
+      "actualVideoProbe": true,
+      "syntheticPaymentAdapterOnly": true,
+      "productionWritesPerformed": 0,
+      "financialProviderCalls": 0,
+      "freeGuestPlayback": {
+        "duration": 40,
+        "error": null,
+        "source": "/api/drama/media?id=6f3c2eea-f21c-403f-86ef-c70c4a479ae3"
+      },
+      "paywall": {
+        "loginRequired": true,
+        "playerAbsent": true,
+        "scroll": 375,
+        "width": 375,
+        "controlsHidden": true
+      },
+      "resume": {
+        "playing": true,
+        "position": 7.46578
+      },
+      "mobileStudio": {
+        "episodeForms": 1,
+        "episodeTitle": "첫 번째 이야기",
+        "font": "16px",
+        "scroll": 375,
+        "title": "모바일 등록 확인",
+        "width": 375
+      },
+      "videoAndSubtitleFormUpload": {
+        "caption": true,
+        "scroll": 375,
+        "video": true,
+        "width": 375
+      },
+      "consoleErrors": 0,
+      "translationKeys": 1544
+    },
+    "remainingBeforeOperatingVideo": {
+      "costAndProviderDecision": true,
+      "sharedPhysicalCapacityAndBackupBudgetApproval": true,
+      "adaptiveStreamingAndDRMNotIncluded": true
+    },
+    "remainingBeforeOperatingPaidViewing": [
+      "NEON contract and operating paid ledger/charge authority",
+      "Verified debit and durable idempotency/reconciliation adapter",
+      "Refund/revocation and creator revenue/settlement policy/connection",
+      "Owner first real purchase and recovery verification"
+    ],
+    "preservation": {
+      "checked": 675,
+      "changed": []
+    },
+    "newPaidResources": 0,
+    "planChanges": 0
   }
 }

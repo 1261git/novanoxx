@@ -3,7 +3,7 @@ homeSections.forEach(el=>el.hidden=true);
 const page = document.createElement('section');
 page.className = 'route-page'; page.hidden = true;
 document.querySelector('main').append(page);
-const routeNames={'About':'about','FAQ':'faq','Contest':'contest','Brief 의뢰':'briefs','Creator 안내':'creators','NEON 지갑':'wallet','로그인':'login'};
+const routeNames={'AI 드라마 상영관':'theater','About':'about','FAQ':'faq','Contest':'contest','Brief 의뢰':'briefs','Creator 안내':'creators','NEON 지갑':'wallet','로그인':'login'};
 function go(route){location.hash='/'+route}
 function info(name){go(routeNames[name]||'')}
 function detail(id){if(typeof NNXAssetTraffic!=='undefined')NNXAssetTraffic.click(id);rememberAsset('assets/'+id);go('assets/'+id)}
@@ -42,6 +42,9 @@ function route(){
  if(['exclusive-contract','license-contract'].includes(current)){renderSaleContract(current==='exclusive-contract');window.scrollTo(0,0);return;}
  if(current==='brief-terms'){renderBriefTerms();window.scrollTo(0,0);return;}
  if(current==='account-withdrawal'){renderAccountWithdrawal();window.scrollTo(0,0);return;}
+ if(current==='theater'){NNXDrama.catalog();window.scrollTo(0,0);return;}
+ if(current==='drama'){NNXDrama.detail();window.scrollTo(0,0);return;}
+ if(current==='drama-studio'){NNXDrama.studio();window.scrollTo(0,0);return;}
  if(current==='creator'){renderCreatorPublicProfile();window.scrollTo(0,0);return;}
  if(current==='admin-dashboard'){NNXAdminDashboard.render();window.scrollTo(0,0);return;}
  if(current==='recent-assets'){NNXEngagement.recent();window.scrollTo(0,0);return;}

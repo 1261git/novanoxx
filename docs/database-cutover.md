@@ -452,3 +452,15 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - creator-api.test.cjs + creator-metadata-input.test.cjs 필수2검사 모두 PASS(약1초). 실제 로컬 이미지 변환/격리 SQLite 범위이며 운영 상품 저장·외부결제·메일·PG 호출0. 제한 실행환경의 Windows 임시파일 rename EPERM은 로컬 실행권한 환경 문제로 별도 확인 후 정상 실행환경에서 통과. PostgreSQL·전체 사이트/모든 검사 통과로 확대하지 않음.
 - 제품 기능 수정 필요 없음: 서비스코드·운영설정·DB/파일 변경0, 운영 재배포 불필요. 기존 LIVE afae8ab / dep-dbcb9smk1f9s73c09hh0 유지. 검사/기록만 [skip render] 보관하여 추가 배포 방지. 기존 미커밋675 changed[], 새유료자원·요금제변경0. 기존 운영·TEST 자료 보존.
 - 증빙 creator221-test-output.txt/creator221-resolution.json. 220의 오래된 검사 미통과 항목은 이번 갱신으로 해결됨.
+
+
+## 222. 2026-10-22 — AI 드라마 상영관·크리에이터 직접 공개·1/2화 무료/3화 NEON
+
+- 마켓 VIDEO 하위분류 대신 상단 별도 상영관/#/theater, 작품·회차/#/drama?id=, 크리에이터 등록/#/drama-studio 및 기존 크리에이터 메뉴 연결. 제목·줄거리·장르·상영권/제3자소재 고지·회차 제목/순서/소개·가격 저장. 기존 에셋과 별도 권한/테이블/파일경로를 사용해 원본 판매와 상영권을 혼동하지 않음. 포스터는 제목 기반 기본 커버이며 업로드 기능 아님.
+- 진행 중 사용자 변경을 반영해 관리자 사전심사 제거. 등록자는 영상/상영권 확인 후 직접 공개. 관리자는 사후 중지/사유 기록만. 기존 공개 회차는 유지하며 새 DRAFT 회차 추가/영상등록/개별 공개·중지 가능. 정지·탈퇴/프로필 없는 작가 작품은 공개 목록과 파일에서 제외. 기존 상품 상태/자료 변경0.
+- 1·2화 무료 강제, 3화부터 정수 NEON 가격(초기 제안3, 직접변경 가능). 구매 전 유료회차 video/tracks URL 미제공, 파일ID 직접접근도 차단. 소유자·권한있는 관리자는 비공개 검수 가능. 검증된 NEON 차감영수증 이후 시청권 저장/재차감 방지 연결, 동일 계정·회차의 안정적 멱등키, 불명결과 UNKNOWN/재확인 경로 준비. TEST_WALLET 영수증은 거부. 운영 어댑터는 null로 실제 구매409/차감0. 이 구현이 NEON 유상 원장·충전·환급·판매자 정산을 완성한 것은 아님.
+- 후보 영상은 20분/300MB 이하 H264(yuv420p)/AAC MP4, 후보전용600MB상한/최소여유공간/동시1업로드. VTT1MB/회차8언어·형식/시간검증/태그제거. 교체 이전 파일/행을 보존, 새 실패파일만정리. Range/HEAD·suffix/416·비공개접근검증. HLS 자동화질/CDN/DRM은 미연결. uploads_enabled는 운영기본false, 영상·자막 운영업로드 비활성: 비용/용량/백업예산 승인 후 적합한 영상전송서비스/공유용량보호 연결 필요. 새유료서비스/증설0.
+- 이어보기는 계정구분한 이기기 localStorage30일/100회차, 마지막시청회차 선택·재생위치복원·완료회차정리·삭제/저장차단실패안전. 서버 시청/검색 추적 추가없음. 자막 켜기끄기/다음회차 링크/모바일16px·좁은화면.
+- 최종 SQLite/PG(PGlite) 생명주기 및 이어보기3검사PASS. 실제 FFmpeg 합성MP4/ffprobe 사용. 직접공개·새회차연재·권한·손상파일·기존행불변·무료접근·유료파일차단·위조TEST영수증거부·가격변조·재차감방지·차감후타임아웃합성복구 확인. 합성단위 어댑터만사용/외부결제0. 전체격리사이트 모바일375px/스크롤375, 실제 등록폼 작품/회차/영상/VTT저장, 40초영상재생/자막ready2/켜기끄기/7초이어보기/2화전환·비회원2화무료·3화player없음 확인/콘솔오류0.
+- public schema drama_series/episodes/media/reviews/entitlements/purchase_intents 추가(기존테이블변경0). media는 DATA_DIR/drama-media, 기존 일반파일 트리 백업과 public schema 덤프 대상에 포함되나 실제 이 기능 새영상 백업·복구 검증을 운영 완료로 표시하지 않음. 영상 활성화 전 총용량/백업비용 검토 필수.
+- 운영금융/정산·메일·기존자료변경0, 기존미커밋675 changed[]. 6언어1544키누락0. 노트/운영매뉴얼/준비현황 갱신. 배포최종확인은 후속기록. 증빙 drama222-tests.txt/drama222-browser-report.json/drama222-result.json/drama222-mobile-player.png/drama222-paywall.png.
