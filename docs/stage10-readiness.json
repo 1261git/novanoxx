@@ -1,5 +1,5 @@
 {
-  "revision": 217,
+  "revision": 218,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7455,6 +7455,73 @@
     "translationKeys": 1466,
     "productionProfileFixturesCreated": 0,
     "originalAccessUnchanged": true,
+    "preservation": {
+      "checked": 675,
+      "changed": []
+    },
+    "newPaidResources": 0,
+    "planChanges": 0
+  },
+  "exampleCreatorsAndProfileRename218": {
+    "revision": 218,
+    "date": "2026-10-21",
+    "commit": "3f364de1663672eb3cee82d1dab8c1924c742faf",
+    "deploy": "dep-dbc9et0u01pc73d1ejeg",
+    "status": "LIVE",
+    "smoke": {
+      "assets/demo-creators.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/creator-public-profile.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/creator-public-profile.css": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "page-routing.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/developer-notes-data.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "catalog": {
+        "status": 200,
+        "realAssets": 0,
+        "includeDemo": true
+      }
+    },
+    "operatingUI": {
+      "exampleCreatorLinks": 8,
+      "exampleBadges": 8,
+      "novaExampleWorks": 2,
+      "marketNameClickWorks": true,
+      "exampleMemberSeparationNotice": true,
+      "consoleErrors": 0
+    },
+    "localUI": {
+      "profileSaveName": "NovaNoxX",
+      "realActiveSoldCardsRenamed": 2,
+      "realPublicIdStable": true,
+      "sameNameExampleGroupSeparate": true,
+      "protectedExampleImageWidth": 960,
+      "mobileWidth": 375,
+      "mobileScrollWidth": 375,
+      "consoleErrors": 0
+    },
+    "preservationFixture": {
+      "assetRowsUnchanged": true,
+      "externalPortfolioPreserved": true,
+      "fictionalMembersCreated": 0,
+      "publicIdentityUnchanged": true
+    },
+    "testsPassed": 3,
+    "translationKeys": 1469,
+    "productionRenameNotPerformed": true,
     "preservation": {
       "checked": 675,
       "changed": []
