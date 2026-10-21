@@ -466,3 +466,13 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 운영금융/정산·메일·기존자료변경0, 기존미커밋675 changed[]. 6언어1544키누락0. 노트/운영매뉴얼/준비현황 갱신. 배포최종확인은 후속기록. 증빙 drama222-tests.txt/drama222-browser-report.json/drama222-result.json/drama222-mobile-player.png/drama222-paywall.png.
 
 - 최종222 기능748c2eb / dep-dbck7cdg1s2s7385733g LIVE 후 상단추가메뉴 너비를 보완한 9037a9f2f5f49e2ad333642492292e5ba2d5381d / dep-dbck9761egvs73eqvaeg LIVE 확인. 변경8파일200·정규화일치/최종CSS200일치, drama/catalog200(운영공개작품0), studio익명401, 기존catalog200·예시유지·health200/PostgreSQL정상. 운영 상영관 메뉴/1·2무료/3화NEON정책·빈상태·새개발자노트 확인/콘솔오류0. 데스크톱1265px 7메뉴동일top19/가로넘침0, 태블릿1024(내용1009) 메뉴하단111<헤더124/넘침0. 운영시험상품·드라마·계정생성0, 기존675변경0. 이번 격리서버/합성DB/runtime만 정리·증빙보존. 최종증빙 production222-report.json/production222-smoke.json/production222-ui.json/production222-theater.png. 운영영상업로드/NEON실구매 활성화는 계속 대기.
+
+
+## 2026-10-22 최신223 — NovaPlay 이름·기본3NEON 확정과 영상 비용 검토
+
+- 사용자 확정: 상단 메뉴/상영관 제목 NovaPlay, 1·2화무료/3화부터 기본3NEON. 기존 기본값3 유지·회차별 입력 유지. 기존 해시주소/테이블/파일 변경없음.
+- Render MCP 읽기조회: 운영 novanoxx 단일0.5CPU/512MB, /data 총5GB(여유5GB 아님). 최근 유휴 메트릭은 100명 성능근거로 사용하지 않음. 실제 잔여디스크/월간전송할당량은 MCP로 미확인. 기존미커밋675 changed[].
+- 2–4Mbps 영상100명 직송 가정:200–400Mbps/10분15–30GB. 곧바로다운이라고 단정하지 않지만 현재 단일서버 안정성 보장불가. 유료/100인부하실험0. 홈페이지·인증·NEON권한은기존Render, 영상직접업로드/전송은전용CDN 권장. 전용서비스는 아직 미연결.
+- Cloudflare Stream 공식2026-10-22: 저장1000분용량단위 월USD5/전송1000분USD1, 업로드·인코딩/전송대역폭포함. 10분10편 +100명한편씩=USD6, 100명전편=USD15(세금/환율/버퍼링/기존요금/백업별도). Render초과공개전송USD0.15/GB·디스크USD0.25/GB월 확인. 실제청구서/할당잔량은 확인하지 않음. 상세 docs/novaplay-capacity.md.
+- 이번은 이름/기본정책기록/노트 기존서비스배포. 유료자원/증설0·영상업로드비활성/실NEON구매비활성유지. 유료연결 승인후 직접업로드·인코딩상태웹훅·서명재생/자막/이어보기·비용보호·복구범위 구현 필요. NEON유상원장·충전/차감/환불/정산 미완료 구분유지.
+- 문법·번역1544키누락0/기존675불변 확인. 배포결과는 후속기록.

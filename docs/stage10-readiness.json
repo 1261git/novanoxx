@@ -1,5 +1,5 @@
 {
-  "revision": 222,
+  "revision": 223,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7927,5 +7927,41 @@
     },
     "ownedTemporaryServerStopped": true,
     "ownedRuntimeAndSyntheticDataRemoved": true
+  },
+  "novaPlay223": {
+    "revision": 223,
+    "date": "2026-10-22",
+    "name": "NovaPlay",
+    "freeEpisodeNumbers": [
+      1,
+      2
+    ],
+    "defaultPaidEpisodeNeon": 3,
+    "existingService": {
+      "cpu": 0.5,
+      "memoryMB": 512,
+      "diskGB": 5,
+      "instances": 1,
+      "freeDiskBytes": "not measured by MCP"
+    },
+    "recommendation": "Keep site/auth/entitlements on existing Render; direct creator uploads and signed video delivery via dedicated streaming service after cost approval. Not yet integrated.",
+    "candidate": "Cloudflare Stream",
+    "officialUsdPricing": {
+      "storageCapacityMinutes": 1000,
+      "storageMonthly": 5,
+      "deliveredPer1000Minutes": 1,
+      "uploadEncodingIncluded": true
+    },
+    "examples": {
+      "tenEpisodesTenMinutes100OneEpisode": 6,
+      "tenEpisodesTenMinutes100AllEpisodes": 15,
+      "excludes": "tax/exchange rate/buffering and existing Render/backup costs"
+    },
+    "concurrency100": "Not load tested; no guarantee on current direct MP4 server. At 2-4 Mbps/viewer: 200-400 Mbps and 15-30 GB per 10 minutes. Dedicated CDN offloads video bytes but application capacity is not certified.",
+    "paidResourcesCreated": false,
+    "videoUploadsEnabled": false,
+    "liveNeonPurchaseEnabled": false,
+    "deployment": "pending",
+    "costReport": "docs/novaplay-capacity.md"
   }
 }
