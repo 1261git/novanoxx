@@ -1,5 +1,5 @@
 {
-  "revision": 215,
+  "revision": 216,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7326,6 +7326,66 @@
       },
       "operatingAdminUI": "NOT_VERIFIED_NO_ACTIVE_ADMIN_SESSION"
     },
+    "preservation": {
+      "checked": 675,
+      "changed": []
+    },
+    "newPaidResources": 0,
+    "planChanges": 0
+  },
+  "publicCreatorProfiles216": {
+    "revision": 216,
+    "date": "2026-10-21",
+    "commit": "7983ff70183fc6c5351225a7321ffbde1d671c1c",
+    "deploy": "dep-dbc8mle7bikc73fpc7ng",
+    "status": "LIVE",
+    "smoke": {
+      "assets/creator-public-profile.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/creator-public-profile.css": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "page-routing.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/creator-workspace.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/developer-notes-data.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "catalog": {
+        "status": 200,
+        "assets": 0,
+        "includeDemo": true
+      },
+      "invalidProfileStatus": 404
+    },
+    "operatingUI": {
+      "profileFormExternalUrlRemoved": true,
+      "profileAutoAssetsNotice": true,
+      "notesUpdated": true,
+      "consoleErrors": 0,
+      "existingReviewUserProfileNotCreated": true
+    },
+    "localValidation": {
+      "sqlitePostgresPassed": 2,
+      "httpResavePreservesPortfolio": true,
+      "profileAssetAuthorNavigation": true,
+      "guestDetailLoginGuard": true,
+      "mobileWidth": 375,
+      "mobileScrollWidth": 375,
+      "externalBodyLinks": 0,
+      "translationKeys": 1457
+    },
+    "publicProfileScope": "ACTIVE_PUBLIC_ASSETS_ONLY",
+    "soldPortfolioSuggestion": "USER_PROPOSAL_NOT_IMPLEMENTED",
     "preservation": {
       "checked": 675,
       "changed": []
