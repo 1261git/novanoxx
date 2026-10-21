@@ -476,3 +476,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - Cloudflare Stream 공식2026-10-22: 저장1000분용량단위 월USD5/전송1000분USD1, 업로드·인코딩/전송대역폭포함. 10분10편 +100명한편씩=USD6, 100명전편=USD15(세금/환율/버퍼링/기존요금/백업별도). Render초과공개전송USD0.15/GB·디스크USD0.25/GB월 확인. 실제청구서/할당잔량은 확인하지 않음. 상세 docs/novaplay-capacity.md.
 - 이번은 이름/기본정책기록/노트 기존서비스배포. 유료자원/증설0·영상업로드비활성/실NEON구매비활성유지. 유료연결 승인후 직접업로드·인코딩상태웹훅·서명재생/자막/이어보기·비용보호·복구범위 구현 필요. NEON유상원장·충전/차감/환불/정산 미완료 구분유지.
 - 문법·번역1544키누락0/기존675불변 확인. 배포결과는 후속기록.
+
+- 최종223 4a88a2dcb805614cf3ee1b0d6bd7ff20376acc98 / dep-dbckgm4s728c73amhkrg LIVE. 운영공개3파일200/원본일치(HTML정상canonical/운영flag주입만제외), catalog200/공개작품0 유지. 실제NovaPlay메뉴·페이지제목확인/7메뉴top19/가로넘침0. 증빙production223-smoke.json/production223-novaplay.png. 유료서비스/영상활성화/실NEON구매0.

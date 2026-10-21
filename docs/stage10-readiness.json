@@ -7961,7 +7961,16 @@
     "paidResourcesCreated": false,
     "videoUploadsEnabled": false,
     "liveNeonPurchaseEnabled": false,
-    "deployment": "pending",
+    "deployment": {
+      "commit": "4a88a2dcb805614cf3ee1b0d6bd7ff20376acc98",
+      "deployId": "dep-dbckgm4s728c73amhkrg",
+      "status": "LIVE",
+      "verifiedFiles": 3,
+      "catalogStatus": 200,
+      "publicSeries": 0,
+      "ui": "NovaPlay menu/title visible; 7 menu buttons top19; no horizontal overflow",
+      "evidence": "production223-smoke.json; production223-novaplay.png"
+    },
     "costReport": "docs/novaplay-capacity.md"
   }
 }
