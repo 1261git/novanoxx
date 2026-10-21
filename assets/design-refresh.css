@@ -95,3 +95,8 @@ body:has([data-route="contest"]) .route-page,body:has([data-route="contest-submi
   .account-profile-popover :is(a,span,strong,small) { word-break:keep-all; overflow-wrap:anywhere; }
   .account-profile-popover .account-neon-status strong { flex-shrink:0; }
 }
+/* Keep creator inputs readable without focus zoom on small mobile screens. */
+@media (max-width:760px) {
+  #creator-asset-form fieldset,.creator-wizard-step,.creator-wizard-step .form-row>label { min-width:0; }
+  #creator-asset-form :is(input:not([type=checkbox]),select,textarea) { font-size:16px; min-width:0; max-width:100%; }
+}

@@ -1,5 +1,5 @@
 {
-  "revision": 219,
+  "revision": 220,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7602,5 +7602,49 @@
     },
     "newPaidResources": 0,
     "planChanges": 0
+  },
+  "mobileCreatorInputAudit220": {
+    "revision": 220,
+    "date": "2026-10-21",
+    "status": "READY_FOR_DEPLOY",
+    "categories": 6,
+    "steps": 8,
+    "mobileWidths": [
+      390,
+      320
+    ],
+    "allStepsNoOverflow": true,
+    "smallestViewport": {
+      "days": "0",
+      "font": "16px",
+      "price": "100",
+      "scroll": 305,
+      "width": 305
+    },
+    "conditionalQuoteDisabled": true,
+    "legacyQuoteDisabled": true,
+    "restored": {
+      "category": "VIDEO",
+      "contract": false,
+      "customInvalid": true,
+      "duration": "0",
+      "extraReadOnly": true,
+      "mode": "ITEMIZED_SUM",
+      "quoteEnabled": true,
+      "quotePrice": "5",
+      "rights": false,
+      "subcategory": "Commercial"
+    },
+    "consoleErrors": 0,
+    "savedDraftMetadataVerified": true,
+    "productionWrites": 0,
+    "providerCalls": 0,
+    "newPaidResources": 0,
+    "planChanges": 0,
+    "legacyTestNote": "creator-api.test.cjs is stale: baseline fixture omits required thirdPartyAssets and uses non-image bytes for preview. Original test preserved; not counted as PASS. Numeric schema test PASS and actual isolated form save/DB verification PASS.",
+    "preservation": {
+      "checked": 675,
+      "changed": []
+    }
   }
 }
