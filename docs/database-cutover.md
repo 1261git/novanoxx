@@ -386,3 +386,11 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 사전 확인: Render 신뢰 프록시 경계/위조 전달헤더 방어를 확인하기 전 임의 X-Forwarded-For 값을 사용하지 않는다. MDN은 신뢰 프록시 경계 없이 XFF를 사용할 때의 문제를 설명한다. https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Forwarded-For
 - 국가는 IP 위치의 근사값이며 국적/회원 프로필 국가가 아니다. VPN/프록시/모바일 회선/DB 미수록은 오차 또는 미확인으로 표시한다. 프로필/언어를 접속 국가로 대체하지 않는다.
 - 사용자의 이번 선택은 IP 기반 국가 판별 **검토 희망**이며 운영 IP 처리 승인으로 간주하지 않았다. 기존 IP 미수집 안내 변경·처리 근거/공개 안내 검토·활성화 확인이 남는다. 현재 DB 다운로드/국가 판별 의존성 설치/원문 IP 열람·저장·외부전송·GeoIP 활성화는 하지 않았다. 파이 틀과 분류 합계는 준비했으나 국가 데이터는 UNKNOWN으로 명시한다.
+
+## 215. 2026-10-21 — 운영자 발급 Toss 검수용 일반 계정
+
+- 사용자 승인한 기존 운영 서비스와 workspace만 사용. 아이디 novanoxx_test, 내부 이메일 novanoxx_test@novanoxx.com. 로그인 경로 https://novanoxx.com/#/login?review=1 에서 아이디를 입력할 수 있으며 일반 로그인은 이메일 입력 유지. 기존 직접 회원가입은 이메일 인증 방식으로 제공된다.
+- 비밀번호는 사용자가 마지막에 지정한 값을 scrypt salt/hash로만 일회 발급. 평문·salt/hash를 소스·개발자노트·인수인계·증빙에 기록하지 않는다. 임시 환경변수는 발급 확인 후 비워 재실행을 중지한다. 기존 계정이 있으면 덮어쓰지 않으며 nonce 감사 기록으로 중복 발급 방지.
+- 일반 계정이며 관리자 권한·유료 잔액·주문·파일 이용 권한 부여 없음. 운영자 발급 검수 신원으로 인증 상태를 기록하며 실제 이메일 인증 메일 수신을 주장하지 않는다. Toss 신청 제출·계약·실금융 실행 없음. 새 유료 자원·요금제 변경 없음, 기존 사용량 과금 유지.
+- SQLite/PostgreSQL 계정 검사2 PASS: 일반 권한/해시 보관/멱등성/기존 계정 불변/환경 및 입력 제한/아이디 정규화. 관련 통계7검사와 합계9 PASS.
+- 최종 dep-dbc8akbncjis738msjq0 LIVE. 발급 요청 비움 후 로그인200/isAdmin false/FREE/NEON0/관리자 dashboard403/로그아웃200. 운영 로그인 UI 확인. 새 통계의 운영 관리자 조회는 현재 관리자 세션 부재로 미검증; 합성 UI 및 SQLite/PG 검사는 완료. 비밀번호 없는 증빙 production215-report.json/review215-login.png. 기존 미커밋675개 변경0.

@@ -1,5 +1,5 @@
 {
-  "revision": 213,
+  "revision": 215,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7287,5 +7287,50 @@
       "changed": []
     },
     "initialProductionIssue": "Legacy metadata is TEXT. Initial category operator caused dashboard aggregation failure; fixed with explicit jsonb cast without modifying stored data, retested TEXT fixture and operating screen."
+  },
+  "reviewAccountAndSegmentedTraffic215": {
+    "date": "2026-10-21",
+    "revision": 215,
+    "commit": "08bb1323e2bc29feb99b28da1eace4a0df632237",
+    "deploy": "dep-dbc8akbncjis738msjq0",
+    "status": "LIVE",
+    "reviewAccount": {
+      "alias": "novanoxx_test",
+      "loginUrl": "https://novanoxx.com/#/login?review=1",
+      "loginStatus": 200,
+      "isAdmin": false,
+      "plan": "FREE",
+      "neonBalance": 0,
+      "adminDashboardStatus": 403,
+      "logoutStatus": 200,
+      "temporaryProvisionRequestCleared": true,
+      "credentialsRecorded": false
+    },
+    "analytics": {
+      "testsPassed": 9,
+      "memberGuestClicksSeparated": true,
+      "guestDetailLoginRequired": true,
+      "ipLookupEnabled": false,
+      "country": "UNKNOWN",
+      "aggregateRetentionDays": 120,
+      "accountIdsStored": false,
+      "ipStored": false,
+      "consentPopupAdded": false,
+      "syntheticUI": {
+        "allClicks": 5,
+        "guestClicks": 2,
+        "memberDetailViews": 1,
+        "countryTooltip": true,
+        "mobileWidth": 375,
+        "mobileScrollWidth": 375
+      },
+      "operatingAdminUI": "NOT_VERIFIED_NO_ACTIVE_ADMIN_SESSION"
+    },
+    "preservation": {
+      "checked": 675,
+      "changed": []
+    },
+    "newPaidResources": 0,
+    "planChanges": 0
   }
 }
