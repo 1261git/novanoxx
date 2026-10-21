@@ -489,3 +489,7 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 유료회차권한확인후30분HLS token(downloadable:false), rawmedia는원격파일비노출/직접다운로드차단. Cloudflare다운로드생성API호출0. 브라우저저장메뉴숨김은추가장치/완전DRM·녹화차단아님. HLS자동화질/네이티브HLS 또는MIT hls.js1.6.13 포함/선로딩최소/재생버튼선택후요청·재시도/이어보기·기존VTT유지.
 - 관리자대시보드 NovaPlay·Cloudflare 바로가기/저장·전송·USD예상표/800분·5000분안내. GraphQL권한없음/오류는미확인표시(0원조작없음),월UTC기준/5분캐시/청구서바로가기. Stream영상원문은Cloudflare에보관·기존R2파일백업자동복제미구현구분. 기존자료보존/NEON운영실구매차단유지.
 - SQLite/PG필수검사+기존생명주기/기기이어보기 확인, 로컬6초HLS실재생ready4/noerror. 번역1578키누락0, 기존675변경0. 실제배포/Cloudflare검증 후속기록.
+
+- 실제224 운영6197df6 / dep-dbckt8bm8hqs73aeebjg LIVE. 공개5파일200·원본일치, health200/Postgres, catalog공개드라마0유지, 익명usage403. 운영서버실조회 storage0/1000,월delivery0,Analytics권한true,예상USD5,운영웹훅복구키존재true(키값노출0).
+- 동일3초합성비공개영상1개 실제Stream TUS204/변환ready/서명HLS200·FFmpeg1초실디코딩성공/CORS정상/서명없는UID401/MP4다운로드403. 원격UID ec33dfe106a94a51005d7602f60f63bf, 이름 NovaPlay private connection check 2026-10-22. Cloudflare비공개로보존·사이트카탈로그등록0·회원/상품/거래수정0. 서버DATA_DIR/drama-stream-connection-check-20261022.json 비밀없는결과보관. 자동웹훅은대응앱업로드UID가없어공개작품생성없이무시.
+- 로그인요청 후에도운영브라우저는novanoxx_test라관리자실제UI열람은미확인. 격리실제UI/합성요금표확인과운영서버실사용량조회는구분. 관리자로그인시대시보드상단NovaPlay버튼으로조회가능. 실제검사7PASS/번역1578키/기존675변경0. 노트실검증반영과처리중상태문구정리는후속배포.

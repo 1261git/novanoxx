@@ -7976,7 +7976,7 @@
   "cloudflareStream224": {
     "revision": 224,
     "date": "2026-10-22",
-    "status": "DEPLOYMENT_PENDING",
+    "status": "LIVE_REAL_PROVIDER_VERIFIED",
     "subscription": "Cloudflare Images & Stream Starter Bundle",
     "monthlyBaseUsd": 5,
     "includedStorageMinutes": 1000,
@@ -7996,6 +7996,31 @@
       "local actual HLS 6sec readyState4/noerror",
       "translation1578 keys missing0"
     ],
-    "production": "pending"
+    "production": {
+      "commit": "6197df6bfe2850178a46f2ead86b43d49bc231de",
+      "deploy": "dep-dbckt8bm8hqs73aeebjg",
+      "status": "LIVE",
+      "filesMatch": 5,
+      "health": 200,
+      "database": "postgres",
+      "anonymousUsageDenied": 403,
+      "cloudStorageMinutesBeforeCheck": 0,
+      "cloudCapacityMinutes": 1000,
+      "cloudDeliveryMinutesBeforeCheck": 0,
+      "analyticsAvailable": true,
+      "estimatedBaseUsd": 5,
+      "webhookRecoveryPresent": true,
+      "privateProbe": {
+        "uid": "ec33dfe106a94a51005d7602f60f63bf",
+        "upload": 204,
+        "duration": 3,
+        "signedHls": 200,
+        "rawUid": 401,
+        "download": 403,
+        "hlsDecoded": true,
+        "published": false
+      },
+      "adminUi": "production browser is still review account; local real UI tested with synthetic data; production server queries verified"
+    }
   }
 }
