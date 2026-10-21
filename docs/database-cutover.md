@@ -443,3 +443,12 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 개발자노트/운영매뉴얼/준비현황 갱신. 기존 Render 자원 재사용/새유료자원·요금제변경0·기존사용량 요금유지. 배포범위 등록 JS2/CSS1/노트. 최종 배포 확인은 후속기록. 증빙 mobile220-browser-report.json/mobile220-saved-draft.json/mobile220-result.json/mobile220-inputs.png.
 
 - 최종220 afae8ab0352b582efc41ac312b051a7b0747bfe5 / dep-dbcb9smk1f9s73c09hh0 LIVE(61초). 변경4파일200·정규화본문일치/catalog200, 운영 신규개발자노트 표기·콘솔오류0 확인. 수정된 전체등록폼은 운영상품저장 없이 격리 브라우저/DB로 검증. 1475번역키 누락0/기존675변경0. 신규검수서버종료/이번 runtime·합성DB만 정리·증빙보존. 증빙 production220-report.json/production220-smoke.json/production220-notes.png.
+
+
+## 221. 2026-10-22 — 오래된 등록 자동검사 해결·실제 기능 문제 구분
+
+- 220에서 미통과로 남긴 creator-api.test.cjs 재현: 최신 필수 thirdPartyAssets 누락으로 계약 검사 전에 고지 오류, 일반 문자열을 PNG 미리보기로 제출, 번역 span/esc 문맥이 추가된 UI 함수를 과거 텍스트/정확한 마크업으로 비교하던 시험자료 불일치. 서비스 보호 규칙을 완화하지 않음.
+- 실제 로컬 FFmpeg로 합성 PNG 생성해 원본 바이트 불변, 보호 JPEG 변환·증빙행, 손상 PNG 거부/미완료파일·행 정리, 고지 미입력/계약 미확인/권리 미확인 제출 차단, 다른 사용자 접근·수정 차단, 심사→관리자 승인→공개목록·원본 공개404까지 검증. UI 함수는 현재 번역 span과 문구를 함께 검증. 임시 DB close/자체 생성 디렉터리 정리·검사 프로세스 PATH 복구.
+- creator-api.test.cjs + creator-metadata-input.test.cjs 필수2검사 모두 PASS(약1초). 실제 로컬 이미지 변환/격리 SQLite 범위이며 운영 상품 저장·외부결제·메일·PG 호출0. 제한 실행환경의 Windows 임시파일 rename EPERM은 로컬 실행권한 환경 문제로 별도 확인 후 정상 실행환경에서 통과. PostgreSQL·전체 사이트/모든 검사 통과로 확대하지 않음.
+- 제품 기능 수정 필요 없음: 서비스코드·운영설정·DB/파일 변경0, 운영 재배포 불필요. 기존 LIVE afae8ab / dep-dbcb9smk1f9s73c09hh0 유지. 검사/기록만 [skip render] 보관하여 추가 배포 방지. 기존 미커밋675 changed[], 새유료자원·요금제변경0. 기존 운영·TEST 자료 보존.
+- 증빙 creator221-test-output.txt/creator221-resolution.json. 220의 오래된 검사 미통과 항목은 이번 갱신으로 해결됨.

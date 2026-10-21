@@ -1,5 +1,5 @@
 {
-  "revision": 220,
+  "revision": 221,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7673,5 +7673,44 @@
     "temporaryServerStopped": true,
     "ownedSyntheticDataAndRuntimeRemoved": true,
     "translationKeys": 1475
+  },
+  "creatorApiLegacyTestResolution221": {
+    "revision": 221,
+    "date": "2026-10-22",
+    "status": "RESOLVED_TEST_FIXTURE",
+    "productionCodeChanged": false,
+    "productionRedeployed": false,
+    "lastLiveCommit": "afae8ab0352b582efc41ac312b051a7b0747bfe5",
+    "lastLiveDeploy": "dep-dbcb9smk1f9s73c09hh0",
+    "causes": [
+      "Fixture omitted the required third-party material disclosure",
+      "Preview fixture was plain text instead of an actual image",
+      "UI helper now emits translated HTML and requires the esc context; old assertion expected plain text and exact old markup"
+    ],
+    "changes": [
+      "Use an actual FFmpeg-generated synthetic PNG",
+      "Assert unchanged original bytes and JPEG protected derivative with recorded preview proof",
+      "Verify corrupt image rejection leaves no file records or incomplete upload",
+      "Keep third-party disclosure, rights and contract rejection checks",
+      "Update UI helper expectations for translated markup",
+      "Close the isolated database, remove only owned temporary fixtures and restore test process PATH"
+    ],
+    "checks": {
+      "focusedTests": 2,
+      "passed": 2,
+      "failed": 0,
+      "actualFFmpeg": true,
+      "database": "isolated SQLite",
+      "scope": "creator API save/upload/review/approval/public catalog/original access plus category numeric validation",
+      "operatingWrites": 0,
+      "providerCalls": 0
+    },
+    "preservation": {
+      "checked": 675,
+      "changed": []
+    },
+    "newPaidResources": 0,
+    "planChanges": 0,
+    "existingLiveCodeUnchanged": true
   }
 }
