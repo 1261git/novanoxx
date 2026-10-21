@@ -422,3 +422,11 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 필수3검사 PASS: 예시 불변스냅샷/동일이름 실계정 분리/UUID기준 이름 갱신, SQLite/PostgreSQL 최신 프로필명이 ACTIVE/SOLD의 catalog/공개모음에 반영·기존 metadata/원본보호/정지탈퇴 유지. 격리 실제폼 Original Creator→NovaNoxX 저장 후 실제ACTIVE/SOLD 카드2개 새이름/동일UUID, 예시NovaNoxX2작품은 별도주소·배지 유지 확인. 예시8카드 링크·Nova예시2/판매완료예시1·기존 보호이미지960px·모바일390px 문서폭/스크롤375·콘솔오류0 확인. 합성DB 상품행전체/외부portfolio 불변·예시회원생성0 확인.
 - 6언어1469키 누락0/구문·diff 확인, 기존 미커밋675 changed[]. 운영시험프로필/상품 생성0. 기존사용량 과금유지, 새유료자원/요금제 변경0. 최종운영배포는 후속기록.
 - 최종운영3f364de1663672eb3cee82d1dab8c1924c742faf / dep-dbc9et0u01pc73d1ejeg LIVE(50.6초). 새모듈/모음/CSS/라우팅/노트5파일200·줄바꿈정규화일치, catalog200/includeDemo true/실제연결상품0. 실제운영 카드8작가링크/배지8·이름클릭→Nova예시모음2작품/비연결안내/콘솔오류0 확인. 실제활동명 변경은 운영자료를 바꾸지 않고 격리실제폼/DB검증으로 구분. 증빙 production218-report.json/production218-smoke.json/profile218-preservation.json/profile218-production-example.png. 기존675파일변경0. 새 검수 임시서버종료·의존성/합성자료만 정리, 기존자료 보존.
+
+## 219. 2026-10-21 — 상단 크리에이터 작가 목록·분야별 사양 step 오류 수정
+
+- 기존 #/creators 상단에 작가목록을 추가하고 기존 크리에이터 시작/등록과 요금제 안내는 하단 유지. 실제 크리에이터/예시 작가를 섹션·배지·주소로 구분, 이름 클릭→개인작품, 판매중/판매완료 건수. 실제 목록은 users/creator_profiles/공개catalog ACTIVE/SOLD 연결 작품이 있는 크리에이터만이며 초안/심사/중지/TEST·정지/탈퇴 제외. 개인정보가 있는 비공개 프로필까지 전 회원 목록으로 노출하지 않음.
+- GET /api/catalog/creators: 공개UUID·활동명·공개사진URL·공개작품 상태별건수만, 50건/더보기·안정 정렬·offset검증. 이메일/내부계정ID/외부주소/소개/국가/원본 제외. 기존 creator_public_links 지연발급 재사용, 새스키마/거래변경 없음. 예시는 기존8작품/7작가 스냅샷의 목록만 반환, 실회원생성 없음.
+- 입력오류 원인은 공통 정수 input의 min=0.000001 / step=1 조합: 유효값이 0.000001+n이라 정수3000이 stepMismatch. 영상·2D 가로/세로,3D폴리곤,AUDIO샘플레이트,DOCUMENTS페이지수7항목에 공통영향. integer min=1/step=1, 소수4항목은 min=0/step=any + 기존 서버공용validate로 >0·유한수·상한검증, max=MAX_SAFE_INTEGER와 모바일 inputmode 지정. 빈 선택값 유지. 서버사양/저장자료·문자항목 기준은 그대로.
+- 필수4검사PASS: SQLite/PostgreSQL 목록 공개범위·상태건수·정지/탈퇴·개인ID비노출·정렬/50+6페이지중복없음·offset/method, 예시목록분리, 6분야7정수/4소수 서버규칙. 실제 브라우저 공통사양 폼에서 11개 숫자입력 모두 3000/29.97 valid·stepMismatch false, 정수1.5/소수0 거절·빈값valid. 문자항목에는 step오류 없음. 실제 격리사이트에서 동명이 실제1명/예시7명 구분 및 상단메뉴·두프로필 이동, 모바일390px 문서폭/스크롤375·콘솔오류0. 숫자체크는 공통렌더러를 그대로 사용하는 최소폼 검수이며 운영에 상품 저장하지 않음.
+- 6언어1475키 누락0, 구문/diff·기존675파일변경0 확인. 기존운영/TEST/상품/파일/미커밋 보존. 새 유료자원/요금제변경0·기존사용량 과금유지. 최종운영배포 후속기록.

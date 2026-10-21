@@ -12,8 +12,13 @@ module.exports=function({db,json,assets}){
   return db.prepare("SELECT p.user_id,p.display_name,p.bio,p.country,p.language,v.updated AS avatar_version FROM creator_public_links l JOIN creator_profiles p ON p.user_id=l.user_id JOIN users u ON u.id=p.user_id LEFT JOIN member_restrictions r ON r.user_id=p.user_id LEFT JOIN creator_avatars v ON v.user_id=p.user_id WHERE l.public_id=? AND COALESCE(r.state,'ACTIVE') NOT IN ('SUSPENDED','WITHDRAWN')").get(id)||null;
  }
  async function handle(req,res,name){
-  if(!['/api/catalog/creator','/api/catalog/creator/avatar'].includes(name))return false;
+  if(!['/api/catalog/creator','/api/catalog/creator/avatar','/api/catalog/creators'].includes(name))return false;
   if(req.method!=='GET'){json(res,405,{error:'지원하지 않는 요청이에요.'});return true;}
+  if(name==='/api/catalog/creators'){
+   const raw=new URL(req.url,'http://localhost').searchParams.get('offset')||'0';if(!/^\d{1,7}$/.test(raw)||Number(raw)>1000000){json(res,400,{error:'INVALID_OFFSET'});return true;}const offset=Number(raw);
+   const rows=db.prepare("SELECT p.user_id,p.display_name,v.updated AS avatar_version,SUM(CASE WHEN a.status='ACTIVE' THEN 1 ELSE 0 END) AS active_count,SUM(CASE WHEN a.status='SOLD' THEN 1 ELSE 0 END) AS sold_count FROM creator_profiles p JOIN users u ON u.id=p.user_id JOIN creator_assets a ON a.user_id=p.user_id JOIN catalog_links l ON l.asset_id=a.id LEFT JOIN asset_publication_policy s ON s.asset_id=a.id LEFT JOIN member_restrictions r ON r.user_id=p.user_id LEFT JOIN creator_avatars v ON v.user_id=p.user_id WHERE a.status IN ('ACTIVE','SOLD') AND COALESCE(s.visibility,'PUBLIC')='PUBLIC' AND COALESCE(r.state,'ACTIVE') NOT IN ('SUSPENDED','WITHDRAWN') GROUP BY p.user_id,p.display_name,v.updated ORDER BY p.display_name,p.user_id LIMIT 51 OFFSET ?").all(offset);
+   json(res,200,{creators:rows.slice(0,50).map(p=>{const id=ensure(p.user_id);return {publicId:id,displayName:p.display_name,activeCount:Number(p.active_count),soldCount:Number(p.sold_count),avatarUrl:p.avatar_version?'/api/catalog/creator/avatar?id='+id+'&v='+p.avatar_version:null};}),nextOffset:rows.length>50?offset+50:null});return true;
+  }
   const id=new URL(req.url,'http://localhost').searchParams.get('id'),profile=find(id);
   if(!profile){json(res,404,{error:'공개 프로필을 찾을 수 없습니다.'});return true;}
   if(name.endsWith('/avatar')){
