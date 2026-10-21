@@ -1,5 +1,5 @@
 {
-  "revision": 218,
+  "revision": 219,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7522,6 +7522,80 @@
     "testsPassed": 3,
     "translationKeys": 1469,
     "productionRenameNotPerformed": true,
+    "preservation": {
+      "checked": 675,
+      "changed": []
+    },
+    "newPaidResources": 0,
+    "planChanges": 0
+  },
+  "creatorDirectoryAndNumericInputs219": {
+    "revision": 219,
+    "date": "2026-10-21",
+    "commit": "1ebd669cc7b46e40a159570f7e35bd9a7e3bf1b1",
+    "deploy": "dep-dbc9p0rncjis73erpfs0",
+    "status": "LIVE",
+    "smoke": {
+      "assets/creator-directory.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/creator-metadata-schema.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/creator-public-profile.css": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/demo-creators.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/developer-notes-data.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "page-routing.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "directory": {
+        "status": 200,
+        "realCreators": 0,
+        "nextOffset": null
+      },
+      "catalog": {
+        "status": 200,
+        "assets": 0,
+        "includeDemo": true
+      }
+    },
+    "operatingUI": {
+      "exampleCreators": 7,
+      "realCreators": 0,
+      "emptyRealState": true,
+      "exampleNameToProfile": true,
+      "consoleErrors": 0
+    },
+    "localUI": {
+      "sameNameRealAndExampleSeparated": true,
+      "realNameToProfile": true,
+      "exampleNameToProfile": true,
+      "mobileWidth": 375,
+      "mobileScrollWidth": 375
+    },
+    "numericInputs": {
+      "integerFields": 7,
+      "decimalFields": 4,
+      "allValidValuesAccepted": true,
+      "stepMismatch": false,
+      "invalidValuesRejected": true,
+      "optionalEmptyValid": true
+    },
+    "testsPassed": 4,
+    "translationKeys": 1475,
+    "productionAssetSaveNotPerformed": true,
     "preservation": {
       "checked": 675,
       "changed": []
