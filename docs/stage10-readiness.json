@@ -8020,11 +8020,11 @@
         "hlsDecoded": true,
         "published": false
       },
-      "adminUi": "production browser is still review account; local real UI tested with synthetic data; production server queries verified",
+      "adminUi": "VERIFIED after owner Google admin login; storage0.05/1000 min, videoCount1, delivery0/5000 included min, baseUSD5/deliveryUSD0/totalUSD5, webhook connected; no horizontal overflow at760px",
       "finalCommit": "0e2c1617e221e99d1214da1f7b4d8fab2cb02580",
       "finalDeploy": "dep-dbcl10u1egvs73erqm2g",
       "finalStatus": "LIVE",
-      "evidence": "stream224-result.json; stream224-cloud-protection.png; stream224-subscription.png"
+      "evidence": "stream224-result.json; stream224-cloud-protection.png; stream224-subscription.png; stream224-production-usage.png"
     }
   }
 }

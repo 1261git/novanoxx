@@ -495,3 +495,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 로그인요청 후에도운영브라우저는novanoxx_test라관리자실제UI열람은미확인. 격리실제UI/합성요금표확인과운영서버실사용량조회는구분. 관리자로그인시대시보드상단NovaPlay버튼으로조회가능. 실제검사7PASS/번역1578키/기존675변경0. 노트실검증반영과처리중상태문구정리는후속배포.
 
 - 최종224 0e2c1617e221e99d1214da1f7b4d8fab2cb02580 / dep-dbcl10u1egvs73erqm2g LIVE, 변경노트/처리문구2파일200일치. Cloudflare관리UI에서도 Require Signed URLs=true/Allowed Origins=novanoxx.com/Automatically Delete=false/3초영상Ready 확인. 스크린샷 stream224-cloud-protection.png 및 구독포함량 stream224-subscription.png. 임시로컬서버종료/이번runtime·합성DB·helper만경로검증후정리, 증빙보존. 기존675변경0. 공개영상0·원본/운영/TEST변경0·새Render자원0, 선택Cloudflare월5구독만활성. 전체상영서비스완료와NEON실제구매연결은구분.
+
+- 사용자관리자로그인완료후운영실제UI최종확인: 관리자대시보드→NovaPlay버튼 정상. storage0.05/1000분/영상1개/월delivery0/5000기본포함·baseUSD5/deliveryUSD0/totalUSD5/웹훅연결안내오류없음, 760px가로넘침0. 실제관리자UI미확인상태해소. 증빙stream224-production-usage.png, 신규영상/결제재검사0.
