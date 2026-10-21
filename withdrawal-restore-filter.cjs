@@ -13,6 +13,7 @@ module.exports=function({db,current,isolatedRestoreConfirmed=false,now=Date.now(
   if(exists('public.account_email_preferences'))db.prepare('UPDATE account_email_preferences SET price=0,sold=0,new_assets=0,updated=?').run(now);
   if(exists('public.visitor_browser_daily'))db.exec('DELETE FROM visitor_browser_daily');
   if(exists('public.visitor_hourly_totals'))db.prepare('DELETE FROM visitor_hourly_totals WHERE date_hour<?').run(require('./visitor-analytics.cjs').day(now-119*86400000)+'T00');
+  if(exists('public.asset_traffic_daily'))db.prepare('DELETE FROM asset_traffic_daily WHERE day_key<?').run(require('./asset-traffic.cjs').day(now-119*86400000));
   if(exists('public.visitor_daily_totals'))db.prepare('DELETE FROM visitor_daily_totals WHERE date_key<?').run(require('./visitor-analytics.cjs').day(now-119*86400000));
   if(exists('public.account_email_observations'))db.exec('DELETE FROM account_email_observations');
   db.exec('COMMIT');

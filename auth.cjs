@@ -23,6 +23,7 @@ const memberAdmin=require('./member-administration.cjs')({db,user,json,origin:de
 const creatorApi=require('./creator-api.cjs')(db,dir,user,json,isScopedAdmin,{checkActivation:checkEngineActivation,usage:()=>localEngine?.usage()});
 const savedApi=require('./account-saved.cjs')({db,user,json,origin:deployment.base});
 const visitors=require('./visitor-analytics.cjs')({db,user,json,origin:deployment.base,isAdmin:isScopedAdmin,enabled:process.env.RENDER_SERVICE_ID==='srv-db5aqunlk1mc739bi0m0'&&process.env.NNX_REVIEW_MODE!=='1'});
+const assetTraffic=require('./asset-traffic.cjs')({db,user,json,origin:deployment.base,isAdmin:isScopedAdmin,enabled:process.env.RENDER_SERVICE_ID==='srv-db5aqunlk1mc739bi0m0'&&process.env.NNX_REVIEW_MODE!=='1'});
 const engagement=require('./engagement.cjs')({db,user,json,origin:deployment.base,isAdmin:baseAdmin});
 const catalogAdmin=require('./catalog-admin.cjs')({db,user,json,origin:deployment.base,isAdmin:isScopedAdmin,checkActivation:checkEngineActivation});
 const applicationEngine=require('./application-engine-bridge.cjs')({user,json,origin:deployment.base,isAdmin:isScopedAdmin});
@@ -34,7 +35,7 @@ const neonPayments=require('./neon-payments.cjs')(db,user,json,{notify:input=>ac
 if(process.env.NNX_LOCAL_ENGINE_TEST==='1'){localEngine=require('./local-test-engine.cjs')({db,dir});applicationEngine.configure(localEngine);}
 if(process.env.NNX_REVIEW_MODE==='1'){localEngine=require('./review-engine.cjs')({db,dir});applicationEngine.configure(localEngine);}
 const productionSite=process.env.RENDER_SERVICE_ID==='srv-db5aqunlk1mc739bi0m0'&&process.env.NNX_REVIEW_MODE!=='1';
-if(productionSite){localEngine=require('./production-runtime.cjs')({db,dir});applicationEngine.configure(localEngine);}
+if(productionSite){localEngine=require('./production-runtime.cjs')({db,dir,onAssetView:input=>assetTraffic.detail(input)});applicationEngine.configure(localEngine);}
 const previewEnv=productionSite?{productionSite:true,NNX_REVIEW_MODE:'1',NNX_REVIEW_TOSS_CLIENT_KEY:/^test_ck_/.test(process.env.TOSS_CLIENT_KEY||'')?process.env.TOSS_CLIENT_KEY:undefined}:process.env;
 const reviewCheckout=process.env.NNX_REVIEW_MODE==='1'||productionSite?require('./review-checkout.cjs')({db,user,json,origin:deployment.base,env:previewEnv}):null;
 const operatingFinance=require('./operating-finance-http.cjs')({finance:localEngine?.finance,analytics:localEngine?.analytics,user,json,origin:deployment.base});
@@ -42,6 +43,7 @@ const subscriptionRefundsHttp=require('./subscription-refunds-http.cjs')({refund
 const operatingPayouts=require('./operating-payouts-http.cjs')({payouts:localEngine?.payouts,user,json,origin:deployment.base});
 const operatingCheckout=localEngine?.commerce?require('./operating-commerce-http.cjs')({commerce:localEngine.commerce,subscription:localEngine.subscription,user,json,origin:deployment.base}):null;
 accountMail=require('./mail-runtime.cjs').configured({db,origin:deployment.base});
+if(productionSite&&process.env.NNX_REVIEW_ACCOUNT_PROVISION){try{const result=accountMail?require('./review-account-provision.cjs').provision({db}):{status:'MAIL_NOT_CONFIGURED'};console.log('NNX_REVIEW_ACCOUNT_'+result.status);}catch{console.error('NNX_REVIEW_ACCOUNT_PROVISION_DEFERRED');}}
 const withdrawal=require('./account-withdrawal.cjs')({db,user,json,origin:deployment.base,isAdmin:isScopedAdmin,sessionHash:req=>hashToken(token(req))});
 if(localEngine?.tick){const tick=localEngine.tick.bind(localEngine);localEngine.tick=async()=>{withdrawal.purge();return tick();};}
 const attempts = new Map();
@@ -74,6 +76,7 @@ module.exports=async function auth(req,res,name){
  }
  if(localEngine?.admin&&(name.startsWith('/api/auth/admin/')||/\/engine\/(?:dispute-admin|subscription-admin|roles|role-action)/.test(name))){const actor=user(req);if(!actor){json(res,401,{error:'로그인이 필요합니다.'});return true;}if(!localEngine.admin.route(actor.id,name,req.method)){json(res,403,{error:'ACCESS_DENIED'});return true;}}
  if(await savedApi(req,res,name))return true;
+ if(await assetTraffic.handle(req,res,name))return true;
  if(await visitors.handle(req,res,name))return true;
  if(await engagement.handle(req,res,name))return true;
  if(await catalogAdmin(req,res,name))return true;
@@ -104,7 +107,7 @@ module.exports=async function auth(req,res,name){
  if(name==='/api/auth/creator-profile'){const u=user(req);if(!u){json(res,401,{error:'로그인이 필요해요.'});return true;}const d=await body(req);const clean=k=>typeof d[k]==='string'?d[k].trim():'';const profile={displayName:clean('displayName'),bio:clean('bio'),country:clean('country'),language:clean('language'),portfolio:clean('portfolio')};let valid=profile.displayName.length>=1&&profile.displayName.length<=40&&profile.bio.length>=1&&profile.bio.length<=1000&&profile.country.length>=1&&profile.country.length<=60&&['ko','en','ko,en'].includes(profile.language)&&profile.portfolio.length<=500;if(profile.portfolio){try{valid=valid&&['https:','http:'].includes(new URL(profile.portfolio).protocol)}catch{valid=false}}if(!valid){json(res,400,{error:'프로필 입력값을 확인해주세요. 포트폴리오는 http 또는 https 주소로 입력해주세요.'});return true;}db.prepare('INSERT INTO creator_profiles VALUES(?,?,?,?,?,?,?) ON CONFLICT(user_id) DO UPDATE SET display_name=excluded.display_name,bio=excluded.bio,country=excluded.country,language=excluded.language,portfolio=excluded.portfolio,updated=excluded.updated').run(u.id,profile.displayName,profile.bio,profile.country,profile.language,profile.portfolio,Date.now());json(res,200,{profile});return true;}
  if(!['/api/auth/signup','/api/auth/login'].includes(name)){json(res,404,{error:'인증 메일 서비스는 아직 연결되지 않았습니다.'});return true;}
  const key=req.socket.remoteAddress;const now=Date.now();let a=attempts.get(key);if(!a||now-a.start>600000){a={start:now,count:0};attempts.set(key,a);}if(++a.count>30){json(res,429,{error:'요청이 많아요. 잠시 후 다시 시도해주세요.'});return true;}
- const data=await body(req);const email=typeof data.email==='string'?data.email.trim().toLowerCase():'';const password=typeof data.password==='string'?data.password:'';
+ const data=await body(req);const email=name.endsWith('/login')?require('./review-account-provision.cjs').normalize(data.email):typeof data.email==='string'?data.email.trim().toLowerCase():'';const password=typeof data.password==='string'?data.password:'';
  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||email.length>254||password.length<8||password.length>128){json(res,400,{error:'이메일과 비밀번호(8~128자)를 확인해주세요.'});return true;}
  if(name.endsWith('/signup')){const nameValue=typeof data.name==='string'?data.name.trim():'';if(!nameValue||nameValue.length>40){json(res,400,{error:'이름을 1~40자로 입력해주세요.'});return true;}
  const salt=crypto.randomBytes(16).toString('hex');const hashed=await derive(password,salt,64);const u={id:crypto.randomUUID(),email,name:nameValue};
@@ -125,3 +128,5 @@ module.exports.configureEngine=services=>applicationEngine.configure(services);
 module.exports.localEngine=()=>localEngine;
 
 module.exports.visitors=()=>visitors;
+
+module.exports.assetTraffic=()=>assetTraffic;
