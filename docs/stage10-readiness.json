@@ -7716,7 +7716,7 @@
   "dramaTheater222": {
     "revision": 222,
     "date": "2026-10-22",
-    "status": "READY_FOR_DEPLOY",
+    "status": "LIVE",
     "policy": {
       "menu": "theater",
       "creatorStudio": "drama-studio",
@@ -7749,7 +7749,6 @@
       ],
       "actualVideoProbe": true,
       "syntheticPaymentAdapterOnly": true,
-      "productionWritesPerformed": 0,
       "financialProviderCalls": 0,
       "freeGuestPlayback": {
         "duration": 40,
@@ -7782,7 +7781,8 @@
         "width": 375
       },
       "consoleErrors": 0,
-      "translationKeys": 1544
+      "translationKeys": 1544,
+      "productionBusinessDataWrites": 0
     },
     "remainingBeforeOperatingVideo": {
       "costAndProviderDecision": true,
@@ -7800,6 +7800,132 @@
       "changed": []
     },
     "newPaidResources": 0,
-    "planChanges": 0
+    "planChanges": 0,
+    "commit": "9037a9f2f5f49e2ad333642492292e5ba2d5381d",
+    "deploy": "dep-dbck9761egvs73eqvaeg",
+    "initialFeatureCommit": "748c2eb45dc4b4804fae3ec6f3acc30981b5f6b1",
+    "initialFeatureDeploy": "dep-dbck7cdg1s2s7385733g",
+    "smoke": {
+      "date": "2026-10-22",
+      "commit": "9037a9f2f5f49e2ad333642492292e5ba2d5381d",
+      "deploy": "dep-dbck9761egvs73eqvaeg",
+      "status": "LIVE",
+      "files": {
+        "assets/drama-progress.js": {
+          "status": 200,
+          "matchesLocalIgnoringCRLF": true
+        },
+        "assets/drama-theater.css": {
+          "status": 200,
+          "matchesLocalIgnoringCRLF": true
+        },
+        "page-routing.js": {
+          "status": 200,
+          "matchesLocalIgnoringCRLF": true
+        },
+        "assets/creator-workspace.js": {
+          "status": 200,
+          "matchesLocalIgnoringCRLF": true
+        },
+        "assets/ui-translations-extra.js": {
+          "status": 200,
+          "matchesLocalIgnoringCRLF": true
+        },
+        "assets/drama-theater.js": {
+          "status": 200,
+          "matchesLocalIgnoringCRLF": true
+        },
+        "assets/developer-notes-data.js": {
+          "status": 200,
+          "matchesLocalIgnoringCRLF": true
+        },
+        "assets/ui-translations.js": {
+          "status": 200,
+          "matchesLocalIgnoringCRLF": true
+        }
+      },
+      "api": {
+        "drama/catalog": {
+          "status": 200,
+          "series": 0
+        },
+        "drama/studio": {
+          "status": 401
+        },
+        "catalog": {
+          "status": 200,
+          "assets": 0,
+          "includeDemo": true
+        },
+        "health": {
+          "status": 200,
+          "database": "postgres",
+          "healthy": "ok"
+        }
+      },
+      "headerTheater": true,
+      "initialFeatureCommit": "748c2eb45dc4b4804fae3ec6f3acc30981b5f6b1",
+      "initialFeatureDeploy": "dep-dbck7cdg1s2s7385733g",
+      "finalHeaderCSS": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      }
+    },
+    "operatingUI": {
+      "emptyState": true,
+      "menu": true,
+      "freePolicy": true,
+      "consoleErrors": [],
+      "developerNote": true,
+      "desktopHeader": {
+        "buttons": [
+          {
+            "bottom": 56,
+            "text": "마켓플레이스",
+            "top": 19
+          },
+          {
+            "bottom": 56,
+            "text": "상영관",
+            "top": 19
+          },
+          {
+            "bottom": 56,
+            "text": "콘테스트",
+            "top": 19
+          },
+          {
+            "bottom": 56,
+            "text": "제작 의뢰 ↗",
+            "top": 19
+          },
+          {
+            "bottom": 56,
+            "text": "크리에이터",
+            "top": 19
+          },
+          {
+            "bottom": 56,
+            "text": "About",
+            "top": 19
+          },
+          {
+            "bottom": 56,
+            "text": "FAQ",
+            "top": 19
+          }
+        ],
+        "scroll": 1265,
+        "width": 1265
+      },
+      "tabletHeader": {
+        "headerBottom": 124,
+        "maxButtonBottom": 111,
+        "scroll": 1009,
+        "width": 1009
+      }
+    },
+    "ownedTemporaryServerStopped": true,
+    "ownedRuntimeAndSyntheticDataRemoved": true
   }
 }
