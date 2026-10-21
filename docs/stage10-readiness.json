@@ -1,5 +1,5 @@
 {
-  "revision": 223,
+  "revision": 224,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7972,5 +7972,30 @@
       "evidence": "production223-smoke.json; production223-novaplay.png"
     },
     "costReport": "docs/novaplay-capacity.md"
+  },
+  "cloudflareStream224": {
+    "revision": 224,
+    "date": "2026-10-22",
+    "status": "DEPLOYMENT_PENDING",
+    "subscription": "Cloudflare Images & Stream Starter Bundle",
+    "monthlyBaseUsd": 5,
+    "includedStorageMinutes": 1000,
+    "includedMonthlyDeliveryMinutes": 5000,
+    "extraDeliveryUsdPer1000Minutes": 1,
+    "automaticStorageUpgrade": false,
+    "downloadGenerationEnabled": false,
+    "signedPlaybackMinutes": 30,
+    "access": "same free/paid episode entitlements; live NEON still disabled",
+    "uploads": "direct TUS, 8MiB chunks, file300MiB/max20min, creator10requests/day, account1000min conservative reservations",
+    "existingDataPreserved": true,
+    "credentials": "new account-scoped Stream Read/Write + Account Analytics Read token; approved Render secret env, no workstation plaintext copy",
+    "webhook": "startup GET/PUT only approved URL; preserve any different existing webhook; HMAC raw body/time verification; server0600 recovery secret included in encrypted file backups",
+    "videoBackup": "Stream files remain in Cloudflare; DB media identifiers are backed up; no separate R2 video mirror claimed",
+    "checks": [
+      "focused SQLite/PostgreSQL access tests",
+      "local actual HLS 6sec readyState4/noerror",
+      "translation1578 keys missing0"
+    ],
+    "production": "pending"
   }
 }

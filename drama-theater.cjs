@@ -17,14 +17,15 @@ async function probe(file){
  if(!video||video.codec_name!=='h264'||!['yuv420p','yuvj420p'].includes(video.pix_fmt)||data.streams.some(s=>s.codec_type==='audio'&&s.codec_name!=='aac')||!Number.isFinite(duration)||duration<=0||duration>1200||video.width*video.height>3840*2160)throw Error('영상은 20분 이하의 H.264/AAC MP4로 올려주세요.');
  return {duration,width:video.width,height:video.height};
 }
-module.exports=function({db,dir,user,json,origin,isAdmin,blocked=()=>false,uploadsEnabled=false,neon=null}){
+module.exports=function({db,dir,user,json,origin,isAdmin,blocked=()=>false,uploadsEnabled=false,neon=null,cloud=null}){
  db.exec(`CREATE TABLE IF NOT EXISTS drama_series(id TEXT PRIMARY KEY,user_id TEXT NOT NULL,body TEXT NOT NULL,status TEXT NOT NULL,created BIGINT NOT NULL,updated BIGINT NOT NULL);
  CREATE TABLE IF NOT EXISTS drama_episodes(id TEXT PRIMARY KEY,series_id TEXT NOT NULL,user_id TEXT NOT NULL,position INTEGER NOT NULL,body TEXT NOT NULL,status TEXT NOT NULL,created BIGINT NOT NULL,updated BIGINT NOT NULL,UNIQUE(series_id,position));
  CREATE TABLE IF NOT EXISTS drama_media(id TEXT PRIMARY KEY,episode_id TEXT NOT NULL,user_id TEXT NOT NULL,kind TEXT NOT NULL,language TEXT NOT NULL,label TEXT NOT NULL,bytes BIGINT NOT NULL,body TEXT NOT NULL,active INTEGER NOT NULL,created BIGINT NOT NULL);
  CREATE TABLE IF NOT EXISTS drama_entitlements(actor TEXT NOT NULL,episode_id TEXT NOT NULL,transaction_id TEXT NOT NULL UNIQUE,price INTEGER NOT NULL,status TEXT NOT NULL,created BIGINT NOT NULL,PRIMARY KEY(actor,episode_id));
  CREATE TABLE IF NOT EXISTS drama_purchase_intents(id TEXT PRIMARY KEY,actor TEXT NOT NULL,episode_id TEXT NOT NULL,price INTEGER NOT NULL,status TEXT NOT NULL,created BIGINT NOT NULL);
  CREATE TABLE IF NOT EXISTS drama_reviews(id TEXT PRIMARY KEY,series_id TEXT NOT NULL,actor TEXT NOT NULL,action TEXT NOT NULL,reason TEXT NOT NULL,created BIGINT NOT NULL);`);
- const folder=path.join(dir,'drama-media'),fileLimit=300*1024*1024,totalLimit=600*1024*1024;let busy=false;
+ db.exec('CREATE TABLE IF NOT EXISTS drama_stream_uploads(id TEXT PRIMARY KEY,episode_id TEXT NOT NULL,user_id TEXT NOT NULL,uid TEXT UNIQUE,bytes BIGINT NOT NULL,status TEXT NOT NULL,created BIGINT NOT NULL,updated BIGINT NOT NULL);');
+ const folder=path.join(dir,'drama-media'),fileLimit=300*1024*1024,totalLimit=600*1024*1024;let busy=false,cloudBusy=false;
  const fail=(message,status=400)=>{const error=Error(message);error.status=status;throw error;};
  const series=id=>UUID.test(id||'')?db.prepare('SELECT * FROM drama_series WHERE id=?').get(id):null;
  const episode=id=>UUID.test(id||'')?db.prepare('SELECT * FROM drama_episodes WHERE id=?').get(id):null;
@@ -39,7 +40,7 @@ module.exports=function({db,dir,user,json,origin,isAdmin,blocked=()=>false,uploa
  const paymentsReady=()=>neon?.ready?.()===true;
  const purchasing=new Set();
  const media=ep=>db.prepare('SELECT * FROM drama_media WHERE episode_id=? AND active=1 ORDER BY created,id').all(ep.id);
- function outputEpisode(ep,actor){const files=media(ep),video=files.find(f=>f.kind==='video'),allowed=watchable(ep,actor);return {id:ep.id,number:ep.position,...JSON.parse(ep.body),priceNeon:price(ep),locked:!allowed,purchased:purchased(actor,ep),paymentReady:paymentsReady(),status:ep.status,duration:video?Number(JSON.parse(video.body).duration)||null:null,video:allowed&&video?'/api/drama/media?id='+video.id:null,tracks:allowed?files.filter(f=>f.kind==='caption').map(f=>({language:f.language,label:f.label,url:'/api/drama/media?id='+f.id})):[],editable:own(ep,actor)};}
+ function outputEpisode(ep,actor){const files=media(ep),video=files.find(f=>f.kind==='video'),allowed=watchable(ep,actor),remote=video&&JSON.parse(video.body).provider==='cloudflare',pending=own(ep,actor)?db.prepare('SELECT id,status FROM drama_stream_uploads WHERE episode_id=? ORDER BY created DESC LIMIT 1').get(ep.id):null;return {id:ep.id,number:ep.position,...JSON.parse(ep.body),priceNeon:price(ep),locked:!allowed,purchased:purchased(actor,ep),paymentReady:paymentsReady(),status:ep.status,duration:video?Number(JSON.parse(video.body).duration)||null:null,video:allowed&&video?'/api/drama/media?id='+video.id:null,videoProvider:allowed&&video?(remote?'cloudflare':'local'):null,upload:pending||null,tracks:allowed?files.filter(f=>f.kind==='caption').map(f=>({language:f.language,label:f.label,url:'/api/drama/media?id='+f.id})):[],editable:own(ep,actor)};}
  function output(row,actor,detail=false){const name=db.prepare('SELECT display_name FROM creator_profiles WHERE user_id=?').get(row.user_id)?.display_name||'Creator';const episodes=db.prepare('SELECT * FROM drama_episodes WHERE series_id=? ORDER BY position,id').all(row.id).filter(e=>visible(e,actor));return {id:row.id,...JSON.parse(row.body),creator:name,status:row.status,episodeCount:episodes.length,...(detail?{episodes:episodes.map(e=>outputEpisode(e,actor)),editable:own(row,actor),reviews:own(row,actor)?db.prepare('SELECT action,reason,created FROM drama_reviews WHERE series_id=? ORDER BY created DESC LIMIT 10').all(row.id):[]}:{} )};}
  const text=(value,max,required=false)=>{if(typeof value!=='string'||value.trim().length>max||required&&!value.trim())fail('입력 내용을 확인해주세요.');return value.trim();};
  function record(row,actor,action,reason=''){db.prepare('INSERT INTO drama_reviews VALUES(?,?,?,?,?,?)').run(crypto.randomUUID(),row.id,actor.id,action,reason,Date.now());}
@@ -48,14 +49,37 @@ module.exports=function({db,dir,user,json,origin,isAdmin,blocked=()=>false,uploa
  async function stream(req,res,url,actor){
   const id=url.searchParams.get('id');const f=UUID.test(id||'')?db.prepare('SELECT * FROM drama_media WHERE id=? AND active=1').get(id):null;
   if(!f||!watchable(episode(f.episode_id),actor))fail('공개된 회차를 찾을 수 없습니다.',404);
+  if(JSON.parse(f.body).provider==='cloudflare')fail('보호된 재생 연결을 사용해주세요.',404);
   const file=path.join(folder,f.id),stat=await fs.promises.lstat(file).catch(()=>null);if(!stat||!stat.isFile()||stat.isSymbolicLink()||stat.size!==Number(f.bytes))fail('공개된 회차를 찾을 수 없습니다.',404);
   const headers={'Content-Type':f.kind==='video'?'video/mp4':'text/vtt; charset=utf-8','X-Content-Type-Options':'nosniff','Content-Disposition':'inline','Cache-Control':'private, no-store','Accept-Ranges':'bytes'};
   let start=0,end=stat.size-1,status=200;const range=req.headers.range;
   if(range){const m=/^bytes=(\d*)-(\d*)$/.exec(range);if(!m||!m[1]&&!m[2]){res.writeHead(416,{'Content-Range':'bytes */'+stat.size}).end();return;}start=m[1]?Number(m[1]):Math.max(0,stat.size-Number(m[2]));end=m[1]?(m[2]?Math.min(Number(m[2]),end):end):end;if(!Number.isSafeInteger(start)||!Number.isSafeInteger(end)||start>end||start>=stat.size){res.writeHead(416,{'Content-Range':'bytes */'+stat.size}).end();return;}status=206;headers['Content-Range']=`bytes ${start}-${end}/${stat.size}`;}
   res.writeHead(status,{...headers,'Content-Length':end-start+1});if(req.method==='HEAD'){res.end();return;}const input=fs.createReadStream(file,{start,end});input.on('error',()=>res.destroy());res.on('close',()=>input.destroy());input.pipe(res);
  }
+ function editableEpisode(id,actor){const ep=episode(id);if(!ep||ep.user_id!==actor.id||ep.status!=='DRAFT'||!['DRAFT','PUBLISHED'].includes(series(ep.series_id)?.status)||!ownerActive(actor.id))fail('편집 가능한 회차를 선택해주세요.',409);return ep;}
+ async function syncCloud(row){
+  if(!cloud?.ready()||!row?.uid)fail('영상 업로드 연결을 확인해주세요.',409);
+  const info=await cloud.video(row.uid),ep=episode(row.episode_id);
+  if(info.uid!==row.uid||info.requireSignedURLs!==true||!info.allowedOrigins?.includes(new URL(origin).hostname))fail('보호된 영상 준비 상태를 확인해주세요.',409);
+  const latest=db.prepare('SELECT id FROM drama_stream_uploads WHERE episode_id=? ORDER BY created DESC,id DESC LIMIT 1').get(row.episode_id);
+  if(!ep||latest?.id!==row.id||row.status==='READY')return {ok:true,status:row.status};
+  if(info.status?.state==='error'){db.prepare("UPDATE drama_stream_uploads SET status='ERROR',updated=? WHERE id=?").run(Date.now(),row.id);return {ok:true,status:'ERROR'};}
+  if(!info.readyToStream)return {ok:true,status:'PROCESSING'};
+  const duration=Number(info.duration);if(!Number.isFinite(duration)||duration<=0||duration>1200||Number(info.size)>fileLimit)fail('영상은 20분·300MB 이하로 올려주세요.',409);
+  if(ep.status!=='DRAFT'||!['DRAFT','PUBLISHED'].includes(series(ep.series_id)?.status)||!ownerActive(ep.user_id))fail('편집 가능한 회차를 선택해주세요.',409);
+  db.exec('BEGIN IMMEDIATE');try{if(db.prepare('SELECT status FROM drama_stream_uploads WHERE id=?').get(row.id)?.status==='READY'){db.exec('COMMIT');return {ok:true,status:'READY'};}db.prepare("UPDATE drama_media SET active=0 WHERE episode_id=? AND kind='video' AND active=1").run(ep.id);db.prepare('INSERT INTO drama_media VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(id) DO NOTHING').run(row.id,ep.id,row.user_id,'video','','',Number(info.size)||row.bytes,JSON.stringify({provider:'cloudflare',uid:row.uid,duration}),1,Date.now());db.prepare("UPDATE drama_stream_uploads SET status='READY',updated=? WHERE id=?").run(Date.now(),row.id);db.exec('COMMIT');}catch(error){db.exec('ROLLBACK');throw error;}return {ok:true,status:'READY'};
+ }
+ async function cloudUpload(input,actor){
+  if(!cloud?.ready())fail('Cloudflare Stream 연결 설정이 필요합니다.',409);const ep=editableEpisode(input.episodeId,actor);
+  if(!Number.isSafeInteger(input.bytes)||input.bytes<1||input.bytes>fileLimit)fail('파일 크기를 확인해주세요.');if(cloudBusy)fail('다른 영상 업로드가 진행 중입니다. 잠시 후 다시 시도해주세요.',409);
+  if(db.prepare("SELECT id FROM drama_stream_uploads WHERE episode_id=? AND status IN ('PENDING','PROCESSING','UNKNOWN') AND created>?").get(ep.id,Date.now()-3600000))fail('진행 중인 업로드 상태를 먼저 확인해주세요.',409);
+  if(Number(db.prepare('SELECT COUNT(*) n FROM drama_stream_uploads WHERE user_id=? AND created>?').get(actor.id,Date.now()-86400000).n)>=10)fail('하루 업로드 한도를 확인해주세요.',409);
+  cloudBusy=true;const id=crypto.randomUUID(),now=Date.now();db.prepare('INSERT INTO drama_stream_uploads VALUES(?,?,?,?,?,?,?,?)').run(id,ep.id,actor.id,null,input.bytes,'PENDING',now,now);
+  try{const remote=await cloud.create({bytes:input.bytes,reservedSeconds:1200,pendingMinutes:Math.max(0,Number(db.prepare("SELECT COUNT(*) n FROM drama_stream_uploads WHERE status IN ('PENDING','PROCESSING','UNKNOWN') AND created>?").get(Date.now()-3600000).n)-1)*20});db.prepare("UPDATE drama_stream_uploads SET uid=?,status='PROCESSING',updated=? WHERE id=?").run(remote.uid,Date.now(),id);return {id,uploadURL:remote.uploadURL,bytes:input.bytes};}catch(error){db.prepare("UPDATE drama_stream_uploads SET status='UNKNOWN',updated=? WHERE id=?").run(Date.now(),id);throw error;}finally{cloudBusy=false;}
+ }
  async function upload(req,url,actor){
-  if(!uploadsEnabled)fail('영상 업로드는 저장·전송 비용 확인 후 활성화됩니다.',409);
+  if(!uploadsEnabled&&!(cloud?.ready()&&url.searchParams.get('kind')==='caption'))fail('영상 업로드는 저장·전송 비용 확인 후 활성화됩니다.',409);
+  if(cloud?.ready()&&url.searchParams.get('kind')==='video')fail('보호된 직접 업로드 연결을 사용해주세요.',409);
   const ep=episode(url.searchParams.get('episodeId'));if(!ep||ep.user_id!==actor.id||ep.status!=='DRAFT'||!['DRAFT','PUBLISHED'].includes(series(ep.series_id)?.status))fail('편집 가능한 회차를 선택해주세요.',409);
   const kind=url.searchParams.get('kind'),language=kind==='caption'?url.searchParams.get('language')||'ko':'';
   if(!['video','caption'].includes(kind)||kind==='caption'&&!LANG.test(language))fail('입력 내용을 확인해주세요.');
@@ -74,16 +98,23 @@ module.exports=function({db,dir,user,json,origin,isAdmin,blocked=()=>false,uploa
  async function handle(req,res,name){
   if(!name.startsWith('/api/drama/'))return false;const url=new URL(req.url,origin),actor=user(req);
   try{
+   if(req.method==='POST'&&name==='/api/drama/stream/webhook'){
+    let size=0,chunks=[];for await(const chunk of req){size+=chunk.length;if(size>65536)fail('입력 내용을 확인해주세요.',413);chunks.push(chunk);}const body=Buffer.concat(chunks);if(!cloud?.verify(body,req.headers['webhook-signature']))fail('요청 권한을 확인해주세요.',403);let data;try{data=JSON.parse(body);}catch{fail('입력 내용을 확인해주세요.');}const row=db.prepare('SELECT * FROM drama_stream_uploads WHERE uid=?').get(data.uid||'');if(row)await syncCloud(row);json(res,200,{ok:true});return true;
+   }
    if(['GET','HEAD'].includes(req.method)&&name==='/api/drama/media'){await stream(req,res,url,actor);return true;}
    if(req.method==='GET'){
+    if(name==='/api/drama/stream/usage'){if(!admin(actor))fail('관리자 권한이 필요해요.',403);json(res,200,cloud?.ready()?await cloud.usage():{configured:false});return true;}
+    if(name==='/api/drama/stream/playback'){const f=db.prepare('SELECT * FROM drama_media WHERE id=? AND active=1').get(url.searchParams.get('id')||'');if(!f||!watchable(episode(f.episode_id),actor)||JSON.parse(f.body).provider!=='cloudflare')fail('공개된 회차를 찾을 수 없습니다.',404);res.setHeader('Cache-Control','private, no-store');json(res,200,await cloud.playback(JSON.parse(f.body).uid));return true;}
     if(name==='/api/drama/catalog'){const rows=db.prepare("SELECT * FROM drama_series WHERE status='PUBLISHED' ORDER BY updated DESC,id LIMIT 100").all().filter(publicSeries);json(res,200,{series:rows.map(r=>output(r,null)).filter(r=>r.episodeCount>0)});return true;}
     if(name==='/api/drama/series'){const row=series(url.searchParams.get('id'));if(!row||!own(row,actor)&&!publicSeries(row))fail('공개된 작품을 찾을 수 없습니다.',404);json(res,200,{series:output(row,actor,true)});return true;}
-    if(name==='/api/drama/studio'){if(!actor)fail('로그인이 필요합니다.',401);if(!ownerActive(actor.id)&&!admin(actor))fail('크리에이터 프로필을 먼저 등록해주세요.',403);json(res,200,{uploadsEnabled,series:db.prepare('SELECT * FROM drama_series WHERE user_id=? ORDER BY updated DESC,id').all(actor.id).map(r=>output(r,actor,true)),reviews:admin(actor)?db.prepare("SELECT * FROM drama_series WHERE status='PUBLISHED' ORDER BY updated,id LIMIT 100").all().map(r=>output(r,actor,true)):null});return true;}
+    if(name==='/api/drama/studio'){if(!actor)fail('로그인이 필요합니다.',401);if(!ownerActive(actor.id)&&!admin(actor))fail('크리에이터 프로필을 먼저 등록해주세요.',403);json(res,200,{uploadsEnabled:uploadsEnabled||!!cloud?.ready(),cloudUploads:!!cloud?.ready(),series:db.prepare('SELECT * FROM drama_series WHERE user_id=? ORDER BY updated DESC,id').all(actor.id).map(r=>output(r,actor,true)),reviews:admin(actor)?db.prepare("SELECT * FROM drama_series WHERE status='PUBLISHED' ORDER BY updated,id LIMIT 100").all().map(r=>output(r,actor,true)):null});return true;}
     fail('요청한 화면을 찾을 수 없습니다.',404);
    }
    if(req.method!=='POST')fail('지원하지 않는 요청입니다.',405);if(!actor)fail('로그인이 필요합니다.',401);if(req.headers.origin!==origin)fail('요청 출처를 확인해주세요.',403);if(name!=='/api/drama/purchase'&&!ownerActive(actor.id)&&!admin(actor))fail('크리에이터 프로필을 먼저 등록해주세요.',403);
    if(name==='/api/drama/upload'){json(res,200,await upload(req,url,actor));return true;}
    if(!/^application\/json(?:;|$)/i.test(req.headers['content-type']||''))fail('JSON 요청이 필요합니다.',415);const input=await readJSON(req);
+   if(name==='/api/drama/stream/upload'){json(res,200,await cloudUpload(input,actor));return true;}
+   if(name==='/api/drama/stream/status'){const row=db.prepare('SELECT * FROM drama_stream_uploads WHERE id=?').get(input.id||'');if(!row||row.user_id!==actor.id)fail('영상 정보를 찾을 수 없습니다.',404);json(res,200,await syncCloud(row));return true;}
    if(name==='/api/drama/purchase'){
     const ep=episode(input.episodeId);if(!ep||ep.status!=='PUBLISHED'||!publicSeries(series(ep.series_id)))fail('공개된 회차를 찾을 수 없습니다.',404);
     if(own(ep,actor)||price(ep)===0||purchased(actor,ep)){json(res,200,{ok:true,alreadyOwned:true});return true;}

@@ -4,3 +4,5 @@
 /* Make room for the theater item without pushing FAQ out of the header. */
 @media(min-width:1100px) and (max-width:1400px){header nav button{padding-inline:9px}}
 @media(min-width:761px) and (max-width:1099px){header{height:auto;flex-wrap:wrap;padding-block:12px;row-gap:6px}header nav{order:3;width:100%;height:auto;justify-content:center;flex-wrap:wrap;gap:4px}}
+
+.drama-stream-usage{scroll-margin-top:180px;overflow-wrap:anywhere}.drama-stream-usage table{width:100%;border-collapse:collapse;margin-block:20px}.drama-stream-usage th,.drama-stream-usage td{padding:12px;text-align:left;border-bottom:1px solid var(--line)}.drama-stream-usage th{font-weight:500}.drama-stream-usage button{padding:12px;background:#251d2a;color:inherit;border:1px solid #66516e;border-radius:7px}.drama-stream-usage .outline-link{display:inline-block;margin:8px 10px 8px 0}

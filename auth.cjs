@@ -21,7 +21,7 @@ const kakao=require('./kakao-auth.cjs');
 let localEngine;const baseAdmin=require('./admin-policy.cjs'),isScopedAdmin=u=>Boolean(u&&(baseAdmin(u)||localEngine?.admin.hasAny(u.id)));const checkEngineActivation=asset=>localEngine?.subscription.checkActivation(asset);
 const memberAdmin=require('./member-administration.cjs')({db,user,json,origin:deployment.base,isAdmin:isScopedAdmin});
 const creatorApi=require('./creator-api.cjs')(db,dir,user,json,isScopedAdmin,{checkActivation:checkEngineActivation,usage:()=>localEngine?.usage()});
-const dramaTheater=require('./drama-theater.cjs')({db,dir,user,json,origin:deployment.base,isAdmin:actor=>baseAdmin(actor)||!!localEngine?.admin.can(actor.id,'catalog.review'),blocked:id=>memberAdmin.blocked(id),uploadsEnabled:process.env.NNX_DRAMA_UPLOAD_ENABLED==='1'});
+const dramaTheater=require('./drama-theater.cjs')({db,dir,user,json,origin:deployment.base,isAdmin:actor=>baseAdmin(actor)||!!localEngine?.admin.can(actor.id,'catalog.review'),blocked:id=>memberAdmin.blocked(id),uploadsEnabled:process.env.NNX_DRAMA_UPLOAD_ENABLED==='1',cloud:require('./cloudflare-stream.cjs')({origin:deployment.base,dir})});
 const creatorPublic=require('./creator-public-profile.cjs')({db,json,assets:()=>[]});
 const savedApi=require('./account-saved.cjs')({db,user,json,origin:deployment.base});
 const visitors=require('./visitor-analytics.cjs')({db,user,json,origin:deployment.base,isAdmin:isScopedAdmin,enabled:process.env.RENDER_SERVICE_ID==='srv-db5aqunlk1mc739bi0m0'&&process.env.NNX_REVIEW_MODE!=='1'});

@@ -478,3 +478,14 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 문법·번역1544키누락0/기존675불변 확인. 배포결과는 후속기록.
 
 - 최종223 4a88a2dcb805614cf3ee1b0d6bd7ff20376acc98 / dep-dbckgm4s728c73amhkrg LIVE. 운영공개3파일200/원본일치(HTML정상canonical/운영flag주입만제외), catalog200/공개작품0 유지. 실제NovaPlay메뉴·페이지제목확인/7메뉴top19/가로넘침0. 증빙production223-smoke.json/production223-novaplay.png. 유료서비스/영상활성화/실NEON구매0.
+
+
+## 2026-10-22 최신224 — Cloudflare Stream 업로드·상영 연결
+
+- 사용자 월USD5기본+사용량조회/다운로드차단/기존보존 승인. Cloudflare 실제계정26fa9902e2359e7c8504081c66e34021의 Starter Bundle 구매완료화면 확인: 월5/저장1000분/월전송5000분포함/초과1000분USD1. 이전223의 개별Stream 요금계산과 달리 이 구독의 포함량을 적용. 기존 R2백업/도메인변경0.
+- 사용자 실행직전 승인으로 NovaPlay전용 계정토큰 Stream Read/Write+Account Analytics Read 생성. 기존Render에 NNX_STREAM_ACCOUNT_ID/API_TOKEN/ENABLED=1 추가 Save only. 기존환경변수보존. 로컬평문토큰파일저장은 자동검토거부되어 실행하지않고 메모리→Render비밀설정직접전달. 비밀값 로그/소스/노트노출0.
+- provider cloudflare-stream.cjs: TUS직접업로드·서명URL필수/허용도메인 고정·20분/300MB·1000분보수적예약·자동증설없음. 단일진행/계정회차당처리확인/크리에이터하루10요청. 드라마신규uploads테이블추가만. 변환완료+보호설정재조회후active교체/기존행·원본유지. 위조/과거웹훅차단/알려진UID만조회·중복완료불변. 기존다른웹훅주소발견시덮어쓰지않음.
+- 웹훅URL https://novanoxx.com/api/drama/stream/webhook, 부팅시기존값GET/없을때만PUT. 반환secret은운영DATA_DIR/drama-stream-webhook-계정.json(0600)복구사본,일반암호화백업대상. 로컬워크스테이션토큰파일0.
+- 유료회차권한확인후30분HLS token(downloadable:false), rawmedia는원격파일비노출/직접다운로드차단. Cloudflare다운로드생성API호출0. 브라우저저장메뉴숨김은추가장치/완전DRM·녹화차단아님. HLS자동화질/네이티브HLS 또는MIT hls.js1.6.13 포함/선로딩최소/재생버튼선택후요청·재시도/이어보기·기존VTT유지.
+- 관리자대시보드 NovaPlay·Cloudflare 바로가기/저장·전송·USD예상표/800분·5000분안내. GraphQL권한없음/오류는미확인표시(0원조작없음),월UTC기준/5분캐시/청구서바로가기. Stream영상원문은Cloudflare에보관·기존R2파일백업자동복제미구현구분. 기존자료보존/NEON운영실구매차단유지.
+- SQLite/PG필수검사+기존생명주기/기기이어보기 확인, 로컬6초HLS실재생ready4/noerror. 번역1578키누락0, 기존675변경0. 실제배포/Cloudflare검증 후속기록.
