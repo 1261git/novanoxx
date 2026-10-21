@@ -1,5 +1,5 @@
 {
-  "revision": 216,
+  "revision": 217,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -7386,6 +7386,75 @@
     },
     "publicProfileScope": "ACTIVE_PUBLIC_ASSETS_ONLY",
     "soldPortfolioSuggestion": "USER_PROPOSAL_NOT_IMPLEMENTED",
+    "preservation": {
+      "checked": 675,
+      "changed": []
+    },
+    "newPaidResources": 0,
+    "planChanges": 0
+  },
+  "creatorPortfolioTabs217": {
+    "revision": 217,
+    "date": "2026-10-21",
+    "commit": "2a82bee787daf07fcc8b57d80c0c195ac68f293e",
+    "deploy": "dep-dbc8uc0u01pc73d0rcug",
+    "status": "LIVE",
+    "smoke": {
+      "index.html": {
+        "status": 200,
+        "creatorCardLinksIncluded": true
+      },
+      "assets/creator-public-profile.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/creator-public-profile.css": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/contest.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/developer-notes-data.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "page-routing.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "/api/catalog": {
+        "status": 200,
+        "rows": 0
+      },
+      "/api/contest": {
+        "status": 200,
+        "rows": 0
+      },
+      "invalidProfileStatus": 404
+    },
+    "databaseChecksPassed": 2,
+    "ui": {
+      "syntheticCounts": {
+        "all": 3,
+        "active": 1,
+        "sold": 2
+      },
+      "tabKeyboard": true,
+      "tabReloadRestore": true,
+      "marketCreatorLink": true,
+      "soldPurchaseLinks": 0,
+      "protectedImageWidth": 960,
+      "missingPreviewDisabled": true,
+      "mobileWidth": 375,
+      "mobileScrollWidth": 375,
+      "consoleErrors": 0,
+      "productionDeveloperNoteVerified": true
+    },
+    "translationKeys": 1466,
+    "productionProfileFixturesCreated": 0,
+    "originalAccessUnchanged": true,
     "preservation": {
       "checked": 675,
       "changed": []
