@@ -493,3 +493,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 실제224 운영6197df6 / dep-dbckt8bm8hqs73aeebjg LIVE. 공개5파일200·원본일치, health200/Postgres, catalog공개드라마0유지, 익명usage403. 운영서버실조회 storage0/1000,월delivery0,Analytics권한true,예상USD5,운영웹훅복구키존재true(키값노출0).
 - 동일3초합성비공개영상1개 실제Stream TUS204/변환ready/서명HLS200·FFmpeg1초실디코딩성공/CORS정상/서명없는UID401/MP4다운로드403. 원격UID ec33dfe106a94a51005d7602f60f63bf, 이름 NovaPlay private connection check 2026-10-22. Cloudflare비공개로보존·사이트카탈로그등록0·회원/상품/거래수정0. 서버DATA_DIR/drama-stream-connection-check-20261022.json 비밀없는결과보관. 자동웹훅은대응앱업로드UID가없어공개작품생성없이무시.
 - 로그인요청 후에도운영브라우저는novanoxx_test라관리자실제UI열람은미확인. 격리실제UI/합성요금표확인과운영서버실사용량조회는구분. 관리자로그인시대시보드상단NovaPlay버튼으로조회가능. 실제검사7PASS/번역1578키/기존675변경0. 노트실검증반영과처리중상태문구정리는후속배포.
+
+- 최종224 0e2c1617e221e99d1214da1f7b4d8fab2cb02580 / dep-dbcl10u1egvs73erqm2g LIVE, 변경노트/처리문구2파일200일치. Cloudflare관리UI에서도 Require Signed URLs=true/Allowed Origins=novanoxx.com/Automatically Delete=false/3초영상Ready 확인. 스크린샷 stream224-cloud-protection.png 및 구독포함량 stream224-subscription.png. 임시로컬서버종료/이번runtime·합성DB·helper만경로검증후정리, 증빙보존. 기존675변경0. 공개영상0·원본/운영/TEST변경0·새Render자원0, 선택Cloudflare월5구독만활성. 전체상영서비스완료와NEON실제구매연결은구분.

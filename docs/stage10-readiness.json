@@ -8020,7 +8020,11 @@
         "hlsDecoded": true,
         "published": false
       },
-      "adminUi": "production browser is still review account; local real UI tested with synthetic data; production server queries verified"
+      "adminUi": "production browser is still review account; local real UI tested with synthetic data; production server queries verified",
+      "finalCommit": "0e2c1617e221e99d1214da1f7b4d8fab2cb02580",
+      "finalDeploy": "dep-dbcl10u1egvs73erqm2g",
+      "finalStatus": "LIVE",
+      "evidence": "stream224-result.json; stream224-cloud-protection.png; stream224-subscription.png"
     }
   }
 }
