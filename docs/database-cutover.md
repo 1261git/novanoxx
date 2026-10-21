@@ -441,3 +441,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 격리 합성계정에서 DRAFT1건 저장해 제목/설명/납품/3000x3000/길이12/29.97fps/가격100/견적5·2/제작요소7/제3자선택/제작정보 DB일치. 파일 업로드·운영상품저장·외부결제/메일호출0. 콘솔오류0. 기존 미커밋675 changed[].
 - 숫자 공통검사PASS. 기존 creator-api.test.cjs는 최신 필수 제3자소재 선택이 없고 이미지가 아닌 시험문자열을 preview에 올리는 오래된 fixture라 실패(제품 회귀로 판정하지 않음). 시험파일 원문 보존, PASS로 집계하지 않음. 이 작업은 클라이언트 수정이며 실제 격리 폼/서버저장 검증을 적용. 전체 기존 검사 통과라고 보고하지 않음.
 - 개발자노트/운영매뉴얼/준비현황 갱신. 기존 Render 자원 재사용/새유료자원·요금제변경0·기존사용량 요금유지. 배포범위 등록 JS2/CSS1/노트. 최종 배포 확인은 후속기록. 증빙 mobile220-browser-report.json/mobile220-saved-draft.json/mobile220-result.json/mobile220-inputs.png.
+
+- 최종220 afae8ab0352b582efc41ac312b051a7b0747bfe5 / dep-dbcb9smk1f9s73c09hh0 LIVE(61초). 변경4파일200·정규화본문일치/catalog200, 운영 신규개발자노트 표기·콘솔오류0 확인. 수정된 전체등록폼은 운영상품저장 없이 격리 브라우저/DB로 검증. 1475번역키 누락0/기존675변경0. 신규검수서버종료/이번 runtime·합성DB만 정리·증빙보존. 증빙 production220-report.json/production220-smoke.json/production220-notes.png.

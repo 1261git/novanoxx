@@ -7606,7 +7606,7 @@
   "mobileCreatorInputAudit220": {
     "revision": 220,
     "date": "2026-10-21",
-    "status": "READY_FOR_DEPLOY",
+    "status": "LIVE",
     "categories": 6,
     "steps": 8,
     "mobileWidths": [
@@ -7645,6 +7645,33 @@
     "preservation": {
       "checked": 675,
       "changed": []
-    }
+    },
+    "commit": "afae8ab0352b582efc41ac312b051a7b0747bfe5",
+    "deploy": "dep-dbcb9smk1f9s73c09hh0",
+    "smoke": {
+      "assets/creator-draft-wizard.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/developer-notes-data.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/design-refresh.css": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      },
+      "assets/creator-workspace.js": {
+        "status": 200,
+        "matchesLocalIgnoringCRLF": true
+      }
+    },
+    "operatingUI": {
+      "newNoteVisible": true,
+      "consoleErrors": []
+    },
+    "temporaryServerStopped": true,
+    "ownedSyntheticDataAndRuntimeRemoved": true,
+    "translationKeys": 1475
   }
 }
