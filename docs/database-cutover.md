@@ -578,3 +578,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 사용자 명시요청으로 로고/브랜드명/카피/색상 ITEMIZED_SUM price0 강제/readonly 제한 제거. 0~1,000,000 정수 NEON·작업일 기존 검증 유지. 공통 assets/option-quote.js를 서버 creator/save, commerce-quote, sandbox-engine-core 및 구매UI가 함께 사용. 선택된 항목만 합산/이용권한/정산 정책 및 실제결제 활성화는 변경하지 않음.
 - 기존 DB 마이그레이션/상품 일괄 가격 수정0, 기존항목0과 과거주문스냅샷 그대로. LEGACY_BUNDLE은 구조건 보존(기존 basic4항목 포함); 개별유료 설정은 항목별 모드 전환/저장 필요하며 UI 명시 안내. 등록의 기본가포함 안내 수정/5보조locale 반영. 역사적 개발자노트는 보존하고 최신글에 정책변경 명시.
 - 필수검사: stage10-bundle sqlite48/PG48 PASS(4개개별/합계/0기존/legacy보존/음수소수상한차단/낡은예상견적차단/중복주문/스냅샷고정), creator-workflow12PASS(4항목2/3/4/5 저장·catalog·공통견적94). 구 stage10-closure의 price1거절 단언도 새정책에 맞게 수정(전체재실행아님). 실제 격리UI 4항목2/3/4/5 입력·서버저장·복원 확인, 추가금액합계14. 새유료자원·외부제공자호출·운영시험자료0. 배포결과 후속기록.
+
+- 최종232 d74a358ecd18afb4c6411db0c110f839d33ae4b8 / dep-dbct4pm1egvs73f3scfg LIVE. 수정공개5파일200·원본일치, catalog200/기존공개상품 공통견적검사정상. brand232-production-smoke.json / brand232-local-ui.json / brand232-local-prices.png. 실제운영가격수정·주문생성·실결제0, 신규유료자원0. 격리로컬서버·탭종료/675파일변경0.

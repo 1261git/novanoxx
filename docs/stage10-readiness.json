@@ -8606,7 +8606,7 @@
     "deploy": "dep-dbcstgvavr4c73d0g7ig"
   },
   "brandOptionPricing232": {
-    "status": "READY_FOR_PRODUCTION_DEPLOY",
+    "status": "PRODUCTION_LIVE",
     "keys": [
       "logo",
       "brandName",
@@ -8617,6 +8617,8 @@
     "historicalListingsAndOrdersPreserved": true,
     "legacyBundleTermsPreserved": true,
     "newPaidResources": 0,
-    "checks": "SQLite48/PostgreSQL48/workflow12 and local actual UI save"
+    "checks": "SQLite48/PostgreSQL48/workflow12 and local actual UI save",
+    "commit": "d74a358ecd18afb4c6411db0c110f839d33ae4b8",
+    "deploy": "dep-dbct4pm1egvs73f3scfg"
   }
 }
