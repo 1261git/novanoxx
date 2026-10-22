@@ -11,6 +11,12 @@ for(const backend of ['sqlite','postgres'])test(backend+': creator drama lifecyc
   async function call(action,data,actor='owner',extra={}){const r=await fetch(origin+'/api/drama/'+action,{method:data===undefined?'GET':'POST',headers:{origin,...(actor?{'x-test-user':actor}:{}),...(data===undefined?{}:{'Content-Type':Buffer.isBuffer(data)?'application/octet-stream':'application/json'}),...extra},body:data===undefined?undefined:Buffer.isBuffer(data)?data:JSON.stringify(data)});return {status:r.status,body:r.headers.get('content-type')?.startsWith('application/json')?await r.json():Buffer.from(await r.arrayBuffer()),headers:r.headers};}
   assert.equal((await call('studio',undefined,null)).status,401);
   const s=await call('series/save',{title:'Synthetic drama',description:'A fictional series',genre:'SF',rightsNote:'Synthetic video',screeningRights:true});assert.equal(s.status,200);const id=s.body.id;
+  const legacyBody=db.prepare('SELECT body FROM drama_series WHERE id=?').get(id).body;
+  assert.equal((await call('series/save',{id,title:'Synthetic drama',description:'A fictional series',category:'film',subcategory:'modern',screeningRights:true})).status,400);assert.equal(db.prepare('SELECT body FROM drama_series WHERE id=?').get(id).body,legacyBody);
+  assert.equal((await call('series/save',{id,title:'Synthetic drama',description:'A fictional series',category:'drama',subcategory:'romance-fantasy',rightsNote:'Synthetic video',screeningRights:true})).status,200);
+  assert.equal((await call('series/save',{id,title:'Synthetic drama',description:'A fictional series',rightsNote:'Synthetic video',screeningRights:true})).status,200);
+  const savedCategory=JSON.parse(db.prepare('SELECT body FROM drama_series WHERE id=?').get(id).body);assert.equal(savedCategory.category,'drama');assert.equal(savedCategory.subcategory,'romance-fantasy');assert.equal(savedCategory.genre,'SF');
+
   const e=await call('episode/save',{seriesId:id,number:1,title:'Episode 1',description:'Synthetic'});assert.equal(e.status,200);const ep=e.body.id;
   assert.equal((await call('episode/save',{seriesId:id,number:1,title:'Duplicate',description:''})).status,409);
   assert.equal((await call('episode/save',{seriesId:id,number:1.5,title:'Decimal',description:''})).status,400);

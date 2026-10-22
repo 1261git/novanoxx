@@ -1,5 +1,5 @@
 {
-  "revision": 227,
+  "revision": 228,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8268,6 +8268,145 @@
       "stream227-local-http.json",
       "stream227-usage-observation.txt",
       "stream227-resource-observation.json"
+    ]
+  },
+  "novaPlayCategories228": {
+    "revision": 228,
+    "date": "2026-10-22",
+    "status": "LOCAL_VERIFIED_PENDING_DEPLOY",
+    "groups": [
+      {
+        "id": "drama",
+        "label": "드라마",
+        "children": [
+          {
+            "id": "romance-fantasy",
+            "label": "로맨스 판타지"
+          },
+          {
+            "id": "modern",
+            "label": "현대물"
+          },
+          {
+            "id": "romance",
+            "label": "로맨스"
+          },
+          {
+            "id": "fantasy",
+            "label": "판타지"
+          },
+          {
+            "id": "thriller-mystery",
+            "label": "스릴러·미스터리"
+          },
+          {
+            "id": "sf",
+            "label": "SF"
+          },
+          {
+            "id": "historical",
+            "label": "사극"
+          },
+          {
+            "id": "action",
+            "label": "액션"
+          },
+          {
+            "id": "comedy",
+            "label": "코미디"
+          },
+          {
+            "id": "other",
+            "label": "기타"
+          }
+        ]
+      },
+      {
+        "id": "film",
+        "label": "영화·단편",
+        "children": [
+          {
+            "id": "drama",
+            "label": "드라마"
+          },
+          {
+            "id": "romance",
+            "label": "로맨스"
+          },
+          {
+            "id": "fantasy-sf",
+            "label": "판타지·SF"
+          },
+          {
+            "id": "thriller-mystery",
+            "label": "스릴러·미스터리"
+          },
+          {
+            "id": "action",
+            "label": "액션"
+          },
+          {
+            "id": "comedy",
+            "label": "코미디"
+          },
+          {
+            "id": "other",
+            "label": "기타"
+          }
+        ]
+      },
+      {
+        "id": "animation",
+        "label": "애니메이션",
+        "children": [
+          {
+            "id": "romance-fantasy",
+            "label": "로맨스 판타지"
+          },
+          {
+            "id": "fantasy",
+            "label": "판타지"
+          },
+          {
+            "id": "sf",
+            "label": "SF"
+          },
+          {
+            "id": "action",
+            "label": "액션"
+          },
+          {
+            "id": "slice-of-life",
+            "label": "일상·코미디"
+          },
+          {
+            "id": "other",
+            "label": "기타"
+          }
+        ]
+      }
+    ],
+    "scope": "catalog URL filters/counts/empty state; creator two-level classification; detail/card labels; shared backend validator",
+    "existingData": "genre kept; absent fields preserve old classification; legacy titles remain all/unclassified; no mass writes, table migration or video changes",
+    "catalogLimit": 100,
+    "checks": {
+      "tests": 5,
+      "sqlite": true,
+      "postgresPglite": true,
+      "actualLocalFilter": true,
+      "formSaveRestore": true,
+      "mobile390Overflow": false,
+      "englishSwitch": true
+    },
+    "paidResourcesAdded": 0,
+    "videoTransferTest": false,
+    "originalPreservation": {
+      "checked": 675,
+      "changed": 0
+    },
+    "evidence": [
+      "categories228-tests.txt",
+      "categories228-local-mobile.png"
     ]
   }
 }

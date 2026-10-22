@@ -1,6 +1,7 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),{promisify}=require('node:util');
 const execFile=promisify(require('node:child_process').execFile);
+const categories=require('./assets/drama-categories.js');
 const UUID=/^[a-f0-9-]{36}$/i,LANG=/^[a-z]{2,3}(?:-[a-z0-9]{2,8}){0,2}$/i;
 function caption(bytes){
  const value=bytes.toString('utf8').replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n');
@@ -132,7 +133,8 @@ module.exports=function({db,dir,user,json,origin,isAdmin,blocked=()=>false,uploa
    if(name==='/api/drama/series/save'){
     const old=input.id?series(input.id):null;if(input.id&&(!old||old.user_id!==actor.id||old.status!=='DRAFT'))fail('편집 가능한 작품을 선택해주세요.',409);
     if(!old&&Number(db.prepare('SELECT COUNT(*) n FROM drama_series WHERE user_id=?').get(actor.id).n)>=50)fail('작품 등록 한도를 확인해주세요.');
-    const body={title:text(input.title,120,true),description:text(input.description,3000,true),genre:text(input.genre||'',60),rightsNote:text(input.rightsNote||'',1000),screeningRights:input.screeningRights===true};const now=Date.now(),id=old?.id||crypto.randomUUID();if(old)db.prepare('UPDATE drama_series SET body=?,updated=? WHERE id=?').run(JSON.stringify(body),now,id);else db.prepare('INSERT INTO drama_series VALUES(?,?,?,?,?,?)').run(id,actor.id,JSON.stringify(body),'DRAFT',now,now);json(res,200,{id});return true;
+    const previous=old?JSON.parse(old.body):{},selected=categories.selection(previous);if(input.category!==undefined||input.subcategory!==undefined){if(!categories.valid(input.category,input.subcategory))fail('작품 카테고리와 하위 장르를 선택해주세요.');selected.category=input.category;selected.subcategory=input.subcategory;}
+    const body={...previous,title:text(input.title,120,true),description:text(input.description,3000,true),genre:text(input.genre??previous.genre??'',60),category:selected.category,subcategory:selected.subcategory,rightsNote:text(input.rightsNote||'',1000),screeningRights:input.screeningRights===true};const now=Date.now(),id=old?.id||crypto.randomUUID();if(old)db.prepare('UPDATE drama_series SET body=?,updated=? WHERE id=?').run(JSON.stringify(body),now,id);else db.prepare('INSERT INTO drama_series VALUES(?,?,?,?,?,?)').run(id,actor.id,JSON.stringify(body),'DRAFT',now,now);json(res,200,{id});return true;
    }
    if(name==='/api/drama/episode/save'){
     const row=series(input.seriesId),old=input.id?episode(input.id):null;if(!row||row.user_id!==actor.id||!['DRAFT','PUBLISHED'].includes(row.status)||input.id&&(!old||old.series_id!==row.id||old.status!=='DRAFT'))fail('편집 가능한 회차를 선택해주세요.',409);
