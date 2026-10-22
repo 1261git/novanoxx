@@ -1,5 +1,5 @@
 {
-  "revision": 235,
+  "revision": 236,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8675,6 +8675,37 @@
       "1000 concurrent playback",
       "800MB upload",
       "paid episode purchase"
+    ]
+  },
+  "novaPlay1080Verification236": {
+    "date": "2026-10-23",
+    "seriesId": "9d3320ad-265d-4f7c-b3b2-d05e7895b2f4",
+    "actualCloudflareUpload": true,
+    "source": "1920x1080 H264 24fps 3s 8647bytes",
+    "initialNativeAuto": "426x240",
+    "selectableHlsAuto": "1920x1080",
+    "manual1080Playback": {
+      "width": 1920,
+      "height": 1080,
+      "ended": true,
+      "error": null,
+      "readyState": 4
+    },
+    "newUi": [
+      "quality selection when MediaSource is supported",
+      "decoded video resolution display"
+    ],
+    "finalState": "DRAFT_PRIVATE_VIDEO_RETAINED",
+    "anonymousAccess": "catalog excluded; series404; media404",
+    "storageAfterMinutes": 0.19,
+    "videoCount": 4,
+    "estimatedMonthlyUsd": 5,
+    "newPaidResources": 0,
+    "notVerified": [
+      "all devices/networks",
+      "1000 concurrent playback",
+      "800MB upload",
+      "paid-episode purchase"
     ]
   }
 }

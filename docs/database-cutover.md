@@ -616,3 +616,11 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 사후운영사용량 2026-10-22T13:13UTC 저장0.14/1000분·영상3·전송0/5000분(지연가능)·예상월USD5유지. 확인영상은Cloudflare에비공개보존하며기존영상2개와기록은보존.
 
 - 최종235 개발자노트 1c162e7ebf3bf0c046dc263010cc94e470d5ee3e / dep-dbd0om6k1f9s73b6aidg LIVE. 운영공개 developer-notes-data.js 200·로컬정규화원문일치·실검증신규항목확인(stream235-notes-deploy.json). 인수인계235완료/675보존변경0. 실제단일Cloudflare업로드·자동공개·1회재생후비공개보존 완료. 추가기능수정·증설없음.
+
+
+## 2026-10-23 최신236 — 실제 1080p 업로드·재생 확인/화질 선택 보완
+
+- 기존 합성 stream225-1080p-private-check.mp4(1920×1080/H264/24fps/3초/8647bytes)를 운영 새작품 form→Cloudflare TUS 1회 업로드/처리알림 자동공개 확인. series9d3320ad-265d-4f7c-b3b2-d05e7895b2f4 / episode9910c78f-9eb7-48ac-9109-6978af2272a9 / mediac868831a-4e5d-4682-8f0f-2a0849c33997.
+- 최초 실제브라우저 native HLS 자동재생은426×240/끝까지정상. 원본1080만으로1080재생이라고기록하지않음. 플레이어 MSE지원시 hls.js 우선으로변경(native지원만시기존경로), 실제manifest levels로 자동·1080/720/480/360/240p UI구성/현재decoded resolution 표시/수동선택후종료영상처음부터재생/해제시정리. 기존권한·서명URL·다운로드제한유지. 5보조locale3문구추가.
+- 배포0417fe8/dep-dbd2gktg1s2s738lnha0 후native우선경로에선선택UI숨김이므로0f0e8e1/dep-dbd2ht3m8hqs73auh930 LIVE로MSE우선수정. 동일영상 재업로드0. 수정후자동실재생1920×1080및1080p직접선택→currentTime2.999999/duration2.999999/endedtrue/readyState4/errornull/videoWidth1920/videoHeight1080/nodownload. stream236-decoded-playback.json / stream236-1080p-playback.png / stream236-production-result.json. 전체브라우저·모바일·네트워크·1000동시·800MB실전송·유료회차결제검증과구분.
+- 사용자범위실재생만/대규모부하0. 사전저장0.14/1000분·영상3/사후0.19분·영상4, 전송0/5000분표시(지연가능),예상월USD5유지/포함량내추가청구없을것으로예상·확정청구서미확인. 새유료자원·증설0. 확인작품공개중지→DRAFT/영상·기록삭제0. 공개catalog제외·익명series404/media404 확인. 이전235작품과기존영상보존/원래675파일보존. syntax·5locale검사통과/실제운영UI필수검증완료. 개발자노트와인수인계236갱신/최종노트배포결과후속기록.
