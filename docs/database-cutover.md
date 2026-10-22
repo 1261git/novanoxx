@@ -580,3 +580,10 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 필수검사: stage10-bundle sqlite48/PG48 PASS(4개개별/합계/0기존/legacy보존/음수소수상한차단/낡은예상견적차단/중복주문/스냅샷고정), creator-workflow12PASS(4항목2/3/4/5 저장·catalog·공통견적94). 구 stage10-closure의 price1거절 단언도 새정책에 맞게 수정(전체재실행아님). 실제 격리UI 4항목2/3/4/5 입력·서버저장·복원 확인, 추가금액합계14. 새유료자원·외부제공자호출·운영시험자료0. 배포결과 후속기록.
 
 - 최종232 d74a358ecd18afb4c6411db0c110f839d33ae4b8 / dep-dbct4pm1egvs73f3scfg LIVE. 수정공개5파일200·원본일치, catalog200/기존공개상품 공통견적검사정상. brand232-production-smoke.json / brand232-local-ui.json / brand232-local-prices.png. 실제운영가격수정·주문생성·실결제0, 신규유료자원0. 격리로컬서버·탭종료/675파일변경0.
+
+
+## 2026-10-22 최신233 — 구매자 추가작업 표시·선택금액 검증
+
+- 사용자 구매자금액/세부사항/선택만합산 확인요청. 공통계산은 정상. 실제UI→review/checkout에서 expectedFulfillment/purchaseCountry 운영필드를 보내 review허용스키마가 INVALID_INPUT으로 거절할 수 있는 불일치 발견. frontend preview요청은허용기본필드만, realBilling운영요청은납품·국가포함 유지. 서버 스키마/권한/기존견적·주문/금융활성화 변경0.
+- 구매항목카드 checkbox·금액·작업일·본문설명 aria-describedby/textContent, 기본가+선택추가=NEON/원화합계·작업일 aria-live 표시. 선택한키만공통quote/서버prepare로전달. 중복확인클릭잠금/오류표시. 확인dialog 서버snapshot.optionKeys/customizationDetails만 표시(스냅샷 구조 변경0/미선택설명제외). 기본적용포함 고정문구 수정. 모바일 landing.css의 small-note10px!important를 해당카드에만14px 밝은색으로교정,390px넘침0. 5보조locale신규키 반영.
+- 실제app UI+실제 review-checkout.cjs+commerce-quote.cjs/메모리SQLite 합성상품/회원fixture: 기본100/항목2·3·4·5, API금액[10000,10700,10500,11400,10000]·선택[없음,logo+color,color,전체,없음]·설명키선택과일치/PG start 차단·호출0. buyer233-ui-requests.json / buyer233-selected-checkout.png / buyer233-mobile.png. 6언어 review-checkout-ui.test 6PASS(선택설명표시/HTML문자열텍스트/SDK인자모의검증·이탈정리). 실제결제/운영주문 생성0, 원래675변경0. 이번은선택금액전달·준비확인이고 계약후실승인검증과구분. 기존운영서비스에UI/안내/노트만배포/새유료자원0. 결과후속기록.
