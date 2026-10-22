@@ -589,3 +589,12 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 실제app UI+실제 review-checkout.cjs+commerce-quote.cjs/메모리SQLite 합성상품/회원fixture: 기본100/항목2·3·4·5, API금액[10000,10700,10500,11400,10000]·선택[없음,logo+color,color,전체,없음]·설명키선택과일치/PG start 차단·호출0. buyer233-ui-requests.json / buyer233-selected-checkout.png / buyer233-mobile.png. 6언어 review-checkout-ui.test 6PASS(선택설명표시/HTML문자열텍스트/SDK인자모의검증·이탈정리). 실제결제/운영주문 생성0, 원래675변경0. 이번은선택금액전달·준비확인이고 계약후실승인검증과구분. 기존운영서비스에UI/안내/노트만배포/새유료자원0. 결과후속기록.
 
 - 최종233 e5777bad285f08e49edbe2dc2f8e24dea248c4b7 / dep-dbctiu49v7es73bugd9g LIVE. 수정공개7파일200·수정본일치/catalog200. buyer233-production-smoke.json. 현재운영공개목록에itemized지원상품없음(publicOptionAssetId null)이므로 운영상품·주문을새로만들지않고 actual local review API로선택시나리오검증. 운영금융·원본·자료변경0. 새유료자원0/675파일변경0. 격리서버·탭종료/뷰포트복구. 개발자노트·인수인계233갱신완료.
+
+
+## 2026-10-22 최신234 — 단일 단계 저장·NovaPlay 첫 영상/800MB/자동 공개
+
+- 사용자 이전/다음·에셋정보임시저장 제거/주황 save-next 1개 요청. creator-draft-wizard 원submit 제거/상단 controls 제거/파일패널 form내step2 이동, 0~5정보저장후다음/6정보저장후심사제출 1개. 서버classification단계만제목없는초안저장 허용/DETAILS와최종submit완성검증 유지. 최종저장후실제submit연결/오류재시도same savedAssetId. 남아있던영문정규식요건을제목·내용비어있지않음으로수정(앞선통합언어입력요구). owner목록제목없는에셋표시/실입력title빈값유지.
+- 새드라마form firstEpisodeVideo/선택title추가. series/poster저장→1화무료생성→local또는Cloudflare직접upload→publishWhenReady요청. 업로드불가상태disabled/MP4·크기/권리선확인. DB ID·firstEpisodeId 재시도재사용. 영상없으면DRAFT. 영상처리중은body.publishWhenReady=true/owner권한·상영권한·모든회차영상·활성creator 확인후 webhook/status에서PUBLISHED 전환(관리자승인없음), 중복알림멱등/처리중cancelAutoPublish지원,명시수정/공개중지시flagclear. 기존series/episode/raw파일삭제0,권한·유료회차정책 유지.
+- cloudFileLimit800MiB=838860800 bytes/meta업로드와처리후 검증. studio videoByteLimit공급/Cloudflare20분800MB안내, 기존Render직접local300MiB·총600MiB상한 보존. 직접provider전송/TUS8MiB chunks 유지로800MB를Render에저장하지않음. 기존매월Stream기본·사용량과금융활성화조건그대로/새유료서비스·증설0. 실제800MB유료전송안함.
+- 새작품link studio?new=고유값→빈form/제목포커스·기존내작품보존안내(기존동일hash무반응원인수정). 폼상태표시는poster상태대신직계role=status에표시. 자동공개history코드대신한글label. 새문구5보조locale반영.
+- 필수검사 cloudflare-stream --test-name-pattern remote upload SQLite/PG2PASS(800정확허용·800+1차단/대기비공개/웹훅자동공개/중복1회/취소후DRAFT/기존유료권한); drama-theater 기존3PASS; creator-workflow13PASS(분류빈제목저장/상세빈제목거절/미완성제출차단추가). 실제격리UI 7단계연속저장/원본·보호미리보기/한국어metadata REVIEW, NovaPlay합성2초MP4저장·업로드·PUBLISHED→상영관1회차카드, 새작품emptytitle·oldseries보존. registration234-local-ui.json / registration234-theater.png. 실제Cloudflare전송0/운영상품·작품시험등록0/원래675변경0. 브라우저filechooser도구지연1회 있었지만업로드성공·최종흐름확인됨. 배포결과후속기록.

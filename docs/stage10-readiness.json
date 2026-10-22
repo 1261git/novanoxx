@@ -1,5 +1,5 @@
 {
-  "revision": 233,
+  "revision": 234,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8639,5 +8639,18 @@
     "commit": "e5777bad285f08e49edbe2dc2f8e24dea248c4b7",
     "deploy": "dep-dbctiu49v7es73bugd9g",
     "livePublicItemizedFixtureAvailable": false
+  },
+  "registrationFlow234": {
+    "status": "READY_FOR_DEPLOY",
+    "singleSaveNext": true,
+    "classificationDraftSupported": true,
+    "firstEpisodeUploadInNewWork": true,
+    "cloudVideoMaxBytes": 838860800,
+    "localLimitsUnchanged": true,
+    "autoPublishAfterReadiness": true,
+    "autoPublishCancelable": true,
+    "localActualPublicationChecked": true,
+    "newPaidResources": 0,
+    "externalProviderCalls": 0
   }
 }
