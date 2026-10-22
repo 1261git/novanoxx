@@ -521,3 +521,11 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 공식설계근거 https://developers.cloudflare.com/stream/viewing-videos/securing-your-stream/ .
 
 - 최종226 b9e7c187c136e1b6414ea35ed848807349809406 / dep-dbclibss728c73anlm30 LIVE. 운영health200/노트200원본일치/catalog200공개드라마0/익명usage403 유지. 운영부팅서명키파일존재·600/별도최소확인에서기존키재사용·추가키생성0, 2회동시재생요청 metadata1/tokenAPI0/동일응답, 로컬발급서명HLS200/1080목록존재/rawUID401/download403/ttl1800·downloadable:false 실제확인. 새영상업로드·운영회원/거래/작품생성0. 기존비공개1080확인영상만사용, 사전storage0.1분/delivery0분포함범위. 실제1000개영상전송0. 새키는운영디스크에만보관, 기존재귀암호화파일백업의대상이며이번추가전체백업·복원검증을실행한것은아님. 증빙 stream226-tests.txt / stream226-production-smoke.json / stream226-production-signing.json / stream226-production-notes.png.
+
+
+## 2026-10-22 최신227 — 1,000명 실검사 비용/무료 HTTP 확인
+
+- 무료추가확인: 로컬HTTP 무료1000+합성시청권1000=2000성공, 상태API2/tokenAPI0/권한회수·비공개·판매자차단차단. 클라이언트128소켓/메모리SQLite/모의신원·provider, 운영PG·실세션·1000동시영상검증아님. scripts/check-stream-startup-local.cjs / stream227-local-http.json. 기존675변경0.
+- 운영읽기UI storage0.1/1000·영상2·월delivery0/5000(지연가능), 기존b9e7c18 LIVE. 최신메모리약66.65MiB/512MiB·지연자료없음, 유휴메트릭을용량검증근거로사용하지않음. stream227-usage-observation.txt / stream227-resource-observation.json.
+- 1000명1분=1000분/초과USD0,3분=3000분/USD0,5분=5000분/USD0(여유20%면USD1),10분=10000분/USD5(20%면USD7),30분=30000분/USD25(20%면USD31). 각1회독립/기본5000포함량전부남음가정/월기본USD5중복제외/세금환율별도. 선로딩·재시도·단계합산은추가된다. 상세 docs/novaplay-capacity.md 227.
+- 실제발생기장비비별도미확정. 로컬회선수Gbps/외부분산도구의동시VU한도미검증이며무료500VUh만으로1000VU가능하다고하지않음. 유료/무료대규모실CDN검사는미실행,생성·가입·구독·증설0. 대표영상·단계합산·실행장비·총비용·중지조건확정후먼저알리고실행해야함. 3초저비트레이트컬러바반복을장시간검증이라고주장금지. 노트226배포유지/이번은문서·무료검사스크립트만저장하고재배포불필요.

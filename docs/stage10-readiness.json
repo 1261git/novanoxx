@@ -1,5 +1,5 @@
 {
-  "revision": 226,
+  "revision": 227,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8197,5 +8197,77 @@
       "notesUi": "actual deployed new heading and text verified; stream226-production-notes.png"
     },
     "keyBackup": "eligible for existing encrypted recursive file capture; next scheduled backup; no extra full backup/restore run claimed"
+  },
+  "streamLoadPlanning227": {
+    "revision": 227,
+    "date": "2026-10-22",
+    "status": "FREE_LOCAL_HTTP_VERIFIED_COST_PLAN_ONLY",
+    "localHttp": {
+      "scope": "local HTTP drama route; synthetic identity; SQLite memory; mocked provider; no video transfer",
+      "clientMaxSockets": 128,
+      "freeStarts": 1000,
+      "paidStarts": 1000,
+      "successes": 2000,
+      "providerStateCalls": 2,
+      "externalTokenCalls": 0,
+      "revocationDenied": true,
+      "anonymousPaidDenied": true,
+      "unpublishedDenied": true,
+      "blockedOwnerDenied": true,
+      "peakPendingServerRequests": 128,
+      "localElapsedMs": 398,
+      "productionPostgresOrSessionLoadTested": false,
+      "realConcurrent1000VideoPlayback": false
+    },
+    "observedUsage": {
+      "storageMinutes": 0.1,
+      "deliveryMinutes": 0,
+      "includedDeliveryMinutes": 5000,
+      "analyticsThrough": "2026-10-22T00:36Z",
+      "mayLag": true
+    },
+    "videoOnlyExtraUsdAssuming5000Remain": [
+      {
+        "viewers": 1000,
+        "minutes": 1,
+        "nominal": 0,
+        "with20PercentMargin": 0
+      },
+      {
+        "viewers": 1000,
+        "minutes": 3,
+        "nominal": 0,
+        "with20PercentMargin": 0
+      },
+      {
+        "viewers": 1000,
+        "minutes": 5,
+        "nominal": 0,
+        "with20PercentMargin": 1
+      },
+      {
+        "viewers": 1000,
+        "minutes": 10,
+        "nominal": 5,
+        "with20PercentMargin": 7
+      },
+      {
+        "viewers": 1000,
+        "minutes": 30,
+        "nominal": 25,
+        "with20PercentMargin": 31
+      }
+    ],
+    "costScope": "each standalone run; stages sum; existing USD5 base not added; excludes generator, taxes, currency; planning margin is not cap",
+    "generatorCost": "not selected; no guaranteed quote yet; local bandwidth and external concurrent-VU limits must be verified",
+    "paidActions": 0,
+    "productionLoadExecuted": false,
+    "deploymentRequired": false,
+    "report": "docs/novaplay-capacity.md#227",
+    "evidence": [
+      "stream227-local-http.json",
+      "stream227-usage-observation.txt",
+      "stream227-resource-observation.json"
+    ]
   }
 }
