@@ -8622,7 +8622,7 @@
     "deploy": "dep-dbct4pm1egvs73f3scfg"
   },
   "buyerOptionCheck233": {
-    "status": "READY_FOR_DEPLOY",
+    "status": "PRODUCTION_LIVE",
     "actualLocalCheckoutAmounts": [
       10000,
       10700,
@@ -8635,6 +8635,9 @@
     "financialSnapshotsUnchanged": true,
     "externalProviderCalls": 0,
     "productionWrites": 0,
-    "newPaidResources": 0
+    "newPaidResources": 0,
+    "commit": "e5777bad285f08e49edbe2dc2f8e24dea248c4b7",
+    "deploy": "dep-dbctiu49v7es73bugd9g",
+    "livePublicItemizedFixtureAvailable": false
   }
 }
