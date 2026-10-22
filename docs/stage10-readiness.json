@@ -1,5 +1,5 @@
 {
-  "revision": 224,
+  "revision": 225,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8026,5 +8026,89 @@
       "finalStatus": "LIVE",
       "evidence": "stream224-result.json; stream224-cloud-protection.png; stream224-subscription.png; stream224-production-usage.png"
     }
+  },
+  "streamCapacity225": {
+    "revision": 225,
+    "date": "2026-10-22",
+    "status": "1080_PIPELINE_VERIFIED_CONCURRENCY_NOT_VERIFIED",
+    "probe": {
+      "uid": "2e2792d8012f99be6bba1a8aa49cb1e5",
+      "source": {
+        "width": 1920,
+        "height": 1080,
+        "durationSeconds": 3,
+        "bytes": 8647
+      },
+      "uploadStatus": 204,
+      "private": true,
+      "allowedOrigins": [
+        "novanoxx.com"
+      ],
+      "status": {
+        "state": "ready",
+        "pctComplete": "100.000000",
+        "errorReasonCode": "",
+        "errorReasonText": ""
+      },
+      "streamInput": {
+        "width": 1920,
+        "height": 1080
+      },
+      "manifestStatus": 200,
+      "variants": [
+        {
+          "width": 1920,
+          "height": 1080,
+          "bandwidth": 20968
+        },
+        {
+          "width": 1280,
+          "height": 720,
+          "bandwidth": 16333
+        },
+        {
+          "width": 852,
+          "height": 480,
+          "bandwidth": 12312
+        },
+        {
+          "width": 640,
+          "height": 360,
+          "bandwidth": 10920
+        },
+        {
+          "width": 426,
+          "height": 240,
+          "bandwidth": 9096
+        }
+      ],
+      "decoded1080": true,
+      "published": false,
+      "concurrency1000Tested": false,
+      "usageBefore": {
+        "storageMinutes": 0.05,
+        "deliveryMinutes": 0
+      }
+    },
+    "quality": "ABR; no subscriber quality gate or manual quality selector; 1080 source and completed encoding required",
+    "delivery": "Cloudflare direct; Render authorization and playback startup remain separate",
+    "startupManagementApiCalls": 2,
+    "managementApiDefaultLimit": "1200 per 5min per user/account token; separate from CDN video delivery",
+    "risk": "1000 simultaneous starts could make 2000 REST calls; reduce calls before claiming readiness",
+    "concurrent1000LoadExecuted": false,
+    "additionalPaidResources": 0,
+    "probeWithinIncludedUsage": true,
+    "productionDataChanged": false,
+    "estimated1000Viewers10Minutes": {
+      "deliveryMinutes": 10000,
+      "extraUsdIf5000IncludedRemain": 5,
+      "excludes": "buffering/tax/currency/existing resources"
+    },
+    "pending": [
+      "startup API bottleneck mitigation",
+      "approved staged end-to-end load validation",
+      "live NEON paid access integration"
+    ],
+    "evidence": "stream225-result.json"
   }
 }

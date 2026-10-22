@@ -497,3 +497,13 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 최종224 0e2c1617e221e99d1214da1f7b4d8fab2cb02580 / dep-dbcl10u1egvs73erqm2g LIVE, 변경노트/처리문구2파일200일치. Cloudflare관리UI에서도 Require Signed URLs=true/Allowed Origins=novanoxx.com/Automatically Delete=false/3초영상Ready 확인. 스크린샷 stream224-cloud-protection.png 및 구독포함량 stream224-subscription.png. 임시로컬서버종료/이번runtime·합성DB·helper만경로검증후정리, 증빙보존. 기존675변경0. 공개영상0·원본/운영/TEST변경0·새Render자원0, 선택Cloudflare월5구독만활성. 전체상영서비스완료와NEON실제구매연결은구분.
 
 - 사용자관리자로그인완료후운영실제UI최종확인: 관리자대시보드→NovaPlay버튼 정상. storage0.05/1000분/영상1개/월delivery0/5000기본포함·baseUSD5/deliveryUSD0/totalUSD5/웹훅연결안내오류없음, 760px가로넘침0. 실제관리자UI미확인상태해소. 증빙stream224-production-usage.png, 신규영상/결제재검사0.
+
+
+## 2026-10-22 최신225 — 1080p 실확인·1,000명 동시 검증 범위
+
+- 실제 비공개 3초 1920×1080/8647byte 합성영상 TUS204, 변환100%, HLS200, 1080/720/480/360/240 변형목록 및 1080 변형 FFmpeg1초 실제디코딩 성공. UID 2e2792d8012f99be6bba1a8aa49cb1e5, signed필수/novanoxx.com허용/사이트등록·공개0. 서버 /data/drama-stream-1080-check-20261022.json 및 로컬 stream225-result.json에 비밀없는결과 보관. 기존320×180 검사와 구분. 포함량사전확인 storage0.05분/delivery0분, 한도내실행/새유료자원0.
+- 영상바이트는 Cloudflare직접전송. Render0.5CPU/512MB/총5GB 단일서비스는 홈페이지·권한·재생시작요청 담당. 1,000명동시부하/동시재생 실제검사0, 유휴자원/짧은1인디코딩은 성능근거 아님.
+- 현재 playback당 GETvideo+POSTtoken 2회. 공식관리API 기본1200회/5분(user/account token)이므로 1000명일제시작 약2000호출은 제한가능. CDN영상전송한도와 구분. 운영안정성완료표시금지. 권한검사유지·로컬서명/상태검증캐시 등 호출축소설계 후 승인된 단계부하검사 필요. 임의서명공유캐시·권한우회적용0.
+- 현재ABR 자동화질/회원·구독별화질제한없음/1080수동선택UI없음. 1080원본+변환완료+통신조건 필요, 모든기기1080고정 보장아님. 실제유료NEON구매경유검증 미완료유지. 300MiB 업로드상한은고화질10분원본에제약가능; 증설·상향없음.
+- 1000명×10분=10000전송분. 실제Starter기본5000분전부남았으면 초과약USD5/월기본포함합계USD10, 버퍼링/세금/환율/기존요금별도. 대규모검사는실행전비용·범위승인필요.
+- 근거: https://developers.cloudflare.com/stream/ , https://developers.cloudflare.com/stream/faq/ , https://developers.cloudflare.com/stream/viewing-videos/using-own-player/ , https://developers.cloudflare.com/fundamentals/api/reference/limits/ .

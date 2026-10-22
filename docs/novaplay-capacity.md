@@ -39,3 +39,13 @@ NovaPlay 이름·확정 가격 기록과 개발자노트만 기존 서비스에 
 ## 224 업데이트: 실제 선택된 Starter Bundle
 
 2026-10-22 기존 계정에서 월 $5 Starter Bundle 구매완료 화면을 확인했다. 이 구독은 저장 1,000분과 월 전송 5,000분을 포함한다. 위 개별 Stream 단가 표는 이 구독의 전송 포함량을 제외한 과거 비교 자료다. 실제 NovaPlay 비용 표시는 **$5 + max(0, 월 전송분−5,000)÷1,000 USD**로 계산한다(저장 1,000분 한도 내, 세금/환율/기존 서비스 제외). 100명×10분10편=10,000분이면 약 $10, 100명×한편=1,000분이면 약 $5다. 원본 별도백업 비용은 포함하지 않는다. 저장 추가할당 자동구매는 구현하지 않는다.
+
+
+## 2026-10-22 최신225 — 1080p 실확인·1,000명 동시 검증 범위
+
+- 실제 비공개 3초 1920×1080/8647byte 합성영상 TUS204, 변환100%, HLS200, 1080/720/480/360/240 변형목록 및 1080 변형 FFmpeg1초 실제디코딩 성공. UID 2e2792d8012f99be6bba1a8aa49cb1e5, signed필수/novanoxx.com허용/사이트등록·공개0. 서버 /data/drama-stream-1080-check-20261022.json 및 로컬 stream225-result.json에 비밀없는결과 보관. 기존320×180 검사와 구분. 포함량사전확인 storage0.05분/delivery0분, 한도내실행/새유료자원0.
+- 영상바이트는 Cloudflare직접전송. Render0.5CPU/512MB/총5GB 단일서비스는 홈페이지·권한·재생시작요청 담당. 1,000명동시부하/동시재생 실제검사0, 유휴자원/짧은1인디코딩은 성능근거 아님.
+- 현재 playback당 GETvideo+POSTtoken 2회. 공식관리API 기본1200회/5분(user/account token)이므로 1000명일제시작 약2000호출은 제한가능. CDN영상전송한도와 구분. 운영안정성완료표시금지. 권한검사유지·로컬서명/상태검증캐시 등 호출축소설계 후 승인된 단계부하검사 필요. 임의서명공유캐시·권한우회적용0.
+- 현재ABR 자동화질/회원·구독별화질제한없음/1080수동선택UI없음. 1080원본+변환완료+통신조건 필요, 모든기기1080고정 보장아님. 실제유료NEON구매경유검증 미완료유지. 300MiB 업로드상한은고화질10분원본에제약가능; 증설·상향없음.
+- 1000명×10분=10000전송분. 실제Starter기본5000분전부남았으면 초과약USD5/월기본포함합계USD10, 버퍼링/세금/환율/기존요금별도. 대규모검사는실행전비용·범위승인필요.
+- 근거: https://developers.cloudflare.com/stream/ , https://developers.cloudflare.com/stream/faq/ , https://developers.cloudflare.com/stream/viewing-videos/using-own-player/ , https://developers.cloudflare.com/fundamentals/api/reference/limits/ .
