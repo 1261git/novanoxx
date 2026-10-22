@@ -571,3 +571,10 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 최종231 3cc6453a7a0df35f0c8af88d629e039097918cde / dep-dbcstgvavr4c73d0g7ig LIVE. 공개10파일200·수정본일치, NovaPlay catalog200/공개작품0 보존. forms231-production-smoke.json. 운영 자료 저장0/유료자원0. 원래675파일변경0. 로컬 API·모바일 확인은 forms231-ui-checks.json / forms231-local-api.json에 기록했으며 실제 기종별 검수와 구분합니다.
 
 - 운영 로그인 상태에서 실제 에셋 등록 상세정보의 7단계/제목·내용/최종납품 예시/저장 후 다음 버튼과 중앙 배치 표시를 확인했습니다. 운영 입력·저장·파일 업로드는 하지 않았습니다. forms231-production.png. 로컬 임시 미리보기 서버·탭 종료, 뷰포트 복구 완료.
+
+
+## 2026-10-22 최신232 — 브랜드 적용 4항목 개별 유료 견적
+
+- 사용자 명시요청으로 로고/브랜드명/카피/색상 ITEMIZED_SUM price0 강제/readonly 제한 제거. 0~1,000,000 정수 NEON·작업일 기존 검증 유지. 공통 assets/option-quote.js를 서버 creator/save, commerce-quote, sandbox-engine-core 및 구매UI가 함께 사용. 선택된 항목만 합산/이용권한/정산 정책 및 실제결제 활성화는 변경하지 않음.
+- 기존 DB 마이그레이션/상품 일괄 가격 수정0, 기존항목0과 과거주문스냅샷 그대로. LEGACY_BUNDLE은 구조건 보존(기존 basic4항목 포함); 개별유료 설정은 항목별 모드 전환/저장 필요하며 UI 명시 안내. 등록의 기본가포함 안내 수정/5보조locale 반영. 역사적 개발자노트는 보존하고 최신글에 정책변경 명시.
+- 필수검사: stage10-bundle sqlite48/PG48 PASS(4개개별/합계/0기존/legacy보존/음수소수상한차단/낡은예상견적차단/중복주문/스냅샷고정), creator-workflow12PASS(4항목2/3/4/5 저장·catalog·공통견적94). 구 stage10-closure의 price1거절 단언도 새정책에 맞게 수정(전체재실행아님). 실제 격리UI 4항목2/3/4/5 입력·서버저장·복원 확인, 추가금액합계14. 새유료자원·외부제공자호출·운영시험자료0. 배포결과 후속기록.

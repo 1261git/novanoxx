@@ -1,5 +1,5 @@
 {
-  "revision": 231,
+  "revision": 232,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8604,5 +8604,19 @@
     "checks": "workflow 12 + numeric 1; actual isolated API/mobile 390px file/save/preview and legacy preservation",
     "commit": "3cc6453a7a0df35f0c8af88d629e039097918cde",
     "deploy": "dep-dbcstgvavr4c73d0g7ig"
+  },
+  "brandOptionPricing232": {
+    "status": "READY_FOR_PRODUCTION_DEPLOY",
+    "keys": [
+      "logo",
+      "brandName",
+      "copy",
+      "color"
+    ],
+    "itemizedRange": "integer 0..1000000 NEON",
+    "historicalListingsAndOrdersPreserved": true,
+    "legacyBundleTermsPreserved": true,
+    "newPaidResources": 0,
+    "checks": "SQLite48/PostgreSQL48/workflow12 and local actual UI save"
   }
 }
