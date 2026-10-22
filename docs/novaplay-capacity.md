@@ -49,3 +49,13 @@ NovaPlay 이름·확정 가격 기록과 개발자노트만 기존 서비스에 
 - 현재ABR 자동화질/회원·구독별화질제한없음/1080수동선택UI없음. 1080원본+변환완료+통신조건 필요, 모든기기1080고정 보장아님. 실제유료NEON구매경유검증 미완료유지. 300MiB 업로드상한은고화질10분원본에제약가능; 증설·상향없음.
 - 1000명×10분=10000전송분. 실제Starter기본5000분전부남았으면 초과약USD5/월기본포함합계USD10, 버퍼링/세금/환율/기존요금별도. 대규모검사는실행전비용·범위승인필요.
 - 근거: https://developers.cloudflare.com/stream/ , https://developers.cloudflare.com/stream/faq/ , https://developers.cloudflare.com/stream/viewing-videos/using-own-player/ , https://developers.cloudflare.com/fundamentals/api/reference/limits/ .
+
+
+## 2026-10-22 최신226 — 동시 재생 API 병목 보완
+
+- 매시청자 POSTtoken 제거: 서버 내 비동기RS256/30분서명/nbf-30초/downloadable:false. Cloudflare공식 고사용량 권장안. 기존 운영Render의 Stream권한으로 서명키1회생성, DATA_DIR/drama-stream-signing-계정.json 0600에만보관/기존암호화파일백업포함/로컬평문복사0. wx사전잠금/불완전파일자동대체금지/실패시반복키생성·원격token fallback금지. 기존API토큰권한확대·새외부수신자0.
+- 영상별동시요청통합/보호상태·서명메모리캐시최대1024개·5분/오류2초/오래된성공결과재사용금지. video재확인/웹훅에서해당캐시무효화. 서로다른cold영상GET은최대8개동시·시작20ms간격. 서명키는재시작기존파일재사용.
+- 앱권한캐시0: 매요청DB의공개상태·현재시청권·판매자제한확인후에만adapter호출. 기존30분URL의만료전효력은유지/즉시토큰폐기라고주장하지않음. 원본·행·운영/TEST삭제·마이그레이션0.
+- 로컬합성1000동시 same영상 metadata1/tokenAPI0, different1000영상 metadata1000/tokenAPI0/동시조회최대2관측(상한8)/cold배치약30.3초(Windows모의응답간격포함, 운영응답시간아님). 관련10검사PASS(SQLITE/PGlite PG 권한회수·비공개·기존원본·이어보기포함). 최초로컬셸네트워크제한 및잘못된NODE_PATH로환경실패후 기존node_modules읽기/로컬HTTP허용 환경에서확인완료. 외부유료요청0.
+- 실1000명사이트·DB·CDN장시간검증완료아님. 다수고유영상cold조회/다른관리작업합산API한도는별도용량조건. 새유료자원·증설0, 추가비용부하검사미실행. 기존675불변. 운영단일비공개영상서명재생최소확인후배포결과후속기록.
+- 공식설계근거 https://developers.cloudflare.com/stream/viewing-videos/securing-your-stream/ .

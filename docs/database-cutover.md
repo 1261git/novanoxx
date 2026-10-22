@@ -509,3 +509,13 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 근거: https://developers.cloudflare.com/stream/ , https://developers.cloudflare.com/stream/faq/ , https://developers.cloudflare.com/stream/viewing-videos/using-own-player/ , https://developers.cloudflare.com/fundamentals/api/reference/limits/ .
 
 - 최종225 d6d7a326b82ea95f03333bc68f12e71c557cfb63 / dep-dbcl7cgu01pc73bf8q7g LIVE. 운영노트200·수정본일치/health200, 실제브라우저새로고침후새제목확인. 신규기능·자원·부하발생검사추가0. 기존675변경0. 증빙 stream225-result.json / stream225-production-smoke.json / stream225-private-protection.png.
+
+
+## 2026-10-22 최신226 — 동시 재생 API 병목 보완
+
+- 매시청자 POSTtoken 제거: 서버 내 비동기RS256/30분서명/nbf-30초/downloadable:false. Cloudflare공식 고사용량 권장안. 기존 운영Render의 Stream권한으로 서명키1회생성, DATA_DIR/drama-stream-signing-계정.json 0600에만보관/기존암호화파일백업포함/로컬평문복사0. wx사전잠금/불완전파일자동대체금지/실패시반복키생성·원격token fallback금지. 기존API토큰권한확대·새외부수신자0.
+- 영상별동시요청통합/보호상태·서명메모리캐시최대1024개·5분/오류2초/오래된성공결과재사용금지. video재확인/웹훅에서해당캐시무효화. 서로다른cold영상GET은최대8개동시·시작20ms간격. 서명키는재시작기존파일재사용.
+- 앱권한캐시0: 매요청DB의공개상태·현재시청권·판매자제한확인후에만adapter호출. 기존30분URL의만료전효력은유지/즉시토큰폐기라고주장하지않음. 원본·행·운영/TEST삭제·마이그레이션0.
+- 로컬합성1000동시 same영상 metadata1/tokenAPI0, different1000영상 metadata1000/tokenAPI0/동시조회최대2관측(상한8)/cold배치약30.3초(Windows모의응답간격포함, 운영응답시간아님). 관련10검사PASS(SQLITE/PGlite PG 권한회수·비공개·기존원본·이어보기포함). 최초로컬셸네트워크제한 및잘못된NODE_PATH로환경실패후 기존node_modules읽기/로컬HTTP허용 환경에서확인완료. 외부유료요청0.
+- 실1000명사이트·DB·CDN장시간검증완료아님. 다수고유영상cold조회/다른관리작업합산API한도는별도용량조건. 새유료자원·증설0, 추가비용부하검사미실행. 기존675불변. 운영단일비공개영상서명재생최소확인후배포결과후속기록.
+- 공식설계근거 https://developers.cloudflare.com/stream/viewing-videos/securing-your-stream/ .

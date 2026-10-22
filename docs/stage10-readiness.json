@@ -1,5 +1,5 @@
 {
-  "revision": 225,
+  "revision": 226,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8119,5 +8119,47 @@
       "health": 200,
       "newEntryVisible": true
     }
+  },
+  "streamStartup226": {
+    "revision": 226,
+    "date": "2026-10-22",
+    "status": "IMPLEMENTED_LOCAL_VERIFIED_PENDING_DEPLOY",
+    "signing": "RS256 async crypto local signing; production no /token fallback; 30min exp, nbf -30s, downloadable false",
+    "key": "one-time Stream keys POST under existing Render Stream permissions; DATA_DIR/drama-stream-signing-account.json 0600; existing encrypted file backup; no workstation copy",
+    "recovery": "exclusive wx placeholder; existing invalid file fails closed, no repeated creates; restart reuses existing key",
+    "cache": {
+      "maxEntries": 1024,
+      "ttlSeconds": 300,
+      "errorSeconds": 2,
+      "singleFlight": true,
+      "staleOnError": false,
+      "invalidateOnProviderVideoRead": true
+    },
+    "lookups": {
+      "maxConcurrent": 8,
+      "minStartSpacingMs": 20
+    },
+    "authorization": "unchanged DB checks per HTTP request before adapter; no client-side or CDN authorization cache",
+    "localTests": {
+      "pass": 10,
+      "sameVideoRequests": 1000,
+      "sameVideoMetadataCalls": 1,
+      "tokenApiCalls": 0,
+      "differentVideos": 1000,
+      "differentVideoMetadataCalls": 1000,
+      "distinctColdBatchLocalMs": 30312,
+      "paidRevocationDenied": true,
+      "productionLoadClaim": false
+    },
+    "cost": {
+      "newResources": 0,
+      "externalLoadTest": false,
+      "videoTransferLoadTest": false
+    },
+    "evidence": "stream226-tests.txt",
+    "pending": [
+      "actual production key/bootstrap and signed HLS check",
+      "approved full-site/CDN concurrent load validation; not implied by synthetic adapter tests"
+    ]
   }
 }
