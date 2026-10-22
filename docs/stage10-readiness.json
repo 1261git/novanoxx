@@ -8273,7 +8273,7 @@
   "novaPlayCategories228": {
     "revision": 228,
     "date": "2026-10-22",
-    "status": "LOCAL_VERIFIED_PENDING_DEPLOY",
+    "status": "LIVE_UI_AND_REGISTRATION_VERIFIED",
     "groups": [
       {
         "id": "drama",
@@ -8407,6 +8407,48 @@
     "evidence": [
       "categories228-tests.txt",
       "categories228-local-mobile.png"
-    ]
+    ],
+    "production": {
+      "commit": "d4f6fd6eb1d80f2314267b11ec3e3f9ee80b051f",
+      "deploy": "dep-dbcm1sek1f9s73aqh92g",
+      "status": "LIVE",
+      "files": [
+        {
+          "file": "assets/drama-categories.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/drama-theater.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/drama-theater.css",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/ui-translations.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/ui-translations-extra.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/developer-notes-data.js",
+          "status": 200,
+          "match": true
+        }
+      ],
+      "health": 200,
+      "catalog": 200,
+      "publicSeries": 0,
+      "ui": "actual owner session: parent3 + drama child10 and counts visible; studio category drama and required child list verified; no alerts; no submit",
+      "screenshot": "categories228-production.png"
+    }
   }
 }

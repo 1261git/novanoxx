@@ -536,3 +536,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 사용자 드라마→로맨스판타지/현대물 등 요청. 대분류드라마(10종)·영화/단편(7종)·애니메이션(6종), 공통분류표 assets/drama-categories.js를프런트/서버공유. 상영관대분류·하위장르필터/건수·선택표시·빈결과/URL공유,작품카드·상세분류표시. 기존public catalog 최대100개범위 내클라이언트필터이며전체무제한탐색이라고하지않음.
 - 작품등록category/subcategory필수select·대분류변경시하위선택초기화/명시적접근성이름/모바일16px. 서버허용조합만저장400, 기존JSON body에필드추가만/새테이블0. 구클라이언트분류누락저장시기존분류·장르유지. 기존자유장르추가장르·태그유지/미분류항목전체·미분류노출/자동재분류0. 기존공개작품수정은공개중지필요정책유지.
 - SQLite·PGlite PG 관련5검사PASS, 합성로컬실제UI 로맨스판타지필터1작품·기존미분류작품category선택/저장복원/legacytag유지,390px두select16px/가로넘침0,영어필터전환. 5개보조locale분류키확인. 실제운영작품생성/영상전송/유료자원0. 기존675불변. 증빙 categories228-tests.txt / categories228-local-mobile.png, 실제배포후속기록.
+
+- 최종228 d4f6fd6eb1d80f2314267b11ec3e3f9ee80b051f / dep-dbcm1sek1f9s73aqh92g LIVE. 카테고리관련공개6파일200·원본일치/health200/catalog200공개작품0보존. 실제운영로그인세션에서상위3분류·드라마하위10종·카운트/선택표시확인. 작품등록GET화면category기본drama·하위required10옵션·alert0확인,운영저장0. categories228-production-smoke.json / categories228-production.png. 로컬미리보기서버종료/임시뷰포트복구,기존675변경0. 개발자노트배포완료/인수인계228최종기록.
