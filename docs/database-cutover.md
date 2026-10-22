@@ -519,3 +519,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 로컬합성1000동시 same영상 metadata1/tokenAPI0, different1000영상 metadata1000/tokenAPI0/동시조회최대2관측(상한8)/cold배치약30.3초(Windows모의응답간격포함, 운영응답시간아님). 관련10검사PASS(SQLITE/PGlite PG 권한회수·비공개·기존원본·이어보기포함). 최초로컬셸네트워크제한 및잘못된NODE_PATH로환경실패후 기존node_modules읽기/로컬HTTP허용 환경에서확인완료. 외부유료요청0.
 - 실1000명사이트·DB·CDN장시간검증완료아님. 다수고유영상cold조회/다른관리작업합산API한도는별도용량조건. 새유료자원·증설0, 추가비용부하검사미실행. 기존675불변. 운영단일비공개영상서명재생최소확인후배포결과후속기록.
 - 공식설계근거 https://developers.cloudflare.com/stream/viewing-videos/securing-your-stream/ .
+
+- 최종226 b9e7c187c136e1b6414ea35ed848807349809406 / dep-dbclibss728c73anlm30 LIVE. 운영health200/노트200원본일치/catalog200공개드라마0/익명usage403 유지. 운영부팅서명키파일존재·600/별도최소확인에서기존키재사용·추가키생성0, 2회동시재생요청 metadata1/tokenAPI0/동일응답, 로컬발급서명HLS200/1080목록존재/rawUID401/download403/ttl1800·downloadable:false 실제확인. 새영상업로드·운영회원/거래/작품생성0. 기존비공개1080확인영상만사용, 사전storage0.1분/delivery0분포함범위. 실제1000개영상전송0. 새키는운영디스크에만보관, 기존재귀암호화파일백업의대상이며이번추가전체백업·복원검증을실행한것은아님. 증빙 stream226-tests.txt / stream226-production-smoke.json / stream226-production-signing.json / stream226-production-notes.png.

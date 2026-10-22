@@ -8123,7 +8123,7 @@
   "streamStartup226": {
     "revision": 226,
     "date": "2026-10-22",
-    "status": "IMPLEMENTED_LOCAL_VERIFIED_PENDING_DEPLOY",
+    "status": "LIVE_LOCAL_SIGNING_REAL_PROVIDER_VERIFIED",
     "signing": "RS256 async crypto local signing; production no /token fallback; 30min exp, nbf -30s, downloadable false",
     "key": "one-time Stream keys POST under existing Render Stream permissions; DATA_DIR/drama-stream-signing-account.json 0600; existing encrypted file backup; no workstation copy",
     "recovery": "exclusive wx placeholder; existing invalid file fails closed, no repeated creates; restart reuses existing key",
@@ -8158,8 +8158,44 @@
     },
     "evidence": "stream226-tests.txt",
     "pending": [
-      "actual production key/bootstrap and signed HLS check",
       "approved full-site/CDN concurrent load validation; not implied by synthetic adapter tests"
-    ]
+    ],
+    "production": {
+      "commit": "b9e7c187c136e1b6414ea35ed848807349809406",
+      "deploy": "dep-dbclibss728c73anlm30",
+      "status": "LIVE",
+      "notesStatus": 200,
+      "notesMatch": true,
+      "health": 200,
+      "catalog": 200,
+      "publicSeries": 0,
+      "anonymousUsage": 403,
+      "signing": {
+        "commit": "b9e7c187c136e1b6414ea35ed848807349809406",
+        "uid": "2e2792d8012f99be6bba1a8aa49cb1e5",
+        "keyFileMode": "600",
+        "keyFilePresent": true,
+        "existingKeyReused": true,
+        "metadataCalls": 1,
+        "tokenApiCalls": 0,
+        "coalesced": true,
+        "signedHls": 200,
+        "has1080": true,
+        "download": 403,
+        "rawUid": 401,
+        "claims": {
+          "sub": "2e2792d8012f99be6bba1a8aa49cb1e5",
+          "downloadable": false,
+          "ttlSeconds": 1800
+        },
+        "usageBefore": {
+          "storageMinutes": 0.1,
+          "deliveryMinutes": 0
+        },
+        "actual1000VideoStreams": false
+      },
+      "notesUi": "actual deployed new heading and text verified; stream226-production-notes.png"
+    },
+    "keyBackup": "eligible for existing encrypted recursive file capture; next scheduled backup; no extra full backup/restore run claimed"
   }
 }
