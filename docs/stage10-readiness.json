@@ -1,5 +1,5 @@
 {
-  "revision": 228,
+  "revision": 229,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8450,5 +8450,31 @@
       "ui": "actual owner session: parent3 + drama child10 and counts visible; studio category drama and required child list verified; no alerts; no submit",
       "screenshot": "categories228-production.png"
     }
+  },
+  "novaPlaySearch229": {
+    "revision": 229,
+    "date": "2026-10-22",
+    "status": "LOCAL_VERIFIED_PENDING_DEPLOY",
+    "fields": [
+      "title",
+      "description",
+      "creator",
+      "genre",
+      "category/subcategory names, slugs and current translations"
+    ],
+    "query": "NFKC lowercase whitespace normalized; terms AND; max120; hash q parameter",
+    "categoryPreserved": true,
+    "clearPreservesCategory": true,
+    "scope": "client-side current published catalog max100; no external search or new analytics",
+    "checks": {
+      "unitTests": 3,
+      "actualUiSearch": true,
+      "enter": true,
+      "empty": true,
+      "clear": true,
+      "mobile390Overflow": false
+    },
+    "paidResources": 0,
+    "existingDataPreserved": true
   }
 }

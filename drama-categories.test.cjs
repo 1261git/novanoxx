@@ -14,3 +14,12 @@ test('category labels have translations in all supported secondary locales',()=>
  const labels=new Set(categories.groups.flatMap(group=>[group.label,...group.children.map(child=>child.label)]));
  for(const dict of [en,extra.es,extra['zh-Hans'],extra.vi,extra.de])for(const label of labels)assert.ok(dict[label],label);
 });
+test('NovaPlay search matches title, synopsis, creator and legacy/translated genres without bypassing category filters',()=>{
+ const row={title:'별빛 여행',description:'도시에서 만나는 이야기',creator:'Nova Artist',genre:'CUSTOM TAG',category:'drama',subcategory:'romance-fantasy'};
+ for(const query of ['별빛','도시','nova',' CUSTOM   tag ','로맨스 판타지','ROMANCE FANTASY','Ｎｏｖａ'])assert.equal(categories.searchMatches(row,query),true,query);
+ assert.equal(categories.searchMatches(row,'Contemporary',['Contemporary']),true);
+ assert.equal(categories.searchMatches(row,'nova 별빛'),true);assert.equal(categories.searchMatches(row,'nova nonexistent'),false);
+ assert.equal(categories.searchMatches(row,'  '),true);assert.equal(categories.searchMatches(row,'<script>'),false);
+ assert.equal(categories.searchMatches(row,'nova')&&categories.matches(row,'film'),false);
+ assert.equal(categories.searchMatches({title:'Legacy',genre:'OLD CUSTOM'},'old custom'),true);
+});

@@ -9,5 +9,12 @@
  function valid(category,subcategory){return typeof category==='string'&&typeof subcategory==='string'&&!!find(category)?.children.some(child=>child.id===subcategory);}
  function selection(series){return valid(series?.category,series?.subcategory)?{category:series.category,subcategory:series.subcategory}:{category:'',subcategory:''};}
  function matches(series,category='',subcategory=''){const saved=selection(series);return category==='unclassified'?!saved.category:(!category||saved.category===category)&&(!subcategory||saved.subcategory===subcategory);}
- return Object.freeze({groups:Object.freeze(groups),find,valid,selection,matches});
+ const normalize=value=>String(value||'').normalize('NFKC').toLowerCase().replace(/\s+/g,' ').trim();
+ function searchMatches(series,query,translatedLabels=[]){
+  const terms=normalize(query).slice(0,120).split(' ').filter(Boolean);if(!terms.length)return true;
+  const saved=selection(series),group=find(saved.category),child=group?.children.find(child=>child.id===saved.subcategory);
+  const content=normalize([series.title,series.description,series.creator,series.genre,group?.label,child?.label,group?.id,child?.id?.replace(/-/g,' '),...translatedLabels].filter(Boolean).join(' '));
+  return terms.every(term=>content.includes(term));
+ }
+ return Object.freeze({groups:Object.freeze(groups),find,valid,selection,matches,searchMatches});
 });

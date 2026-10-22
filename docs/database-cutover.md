@@ -538,3 +538,10 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - SQLite·PGlite PG 관련5검사PASS, 합성로컬실제UI 로맨스판타지필터1작품·기존미분류작품category선택/저장복원/legacytag유지,390px두select16px/가로넘침0,영어필터전환. 5개보조locale분류키확인. 실제운영작품생성/영상전송/유료자원0. 기존675불변. 증빙 categories228-tests.txt / categories228-local-mobile.png, 실제배포후속기록.
 
 - 최종228 d4f6fd6eb1d80f2314267b11ec3e3f9ee80b051f / dep-dbcm1sek1f9s73aqh92g LIVE. 카테고리관련공개6파일200·원본일치/health200/catalog200공개작품0보존. 실제운영로그인세션에서상위3분류·드라마하위10종·카운트/선택표시확인. 작품등록GET화면category기본drama·하위required10옵션·alert0확인,운영저장0. categories228-production-smoke.json / categories228-production.png. 로컬미리보기서버종료/임시뷰포트복구,기존675변경0. 개발자노트배포완료/인수인계228최종기록.
+
+
+## 2026-10-22 최신229 — NovaPlay 검색창
+
+- 상단검색form/제목·줄거리·creator·기존genre·분류/번역분류명/영문slug검색. NFKC·소문자·공백정리/120자/복수단어AND/includes문자열매칭(정규식입력실행0). 현재공개catalog최대100개범위클라이언트검색.
+- #/theater?q=...·category·subcategory 함께유지/분류링크에q유지/검색해제는분류유지,검색기준건수·빈결과/Enter검색/모바일16px·390가로넘침0. 사용자검색어HTMLescape/새검색수집·외부검색API·운영자료변경0.
+- 단위검사3PASS(기존분류·5보조locale유지/제목·줄거리·creator·legacytag·번역·공백/대소문자·필터교차), 합성실제UI romance1건·Enter빈결과·해제2건복원/분류유지확인. 기존675불변. 기존운영서비스에UI/번역/노트묶음배포/새유료자원0. 결과후속기록.
