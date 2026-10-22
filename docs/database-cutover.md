@@ -507,3 +507,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 현재ABR 자동화질/회원·구독별화질제한없음/1080수동선택UI없음. 1080원본+변환완료+통신조건 필요, 모든기기1080고정 보장아님. 실제유료NEON구매경유검증 미완료유지. 300MiB 업로드상한은고화질10분원본에제약가능; 증설·상향없음.
 - 1000명×10분=10000전송분. 실제Starter기본5000분전부남았으면 초과약USD5/월기본포함합계USD10, 버퍼링/세금/환율/기존요금별도. 대규모검사는실행전비용·범위승인필요.
 - 근거: https://developers.cloudflare.com/stream/ , https://developers.cloudflare.com/stream/faq/ , https://developers.cloudflare.com/stream/viewing-videos/using-own-player/ , https://developers.cloudflare.com/fundamentals/api/reference/limits/ .
+
+- 최종225 d6d7a326b82ea95f03333bc68f12e71c557cfb63 / dep-dbcl7cgu01pc73bf8q7g LIVE. 운영노트200·수정본일치/health200, 실제브라우저새로고침후새제목확인. 신규기능·자원·부하발생검사추가0. 기존675변경0. 증빙 stream225-result.json / stream225-production-smoke.json / stream225-private-protection.png.

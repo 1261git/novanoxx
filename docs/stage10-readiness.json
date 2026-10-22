@@ -8109,6 +8109,15 @@
       "approved staged end-to-end load validation",
       "live NEON paid access integration"
     ],
-    "evidence": "stream225-result.json"
+    "evidence": "stream225-result.json",
+    "production": {
+      "commit": "d6d7a326b82ea95f03333bc68f12e71c557cfb63",
+      "deploy": "dep-dbcl7cgu01pc73bf8q7g",
+      "status": "LIVE",
+      "notesStatus": 200,
+      "notesMatch": true,
+      "health": 200,
+      "newEntryVisible": true
+    }
   }
 }
