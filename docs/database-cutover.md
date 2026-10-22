@@ -614,3 +614,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 실제연결 smoke만확인,1080p/800MB실전송/1000동시재생/유료회차결제는미검증. 브라우저 filechooser.setFiles 도구응답약47분지연1회, 중복파일선택·중복업로드없이 단일작품완료 확인. 실제사이트업로드오류로기록하지않음. evidence stream235-production-result.json / stream235-public-theater.png / stream235-playback-ended.png. 추가코드수정필요없음/개발자노트반영배포결과후속기록.
 
 - 사후운영사용량 2026-10-22T13:13UTC 저장0.14/1000분·영상3·전송0/5000분(지연가능)·예상월USD5유지. 확인영상은Cloudflare에비공개보존하며기존영상2개와기록은보존.
+
+- 최종235 개발자노트 1c162e7ebf3bf0c046dc263010cc94e470d5ee3e / dep-dbd0om6k1f9s73b6aidg LIVE. 운영공개 developer-notes-data.js 200·로컬정규화원문일치·실검증신규항목확인(stream235-notes-deploy.json). 인수인계235완료/675보존변경0. 실제단일Cloudflare업로드·자동공개·1회재생후비공개보존 완료. 추가기능수정·증설없음.
