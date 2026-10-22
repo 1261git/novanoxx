@@ -1,5 +1,5 @@
 {
-  "revision": 230,
+  "revision": 231,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8592,5 +8592,15 @@
       "ui": "actual owner session optional poster input and JPG/PNG/WebP hint visible; no alerts; no production submit",
       "screenshot": "posters230-production-upload.png"
     }
+  },
+  "creatorUpload231": {
+    "status": "READY_FOR_PRODUCTION_DEPLOY",
+    "preserveExistingData": true,
+    "stepCount": 7,
+    "stepAndPendingInputsPreserved": true,
+    "posterLocalPreview": true,
+    "customizationDescriptions": true,
+    "newPaidResources": 0,
+    "checks": "workflow 12 + numeric 1; actual isolated API/mobile 390px file/save/preview and legacy preservation"
   }
 }

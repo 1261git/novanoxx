@@ -558,3 +558,12 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 검사6PASS: SQLite/PGlite PG 실제PNG/JPG/WebP변환·공개/비공개·타인/Origin차단·교체3이력/원본그대로·손상/SVG/대용량차단·기존회차/이어보기. 합성실제UI파일선택/작품저장동시업로드·640x960표시/목록로딩·390px넘침0. filechooser에서도구응답지연이있었지만작품저장/이미지확인완료. 실제운영작품생성0·구매원본변경0·기존675변경0. posters230-tests.txt / posters230-local-thumbnail.png. 배포결과후속기록.
 
 - 최종230 4391c47280967706096f5b612b8235a7836d2e0d / dep-dbcmkcrm8hqs73ag8ic0 LIVE. 공개5파일200·원본일치/health200/catalog200공개작품0유지. 존재없는poster404/익명POST401/저장0확인. 실제운영owner세션의작품등록posterFile선택/accept3형식·5MB안내·alerts0확인. posters230-production-smoke.json / posters230-production-upload.png. 로컬이미지실업로드·썸네일증빙은posters230-local-ui.json / posters230-local-thumbnail.png,운영썸네일실데이터를만들어검증한것은아님. 로컬서버종료·뷰포트복구/기존675변경0/새유료자원0. 개발자노트배포·인수인계230완료.
+
+
+## 2026-10-22 최신231 — 등록 흐름·모바일 메뉴·포스터 즉시 미리보기
+
+- 사용자 요청 묶음: 저장 후 단계1 초기화 원인인 재렌더 초기값 수정. step URL 유지/7단계(Creative Elements 제외)/정보 저장하고 다음 단계 버튼/중복 저장 잠금. 임시저장은 제목·분류·숫자 유효성 확인, 출판 필수조건은 기존 서버 심사 제출에서 계속 확인. 파일 업로드 성공은 DOM 목록만 갱신해 단계·미저장값을 보존. 원본/보호 미리보기 로컬 실제 업로드 성공.
+- 제목·내용 한 칸씩. titleKo/descriptionKo/industry/creativeElements 및 제외 사양 width/height/3D format/AUDIO bpm/AI runtime은 숨김 값으로 보존·구형 브라우저 초안 복원 포함. 메타데이터 검증/공개 기존 상세는 유지. 최종 납품 세부사항 및 괄호 규격 예시 추가. thirdPartyAssets unknown 선택지 제거/미선택 안내, 기존 unknown을 no로 자동 변경하지 않음.
+- 신규작품 항목별 견적 기본/기존 묶음 유지. 캐릭터·배경 금액 실제 입력·저장 확인. 가격 추가금액 직접 수정하면 명시 안내와 함께 LEGACY_BUNDLE 전환. 포함기본항목 로고/브랜드명/카피/색상0원 정책 유지. customizationDetails 9키 각1000자 서버 검증·보존/공개catalog/구매옵션 textContent/선택항목 quote 스냅샷. 계산금액·납품권한 정책은 변경하지 않음.
+- 포스터 input change Blob URL 미리보기/교체/선택취소 기존복원/이탈시 URL해제. 저장 전 업로드0, 기존서버 보호이미지 저장경로 유지. 모바일 creator-menu/step nav wrap·높이/44px, PC step nav와 NovaPlay1120px 중앙 정렬. 5개 보조locale 신규키 반영.
+- 무료필수확인: creator-workflow.test.cjs 12PASS + creator-metadata-input.test.cjs 1PASS. 격리실제server/API 합성회원의 모바일390px save/current step 및save-next/원본PNG·보호JPEG upload/가격25 및캐릭터12·배경8/설명저장/기존한국어·업종·story·1920x1080 보존 확인. Blob포스터800x1200→375x812 즉시교체·취소/DB series0 유지. 실휴대폰기종검증 아님. forms231-local-api.json / forms231-mobile-menu.png / forms231-mobile-upload.png. 원래675파일 변경0. 기존Render서비스/디스크만사용/추가유료자원·증설·실영상전송0. 배포결과 후속 기록.

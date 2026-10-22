@@ -13,6 +13,6 @@ module.exports=({db,fail,version,allowReserved=()=>false})=>{return function quo
   if(!Number.isSafeInteger(amount)||amount<100||i.expectedTotal!==q.total||i.expectedDays!==q.days)fail('PRICE_CHANGED',409);
   const seller=db.prepare('SELECT id,name FROM users WHERE id=?').get(a.user_id);if(!seller)fail('ASSET_UNAVAILABLE',409);
   if(db.prepare("SELECT state FROM member_restrictions WHERE user_id=?").get(a.user_id)?.state==='SUSPENDED')fail('ASSET_UNAVAILABLE',409);
-  return {kind:i.kind,amount,title:m.title,sellerId:a.user_id,sellerName:seller.name,assetId:a.id,publicId:i.assetId,optionKeys:i.optionKeys,days:q.days,fulfillment:m.fulfillment==='REGISTERED_INSTANT'&&!i.optionKeys.length?'REGISTERED_INSTANT':'WORKFLOW',contract:m.contract,deliverables:m.deliverables,rightsExclusions:m.rightsExclusions||'',saleMode:m.saleMode,policyVersion:version};
+  return {kind:i.kind,amount,title:m.title,sellerId:a.user_id,sellerName:seller.name,assetId:a.id,publicId:i.assetId,optionKeys:i.optionKeys,customizationDetails:Object.fromEntries(i.optionKeys.filter(key=>m.customizationDetails?.[key]).map(key=>[key,m.customizationDetails[key]])),days:q.days,fulfillment:m.fulfillment==='REGISTERED_INSTANT'&&!i.optionKeys.length?'REGISTERED_INSTANT':'WORKFLOW',contract:m.contract,deliverables:m.deliverables,rightsExclusions:m.rightsExclusions||'',saleMode:m.saleMode,policyVersion:version};
  };};
 module.exports.plans=plans;

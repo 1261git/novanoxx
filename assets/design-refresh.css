@@ -100,3 +100,13 @@ body:has([data-route="contest"]) .route-page,body:has([data-route="contest-submi
   #creator-asset-form fieldset,.creator-wizard-step,.creator-wizard-step .form-row>label { min-width:0; }
   #creator-asset-form :is(input:not([type=checkbox]),select,textarea) { font-size:16px; min-width:0; max-width:100%; }
 }
+
+/* Creator navigation is a wrapping menu, independent of the header navigation. */
+.creator-menu,.creator-wizard-nav{display:flex;position:static;height:auto;min-height:0;align-items:center;justify-content:center;flex-wrap:wrap;overflow:visible;gap:10px;width:100%;margin:24px auto;isolation:isolate}
+.creator-menu a,.creator-wizard-nav button{flex:0 1 auto;white-space:normal;line-height:1.5;min-height:44px;max-width:100%}
+.creator-wizard-nav button,.creator-wizard-actions button{background:#19171b;color:inherit;border:1px solid #ffffff30;border-radius:8px;padding:10px 14px;cursor:pointer}
+.creator-wizard-nav button[aria-current=step]{border-color:var(--accent);color:var(--accent)}
+.creator-wizard-actions{display:flex;justify-content:center;gap:12px;margin:16px 0}
+#creator-content{width:100%;min-width:0}#creator-asset-form .form-row{grid-template-columns:minmax(0,1fr)}
+.creator-wizard-step[hidden]{display:none!important}.creator-wizard-step [data-option-quote]{border-top:1px solid #ffffff20;padding-top:18px;margin-top:18px}
+@media(max-width:760px){.creator-menu,.creator-wizard-nav{gap:8px;row-gap:10px;margin:20px auto}.creator-menu a{display:flex;align-items:center;justify-content:center;padding:10px 12px}.creator-wizard-nav button{flex:1 1 125px}.creator-wizard-actions{clear:both}.creator-option-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.creator-check{line-height:1.6;min-height:44px}}
