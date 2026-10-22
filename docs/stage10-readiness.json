@@ -1,5 +1,5 @@
 {
-  "revision": 229,
+  "revision": 230,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8518,5 +8518,39 @@
       "ui": "actual owner session searchbox and title/synopsis/creator/genre placeholder verified",
       "screenshot": "search229-production.png"
     }
+  },
+  "novaPlayPosters230": {
+    "revision": 230,
+    "date": "2026-10-22",
+    "status": "LOCAL_VERIFIED_PENDING_DEPLOY",
+    "formats": [
+      "jpg",
+      "png",
+      "webp"
+    ],
+    "sourceLimitMiB": 5,
+    "maxPixels": 16000000,
+    "maxDimension": 8192,
+    "preview": "prebuilt watermarked JPEG max960px metadata stripped; 2:3 card; fallback cover preserved",
+    "storage": "existing DATA_DIR/drama-posters; 0600 files; total256MiB and preflight524MiB free; single upload/conversion; encrypted backup eligible",
+    "database": "additive drama_posters table/index; immutable versions; old originals and rows retained",
+    "access": "owner active DRAFT same-origin POST; public active series or owner/admin GET/HEAD; old/inactive URLs404; no original HTTP URL",
+    "client": "optional poster in series form, saved with series; file excluded from JSON; failure retains saved series ID for retry; publish awaits poster",
+    "checks": {
+      "tests": 6,
+      "sqlite": true,
+      "postgresPglite": true,
+      "actualImageConversion": true,
+      "originalsPreserved": true,
+      "actualLocalFormUpload": true,
+      "thumbnailLoaded": true,
+      "mobile390Overflow": false
+    },
+    "productionFixtureWrites": 0,
+    "additionalPaidResources": 0,
+    "evidence": [
+      "posters230-tests.txt",
+      "posters230-local-thumbnail.png"
+    ]
   }
 }

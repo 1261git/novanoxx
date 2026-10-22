@@ -547,3 +547,12 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 단위검사3PASS(기존분류·5보조locale유지/제목·줄거리·creator·legacytag·번역·공백/대소문자·필터교차), 합성실제UI romance1건·Enter빈결과·해제2건복원/분류유지확인. 기존675불변. 기존운영서비스에UI/번역/노트묶음배포/새유료자원0. 결과후속기록.
 
 - 최종229 e19510925ccdff0bda99c7fbd64468f63a10aa90 / dep-dbcm5u6k1f9s73aqlg9g LIVE. 관련6공개파일200·원본일치/health200/catalog200공개작품0유지. 실제운영NovaPlay검색입력·placeholder확인. search229-local-checks.json / search229-production-smoke.json / search229-production.png. 로컬미리보기종료·뷰포트복구, 기존675변경0. 추가비용0/운영자료저장0/새수집0. 개발자노트·인수인계229갱신완료.
+
+
+## 2026-10-22 최신230 — NovaPlay 포스터 업로드/썸네일
+
+- 사용자 작품등록포스터/목록썸네일/기존보존/배포 요청. 기존서버FFmpeg·이미지워터마크convert재사용/새유료서비스·증설0. 5MiB·JPG/PNG/WebP·16MP·각변8192이하헤더검사후강제디코더변환/메타데이터제거/960px워터마크JPEG,포스터2:3권장.
+- drama_posters 신규테이블/index추가만. DATA_DIR/drama-posters/UUID.original·UUID.jpg 0600. 기존원본/이력삭제0,교체때이전행active0/새행active1트랜잭션,성공전오류는새임시파일만정리. 작업폴더재귀합256MiB상한·사전여유524MiB·동시포스터1개·기존이미지작업slot/60초제한재사용.
+- GET/HEAD /api/drama/poster?id=현재UUID: 공개/활성소유자작품또는owner/admin만보호JPEG,비공개익명/과거inactive404/no-store/nosniff,원본HTTP경로없음. POST는creator본인DRAFT·동일Origin·활성프로필만. backupGate안에서처리/파일+DB기존암호화백업대상(이번추가백업/복원실행아님).
+- 작품form선택파일을JSON본문에서제외·작품저장뒤이미지업로드,첫저장이후이미지실패시dataset savedSeriesId로동일작품재시도/중복방지·오류안내. 새파일없으면기존유지/현재포스터미리보기,공개버튼도선택포스터먼저처리. 목록은보호이미지lazy/decodeasync+제목/분류오버레이,없는작품기존커버유지.
+- 검사6PASS: SQLite/PGlite PG 실제PNG/JPG/WebP변환·공개/비공개·타인/Origin차단·교체3이력/원본그대로·손상/SVG/대용량차단·기존회차/이어보기. 합성실제UI파일선택/작품저장동시업로드·640x960표시/목록로딩·390px넘침0. filechooser에서도구응답지연이있었지만작품저장/이미지확인완료. 실제운영작품생성0·구매원본변경0·기존675변경0. posters230-tests.txt / posters230-local-thumbnail.png. 배포결과후속기록.

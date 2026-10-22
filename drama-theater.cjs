@@ -26,6 +26,7 @@ module.exports=function({db,dir,user,json,origin,isAdmin,blocked=()=>false,uploa
  CREATE TABLE IF NOT EXISTS drama_purchase_intents(id TEXT PRIMARY KEY,actor TEXT NOT NULL,episode_id TEXT NOT NULL,price INTEGER NOT NULL,status TEXT NOT NULL,created BIGINT NOT NULL);
  CREATE TABLE IF NOT EXISTS drama_reviews(id TEXT PRIMARY KEY,series_id TEXT NOT NULL,actor TEXT NOT NULL,action TEXT NOT NULL,reason TEXT NOT NULL,created BIGINT NOT NULL);`);
  db.exec('CREATE TABLE IF NOT EXISTS drama_stream_uploads(id TEXT PRIMARY KEY,episode_id TEXT NOT NULL,user_id TEXT NOT NULL,uid TEXT UNIQUE,bytes BIGINT NOT NULL,status TEXT NOT NULL,created BIGINT NOT NULL,updated BIGINT NOT NULL);');
+ const posters=require('./drama-posters.cjs')({db,dir});
  const folder=path.join(dir,'drama-media'),fileLimit=300*1024*1024,totalLimit=600*1024*1024;let busy=false,cloudBusy=false;
  const fail=(message,status=400)=>{const error=Error(message);error.status=status;throw error;};
  const series=id=>UUID.test(id||'')?db.prepare('SELECT * FROM drama_series WHERE id=?').get(id):null;
@@ -42,7 +43,7 @@ module.exports=function({db,dir,user,json,origin,isAdmin,blocked=()=>false,uploa
  const purchasing=new Set();
  const media=ep=>db.prepare('SELECT * FROM drama_media WHERE episode_id=? AND active=1 ORDER BY created,id').all(ep.id);
  function outputEpisode(ep,actor){const files=media(ep),video=files.find(f=>f.kind==='video'),allowed=watchable(ep,actor),remote=video&&JSON.parse(video.body).provider==='cloudflare',pending=own(ep,actor)?db.prepare('SELECT id,status FROM drama_stream_uploads WHERE episode_id=? ORDER BY created DESC LIMIT 1').get(ep.id):null;return {id:ep.id,number:ep.position,...JSON.parse(ep.body),priceNeon:price(ep),locked:!allowed,purchased:purchased(actor,ep),paymentReady:paymentsReady(),status:ep.status,duration:video?Number(JSON.parse(video.body).duration)||null:null,video:allowed&&video?'/api/drama/media?id='+video.id:null,videoProvider:allowed&&video?(remote?'cloudflare':'local'):null,upload:pending||null,tracks:allowed?files.filter(f=>f.kind==='caption').map(f=>({language:f.language,label:f.label,url:'/api/drama/media?id='+f.id})):[],editable:own(ep,actor)};}
- function output(row,actor,detail=false){const name=db.prepare('SELECT display_name FROM creator_profiles WHERE user_id=?').get(row.user_id)?.display_name||'Creator';const episodes=db.prepare('SELECT * FROM drama_episodes WHERE series_id=? ORDER BY position,id').all(row.id).filter(e=>visible(e,actor));return {id:row.id,...JSON.parse(row.body),creator:name,status:row.status,episodeCount:episodes.length,...(detail?{episodes:episodes.map(e=>outputEpisode(e,actor)),editable:own(row,actor),reviews:own(row,actor)?db.prepare('SELECT action,reason,created FROM drama_reviews WHERE series_id=? ORDER BY created DESC LIMIT 10').all(row.id):[]}:{} )};}
+ function output(row,actor,detail=false){const name=db.prepare('SELECT display_name FROM creator_profiles WHERE user_id=?').get(row.user_id)?.display_name||'Creator';const episodes=db.prepare('SELECT * FROM drama_episodes WHERE series_id=? ORDER BY position,id').all(row.id).filter(e=>visible(e,actor));const poster=posters.current(row.id);return {id:row.id,...JSON.parse(row.body),creator:name,poster:poster?'/api/drama/poster?id='+poster.id:null,status:row.status,episodeCount:episodes.length,...(detail?{episodes:episodes.map(e=>outputEpisode(e,actor)),editable:own(row,actor),reviews:own(row,actor)?db.prepare('SELECT action,reason,created FROM drama_reviews WHERE series_id=? ORDER BY created DESC LIMIT 10').all(row.id):[]}:{} )};}
  const text=(value,max,required=false)=>{if(typeof value!=='string'||value.trim().length>max||required&&!value.trim())fail('입력 내용을 확인해주세요.');return value.trim();};
  function record(row,actor,action,reason=''){db.prepare('INSERT INTO drama_reviews VALUES(?,?,?,?,?,?)').run(crypto.randomUUID(),row.id,actor.id,action,reason,Date.now());}
  function diskBytes(){if(!fs.existsSync(folder))return 0;return fs.readdirSync(folder).reduce((sum,name)=>{const s=fs.lstatSync(path.join(folder,name));if(s.isSymbolicLink()||!s.isFile())fail('영상 저장 공간을 확인해주세요.',409);return sum+s.size;},0);}
@@ -102,6 +103,7 @@ module.exports=function({db,dir,user,json,origin,isAdmin,blocked=()=>false,uploa
    if(req.method==='POST'&&name==='/api/drama/stream/webhook'){
     let size=0,chunks=[];for await(const chunk of req){size+=chunk.length;if(size>65536)fail('입력 내용을 확인해주세요.',413);chunks.push(chunk);}const body=Buffer.concat(chunks);if(!cloud?.verify(body,req.headers['webhook-signature']))fail('요청 권한을 확인해주세요.',403);let data;try{data=JSON.parse(body);}catch{fail('입력 내용을 확인해주세요.');}const row=db.prepare('SELECT * FROM drama_stream_uploads WHERE uid=?').get(data.uid||'');if(row)await syncCloud(row);json(res,200,{ok:true});return true;
    }
+   if(['GET','HEAD'].includes(req.method)&&name==='/api/drama/poster'){const image=posters.byId(url.searchParams.get('id')),row=image&&series(image.series_id);if(!row||!own(row,actor)&&!publicSeries(row))fail('공개된 작품을 찾을 수 없습니다.',404);posters.serve(req,res,image);return true;}
    if(['GET','HEAD'].includes(req.method)&&name==='/api/drama/media'){await stream(req,res,url,actor);return true;}
    if(req.method==='GET'){
     if(name==='/api/drama/stream/usage'){if(!admin(actor))fail('관리자 권한이 필요해요.',403);json(res,200,cloud?.ready()?await cloud.usage():{configured:false});return true;}
@@ -112,6 +114,7 @@ module.exports=function({db,dir,user,json,origin,isAdmin,blocked=()=>false,uploa
     fail('요청한 화면을 찾을 수 없습니다.',404);
    }
    if(req.method!=='POST')fail('지원하지 않는 요청입니다.',405);if(!actor)fail('로그인이 필요합니다.',401);if(req.headers.origin!==origin)fail('요청 출처를 확인해주세요.',403);if(name!=='/api/drama/purchase'&&!ownerActive(actor.id)&&!admin(actor))fail('크리에이터 프로필을 먼저 등록해주세요.',403);
+   if(name==='/api/drama/poster'){const row=series(url.searchParams.get('seriesId'));if(!row||row.user_id!==actor.id)fail('요청 권한을 확인해주세요.',403);if(row.status!=='DRAFT')fail('편집 가능한 작품을 선택해주세요.',409);json(res,200,await posters.save(req,row,()=>series(row.id)?.status==='DRAFT'&&ownerActive(actor.id)));return true;}
    if(name==='/api/drama/upload'){json(res,200,await upload(req,url,actor));return true;}
    if(!/^application\/json(?:;|$)/i.test(req.headers['content-type']||''))fail('JSON 요청이 필요합니다.',415);const input=await readJSON(req);
    if(name==='/api/drama/stream/upload'){json(res,200,await cloudUpload(input,actor));return true;}
