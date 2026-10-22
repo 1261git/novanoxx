@@ -567,3 +567,7 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 신규작품 항목별 견적 기본/기존 묶음 유지. 캐릭터·배경 금액 실제 입력·저장 확인. 가격 추가금액 직접 수정하면 명시 안내와 함께 LEGACY_BUNDLE 전환. 포함기본항목 로고/브랜드명/카피/색상0원 정책 유지. customizationDetails 9키 각1000자 서버 검증·보존/공개catalog/구매옵션 textContent/선택항목 quote 스냅샷. 계산금액·납품권한 정책은 변경하지 않음.
 - 포스터 input change Blob URL 미리보기/교체/선택취소 기존복원/이탈시 URL해제. 저장 전 업로드0, 기존서버 보호이미지 저장경로 유지. 모바일 creator-menu/step nav wrap·높이/44px, PC step nav와 NovaPlay1120px 중앙 정렬. 5개 보조locale 신규키 반영.
 - 무료필수확인: creator-workflow.test.cjs 12PASS + creator-metadata-input.test.cjs 1PASS. 격리실제server/API 합성회원의 모바일390px save/current step 및save-next/원본PNG·보호JPEG upload/가격25 및캐릭터12·배경8/설명저장/기존한국어·업종·story·1920x1080 보존 확인. Blob포스터800x1200→375x812 즉시교체·취소/DB series0 유지. 실휴대폰기종검증 아님. forms231-local-api.json / forms231-mobile-menu.png / forms231-mobile-upload.png. 원래675파일 변경0. 기존Render서비스/디스크만사용/추가유료자원·증설·실영상전송0. 배포결과 후속 기록.
+
+- 최종231 3cc6453a7a0df35f0c8af88d629e039097918cde / dep-dbcstgvavr4c73d0g7ig LIVE. 공개10파일200·수정본일치, NovaPlay catalog200/공개작품0 보존. forms231-production-smoke.json. 운영 자료 저장0/유료자원0. 원래675파일변경0. 로컬 API·모바일 확인은 forms231-ui-checks.json / forms231-local-api.json에 기록했으며 실제 기종별 검수와 구분합니다.
+
+- 운영 로그인 상태에서 실제 에셋 등록 상세정보의 7단계/제목·내용/최종납품 예시/저장 후 다음 버튼과 중앙 배치 표시를 확인했습니다. 운영 입력·저장·파일 업로드는 하지 않았습니다. forms231-production.png. 로컬 임시 미리보기 서버·탭 종료, 뷰포트 복구 완료.
