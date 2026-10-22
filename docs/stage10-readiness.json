@@ -8454,7 +8454,7 @@
   "novaPlaySearch229": {
     "revision": 229,
     "date": "2026-10-22",
-    "status": "LOCAL_VERIFIED_PENDING_DEPLOY",
+    "status": "LIVE_SEARCH_UI_VERIFIED",
     "fields": [
       "title",
       "description",
@@ -8475,6 +8475,48 @@
       "mobile390Overflow": false
     },
     "paidResources": 0,
-    "existingDataPreserved": true
+    "existingDataPreserved": true,
+    "production": {
+      "commit": "e19510925ccdff0bda99c7fbd64468f63a10aa90",
+      "deploy": "dep-dbcm5u6k1f9s73aqlg9g",
+      "status": "LIVE",
+      "files": [
+        {
+          "file": "assets/drama-categories.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/drama-theater.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/drama-theater.css",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/ui-translations.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/ui-translations-extra.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/developer-notes-data.js",
+          "status": 200,
+          "match": true
+        }
+      ],
+      "health": 200,
+      "catalog": 200,
+      "publicSeries": 0,
+      "ui": "actual owner session searchbox and title/synopsis/creator/genre placeholder verified",
+      "screenshot": "search229-production.png"
+    }
   }
 }

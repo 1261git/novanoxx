@@ -545,3 +545,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 상단검색form/제목·줄거리·creator·기존genre·분류/번역분류명/영문slug검색. NFKC·소문자·공백정리/120자/복수단어AND/includes문자열매칭(정규식입력실행0). 현재공개catalog최대100개범위클라이언트검색.
 - #/theater?q=...·category·subcategory 함께유지/분류링크에q유지/검색해제는분류유지,검색기준건수·빈결과/Enter검색/모바일16px·390가로넘침0. 사용자검색어HTMLescape/새검색수집·외부검색API·운영자료변경0.
 - 단위검사3PASS(기존분류·5보조locale유지/제목·줄거리·creator·legacytag·번역·공백/대소문자·필터교차), 합성실제UI romance1건·Enter빈결과·해제2건복원/분류유지확인. 기존675불변. 기존운영서비스에UI/번역/노트묶음배포/새유료자원0. 결과후속기록.
+
+- 최종229 e19510925ccdff0bda99c7fbd64468f63a10aa90 / dep-dbcm5u6k1f9s73aqlg9g LIVE. 관련6공개파일200·원본일치/health200/catalog200공개작품0유지. 실제운영NovaPlay검색입력·placeholder확인. search229-local-checks.json / search229-production-smoke.json / search229-production.png. 로컬미리보기종료·뷰포트복구, 기존675변경0. 추가비용0/운영자료저장0/새수집0. 개발자노트·인수인계229갱신완료.
