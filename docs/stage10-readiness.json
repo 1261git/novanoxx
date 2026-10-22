@@ -1,5 +1,5 @@
 {
-  "revision": 234,
+  "revision": 235,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8654,5 +8654,27 @@
     "externalProviderCalls": 0,
     "commit": "a5c948b8e4b40dddde2456a0fa2b11a4f064b882",
     "deploy": "dep-dbctvt3m8hqs73anm5dg"
+  },
+  "novaPlayProductionSmoke235": {
+    "date": "2026-10-22",
+    "seriesId": "9ac8703e-d2ee-4790-a83b-ce72b7294cd8",
+    "realCloudflareUpload": true,
+    "automaticPublication": true,
+    "publicCatalogVerified": true,
+    "playbackEnded": true,
+    "durationSeconds": 2,
+    "videoDimensions": "160x100",
+    "finalState": "DRAFT_PRIVATE_MEDIA_RETAINED",
+    "anonymousSeriesStatus": 404,
+    "anonymousMediaStatus": 404,
+    "existingRecordsDeleted": 0,
+    "newPaidResources": 0,
+    "evidence": "stream235-production-result.json",
+    "notVerified": [
+      "1080p",
+      "1000 concurrent playback",
+      "800MB upload",
+      "paid episode purchase"
+    ]
   }
 }

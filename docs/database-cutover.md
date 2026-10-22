@@ -604,3 +604,13 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 운영 로그인 화면에서 단일 submit 버튼 텍스트·주황 rgb(255,107,43), 이전/다음controls 및 구임시저장button 부재를 DOM·화면으로 확인했습니다. registration234-production-asset.png.
 
 - 운영 NovaPlay 로그인 화면에서 firstEpisodeVideo 활성입력과 Cloudflare800MB·20분안내, 고유new링크 표시를 확인했습니다. registration234-production-studio.png. 운영file선택·저장0/Cloudflare전송0.
+
+
+## 2026-10-22 최신235 — NovaPlay 실제 Cloudflare 업로드·상영관 공개·재생 확인
+
+- 사용자 실제영상연결검증 요청에 따라 운영 UI에서 직접생성 2초/160×100/2962bytes MP4 1개를 실제 Cloudflare TUS 업로드. 영상처리완료 알림으로 자동 PUBLISHED 전환(수동 publish/status 호출0), 상영관 카드·익명 catalog/series API에서1회차·무료·duration2·provider cloudflare 확인. 실제영상 버튼으로 HLS 재생 currentTime2/duration2/ended true/readyState4/error null, controlsList nodownload. 서명URL·업로드URL·키는 기록하지 않음.
+- 확인용 series 9ac8703e-d2ee-4790-a83b-ce72b7294cd8 / episode 3eba051f-1403-476c-8178-81fd48e261a3 / media 161fe8d5-c586-48fa-9d43-2faedc85e0ac. 검증후 owner 공개중지→DRAFT, 작품·영상·기록 삭제0. 익명 catalog 제외/series404/media404 확인. 기존공개드라마0→확인용1→최종0. 운영·TEST·원본·원래미커밋 보존.
+- 사전 최신운영UI 2026-10-22T12:22UTC 저장0.1/1000분·영상2·전송0/5000분·예상월USD5. 짧은1회재생은기존포함량내추가청구없을것으로예상/새유료자원·증설0. 사용량지연/확정청구서미확인. 공개가격근거 https://developers.cloudflare.com/stream/pricing/ ; 계정기본포함량은기존구매확인224와운영설정기준.
+- 실제연결 smoke만확인,1080p/800MB실전송/1000동시재생/유료회차결제는미검증. 브라우저 filechooser.setFiles 도구응답약47분지연1회, 중복파일선택·중복업로드없이 단일작품완료 확인. 실제사이트업로드오류로기록하지않음. evidence stream235-production-result.json / stream235-public-theater.png / stream235-playback-ended.png. 추가코드수정필요없음/개발자노트반영배포결과후속기록.
+
+- 사후운영사용량 2026-10-22T13:13UTC 저장0.14/1000분·영상3·전송0/5000분(지연가능)·예상월USD5유지. 확인영상은Cloudflare에비공개보존하며기존영상2개와기록은보존.
