@@ -556,3 +556,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - GET/HEAD /api/drama/poster?id=현재UUID: 공개/활성소유자작품또는owner/admin만보호JPEG,비공개익명/과거inactive404/no-store/nosniff,원본HTTP경로없음. POST는creator본인DRAFT·동일Origin·활성프로필만. backupGate안에서처리/파일+DB기존암호화백업대상(이번추가백업/복원실행아님).
 - 작품form선택파일을JSON본문에서제외·작품저장뒤이미지업로드,첫저장이후이미지실패시dataset savedSeriesId로동일작품재시도/중복방지·오류안내. 새파일없으면기존유지/현재포스터미리보기,공개버튼도선택포스터먼저처리. 목록은보호이미지lazy/decodeasync+제목/분류오버레이,없는작품기존커버유지.
 - 검사6PASS: SQLite/PGlite PG 실제PNG/JPG/WebP변환·공개/비공개·타인/Origin차단·교체3이력/원본그대로·손상/SVG/대용량차단·기존회차/이어보기. 합성실제UI파일선택/작품저장동시업로드·640x960표시/목록로딩·390px넘침0. filechooser에서도구응답지연이있었지만작품저장/이미지확인완료. 실제운영작품생성0·구매원본변경0·기존675변경0. posters230-tests.txt / posters230-local-thumbnail.png. 배포결과후속기록.
+
+- 최종230 4391c47280967706096f5b612b8235a7836d2e0d / dep-dbcmkcrm8hqs73ag8ic0 LIVE. 공개5파일200·원본일치/health200/catalog200공개작품0유지. 존재없는poster404/익명POST401/저장0확인. 실제운영owner세션의작품등록posterFile선택/accept3형식·5MB안내·alerts0확인. posters230-production-smoke.json / posters230-production-upload.png. 로컬이미지실업로드·썸네일증빙은posters230-local-ui.json / posters230-local-thumbnail.png,운영썸네일실데이터를만들어검증한것은아님. 로컬서버종료·뷰포트복구/기존675변경0/새유료자원0. 개발자노트배포·인수인계230완료.

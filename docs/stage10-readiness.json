@@ -8522,7 +8522,7 @@
   "novaPlayPosters230": {
     "revision": 230,
     "date": "2026-10-22",
-    "status": "LOCAL_VERIFIED_PENDING_DEPLOY",
+    "status": "LIVE_UPLOAD_UI_AND_ACCESS_VERIFIED",
     "formats": [
       "jpg",
       "png",
@@ -8551,6 +8551,46 @@
     "evidence": [
       "posters230-tests.txt",
       "posters230-local-thumbnail.png"
-    ]
+    ],
+    "production": {
+      "commit": "4391c47280967706096f5b612b8235a7836d2e0d",
+      "deploy": "dep-dbcmkcrm8hqs73ag8ic0",
+      "status": "LIVE",
+      "files": [
+        {
+          "file": "assets/drama-theater.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/drama-theater.css",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/ui-translations.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/ui-translations-extra.js",
+          "status": 200,
+          "match": true
+        },
+        {
+          "file": "assets/developer-notes-data.js",
+          "status": 200,
+          "match": true
+        }
+      ],
+      "health": 200,
+      "catalog": 200,
+      "publicSeries": 0,
+      "unknownPoster": 404,
+      "unauthenticatedUpload": 401,
+      "fixtureWrites": 0,
+      "ui": "actual owner session optional poster input and JPG/PNG/WebP hint visible; no alerts; no production submit",
+      "screenshot": "posters230-production-upload.png"
+    }
   }
 }
