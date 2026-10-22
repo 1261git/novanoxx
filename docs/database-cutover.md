@@ -598,3 +598,9 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - cloudFileLimit800MiB=838860800 bytes/meta업로드와처리후 검증. studio videoByteLimit공급/Cloudflare20분800MB안내, 기존Render직접local300MiB·총600MiB상한 보존. 직접provider전송/TUS8MiB chunks 유지로800MB를Render에저장하지않음. 기존매월Stream기본·사용량과금융활성화조건그대로/새유료서비스·증설0. 실제800MB유료전송안함.
 - 새작품link studio?new=고유값→빈form/제목포커스·기존내작품보존안내(기존동일hash무반응원인수정). 폼상태표시는poster상태대신직계role=status에표시. 자동공개history코드대신한글label. 새문구5보조locale반영.
 - 필수검사 cloudflare-stream --test-name-pattern remote upload SQLite/PG2PASS(800정확허용·800+1차단/대기비공개/웹훅자동공개/중복1회/취소후DRAFT/기존유료권한); drama-theater 기존3PASS; creator-workflow13PASS(분류빈제목저장/상세빈제목거절/미완성제출차단추가). 실제격리UI 7단계연속저장/원본·보호미리보기/한국어metadata REVIEW, NovaPlay합성2초MP4저장·업로드·PUBLISHED→상영관1회차카드, 새작품emptytitle·oldseries보존. registration234-local-ui.json / registration234-theater.png. 실제Cloudflare전송0/운영상품·작품시험등록0/원래675변경0. 브라우저filechooser도구지연1회 있었지만업로드성공·최종흐름확인됨. 배포결과후속기록.
+
+- 최종234 a5c948b8e4b40dddde2456a0fa2b11a4f064b882 / dep-dbctvt3m8hqs73anm5dg LIVE. 공개수정6파일200·원본일치/catalog200·운영공개드라마0유지. registration234-production-smoke.json. 실제상영관노출은격리API+실제로컬MP4로확인했고운영시험작품을생성하지않음. 실제Cloudflare800MB전송0/신규유료자원0. 임시서버·탭종료/675변경0.
+
+- 운영 로그인 화면에서 단일 submit 버튼 텍스트·주황 rgb(255,107,43), 이전/다음controls 및 구임시저장button 부재를 DOM·화면으로 확인했습니다. registration234-production-asset.png.
+
+- 운영 NovaPlay 로그인 화면에서 firstEpisodeVideo 활성입력과 Cloudflare800MB·20분안내, 고유new링크 표시를 확인했습니다. registration234-production-studio.png. 운영file선택·저장0/Cloudflare전송0.

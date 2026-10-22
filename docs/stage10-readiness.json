@@ -8641,7 +8641,7 @@
     "livePublicItemizedFixtureAvailable": false
   },
   "registrationFlow234": {
-    "status": "READY_FOR_DEPLOY",
+    "status": "PRODUCTION_LIVE",
     "singleSaveNext": true,
     "classificationDraftSupported": true,
     "firstEpisodeUploadInNewWork": true,
@@ -8651,6 +8651,8 @@
     "autoPublishCancelable": true,
     "localActualPublicationChecked": true,
     "newPaidResources": 0,
-    "externalProviderCalls": 0
+    "externalProviderCalls": 0,
+    "commit": "a5c948b8e4b40dddde2456a0fa2b11a4f064b882",
+    "deploy": "dep-dbctvt3m8hqs73anm5dg"
   }
 }
