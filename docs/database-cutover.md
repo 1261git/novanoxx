@@ -626,3 +626,11 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 사용자범위실재생만/대규모부하0. 사전저장0.14/1000분·영상3/사후0.19분·영상4, 전송0/5000분표시(지연가능),예상월USD5유지/포함량내추가청구없을것으로예상·확정청구서미확인. 새유료자원·증설0. 확인작품공개중지→DRAFT/영상·기록삭제0. 공개catalog제외·익명series404/media404 확인. 이전235작품과기존영상보존/원래675파일보존. syntax·5locale검사통과/실제운영UI필수검증완료. 개발자노트와인수인계236갱신/최종노트배포결과후속기록.
 
 - 최종236 27994bb64b81ffb9599802cfd51788efb66df49a / dep-dbd2jcjm8hqs73aujkb0 LIVE. 플레이어·5locale·개발자노트 공개3파일200/검증원문일치(stream236-final-deploy.json). 동일1080p작품DRAFT·영상등록보존과이전235작품보존UI확인. 675파일변경0/추가유료자원0. 실제1080p선택·1920×1080종료확인완료/인수인계236최종갱신.
+
+
+## 2026-10-23 최신237 — 휴대폰 화면 크기 화질 선택·1080p 확인/실기기 미검증 명시
+
+- 사용자의 휴대폰검증요청. 연결도구 inventory는 Windows Chrome/IAB뿐으로 실제Android/iPhone연결없음. CUA viewport는width/height변경만지원(UA/모바일OS/터치에뮬레이션없음). 실기기확인으로표기하지않음. 기존236작품을DRAFT비공개owner미리보기로재사용/재업로드·재공개0.
+- 390×844 viewport에서 실제Cloudflare재생→1080p선택/decoded1920×1080/currentTime2.999999/duration2.999999/endedtrue/readyState4/errornull 확인. playsinline기존유지. 초기글자13px·조작부89×47 관측/가독성개선필요. .drama-quality-control class 및 CSS16px/최소48px높이·112px너비/12px간격/줄바꿈/포커스 추가. 보안·재생서명·권한·유료설정변경0.
+- stream237-before.json에실기기false/viewport측정임을명시. 지원HLS라이브러리1.6.13에ManagedMediaSource의disableRemotePlayback처리코드존재를읽기확인(실제iOS동작통과로처리하지않음). 기존native전용브라우저는자동HLS경로/수동화질선택미지원일수있어실기기확인대기.
+- 사전현재UI 2026-10-23T00:24UTC 저장0.19/1000분·영상4·전송0/5000분표시(지연가능)·예상월USD5. 기존영상소수재생만/포함량내추가청구없을것으로예상·확정청구서미확인. 신규유료자원·증설0. 기존운영·TEST·원본·미커밋자료보존. 개발자노트·인수인계237갱신/운영배포후화면·필수재생결과후속기록. 실제Android/iPhone·모바일Safari·삼성인터넷의터치/전체화면/통신망확인은미완료.

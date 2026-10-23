@@ -1,5 +1,5 @@
 {
-  "revision": 236,
+  "revision": 237,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8707,5 +8707,29 @@
       "800MB upload",
       "paid-episode purchase"
     ]
+  },
+  "novaPlayMobileViewport237": {
+    "date": "2026-10-23",
+    "physicalMobileDeviceVerified": false,
+    "androidChromeVerified": false,
+    "iosSafariVerified": false,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "realCloudflarePlayback": {
+      "width": 1920,
+      "height": 1080,
+      "ended": true,
+      "error": null
+    },
+    "qualitySelection": "1080p selected in desktop browser at phone viewport; not actual touchscreen",
+    "issueFound": "quality select font13px",
+    "fix": "16px font; min-height48px; min-width112px; flex-wrap/gap; keyboard focus",
+    "seriesStatus": "DRAFT preserved",
+    "newUploads": 0,
+    "newPublications": 0,
+    "newPaidResources": 0,
+    "remaining": "Physical Android/iPhone playback and native touch/fullscreen verification"
   }
 }
