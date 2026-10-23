@@ -8758,7 +8758,33 @@
       3,
       4
     ],
-    "deployment": "FIRST_LIVE_FINAL_COPY_AND_DUPLICATE_DELIVERY_CORRECTIONS_PENDING",
-    "publicShoppingId": 1004
+    "deployment": "LIVE",
+    "publicShoppingId": 1004,
+    "commit": "58867560e9d9e2b1c02e00362943e9e08f39a75f",
+    "deployId": "dep-dbdbrelg1s2s73dgd6ug",
+    "verification": {
+      "publicAssets": 2,
+      "allMulti": true,
+      "optionTotalsNeon": [
+        469,
+        269
+      ],
+      "optionDays": 1,
+      "awardsEmptySlots": [
+        3,
+        4
+      ],
+      "previewDecodedNoErrors": true,
+      "originalAnonymousHttpStatuses": [
+        404,
+        404
+      ],
+      "publicFilesMatch": 4,
+      "legacyShoppingIntroHidden": true,
+      "preservedFilesChecked": 675,
+      "preservedFilesChanged": 0,
+      "actualPaymentExecuted": false,
+      "newPaidResources": 0
+    }
   }
 }
