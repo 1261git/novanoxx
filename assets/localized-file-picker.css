@@ -1,0 +1,6 @@
+.localized-file-picker{display:flex;align-items:center;flex-wrap:wrap;gap:10px;position:relative;max-width:100%;margin:8px 0 16px;min-width:0}
+.localized-file-picker>.localized-file-native{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.localized-file-picker>.localized-file-button{flex:0 0 auto;width:auto;margin:0;padding:10px 16px;min-height:44px;font:inherit;color:inherit;background:#25232c;border:1px solid #56505d;border-radius:8px;cursor:pointer}
+.localized-file-picker>.localized-file-button:focus-visible{outline:2px solid #ff7029;outline-offset:3px}
+.localized-file-picker>.localized-file-button:disabled{opacity:.5;cursor:not-allowed}
+.localized-file-name{min-width:0;overflow-wrap:anywhere;font-size:.9em;color:#bbb7c5}

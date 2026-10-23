@@ -1,5 +1,5 @@
 {
-  "revision": 239,
+  "revision": 243,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8914,5 +8914,24 @@
     "preservedFilesChecked": 675,
     "preservedFilesChanged": 0,
     "nativeFileControl": "BROWSER_OS_LANGUAGE_NOT_SITE_TEXT"
+  },
+  "filePicker243": {
+    "languages": [
+      "ko",
+      "en",
+      "es",
+      "zh-Hans",
+      "vi",
+      "de"
+    ],
+    "control": "CUSTOM_LOCALIZED_BUTTON_ORIGINAL_FILE_INPUT_RETAINED",
+    "selectedFilesAndFormValues": "LOCAL_BROWSER_SWITCH_PRESERVED",
+    "cancelAndDisabled": "VERIFIED",
+    "registeredKeys": 1882,
+    "tossQuickOpen": "UNDER_REVIEW_LIVE_CONTRACT_GATE_VISIBLE",
+    "tossBillingActivation": false,
+    "settlementPlanDisplayedKrw": 13250,
+    "newPaidResources": 0,
+    "deployment": "PENDING"
   }
 }

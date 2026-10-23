@@ -4862,4 +4862,8 @@ Object.assign(dictionaries["vi"],{"추천 에셋":"Tác phẩm nổi bật","에
 Object.assign(dictionaries["de"],{"추천 에셋":"Ausgewählte Werke","에셋 탐색":"Werke durchsuchen","공개 영상 미리보기 재생":"Öffentliche Videovorschau abspielen","회전하는 보라색과 오렌지색 천체와 궤도":"Rotierende violette und orange Himmelskörper und Umlaufbahnen"});Object.assign(dictionaries["es"],{"프로필 준비":"Prepare su perfil","에셋 등록 · 심사":"Registro y revisión de obras","판매 · 맞춤 작업":"Ventas y personalización","검수 · 납품 · 정산":"Revisión, entrega y liquidación"});
 Object.assign(dictionaries["zh-Hans"],{"프로필 준비":"完善个人资料","에셋 등록 · 심사":"发布作品与审核","판매 · 맞춤 작업":"销售与定制","검수 · 납품 · 정산":"验收、交付与结算"});
 Object.assign(dictionaries["vi"],{"프로필 준비":"Chuẩn bị hồ sơ","에셋 등록 · 심사":"Đăng tác phẩm và xét duyệt","판매 · 맞춤 작업":"Bán hàng và chỉnh sửa theo yêu cầu","검수 · 납품 · 정산":"Nghiệm thu, bàn giao và quyết toán"});
-Object.assign(dictionaries["de"],{"프로필 준비":"Profil einrichten","에셋 등록 · 심사":"Werkregistrierung und Prüfung","판매 · 맞춤 작업":"Verkauf und Anpassungen","검수 · 납품 · 정산":"Abnahme, Lieferung und Auszahlung"});if(typeof module!=='undefined')module.exports=dictionaries;else root.NNX_TRANSLATIONS_EXTRA=dictionaries;})(typeof globalThis!=='undefined'?globalThis:this);
+Object.assign(dictionaries["de"],{"프로필 준비":"Profil einrichten","에셋 등록 · 심사":"Werkregistrierung und Prüfung","판매 · 맞춤 작업":"Verkauf und Anpassungen","검수 · 납품 · 정산":"Abnahme, Lieferung und Auszahlung"});Object.assign(dictionaries["es"],{"파일 선택":"Seleccionar archivo","선택된 파일 없음":"Ningún archivo seleccionado"});
+Object.assign(dictionaries["zh-Hans"],{"파일 선택":"选择文件","선택된 파일 없음":"未选择文件"});
+Object.assign(dictionaries["vi"],{"파일 선택":"Chọn tệp","선택된 파일 없음":"Chưa chọn tệp"});
+Object.assign(dictionaries["de"],{"파일 선택":"Datei auswählen","선택된 파일 없음":"Keine Datei ausgewählt"});
+if(typeof module!=='undefined')module.exports=dictionaries;else root.NNX_TRANSLATIONS_EXTRA=dictionaries;})(typeof globalThis!=='undefined'?globalThis:this);

@@ -700,3 +700,11 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 로컬 등록7단계×5언어35화면의 표시된 번역대상 한국어잔여0, 실제 제목 입력값전환보존 확인. 단위검증5 PASS, 안내/계약참고번역20조합 링크/버전유지 PASS. 개발자노트 외국어 요약+한국어 개발원문 구분. 전문원어민/법률감수 또는 모든 동적오류경로 수동검증 완료 주장은 하지 않음. 신규유료자원·외부번역서비스0. 배포 후 확인 추가 예정.
 
 - 242 최종 배포: 3b0ebb00c277254033ad061baf59ea55b8db29c1 / dep-dbde8mu1egvs738iulpg LIVE 2026-10-23 13:37:29 KST. 최종등록1880키×5언어, 핵심공개파일8개 수정본일치. 운영 스페인어 등록/파일화면에서 종류별파일명칭·교체안내·선택구간 안내 번역 및 원문파일명유지 확인. 로컬크리에이터진행4단계·프로필언어표시추가누락도수정/확인. 기존675파일변경0, 운영신규작품·금융실행·유료자원0. 브라우저의 기본 파일선택 문구/OS대화상자는 브라우저·OS언어에 따르며 사이트 번역키 대상이 아님. 증거 translation242-report.json / stage-audit.json / local-ui.json / public-files.json / result.json.
+
+
+### 243 파일 선택 다국어 UI·토스 퀵오픈 확인 — 2026-10-23
+- 파일 선택/선택된 파일 없음 6개 언어 표시. 원래 input/FileList/onchange 유지, 사용자 파일명 번역하지 않음. 새 버튼은 명시적 사용자 조작으로만 기본 파일창 열기. disabled/fieldset 잠금·선택 취소·폼 reset 반영. OS 파일 탐색기는 기기 언어 유지. 기존 파일·DB·작품·TEST·백업 변경 없음.
+- 로컬 격리 NovaPlay 포스터 실제 선택 후 6언어 전환에서 파일명·제목 유지, 취소 후 빈 안내 복귀, 에셋 3개 파일버튼 disabled 일치 확인. 번역1882키 누락0, 기존 언어검증3 PASS. UI 범용 향상만 변경, 추가 서비스 비용0.
+- 토스 상점1849825, 퀵 MID q_novanosg5t 및 q_novanor3sf 심사중(일반 novano8ls7도 심사중). 취소된 MID cp_onovan1g8y/novano38ky/novanocaa9와 구분. 최신 퀵 MID API개별연동 라이브 화면에서도 계약미완료 라이브결제불가 안내 확인. 카드사 심사결과 미신청. 키 보기/복사/재발급·라이브 활성화·결제·계약변경 실행0.
+- 이용정보 안심정산플랜 연이용권13,250원/결제필요 표시 소유자에게 사전안내. 결제하지 않음. 계약/퀵오픈 활성 상태와 허용 결제수단·수수료·정산 조건 확정 후 정확한 MID의 LIVE 키를 운영 비밀 환경변수에 등록하고 기존 계약·대사 승인 게이트를 별도 검증해야 함. 구독빌링·NEON유상충전·지급대행을 퀵오픈 승인으로 간주하지 않음. 기존 operating-commerce/financial-provider의 NNX_TOSS_LIVE_CLIENT_KEY/NNX_TOSS_LIVE_SECRET_KEY/NNX_LIVE_PAYMENTS/NNX_PAYMENT_CONTRACT_APPROVED/NNX_OPERATING_RECONCILIATION_APPROVED 준비 유지. legacy TOSS_CLIENT_KEY/TOSS_SECRET_KEY에는 live키 넣지 말 것(심사용 TEST와 충돌).
+- 배포 완료 후 운영 확인 결과 추가 예정.
