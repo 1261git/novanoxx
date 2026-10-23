@@ -8984,6 +8984,12 @@
     "liveKeyRegistration": "PENDING_ACTION_TIME_CONFIRMATION",
     "actualPayment": false,
     "newPaidResources": 0,
-    "deployment": "PENDING_DISABLED_CODE"
+    "deployment": "LIVE_CODE_ACTIVATION_OFF",
+    "commit": "1135ff7928530d665f4fd098fb3001c19685d387",
+    "deployId": "dep-dbdmmqtbedkc73d71ak0",
+    "deployedAt": "2026-10-23T14:13:55Z",
+    "productionAvailability": false,
+    "preservedFilesChecked": 675,
+    "preservedFilesChanged": 0
   }
 }

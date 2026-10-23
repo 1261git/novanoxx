@@ -727,3 +727,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 격리PostgreSQL/SQLite·모의제공자: 기존결제경계/중복/복구/납품권한/구독/시작바인딩과퀵오픈범위/잘못된MID/가격변조/범위회수15검사PASS. 번역1883키누락0. 실제금융API호출0.
 - 활성화예정변수: NNX_QUICK_OPEN_APPROVED=1, NNX_TOSS_MID=q_novanosg5t, NNX_QUICK_OPEN_SELLER_EMAILS=kanoe0213@gmail.com, NNX_PAYMENT_CONTRACT_APPROVED=0(일반계약완료로간주금지), NNX_LIVE_PAYMENTS=1, NNX_OPERATING_RECONCILIATION_APPROVED=1, 해당MID의NNX_TOSS_LIVE_CLIENT_KEY/SECRET_KEY. NNX_BILLING_CONTRACT_APPROVED=0, NNX_SETTLEMENT_CONTRACT_APPROVED=0. 기존TOSS_CLIENT_KEY/SECRET_KEY는설정금지. 운영키등록은행동직전권한확인후. 키값은소스/채팅/증거자료에저장금지.
 - 244정정노트 29a8d0492e57cf8f1f4eb0582b42650f2a6000db / dep-dbdmgeh5efls73b29teg LIVE 2026-10-23 23:00:43 KST.
+
+- 245 연결준비코드 1135ff7928530d665f4fd098fb3001c19685d387 / dep-dbdmmqtbedkc73d71ak0 LIVE 2026-10-23 23:13:55 KST. 운영 availability?assetId=1004 realBilling=false 확인(의도한 키등록전 상태). 기존675개변경0. Chrome의정확한운영Render서비스Environment및퀵MID라이브키선택화면준비, 비밀키복사/노출/등록/실청구0. 실행직전확인질문후응답대기.
