@@ -8801,7 +8801,14 @@
     "listVideo": "EXISTING_SHORT_PREVIEW_UNCHANGED",
     "cardSpecOverlay": "REMOVED_WATERMARK_RETAINED",
     "tests": "SQLITE_PG_DELETE_PROTECTION_AND_15_SECOND_FULL_PREVIEW_PASS",
-    "deployment": "PENDING",
-    "paidResourcesAdded": 0
+    "deployment": "FIRST_LIVE_FOLLOWUP_DEPLOY_PENDING",
+    "paidResourcesAdded": 0,
+    "marketUploadShortcut": true,
+    "requiredFields": "RED_MARKERS_AND_PER_FIELD_STAGE_LINKS",
+    "submitSuccess": "GREEN_BUTTON_ON_SAME_SCREEN",
+    "videoSpecifications": "OPTIONAL_AUTO_DETECT_ON_ORIGINAL_UPLOAD",
+    "mediaResourceBound": "SINGLE_DECODER_ENCODER_FILTER_THREAD",
+    "fullShoppingProduction": "15_SECONDS_ENDED_NO_ERROR",
+    "fullPerfumeProduction": "RETRY_AFTER_RESOURCE_BOUND_DEPLOY"
   }
 }

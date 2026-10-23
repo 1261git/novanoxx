@@ -118,3 +118,5 @@ body:has([data-route="contest"]) .route-page,body:has([data-route="contest-submi
 
 .creator-success-message{padding:16px 20px;border:1px solid #59bb8d77;border-radius:12px;color:#acedd0;background:#17372955;font-weight:600}
 .creator-items article>.outline-link{margin-top:8px;margin-right:6px}
+
+.market-upload-action{display:flex;justify-content:flex-end;margin:14px 0}.market-upload-action .primary{display:inline-flex;padding:13px 22px;border-radius:10px;background:#ff681f;color:#110b08;font-weight:700;text-decoration:none}.creator-required-marker{display:block;color:#ff7b83;font-size:12px;margin:6px 0}.creator-missing-summary{border:1px solid #e96873;background:#551c2522;color:#ff9ca4;border-radius:12px;padding:18px;margin-top:18px}.creator-missing-link{color:#ff9ca4;border:0;background:none;text-decoration:underline;cursor:pointer;padding:6px;text-align:left}[aria-invalid=true]{outline:2px solid #e96873;outline-offset:2px}.creator-submitted-state,.creator-submitted-state:disabled{background:#258559!important;color:white!important;border-color:#258559!important;opacity:1!important}
