@@ -8932,6 +8932,16 @@
     "tossBillingActivation": false,
     "settlementPlanDisplayedKrw": 13250,
     "newPaidResources": 0,
-    "deployment": "PENDING"
+    "deployment": "LIVE_VERIFIED",
+    "commit": "21c3dcb8f26093460e687ce38832a013a779d506",
+    "deployId": "dep-dbdej4k9v7es73dsoll0",
+    "deployedAt": "2026-10-23T04:59:58Z",
+    "productionRealBilling": false,
+    "productionSubscriptionBilling": false,
+    "publicStaticFilesMatch": 5,
+    "indexRuntimeReferencesPresent": true,
+    "productionFileButtonsAndEmptyLabels": "ENGLISH_VERIFIED_KOREAN_RESTORED",
+    "preservedFilesChecked": 675,
+    "preservedFilesChanged": 0
   }
 }
