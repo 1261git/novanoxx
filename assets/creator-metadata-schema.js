@@ -12,8 +12,8 @@ function setupCreatorMetadataFields(form,asset){
 function renderAssetMetadataDetails(asset){
  // The unified title/content are rendered above; preserve legacy translations in storage only.
  let html='';
- const specification=asset.specification||{},fields=CreatorMetadata.fields[asset.cat]||[];const entries=fields.filter(([key])=>specification[key]!==undefined);if(entries.length)html+='<section><h3 data-i18n="상세 사양">상세 사양</h3><dl>'+entries.map(([key,label])=>'<dt>'+esc(label)+'</dt><dd>'+esc(String(specification[key]))+'</dd>').join('')+'</dl></section>';
+ const specification=asset.specification||{},fields=CreatorMetadata.fields[asset.cat]||[];const entries=fields.filter(([key])=>specification[key]!==undefined);if(entries.length)html+='<section><h3 data-i18n="상세 사양">상세 사양</h3><dl>'+entries.map(([key,label])=>'<dt>'+uiMarkup(label)+'</dt><dd>'+esc(String(specification[key]))+'</dd>').join('')+'</dl></section>';
  const elements=asset.creativeElements||{},items=CreatorMetadata.creative.filter(([key])=>typeof elements[key]==='string'&&elements[key].trim());if(items.length)html+='<section><h3>Creative Elements</h3>'+items.map(([key,label])=>'<h4>'+esc(label)+'</h4><p>'+esc(elements[key])+'</p>').join('')+'</section>';
- if(asset.tools||asset.thirdPartyAssets==='yes'||asset.thirdPartyAssets==='no')html+='<section><h3 data-i18n="제작 정보">제작 정보</h3>'+(asset.tools?'<p>사용 도구 · '+esc(asset.tools)+'</p>':'')+(asset.thirdPartyAssets==='yes'?'<p>제3자 소재 사용</p>':asset.thirdPartyAssets==='no'?'<p>제3자 소재 사용하지 않음</p>':'')+(asset.productionContribution?'<p>'+esc(asset.productionContribution)+'</p>':'')+'</section>';
+ if(asset.tools||asset.thirdPartyAssets==='yes'||asset.thirdPartyAssets==='no')html+='<section><h3 data-i18n="제작 정보">제작 정보</h3>'+(asset.tools?'<p>'+uiMarkup('사용한 AI·제작 도구')+' · '+esc(asset.tools)+'</p>':'')+(asset.thirdPartyAssets==='yes'?'<p data-i18n="제3자 소재 사용">제3자 소재 사용</p>':asset.thirdPartyAssets==='no'?'<p data-i18n="제3자 소재 사용하지 않음">제3자 소재 사용하지 않음</p>':'')+(asset.productionContribution?'<p>'+esc(asset.productionContribution)+'</p>':'')+'</section>';
  return html;
 }

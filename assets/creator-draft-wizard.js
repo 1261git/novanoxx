@@ -4,7 +4,7 @@ function clearCreatorLocalDraft(owner,id){if(activeCreatorDraft?.key===creatorDr
 function setupCreatorDraftWizard(form,asset,readonly){
  activeCreatorDraft?.dispose();const owner=authUser?.id;if(!owner)return;
  const key=creatorDraftKey(owner,asset.id),fieldset=form.querySelector('fieldset'),content=form.parentElement;
- const navigation=document.createElement('nav');navigation.className='creator-wizard-nav';navigation.setAttribute('aria-label','에셋 등록 단계');
+ const navigation=document.createElement('nav');navigation.className='creator-wizard-nav';navigation.setAttribute('aria-label',uiText('에셋 등록 단계'));navigation.setAttribute('data-i18n-aria-label','에셋 등록 단계');
  const titles=['분류','상세 정보','파일·미리보기','추가 작업','가격','제작 정보','검토·심사'];navigation.innerHTML=titles.map((title,i)=>`<button type="button" data-i18n="${i+1}. ${title}" data-creator-step="${i}" aria-current="${i===0?'step':'false'}">${i+1}. ${title}</button>`).join('');form.before(navigation);
  const sections=Array.from({length:7},()=>{const node=document.createElement('section');node.className='creator-wizard-step';return node;});let part=1;
  const saveButton=fieldset.querySelector('[type=submit]');
@@ -15,7 +15,7 @@ function setupCreatorDraftWizard(form,asset,readonly){
  for(const i of [0,1,4]){const heading=document.createElement('h2');uiMessage(heading,titles[i]);sections[i].prepend(heading);}
  const guide=form.querySelector('[data-price-guide]');if(guide)sections[4].append(guide);
  saveButton?.remove();content.querySelector('#submit-asset-review')?.remove();const filePanel=content.querySelector('[data-file-kind]')?.closest('.page-panel');if(filePanel)sections[2].append(filePanel);
- const external=[...content.children].filter(node=>node!==form&&node!==navigation).map(node=>({node,step:node.querySelector?.('[data-file-kind]')?2:6}));let step=0;const saveNext=document.createElement('button');saveNext.type='submit';saveNext.className='primary';saveNext.dataset.saveNext='';saveNext.textContent=uiText('정보 저장 후 다음 단계로');if(!readonly)form.append(saveNext);
+ const external=[...content.children].filter(node=>node!==form&&node!==navigation).map(node=>({node,step:node.querySelector?.('[data-file-kind]')?2:6}));let step=0;const saveNext=document.createElement('button');saveNext.type='submit';saveNext.className='primary';saveNext.dataset.saveNext='';uiMessage(saveNext,'정보 저장 후 다음 단계로');if(!readonly)form.append(saveNext);
  function show(next){step=Math.max(0,Math.min(6,Math.trunc(next)));form.dataset.creatorStep=String(step);saveNext.hidden=!!readonly;uiMessage(saveNext,step===6?'정보 저장 후 심사 제출':'정보 저장 후 다음 단계로');const query=new URLSearchParams(location.hash.split('?')[1]||'');query.set('step',String(step));history.replaceState(null,'','#/creator-upload?'+query);sections.forEach((section,i)=>section.hidden=i!==step);form.hidden=false;external.forEach(item=>item.node.hidden=step!==item.step);navigation.querySelectorAll('button').forEach((button,i)=>button.setAttribute('aria-current',i===step?'step':'false'));}
  navigation.querySelectorAll('button').forEach((button,i)=>button.onclick=()=>show(i));show(Number(new URLSearchParams(location.hash.split('?')[1]||'').get('step'))||0);
  if(readonly){if(asset.status==='REVIEW'){const done=document.createElement('button');done.type='button';done.disabled=true;done.className='primary creator-submitted-state';uiMessage(done,'심사 제출되었습니다.');form.append(done);}return;}

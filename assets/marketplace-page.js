@@ -3,13 +3,13 @@
  const hero=document.createElement('div');hero.className='market-library-hero';
  hero.innerHTML='<div class="library-heading"><div><span class="eyebrow">NOVANOXX / CREATIVE LIBRARY</span><h1><span data-i18n="아이디어를 발견하고, 소유하고, 활용하세요.">아이디어를 발견하고, 소유하고, 활용하세요.</span></h1><p><span data-i18n="영상부터 AI 도구까지, 당신의 프로젝트에 어울리는 크리에이티브.">영상부터 AI 도구까지, 당신의 프로젝트에 어울리는 크리에이티브.</span></p></div><div class="library-signature">ONE CREATIVE.<br><span>YOUR NEXT IDEA.</span></div></div>';
  market.prepend(hero);
- const heading=market.querySelector('.browse-heading');heading.querySelector('h2').id='library-results-title';heading.querySelector('.browse-note').textContent='에셋별 판매 방식과 이용 조건을 확인해 주세요.';
+ const heading=market.querySelector('.browse-heading');heading.querySelector('h2').id='library-results-title';uiMessage(heading.querySelector('.browse-note'),'에셋별 판매 방식과 이용 조건을 확인해 주세요.');
  const descriptions={ALL:'모든 가능성을 한곳에서',VIDEO:'움직임으로 전하는 이야기','2D':'아이디어에 새로운 시선을', '3D':'상상을 입체적인 현실로',AUDIO:'장면에 감각을 더하는 소리',DOCUMENTS:'생각을 설득력 있는 형태로',AI_TOOLS:'창작의 다음 단계를 여는 도구'};
  function syncLibrary(){
-  const library=document.body.classList.contains('library-view');heading.querySelector('.browse-note').textContent=library?'에셋별 판매 방식과 이용 조건을 확인해 주세요.':'독점 판매·여러 사람에게 판매, 원하는 조건으로.';
+  const library=document.body.classList.contains('library-view');uiMessage(heading.querySelector('.browse-note'),library?'에셋별 판매 방식과 이용 조건을 확인해 주세요.':'독점 판매·여러 사람에게 판매, 원하는 조건으로.');
   const label=category==='ALL'?'전체 에셋':categoryLabels[category];
   
-  document.getElementById('library-results-title').textContent=library?(subcategory==='ALL'?descriptions[category]:(categoryLabels[subcategory]||subcategory)):'당신을 위한 에셋';
+  uiMessage(document.getElementById('library-results-title'),library?(subcategory==='ALL'?descriptions[category]:(categoryLabels[subcategory]||subcategory)):'당신을 위한 에셋');
   document.querySelectorAll('#categories button').forEach((button,i)=>{button.dataset.index=String(i).padStart(2,'0');button.setAttribute('aria-pressed',String(button.dataset.cat===category));});
  }
  const originalRender=render;render=function(){originalRender();syncLibrary();};

@@ -8882,5 +8882,28 @@
     "publicFilesMatch": 2,
     "preservedFilesChecked": 675,
     "preservedFilesChanged": 0
+  },
+  "translation242": {
+    "date": "2026-10-23",
+    "languages": [
+      "en",
+      "es",
+      "zh-Hans",
+      "vi",
+      "de"
+    ],
+    "registeredKeys": 1880,
+    "coverage": "ALL_REGISTERED_KEYS_AND_LITERAL_MARKED_UI_PRESENT_PLACEHOLDERS_MATCH",
+    "sourceBinding": "DYNAMIC_LABELS_COUNTS_CATEGORIES_RETAIN_CANONICAL_KEYS",
+    "inputPreservation": "NO_FORM_RERENDER_ON_LANGUAGE_CHANGE",
+    "creatorContent": "UNCHANGED_NOT_MACHINE_TRANSLATED",
+    "developerJournal": "LOCALIZED_SUMMARY_KOREAN_ORIGINAL_PRESERVED",
+    "localStageChecks": 35,
+    "localStageMarkedKoreanRemnants": 0,
+    "referenceGuideChecks": 20,
+    "localUnitChecks": 5,
+    "deployment": "PENDING",
+    "newPaidResources": 0,
+    "additionalRoutesChecked": 8
   }
 }
