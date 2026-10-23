@@ -8840,8 +8840,17 @@
     "previewControl": "BOTTOM_LEFT_12PX_TRUE_CLIP_DURATION",
     "submitSuccess": "EXISTING_GREEN_REVIEW_STATE_RETAINED",
     "tests": "4_PASS_LOCAL_UI_COMPLETION_LOCK_UNLOCK_VERIFIED",
-    "deployment": "PENDING",
+    "deployment": "LIVE_VERIFIED",
     "newPaidResources": 0,
-    "existingAssetsModified": 0
+    "existingAssetsModified": 0,
+    "commit": "9c3cd0e20db7f8f3c9c00530474653ee7627778d",
+    "deployId": "dep-dbdcundg1s2s73dhct50",
+    "deployedAt": "2026-10-23T03:08:02Z",
+    "publicFilesMatch": 5,
+    "productionPriceCompleted": true,
+    "productionQuoteAndCheckboxVisible": true,
+    "productionClipAlignment": "ALL_BOTTOM12_LEFT12",
+    "preservedFilesChecked": 675,
+    "preservedFilesChanged": 0
   }
 }
