@@ -8902,8 +8902,17 @@
     "localStageMarkedKoreanRemnants": 0,
     "referenceGuideChecks": 20,
     "localUnitChecks": 5,
-    "deployment": "PENDING",
+    "deployment": "LIVE_VERIFIED",
     "newPaidResources": 0,
-    "additionalRoutesChecked": 8
+    "additionalRoutesChecked": 8,
+    "commit": "3b0ebb00c277254033ad061baf59ea55b8db29c1",
+    "deployId": "dep-dbde8mu1egvs738iulpg",
+    "deployedAt": "2026-10-23T04:37:29Z",
+    "publicFilesMatch": 8,
+    "productionSpanishFileLabelsAndGuide": true,
+    "productionOriginalFilenamesPreserved": true,
+    "preservedFilesChecked": 675,
+    "preservedFilesChanged": 0,
+    "nativeFileControl": "BROWSER_OS_LANGUAGE_NOT_SITE_TEXT"
   }
 }
