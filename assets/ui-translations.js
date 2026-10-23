@@ -1229,4 +1229,5 @@
   "메일 알림 서명을 확인할 수 없습니다.": "The email notification signature could not be verified.",
   "이미 처리한 알림과 내용이 다릅니다.": "The notification differs from the one already processed."
 });Object.assign(entries,{"NovaNoxX 홈":"NovaNoxX home","에셋 등록 단계":"Asset registration steps"});Object.assign(entries,{"추천 에셋":"Featured assets","에셋 탐색":"Browse assets","공개 영상 미리보기 재생":"Play public video preview","회전하는 보라색과 오렌지색 천체와 궤도":"Rotating purple and orange celestial bodies and orbits"});Object.assign(entries,{"프로필 준비":"Set up your profile","에셋 등록 · 심사":"Asset registration and review","판매 · 맞춤 작업":"Sales and customization","검수 · 납품 · 정산":"Approval, delivery and payout"});Object.assign(entries,{"파일 선택":"Choose file","선택된 파일 없음":"No file selected"});
+Object.assign(entries,{"이 작품의 실제 결제는 아직 준비 중입니다. 심사용 결제창을 이용해주세요.":"Real payments for this asset are not ready yet. Please use the review checkout."});
 if(typeof module!=='undefined')module.exports=entries;else root.NNX_TRANSLATIONS=entries;})(typeof globalThis!=='undefined'?globalThis:this);

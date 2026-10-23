@@ -718,3 +718,12 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 공식 계약FAQ는 메인→상품→결제→토스창의 결제경로PPT 준비를 안내. 열려있는 계약메일은 일반 MID novano8ls7 기준, 확인한퀵MID q_novanosg5t와구분필수. 메일/담당자연락/제출/임시보관본문변경0.
 - 안심정산플랜 화면: 월정산한도10,000,000원·결제일부터1년·총13,250원. 결제창설치비아님, 테스트창연동에선결제불필요(미결제상태에서창열림). 안내에 보증보험이용시고객센터문의 명시. 해당가맹점담보조건면제/대체가능여부는 개별계약확인필요, 무조건무료/필수라는단정모두금지. 일반블로그의1000만원보증보험면제문구는개별계약의연이용권면제보장아님. 결제/플랜취소/담보변경0.
 - LIVE 키/승인게이트/자동구독/NEON유상충전/지급대행활성화없음. QuickOpen공식제외업종에포인트충전/2차PG포함하므로에셋단건결제와혼동금지. 기존정산대사/계약승인게이트를우회하지않음. 실제일반결제전환시정확한퀵MID·허용품목/수수료·90일정산조건·라이브키연동범위별도확인필요. 신규유료자원0.
+
+
+### 245 퀵오픈 실결제 연결 준비 — 2026-10-23
+- 사용자의 결제연결 요청에 따라 payment-activation으로 일반계약과퀵오픈승인을구분. NNX_QUICK_OPEN_APPROVED=1, NNX_TOSS_MID=q_novanosg5t, NNX_QUICK_OPEN_SELLER_EMAILS=kanoe0213@gmail.com 일때 자사ASSET만허용. 다른회원/Brief는주문생성전차단, 기존준비주문도판매자범위변경시재검증. 승인mId까지일치확인.
+- 구독은퀵모드에서강제비활성화, provider의빌링키발급/자동청구도차단. 실제결제대상아닌작품은기존심사창유지. 새 commerce/availability GET은명시상품의적격불린만반환하며회원인증필수. 구독/기존TEST심사모드유지. 신규스키마/파일변경/자료삭제없음.
+- 카드수수료3.2%, 부가세포함보기3.52% 운영상점수수료표직접확인, 소유자에게사전안내. 무이자할부는별도추가수수료. 13,250원결제0. 신규유료자원0.
+- 격리PostgreSQL/SQLite·모의제공자: 기존결제경계/중복/복구/납품권한/구독/시작바인딩과퀵오픈범위/잘못된MID/가격변조/범위회수15검사PASS. 번역1883키누락0. 실제금융API호출0.
+- 활성화예정변수: NNX_QUICK_OPEN_APPROVED=1, NNX_TOSS_MID=q_novanosg5t, NNX_QUICK_OPEN_SELLER_EMAILS=kanoe0213@gmail.com, NNX_PAYMENT_CONTRACT_APPROVED=0(일반계약완료로간주금지), NNX_LIVE_PAYMENTS=1, NNX_OPERATING_RECONCILIATION_APPROVED=1, 해당MID의NNX_TOSS_LIVE_CLIENT_KEY/SECRET_KEY. NNX_BILLING_CONTRACT_APPROVED=0, NNX_SETTLEMENT_CONTRACT_APPROVED=0. 기존TOSS_CLIENT_KEY/SECRET_KEY는설정금지. 운영키등록은행동직전권한확인후. 키값은소스/채팅/증거자료에저장금지.
+- 244정정노트 29a8d0492e57cf8f1f4eb0582b42650f2a6000db / dep-dbdmgeh5efls73b29teg LIVE 2026-10-23 23:00:43 KST.

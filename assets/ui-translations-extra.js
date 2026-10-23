@@ -4866,4 +4866,8 @@ Object.assign(dictionaries["de"],{"프로필 준비":"Profil einrichten","에셋
 Object.assign(dictionaries["zh-Hans"],{"파일 선택":"选择文件","선택된 파일 없음":"未选择文件"});
 Object.assign(dictionaries["vi"],{"파일 선택":"Chọn tệp","선택된 파일 없음":"Chưa chọn tệp"});
 Object.assign(dictionaries["de"],{"파일 선택":"Datei auswählen","선택된 파일 없음":"Keine Datei ausgewählt"});
+Object.assign(dictionaries["es"],{"이 작품의 실제 결제는 아직 준비 중입니다. 심사용 결제창을 이용해주세요.":"Los pagos reales de esta obra aún no están disponibles. Usa el pago de revisión."});
+Object.assign(dictionaries["zh-Hans"],{"이 작품의 실제 결제는 아직 준비 중입니다. 심사용 결제창을 이용해주세요.":"此作品暂未开放真实付款。请使用审核支付窗口。"});
+Object.assign(dictionaries["vi"],{"이 작품의 실제 결제는 아직 준비 중입니다. 심사용 결제창을 이용해주세요.":"Thanh toán thực cho tác phẩm này chưa sẵn sàng. Vui lòng dùng cửa sổ thanh toán xét duyệt."});
+Object.assign(dictionaries["de"],{"이 작품의 실제 결제는 아직 준비 중입니다. 심사용 결제창을 이용해주세요.":"Echte Zahlungen für dieses Werk sind noch nicht verfügbar. Bitte den Prüf-Checkout verwenden."});
 if(typeof module!=='undefined')module.exports=dictionaries;else root.NNX_TRANSLATIONS_EXTRA=dictionaries;})(typeof globalThis!=='undefined'?globalThis:this);

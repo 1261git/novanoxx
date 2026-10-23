@@ -1,5 +1,5 @@
 {
-  "revision": 244,
+  "revision": 245,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8961,6 +8961,29 @@
     "quickMidInspected": "q_novanosg5t",
     "midMismatch": "GENERAL_CONTRACT_EMAIL_AND_QUICK_OPEN_ARE_DISTINCT_DO_NOT_MIX_KEYS",
     "newPaidResources": 0,
-    "deployment": "PENDING_CORRECTION_NOTE"
+    "deployment": "LIVE_VERIFIED",
+    "commit": "29a8d0492e57cf8f1f4eb0582b42650f2a6000db",
+    "deployId": "dep-dbdmgeh5efls73b29teg",
+    "deployedAt": "2026-10-23T14:00:43Z"
+  },
+  "quickOpen245": {
+    "scope": "MERCHANT_OWN_ASSETS_ONLY",
+    "sellerEmail": "kanoe0213@gmail.com",
+    "quickMid": "q_novanosg5t",
+    "baseCardFeePercent": 3.2,
+    "cardFeeWithVatPercent": 3.52,
+    "settlement": "90_DAYS_AFTER_REVIEW_RESULT_NOTICE",
+    "limits": [
+      "NO_POINT_TOPUP",
+      "NO_AUTOMATIC_BILLING",
+      "NO_OTHER_SELLERS",
+      "NO_BRIEF",
+      "NO_AUTOMATIC_PAYOUT"
+    ],
+    "testsPassed": 15,
+    "liveKeyRegistration": "PENDING_ACTION_TIME_CONFIRMATION",
+    "actualPayment": false,
+    "newPaidResources": 0,
+    "deployment": "PENDING_DISABLED_CODE"
   }
 }
