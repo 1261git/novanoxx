@@ -1,13 +1,13 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
-module.exports=({db,folder,protection,usage})=>{
+module.exports=({db,folder,protection,usage,currentFiles})=>{
  const busy=new Set();
  async function create(actor,asset){
   if(!asset||asset.user_id!==actor||!['DRAFT','REVIEW','ACTIVE','PAUSED'].includes(asset.status))throw Error('FULL_PREVIEW_STATE');
   if(busy.has(asset.id))throw Error('PREVIEW_BUSY');
-  const existing=db.prepare("SELECT id,kind,name,size FROM creator_files WHERE asset_id=? AND kind='detailPreview' ORDER BY created DESC").all(asset.id).find(f=>protection.verified(f));
+  const existing=(currentFiles?currentFiles(asset.id).filter(f=>f.kind==='detailPreview'):db.prepare("SELECT id,kind,name,size FROM creator_files WHERE asset_id=? AND kind='detailPreview' ORDER BY created DESC").all(asset.id)).find(f=>protection.verified(f));
   if(existing)return {ok:true,fileId:existing.id,alreadyProtected:true};
-  const source=db.prepare("SELECT * FROM creator_files WHERE asset_id=? AND user_id=? AND kind='original' AND ext IN ('mp4','mov','webm') ORDER BY created,id LIMIT 1").get(asset.id,actor);
+  const source=currentFiles?currentFiles(asset.id).find(f=>f.kind==='original'&&['mp4','mov','webm'].includes(f.ext)):db.prepare("SELECT * FROM creator_files WHERE asset_id=? AND user_id=? AND kind='original' AND ext IN ('mp4','mov','webm') ORDER BY created DESC,id DESC LIMIT 1").get(asset.id,actor);
   if(!source)throw Error('FULL_PREVIEW_SOURCE');
   const used=()=>usage?.()??Number(db.prepare('SELECT COALESCE(SUM(size),0) AS total FROM creator_files').get().total);
   if(used()+Number(source.size)*2>700*1024*1024)throw Error('PREVIEW_CAPACITY');

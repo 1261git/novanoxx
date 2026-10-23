@@ -8852,5 +8852,19 @@
     "productionClipAlignment": "ALL_BOTTOM12_LEFT12",
     "preservedFilesChecked": 675,
     "preservedFilesChanged": 0
+  },
+  "creatorFileSlots241": {
+    "date": "2026-10-23",
+    "scope": "ONE_LATEST_FILE_PER_ASSET_PER_KIND_ORIGINAL_PREVIEW_THUMBNAIL",
+    "replacement": "NEW_FILE_AND_PROOF_COMMIT_BEFORE_OLD_BYTES_REMOVAL",
+    "failure": "OLD_FILE_RETAINED",
+    "existingDuplicates": "STARTUP_RECONCILE_SAFE_UNREFERENCED_FILES",
+    "transactionFiles": "RETAINED_AND_UPLOAD_REPLACEMENT_BLOCKED",
+    "originalChange": "INVALIDATE_OLD_DETAIL_PREVIEW_REGENERATE_ON_SUBMIT",
+    "cleanupAuditAndBackups": "PRESERVED",
+    "newAssetCountsAndPlanLimits": "UNCHANGED",
+    "tests": "6_PASS_SQLITE_POSTGRES_API_FAILURE_SUCCESS_FULL_VIDEO_DELETE_PROTECTION",
+    "deployment": "PENDING",
+    "newPaidResources": 0
   }
 }

@@ -41,5 +41,5 @@ module.exports=({db,folder,clock=Date.now})=>{
   }catch(error){db.exec('ROLLBACK');throw error;}
   return cleanup(job);
  }
- return {remove};
+ return {remove,retained};
 };
