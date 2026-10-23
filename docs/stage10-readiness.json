@@ -8864,7 +8864,23 @@
     "cleanupAuditAndBackups": "PRESERVED",
     "newAssetCountsAndPlanLimits": "UNCHANGED",
     "tests": "6_PASS_SQLITE_POSTGRES_API_FAILURE_SUCCESS_FULL_VIDEO_DELETE_PROTECTION",
-    "deployment": "PENDING",
-    "newPaidResources": 0
+    "deployment": "LIVE_VERIFIED",
+    "newPaidResources": 0,
+    "commit": "a7e15d1aa7fe6e52c8df256be7bf077e686ca73d",
+    "deployId": "dep-dbdd5up42hec7391ic40",
+    "deployedAt": "2026-10-23T03:23:29Z",
+    "retiredExistingFiles": 4,
+    "freedBytes": 19203086,
+    "cleanupPending": false,
+    "publicAssetsPreserved": 3,
+    "fullProtectedClipRangeStatuses": [
+      206,
+      206,
+      206
+    ],
+    "productionFileSlots": "ONE_ORIGINAL_ONE_SHORT_PREVIEW_ONE_THUMBNAIL_ONE_SEPARATE_FULL_PREVIEW",
+    "publicFilesMatch": 2,
+    "preservedFilesChecked": 675,
+    "preservedFilesChanged": 0
   }
 }

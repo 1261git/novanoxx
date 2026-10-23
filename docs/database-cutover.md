@@ -690,3 +690,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 신규 creator_file_replacements 정리 이력으로 재시도/감사 보존. 시작 시 기존 중복도 최신 파일 존재·크기·보호 확인 후 거래 참조 없는 파일만 정리. 거래·TEST구매·납품 참조가 있으면 파일 교체와 물리 정리 차단. 기존 백업은 유지.
 - 원본 변경 시 이전 상세 전체 보호본 무효화, 다음 제출에서 최신 원본으로 생성. 원본/짧은 미리보기/상세 전체 미리보기 명칭 구분. 파일 처리 중 중복 업로드·제출·삭제 차단.
 - SQLite·PGlite PostgreSQL 교체/중복정리/거래보호, 업로드 성공·실패와 기존API, 전체15초 보호본, 기존 삭제 보호 총6개 PASS. PGlite는 기존 live/node_modules를 읽기 전용으로 이용(신규 설치 없음). 신규유료자원0. 기존 로컬 보존 대상675개 확인 예정. 배포 후 운영 정리 결과 추가.
+
+- 241 최종 운영 확인: a7e15d1aa7fe6e52c8df256be7bf077e686ca73d / dep-dbdd5up42hec7391ic40 LIVE 2026-10-23 12:23:29 KST. 서버 시작 정리 결과 retired4 / freedBytes19203086 / cleanupPendingfalse. 기존 공개3작품 유지, 전체 보호 영상3개 1바이트 범위 요청206, 공개JS2개 수정본 일치. 쇼핑쇼츠 파일6개→4개(원본·짧은 미리보기·썸네일·별도 전체보호본 각1) 운영 UI 확인. 기존 로컬 보존675개 변경0, 신규운영작품·결제·유료자원0. 개발자노트 운영반영, 증거 creator241-result.json / creator241-production-file-slots.png. 기존 백업과 거래 참조 파일은 보존.
