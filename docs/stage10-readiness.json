@@ -1,5 +1,5 @@
 {
-  "revision": 237,
+  "revision": 238,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8731,5 +8731,33 @@
     "newPublications": 0,
     "newPaidResources": 0,
     "remaining": "Physical Android/iPhone playback and native touch/fullscreen verification"
+  },
+  "realMarketplace238": {
+    "date": "2026-10-23",
+    "sellerAccount": "owner-designated personal account",
+    "saleMode": "MULTI",
+    "pricesNeon": [
+      399,
+      199
+    ],
+    "optionPricesNeon": [
+      70,
+      70
+    ],
+    "optionDays": [
+      1,
+      1
+    ],
+    "oldTestAssets": "PAUSED_PRESERVED",
+    "demoData": "ARCHIVED_PRESERVED_NOT_PUBLIC",
+    "publicPerfumeId": 1003,
+    "shoppingStatus": "REVIEW_AWAITING_ALLOWANCE_DEPLOYMENT",
+    "allowance": "OWNER_APPROVED_TWO_ACCOUNTS_UNLIMITED_ACTIVE_ASSETS_ONLY",
+    "financialGrants": false,
+    "awardsEmptySlots": [
+      3,
+      4
+    ],
+    "deployment": "PENDING"
   }
 }

@@ -110,3 +110,8 @@ body:has([data-route="contest"]) .route-page,body:has([data-route="contest-submi
 #creator-content{width:100%;min-width:0}#creator-asset-form .form-row{grid-template-columns:minmax(0,1fr)}
 .creator-wizard-step[hidden]{display:none!important}.creator-wizard-step [data-option-quote]{border-top:1px solid #ffffff20;padding-top:18px;margin-top:18px}
 @media(max-width:760px){.creator-menu,.creator-wizard-nav{gap:8px;row-gap:10px;margin:20px auto}.creator-menu a{display:flex;align-items:center;justify-content:center;padding:10px 12px}.creator-wizard-nav button{flex:1 1 125px}.creator-wizard-actions{clear:both}.creator-option-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.creator-check{line-height:1.6;min-height:44px}}
+
+/* Two real selections fill the available width; archived demo layout is untouched. */
+.featured-grid.real-curated-grid{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)}
+.featured-grid.real-curated-grid[data-count="1"]{grid-template-columns:minmax(0,1fr)}
+@media(max-width:760px){.featured-grid.real-curated-grid{grid-template-columns:minmax(0,1fr)}.real-curated-grid .featured-main{grid-column:auto}}
