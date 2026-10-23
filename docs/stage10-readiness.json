@@ -8823,5 +8823,25 @@
     "preservedFilesChanged": 0,
     "newTestAssets": 0,
     "actualPayments": 0
+  },
+  "creatorFeedback240": {
+    "date": "2026-10-23",
+    "requiredState": "RED_MISSING_GREEN_VALID_LIVE_INPUT",
+    "commercialModify": "REQUIRED_AND_MARKED_FOR_BOTH_SALE_MODES",
+    "optionalEmpty": "ALLOWED_BLANK_ITEMIZED_PRICE_DAYS_DEFAULT_ZERO",
+    "customizationUnavailable": "DISABLED_UI_SERVER_CLEARS_SELECTIONS_EXTRA_ZERO_DAYS_ZERO_INSTANT",
+    "quoteHelp": "ITEMIZED_SUM_AND_LEGACY_BUNDLE_WITH_EXAMPLES",
+    "instantCheckbox": "ALIGNED_WITH_LABEL",
+    "stepHeadings": [
+      "분류",
+      "상세 정보",
+      "가격"
+    ],
+    "previewControl": "BOTTOM_LEFT_12PX_TRUE_CLIP_DURATION",
+    "submitSuccess": "EXISTING_GREEN_REVIEW_STATE_RETAINED",
+    "tests": "4_PASS_LOCAL_UI_COMPLETION_LOCK_UNLOCK_VERIFIED",
+    "deployment": "PENDING",
+    "newPaidResources": 0,
+    "existingAssetsModified": 0
   }
 }

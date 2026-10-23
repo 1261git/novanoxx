@@ -6,3 +6,5 @@ test('Submission reports precise required sections while leaving frame rate and 
  const result=missing({...asset,description:'',contribution:'',contract:null},[{kind:'original'}]);assert.deepEqual(result.map(x=>[x.key,x.step]),[['description',1],['contribution',5],['preview',2],['contractAccepted',6]]);assert.ok(!result.some(x=>/frameRate|format/.test(x.key)));
  assert.ok(missing({...asset,rightsConfirmed:false},files).some(x=>x.key==='rightsConfirmed'));
 });
+
+test('Optional fields can all be empty and commercial permission is visibly required for either sale mode',()=>{for(const mode of ['EXCLUSIVE','MULTI']){const a={category:'VIDEO',subcategory:'Commercial',title:'Title',description:'Description',deliverables:'Final',contribution:'Own work',thirdPartyAssets:'no',price:1,saleMode:mode,rightsConfirmed:true,usageRights:{commercial:true},contract:{mode,version:'2026-10-11-v1'}};assert.deepEqual(missing(a,[{kind:'original'},{kind:'preview'}]),[]);assert.deepEqual(missing({...a,usageRights:{commercial:false}},[{kind:'original'},{kind:'preview'}]).map(x=>x.key),['rightsCommercialModify']);}});

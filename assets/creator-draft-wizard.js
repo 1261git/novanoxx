@@ -12,6 +12,7 @@ function setupCreatorDraftWizard(form,asset,readonly){
  sections.forEach(section=>fieldset.append(section));
  for(const name of ['category','subcategory'])sections[0].append(form.elements[name].closest('label'));
  sections[4].append(form.elements.price.closest('.form-row'),form.elements.days.closest('label'));
+ for(const i of [0,1,4]){const heading=document.createElement('h2');uiMessage(heading,titles[i]);sections[i].prepend(heading);}
  const guide=form.querySelector('[data-price-guide]');if(guide)sections[4].append(guide);
  saveButton?.remove();content.querySelector('#submit-asset-review')?.remove();const filePanel=content.querySelector('[data-file-kind]')?.closest('.page-panel');if(filePanel)sections[2].append(filePanel);
  const external=[...content.children].filter(node=>node!==form&&node!==navigation).map(node=>({node,step:node.querySelector?.('[data-file-kind]')?2:6}));let step=0;const saveNext=document.createElement('button');saveNext.type='submit';saveNext.className='primary';saveNext.dataset.saveNext='';saveNext.textContent=uiText('정보 저장 후 다음 단계로');if(!readonly)form.append(saveNext);
