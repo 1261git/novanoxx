@@ -8751,13 +8751,14 @@
     "oldTestAssets": "PAUSED_PRESERVED",
     "demoData": "ARCHIVED_PRESERVED_NOT_PUBLIC",
     "publicPerfumeId": 1003,
-    "shoppingStatus": "REVIEW_AWAITING_ALLOWANCE_DEPLOYMENT",
+    "shoppingStatus": "ACTIVE",
     "allowance": "OWNER_APPROVED_TWO_ACCOUNTS_UNLIMITED_ACTIVE_ASSETS_ONLY",
     "financialGrants": false,
     "awardsEmptySlots": [
       3,
       4
     ],
-    "deployment": "PENDING"
+    "deployment": "FIRST_LIVE_FINAL_COPY_AND_DUPLICATE_DELIVERY_CORRECTIONS_PENDING",
+    "publicShoppingId": 1004
   }
 }
