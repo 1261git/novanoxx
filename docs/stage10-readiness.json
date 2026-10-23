@@ -1,5 +1,5 @@
 {
-  "revision": 245,
+  "revision": 246,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8981,7 +8981,7 @@
       "NO_AUTOMATIC_PAYOUT"
     ],
     "testsPassed": 15,
-    "liveKeyRegistration": "PENDING_ACTION_TIME_CONFIRMATION",
+    "liveKeyRegistration": "CANCELLED_USER_REQUIRES_NEON_ONLY",
     "actualPayment": false,
     "newPaidResources": 0,
     "deployment": "LIVE_CODE_ACTIVATION_OFF",
@@ -8991,5 +8991,32 @@
     "productionAvailability": false,
     "preservedFilesChecked": 675,
     "preservedFilesChanged": 0
+  },
+  "neonPolicy246": {
+    "purchase": "NEON_ONLY_EXISTING_FLOW_PRESERVED",
+    "directCardPayments": "EXPLICIT_OPT_IN_DEFAULT_DENY_NO_APPROVAL",
+    "liveKeysRegistered": false,
+    "contracts": {
+      "topup": "STANDARD_PG_POINT_TOPUP_PREAPPROVAL_AUTHENTICATION_AND_MARKETPLACE_MODEL_REVIEW",
+      "subscription": "SEPARATE_BILLING_RISK_REVIEW_CONTRACT_AND_MID",
+      "sellerPayout": "SEPARATE_PAYOUT_CONTRACT_SELLER_KYC_AND_ACCOUNT_CHECK"
+    },
+    "currentMids": {
+      "novano8ls7": "PENDING_NORMAL_CARD",
+      "q_novanor3sf": "PENDING_NORMAL_CARD",
+      "q_novanosg5t": "PENDING_NORMAL_CARD"
+    },
+    "billingApproval": "NOT_CONFIRMED",
+    "payoutApproval": "NOT_CONFIRMED",
+    "publishedPayoutFee": {
+      "monthlyKrw": 300000,
+      "included": 1000,
+      "excessKrw": 100,
+      "source": "https://www.tosspayments.com/blog/articles/30355",
+      "individualQuote": "REQUIRED_VAT_AND_CURRENT_PRICE_UNCONFIRMED"
+    },
+    "paidNeonLedger": "IMPLEMENTATION_AND_RECONCILIATION_REMAIN_AFTER_CONTRACT_APPROVAL",
+    "newPaidResources": 0,
+    "deployment": "PENDING"
   }
 }
