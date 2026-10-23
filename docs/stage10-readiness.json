@@ -8801,7 +8801,7 @@
     "listVideo": "EXISTING_SHORT_PREVIEW_UNCHANGED",
     "cardSpecOverlay": "REMOVED_WATERMARK_RETAINED",
     "tests": "SQLITE_PG_DELETE_PROTECTION_AND_15_SECOND_FULL_PREVIEW_PASS",
-    "deployment": "FIRST_LIVE_FOLLOWUP_DEPLOY_PENDING",
+    "deployment": "LIVE",
     "paidResourcesAdded": 0,
     "marketUploadShortcut": true,
     "requiredFields": "RED_MARKERS_AND_PER_FIELD_STAGE_LINKS",
@@ -8809,6 +8809,19 @@
     "videoSpecifications": "OPTIONAL_AUTO_DETECT_ON_ORIGINAL_UPLOAD",
     "mediaResourceBound": "SINGLE_DECODER_ENCODER_FILTER_THREAD",
     "fullShoppingProduction": "15_SECONDS_ENDED_NO_ERROR",
-    "fullPerfumeProduction": "RETRY_AFTER_RESOURCE_BOUND_DEPLOY"
+    "fullPerfumeProduction": "30.05_SECONDS_ENDED_NO_ERROR",
+    "commit": "ea99cc84b0bfefdb3b302e2886b188bcc6b75257",
+    "deployId": "dep-dbdcdap5efls73ams740",
+    "deployedAt": "2026-10-23T02:31:00Z",
+    "requiredSummaryVerified": "BLANK_FORM_BLOCKED_NO_ASSET_CREATED_TITLE_LINK_FOCUSED",
+    "originalAnonymousStatuses": [
+      404,
+      404
+    ],
+    "publicFilesMatched": 6,
+    "preservedFilesChecked": 675,
+    "preservedFilesChanged": 0,
+    "newTestAssets": 0,
+    "actualPayments": 0
   }
 }
