@@ -1,5 +1,5 @@
 {
-  "revision": 243,
+  "revision": 244,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8943,5 +8943,24 @@
     "productionFileButtonsAndEmptyLabels": "ENGLISH_VERIFIED_KOREAN_RESTORED",
     "preservedFilesChecked": 675,
     "preservedFilesChanged": 0
+  },
+  "quickOpen244": {
+    "priorInterpretationCorrected": true,
+    "officialQuickOpenUrl": "https://www.tosspayments.com/quick-open",
+    "beforeReviewPayments": "POSSIBLE_AFTER_QUICK_OPEN_SIGNUP_AND_INTEGRATION",
+    "settlement": "90_DAYS_AFTER_CARD_REVIEW_RESULT_NOTICE",
+    "productionReviewCheckout": "TOSS_CARD_SELECTOR_TEST_BANNER_VERIFIED",
+    "checkedPublicAsset": 1005,
+    "actualCharge": false,
+    "liveActivation": false,
+    "planKrw": 13250,
+    "planTerm": "1_YEAR_10M_KRW_MONTHLY_SETTLEMENT_LIMIT",
+    "planRequiredForTestWindow": false,
+    "individualCollateralRequirement": "CONFIRM_WITH_TOSS_NO_CHANGE_OR_PURCHASE",
+    "tossContractEmailMid": "novano8ls7",
+    "quickMidInspected": "q_novanosg5t",
+    "midMismatch": "GENERAL_CONTRACT_EMAIL_AND_QUICK_OPEN_ARE_DISTINCT_DO_NOT_MIX_KEYS",
+    "newPaidResources": 0,
+    "deployment": "PENDING_CORRECTION_NOTE"
   }
 }
