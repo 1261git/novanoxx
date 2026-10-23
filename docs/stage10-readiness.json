@@ -9017,6 +9017,15 @@
     },
     "paidNeonLedger": "IMPLEMENTATION_AND_RECONCILIATION_REMAIN_AFTER_CONTRACT_APPROVAL",
     "newPaidResources": 0,
-    "deployment": "PENDING"
+    "deployment": "LIVE_VERIFIED",
+    "commit": "725d7ac3f2bc46daa1b81c231ba7f77faf72d67d",
+    "deployId": "dep-dbdmvl8u01pc73cu3sh0",
+    "deployedAt": "2026-10-23T14:32:39.56304Z",
+    "testsPassed": 17,
+    "productionRealBilling": false,
+    "productionSubscriptionBilling": false,
+    "preservedFilesChecked": 675,
+    "preservedFilesChanged": 0,
+    "evidence": "246-neon-policy-live.png"
   }
 }
