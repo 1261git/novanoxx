@@ -1,5 +1,5 @@
 {
-  "revision": 238,
+  "revision": 239,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -8786,5 +8786,22 @@
       "actualPaymentExecuted": false,
       "newPaidResources": 0
     }
+  },
+  "creatorUsability239": {
+    "date": "2026-10-23",
+    "deletion": "OWNER_CONFIRMATION_REQUIRED_DRAFT_PAUSED_ONLY",
+    "fileReclaim": "UNREFERENCED_OPERATING_FILES_ONLY_AUDIT_AND_BACKUPS_RETAINED",
+    "referencedOriginals": "DELETE_BLOCKED",
+    "existingAssetsDeleted": 0,
+    "quotaErrorPlanLink": true,
+    "reviewSubmitSuccessNotice": true,
+    "reviewCheckoutLabel": "심사용 결제",
+    "billingGatewayVerified": "TEST_CARD_ENTRY_OPENED_NO_CARD_ENTERED_NO_APPROVAL",
+    "detailVideo": "FULL_WATERMARKED_DERIVATIVE_SOURCE_ORIGINAL_PRIVATE",
+    "listVideo": "EXISTING_SHORT_PREVIEW_UNCHANGED",
+    "cardSpecOverlay": "REMOVED_WATERMARK_RETAINED",
+    "tests": "SQLITE_PG_DELETE_PROTECTION_AND_15_SECOND_FULL_PREVIEW_PASS",
+    "deployment": "PENDING",
+    "paidResourcesAdded": 0
   }
 }

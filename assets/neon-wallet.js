@@ -31,7 +31,7 @@ async function renderEnginePurchaseOptions(asset){
 }
 
 let neonSdk,neonWalletRenderVersion=0,neonOrdersRenderVersion=0;
-function loadNeonSdk(){if(window.TossPayments)return Promise.resolve();if(!neonSdk)neonSdk=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='https://js.tosspayments.com/v2/standard';script.onload=resolve;script.onerror=()=>{neonSdk=null;script.remove();reject(Error('결제창을 불러오지 못했어요. 다시 시도해주세요.'))};document.head.append(script)});return neonSdk;}
+function loadNeonSdk(){if(window.TossPayments)return Promise.resolve();if(!neonSdk)neonSdk=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='https://js.tosspayments.com/v2/standard';const timer=setTimeout(()=>script.onerror(),20000);script.onload=()=>{clearTimeout(timer);resolve()};script.onerror=()=>{clearTimeout(timer);neonSdk=null;script.remove();reject(Error('결제창을 불러오지 못했어요. 다시 시도해주세요.'))};document.head.append(script)});return neonSdk;}
 async function renderNeonWallet(notice=''){
  const version=++neonWalletRenderVersion,owner=authUser?.id;
  const isCurrent=()=>version===neonWalletRenderVersion&&page.dataset.route==='wallet'&&authUser?.id===owner;

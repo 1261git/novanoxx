@@ -115,3 +115,6 @@ body:has([data-route="contest"]) .route-page,body:has([data-route="contest-submi
 .featured-grid.real-curated-grid{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)}
 .featured-grid.real-curated-grid[data-count="1"]{grid-template-columns:minmax(0,1fr)}
 @media(max-width:760px){.featured-grid.real-curated-grid{grid-template-columns:minmax(0,1fr)}.real-curated-grid .featured-main{grid-column:auto}}
+
+.creator-success-message{padding:16px 20px;border:1px solid #59bb8d77;border-radius:12px;color:#acedd0;background:#17372955;font-weight:600}
+.creator-items article>.outline-link{margin-top:8px;margin-right:6px}
