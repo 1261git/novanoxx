@@ -20,7 +20,7 @@ test('touch menu survives lift, focus clearing, scrolling height resize and expa
  s.fire('toggle','click');s.win.innerWidth=844;s.fire('window','resize');assert.equal(s.menu.hidden,true);
 });
 test('desktop mouse hover dismissal and keyboard Escape still work',()=>{
- const s=setup(false);s.fire('wrap','pointerenter',{pointerType:'mouse'});assert.equal(s.menu.hidden,false);
+ const s=setup(false);s.fire('wrap','pointerenter',{pointerType:'mouse'});assert.equal(s.menu.hidden,true);s.fire('toggle','click');assert.equal(s.menu.hidden,false);s.fire('toggle','click');assert.equal(s.menu.hidden,true);s.fire('trigger','pointerenter',{pointerType:'mouse'});assert.equal(s.menu.hidden,false);
  s.fire('wrap','pointerleave',{pointerType:'mouse'});s.timers[0]();assert.equal(s.menu.hidden,true);
  s.fire('trigger','keydown',{key:'ArrowDown'});assert.equal(s.menu.hidden,false);assert.equal(s.doc.activeElement,s.child);
  s.fire('wrap','keydown',{key:'Escape'});assert.equal(s.menu.hidden,true);

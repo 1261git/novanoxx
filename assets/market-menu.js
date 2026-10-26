@@ -14,7 +14,7 @@
  function select(link){menu.querySelectorAll('.market-parent-link').forEach(el=>{const active=el===link;el.setAttribute('aria-expanded',String(active));document.getElementById(el.getAttribute('aria-controls')).hidden=!active})}
  const touchMenu=()=>matchMedia('(hover: none), (pointer: coarse)').matches;
  // Touch pointerleave fires when a finger lifts; it is not a request to dismiss.
- wrap.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'&&!touchMenu())open()});wrap.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'&&!touchMenu())timer=setTimeout(()=>{if(!wrap.contains(document.activeElement))close()},180)});
+ wrap.addEventListener('pointerenter',()=>clearTimeout(timer));trigger.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'&&!touchMenu())open()});wrap.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'&&!touchMenu())timer=setTimeout(()=>{if(!wrap.contains(document.activeElement))close()},180)});
  trigger.addEventListener('focus',()=>{if(!touchMenu())open()});trigger.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){e.preventDefault();open();menu.querySelector('a').focus()}});
  // The label keeps its marketplace navigation; the separate disclosure opens categories.
  trigger.addEventListener('click',close,true);
