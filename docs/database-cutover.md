@@ -785,3 +785,9 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 등록UI1897키×5외국어 누락0/자리표시자일치, 별칭t/tr/text등록누락0. 언어전환/필드파일보존·관리자조회표시·구매진입12검사PASS + FAQ/정책/계약참고번역20조합PASS. 기존675개보존변경0. 추가과금0. 증빙250-production-before.json/translation250-after-report.json/250-helper-key-audit.json. 배포후재확인예정.
 
 - 250 사용자 관리자로그인완료 응답 후 실제 admin-dashboard 조회 및8종세부내역(회원/가입/방문2종/매출/환불/구독/구독환불), admin-reviews 내 심사·계좌/지급·환불·검토·이관조회·정책 UI 확인. 금융실행/승인/삭제/서식제출0. 독일어 일별표의 통화접미사제목4종한국어잔존을 추가확인해 translate의(KRW/NEON/USD)표시패턴보완, 단위/금액 불변. 관련검사13PASS. 첫배포496d7eb7b23fd89d8ae6d9ae57eb00731ea8a0ec / dep-dbfegoqjnfac73em6t60 LIVE2026-10-26 14:44:00KST, 추가수정후최종검증계속.
+
+- 250 언어 보완 최종8c9f9490e077fb8918466e4214ec2da221cf8004 / dep-dbfeimtg1s2s73a8sekg LIVE2026-10-26 14:47:54 KST. 수정경로5×외국어5=25조합 마크된UI한국어잔존0. 관리자 통계데이터 로딩후 통화헤더4종×5언어 실제번역확인(250-admin-currency-after.json). 관리자8상세·심사관리조회 확인, 실제개인회원행은증거파일저장안함. 사용자 추가 가격수정요청을 함께처리중.
+
+### 251 실제 크리에이터 개인 작품 가격 NEON 표시 — 2026-10-26
+- 사용자 발견: 크리에이터→실제크리에이터→개인작품 판매가격이NEON으로표시되지않음. 운영Uyunia작품2개에서 ₩19.900/₩39.900(독일어형식)만표시 재현. creator-public-profile의가격템플릿이원화환산만출력하던원인.
+- 판매중카드에NEON원금액을우선표시, 원화환산값보조표시. 예시프로필도같은표시,판매완료보호미리보기불변. 가격·상품·파일·거래·사용권한·결제설정변경0. 모바일flexwrap/minwidth기존보존. 추가과금0. 배포후199/399/1000NEON및100원환산대조예정.

@@ -1,5 +1,5 @@
 {
-  "revision": 250,
+  "revision": 251,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -9090,7 +9090,7 @@
     "evidence": "249-mobile-after.json"
   },
   "languageAudit250": {
-    "status": "IMPLEMENTED_PENDING_DEPLOY",
+    "status": "LIVE_VERIFIED",
     "scope": "WEB_AND_HOME_SCREEN_SHORTCUT_CONFIRMED",
     "existingLanguages": [
       "ko",
@@ -9113,6 +9113,22 @@
     "formRerenderOnLanguageChange": false,
     "newPaidResources": 0,
     "adminDetailKindsChecked": 8,
-    "additionalFix": "CURRENCY_SUFFIX_METRIC_HEADERS_LOCALIZED_WITHOUT_CHANGING_UNITS"
+    "additionalFix": "CURRENCY_SUFFIX_METRIC_HEADERS_LOCALIZED_WITHOUT_CHANGING_UNITS",
+    "commit": "8c9f9490e077fb8918466e4214ec2da221cf8004",
+    "deployId": "dep-dbfeimtg1s2s73a8sekg",
+    "deployedAt": "2026-10-26T05:47:54.726253Z",
+    "changedRouteSnapshotsAfter": 25,
+    "adminCurrencyLocalesVerified": 5
+  },
+  "creatorPrice251": {
+    "status": "IMPLEMENTED_PENDING_DEPLOY",
+    "primaryUnit": "NEON",
+    "secondaryUnit": "KRW",
+    "storedPricesChanged": false,
+    "productionBefore": [
+      "KRW_ONLY_199_NEON_AS_19900_KRW",
+      "KRW_ONLY_399_NEON_AS_39900_KRW"
+    ],
+    "newPaidResources": 0
   }
 }
