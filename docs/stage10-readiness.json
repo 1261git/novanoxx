@@ -1,5 +1,5 @@
 {
-  "revision": 249,
+  "revision": 250,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -9088,5 +9088,29 @@
     "preservedFilesChecked": 675,
     "preservedFilesChanged": 0,
     "evidence": "249-mobile-after.json"
+  },
+  "languageAudit250": {
+    "status": "IMPLEMENTED_PENDING_DEPLOY",
+    "scope": "WEB_AND_HOME_SCREEN_SHORTCUT_CONFIRMED",
+    "existingLanguages": [
+      "ko",
+      "en",
+      "es",
+      "zh-Hans",
+      "vi",
+      "de"
+    ],
+    "productionRouteCount": 29,
+    "foreignLanguagesChecked": 5,
+    "productionSnapshotsBefore": 145,
+    "adminLiveDataVerified": false,
+    "uiKeys": 1897,
+    "missingRegisteredKeys": 0,
+    "targetedTestsPassed": 12,
+    "guideCombinationsPassed": 20,
+    "hindi": "OPTIONAL_LANGUAGE_SELECTION_AWAITING_REPLY_NOT_ADDED",
+    "creatorOriginalsPreserved": true,
+    "formRerenderOnLanguageChange": false,
+    "newPaidResources": 0
   }
 }

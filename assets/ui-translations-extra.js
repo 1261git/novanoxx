@@ -1,5 +1,13 @@
 (function(root){const dictionaries={
   "es": {
+"카카오 로그인 연결이 완료됐어요. 이제 카카오로도 같은 계정에 로그인할 수 있어요.":"El inicio de sesión con Kakao está vinculado. Ya puedes usar Kakao para acceder a esta cuenta.",
+"카카오에서 인증을 완료하면 이 계정에 연결됩니다.":"Completa la verificación en Kakao para vincularlo a esta cuenta.",
+"선택한 에셋으로 돌아가기":"Volver al recurso seleccionado",
+"새벽을 닮은 향,\n브랜드로 남기다.":"Un aroma de amanecer,\nuna marca que perdura.",
+"여행 준비를\n가볍고 간결하게.":"Prepara tu viaje\ncon ligereza y sencillez.",
+"제품 교체로 완성하는 시네마틱 향수 광고":"Un anuncio cinematográfico de perfume adaptado a tu producto",
+"자막으로 전하는 여행 정리의 한 장면":"Organización para viajar, contada con subtítulos",
+"기본 금액 {base} NEON + 선택한 추가 작업 {extra} NEON = 합계 {total} NEON (₩{krw}) · {days}일":"Base {base} NEON + extras seleccionados {extra} NEON = total {total} NEON (₩{krw}) · {days} días",
 "NEON으로 구매":"Comprar con NEON",
 "NEON으로 구매 (준비 중)":"Comprar con NEON (próximamente)",
 "NEON 충전·구매 연결을 준비 중입니다. 현재는 결제하거나 잔액을 차감하지 않습니다.":"Se están preparando las recargas y compras con NEON. Por ahora no se realiza ningún cobro ni descuento del saldo.",
@@ -1003,6 +1011,14 @@
     "워터마크 포함 전체화면": "Pantalla completa con marca de agua"
   },
   "zh-Hans": {
+"카카오 로그인 연결이 완료됐어요. 이제 카카오로도 같은 계정에 로그인할 수 있어요.":"已关联 Kakao 登录。现在可以使用 Kakao 登录同一账号。",
+"카카오에서 인증을 완료하면 이 계정에 연결됩니다.":"在 Kakao 完成验证后将关联到此账号。",
+"선택한 에셋으로 돌아가기":"返回所选素材",
+"새벽을 닮은 향,\n브랜드로 남기다.":"如晨曦般的香气，\n留下品牌印记。",
+"여행 준비를\n가볍고 간결하게.":"轻装出行，\n简单收纳。",
+"제품 교체로 완성하는 시네마틱 향수 광고":"替换产品，打造电影感香水广告",
+"자막으로 전하는 여행 정리의 한 장면":"用字幕讲述旅行收纳场景",
+"기본 금액 {base} NEON + 선택한 추가 작업 {extra} NEON = 합계 {total} NEON (₩{krw}) · {days}일":"基础价格 {base} NEON + 所选附加服务 {extra} NEON = 总计 {total} NEON（₩{krw}）· {days} 天",
 "NEON으로 구매":"使用 NEON 购买",
 "NEON으로 구매 (준비 중)":"使用 NEON 购买（筹备中）",
 "NEON 충전·구매 연결을 준비 중입니다. 현재는 결제하거나 잔액을 차감하지 않습니다.":"NEON 充值和购买功能正在筹备中。目前不会付款或扣除余额。",
@@ -2006,6 +2022,14 @@
     "워터마크 포함 전체화면": "含水印全屏显示"
   },
   "vi": {
+"카카오 로그인 연결이 완료됐어요. 이제 카카오로도 같은 계정에 로그인할 수 있어요.":"Đã liên kết đăng nhập Kakao. Giờ bạn có thể dùng Kakao để đăng nhập cùng tài khoản này.",
+"카카오에서 인증을 완료하면 이 계정에 연결됩니다.":"Hoàn tất xác minh trên Kakao để liên kết với tài khoản này.",
+"선택한 에셋으로 돌아가기":"Quay lại tài nguyên đã chọn",
+"새벽을 닮은 향,\n브랜드로 남기다.":"Hương thơm bình minh,\ndấu ấn thương hiệu.",
+"여행 준비를\n가볍고 간결하게.":"Chuẩn bị chuyến đi\ngọn nhẹ và đơn giản.",
+"제품 교체로 완성하는 시네마틱 향수 광고":"Quảng cáo nước hoa điện ảnh, tùy chỉnh bằng sản phẩm của bạn",
+"자막으로 전하는 여행 정리의 한 장면":"Một cảnh sắp xếp hành lý được kể bằng phụ đề",
+"기본 금액 {base} NEON + 선택한 추가 작업 {extra} NEON = 합계 {total} NEON (₩{krw}) · {days}일":"Giá gốc {base} NEON + công việc thêm đã chọn {extra} NEON = tổng {total} NEON (₩{krw}) · {days} ngày",
 "NEON으로 구매":"Mua bằng NEON",
 "NEON으로 구매 (준비 중)":"Mua bằng NEON (sắp ra mắt)",
 "NEON 충전·구매 연결을 준비 중입니다. 현재는 결제하거나 잔액을 차감하지 않습니다.":"Tính năng nạp và mua bằng NEON đang được chuẩn bị. Hiện không thu tiền hoặc trừ số dư.",
@@ -3009,6 +3033,14 @@
     "워터마크 포함 전체화면": "Toàn màn hình có dấu bản quyền"
   },
   "de": {
+"카카오 로그인 연결이 완료됐어요. 이제 카카오로도 같은 계정에 로그인할 수 있어요.":"Die Kakao-Anmeldung ist verknüpft. Du kannst dich jetzt mit Kakao bei diesem Konto anmelden.",
+"카카오에서 인증을 완료하면 이 계정에 연결됩니다.":"Schließe die Verifizierung bei Kakao ab, um dieses Konto zu verknüpfen.",
+"선택한 에셋으로 돌아가기":"Zum ausgewählten Asset zurück",
+"새벽을 닮은 향,\n브랜드로 남기다.":"Ein Duft wie der Morgen,\neine Marke, die bleibt.",
+"여행 준비를\n가볍고 간결하게.":"Reisevorbereitung,\nleicht und einfach.",
+"제품 교체로 완성하는 시네마틱 향수 광고":"Ein filmischer Parfümspot mit deinem Produkt",
+"자막으로 전하는 여행 정리의 한 장면":"Reiseorganisation, mit Untertiteln erzählt",
+"기본 금액 {base} NEON + 선택한 추가 작업 {extra} NEON = 합계 {total} NEON (₩{krw}) · {days}일":"Grundpreis {base} NEON + ausgewählte Zusatzarbeiten {extra} NEON = Gesamt {total} NEON (₩{krw}) · {days} Tage",
 "NEON으로 구매":"Mit NEON kaufen",
 "NEON으로 구매 (준비 중)":"Mit NEON kaufen (in Vorbereitung)",
 "NEON 충전·구매 연결을 준비 중입니다. 현재는 결제하거나 잔액을 차감하지 않습니다.":"NEON-Aufladungen und Käufe werden vorbereitet. Derzeit werden keine Zahlungen oder Guthabenabzüge ausgeführt.",

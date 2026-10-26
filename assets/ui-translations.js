@@ -1,4 +1,12 @@
 (function(root){const entries={
+"카카오 로그인 연결이 완료됐어요. 이제 카카오로도 같은 계정에 로그인할 수 있어요.":"Kakao sign-in is connected. You can now use Kakao to sign in to this account.",
+"카카오에서 인증을 완료하면 이 계정에 연결됩니다.":"Complete verification on Kakao to link it to this account.",
+"선택한 에셋으로 돌아가기":"Return to the selected asset",
+"새벽을 닮은 향,\n브랜드로 남기다.":"A scent of dawn,\na lasting brand.",
+"여행 준비를\n가볍고 간결하게.":"Pack for your trip,\nlight and simple.",
+"제품 교체로 완성하는 시네마틱 향수 광고":"A cinematic perfume ad customized with your product",
+"자막으로 전하는 여행 정리의 한 장면":"Travel organization, told through captions",
+"기본 금액 {base} NEON + 선택한 추가 작업 {extra} NEON = 합계 {total} NEON (₩{krw}) · {days}일":"Base {base} NEON + selected add-ons {extra} NEON = total {total} NEON (₩{krw}) · {days} days",
 "NEON으로 구매":"Buy with NEON",
 "NEON으로 구매 (준비 중)":"Buy with NEON (coming soon)",
 "NEON 충전·구매 연결을 준비 중입니다. 현재는 결제하거나 잔액을 차감하지 않습니다.":"NEON top-ups and purchases are being prepared. No payment or balance deduction is currently made.",

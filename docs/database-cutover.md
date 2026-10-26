@@ -777,3 +777,9 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 249 완료: 첫 레이아웃 수정 be8d5605ce5509006fcade79ef5cb8e88e5e589a / dep-dbfc1t2jnfac73ek4hm0 LIVE 2026-10-26 11:55:32 KST. 후속 PC hover/arrow 충돌 보완 a8f84f9dcb06c36882a5580e250a44411dffece5 / dep-dbfc3n4s728c73dd6bhg LIVE 2026-10-26 11:59:27 KST. wrap 진입은 닫힘 타이머만 취소, 이름 hover만 펼침, 화살표 명시 클릭 독립. 검사4/4PASS.
 - 배포후320/360/390/430px 재측정: 메뉴겹침0px, 이름높이44px, 구매46px/지갑44px/찜46px, 가로넘침0·세로겹침0. 운영390px에서 화살표열기 화면과 이름클릭 #/marketplace 메인·추천·어워드·닫힌메뉴 확인. 물리 휴대폰 및 터치 에뮬레이션은 아닌 Chrome viewport와 별도 touch 로직 격리 검사 범위. 임시 viewport reset완료, 로컬합성서버 종료. 502 일시 응답은 새로고침 후 정상 복구 확인.
 - 증빙: 249-mobile-before.json, 249-mobile-after.json, 249-mobile-main-live.png, 249-mobile-categories-live.png, 249-mobile-purchase-live.png. 기존675개변경0, 실주문/잔액차감/실청구0, 추가과금0. NEON실구매/빌링/지급대행은 계속 비활성, 247 소유자 인증 대기 유지.
+
+### 250 상세 화면 언어 점검·모바일 웹 공통 번역 보완 — 2026-10-26
+- 사용자 앱 의미 확인: 휴대폰 홈페이지/홈 화면 바로가기. 별도 네이티브앱 생성·스토어배포 범위 아님. 기존6언어 ko/en/es/zh-Hans/vi/de. 힌디어 추가 가능 안내 및 언어선택 질문 대기(미출시).
+- 실제운영 일반로그인계정으로29경로×5외국어145회 점검. 계정/프로필/에셋목록/업로드/주문/의뢰/정산/성과/지갑/연결/소개/FAQ/정책/계약/탈퇴/NovaPlay/목록/최근본/메일/개발자노트/콘테스트/데이터설정/플랜/관리자접근안내 포함. 관리자 실데이터 페이지는 일반계정 권한안내만 확인, 실제금융/제출/업로드/탈퇴동작 실행0. 빈상태/초기로딩 포함이므로 모든 실데이터 하위분기·모국어교열·전문법률번역 완료로 단정금지.
+- 운영연결안내2문구 미표시 발견, uiMarkup적용 및 신규키추가. application-engine의translate=no UI줄이 언어전환후한국어로고정되던원인: UI전용uiLine으로분리, 거래메시지/원문/값보존. 운영검토·이관조회 정적tr→명시적번역마크업, 작업합계자리표시자, 추천/어워드소유마케팅카피/재생안내도 번역키적용. 창작자제목·설명·파일명·입력값·선택FileList미변경. 폼rerender강제안함.
+- 등록UI1897키×5외국어 누락0/자리표시자일치, 별칭t/tr/text등록누락0. 언어전환/필드파일보존·관리자조회표시·구매진입12검사PASS + FAQ/정책/계약참고번역20조합PASS. 기존675개보존변경0. 추가과금0. 증빙250-production-before.json/translation250-after-report.json/250-helper-key-audit.json. 배포후재확인예정.
