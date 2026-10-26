@@ -9045,7 +9045,7 @@
     "evidence": "247-billing-applicant-handoff.png"
   },
   "marketPurchase248": {
-    "status": "IMPLEMENTED_PENDING_DEPLOY",
+    "status": "LIVE_VERIFIED",
     "mainLabel": "MARKETPLACE_HOME",
     "categoryToggle": "SEPARATE_44PX_BUTTON",
     "purchase": "VISIBLE_DISABLED_NEON_PENDING_NO_SPENDING",
@@ -9053,6 +9053,12 @@
     "newPaidResources": 0,
     "testsPassed": 4,
     "translationKeys": 1889,
-    "translationMissing": 0
+    "translationMissing": 0,
+    "commit": "830071f908d306dd6aed899b18a3c884a991e315",
+    "deployId": "dep-dbfbaqeq1p3s73f23t5g",
+    "deployedAt": "2026-10-26T02:06:27.690124Z",
+    "preservedFilesChecked": 675,
+    "preservedFilesChanged": 0,
+    "physicalMobileVerified": false
   }
 }

@@ -766,3 +766,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 모바일 market-nav 클릭 capture가 기본 메인 이동을 막고 카테고리만 열던 문제. 이름은 기존 #/marketplace 메인 라우팅, 별도44px 화살표는 펼침/접힘. PC hover/ArrowDown/Escape/바깥닫기/하위분류/터치스크롤 유지. 메인에는 큐레이션/어워드, category쿼리에는 라이브러리 구분 유지.
 - 6개 언어 신규 문구 추가, 번역등록1889키·누락0. 메뉴/구매진입 회귀4검사PASS. 실제 과금/주문생성/잔액차감0. 신규 유료자원0. 상품·파일·가격·거래·기존 TEST 보존. 모바일 실기기 검증과 터치 로직 격리 검사를 구분.
 - 247 빌링 이메일 인증 대기 상태 유지, 신청/계약/청구 재개 안함. 배포 및 화면 대조는 후속 기록.
+
+- 248 배포 완료: 830071f908d306dd6aed899b18a3c884a991e315 / dep-dbfbaqeq1p3s73f23t5g LIVE 2026-10-26 11:06:27 KST. 운영 쇼핑쇼츠 상세에서 NEON으로 구매(준비 중) disabled·비차감 안내·지갑 링크 확인. 마켓플레이스 이름 클릭으로 #/marketplace 메인/추천/어워드 확인, 전용 화살표 펼침·닫힘과 URL 유지 확인. 터치 로직 격리 검사와 PC 운영 확인이며 휴대폰 실기기 확인은 별도. 증빙248-neon-purchase-live.png / 248-market-category-live.png / 248-market-main-live.png. 보존675개 변경0, 실제 금융/추가비용0.
