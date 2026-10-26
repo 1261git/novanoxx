@@ -12,3 +12,5 @@ test('Purchase totals and connected-account notices switch languages without cha
  const samples=[['기본 금액 {base} NEON + 선택한 추가 작업 {extra} NEON = 합계 {total} NEON (₩{krw}) · {days}일',{base:199,extra:70,total:269,krw:26900,days:1}],['에셋 판매 한도 무제한 · 별도 청구 없음',{}],['카카오 로그인 연결이 완료됐어요. 이제 카카오로도 같은 계정에 로그인할 수 있어요.',{}]];
  for(const [source,values]of samples){const rendered=source.replace(/\{(\w+)\}/g,(_,key)=>values[key]);const e=element(source,values,rendered),input=e.childNodes[1];for(const language of ['en','es','zh-Hans','vi','de','ko']){localizeElement(e,language);assert.equal(e.childNodes[0].nodeValue,translate(source,language).replace(/\{(\w+)\}/g,(_,key)=>values[key]));assert.equal(e.childNodes[1],input);assert.deepEqual(input.files,['selected.mp4']);assert.equal(input.value,'Creator-owned 제목');}}
 });
+
+test('Metric headers keep their currency unit while translating each label',()=>{for(const language of ['ko','en','es','zh-Hans','vi','de'])for(const label of ['판매금액','환불액','구독 결제 합계','구독 환불 합계'])for(const unit of ['KRW','NEON','USD'])assert.equal(translate(label+' ('+unit+')',language),translate(label,language)+' ('+unit+')');});

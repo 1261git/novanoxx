@@ -783,3 +783,5 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - 실제운영 일반로그인계정으로29경로×5외국어145회 점검. 계정/프로필/에셋목록/업로드/주문/의뢰/정산/성과/지갑/연결/소개/FAQ/정책/계약/탈퇴/NovaPlay/목록/최근본/메일/개발자노트/콘테스트/데이터설정/플랜/관리자접근안내 포함. 관리자 실데이터 페이지는 일반계정 권한안내만 확인, 실제금융/제출/업로드/탈퇴동작 실행0. 빈상태/초기로딩 포함이므로 모든 실데이터 하위분기·모국어교열·전문법률번역 완료로 단정금지.
 - 운영연결안내2문구 미표시 발견, uiMarkup적용 및 신규키추가. application-engine의translate=no UI줄이 언어전환후한국어로고정되던원인: UI전용uiLine으로분리, 거래메시지/원문/값보존. 운영검토·이관조회 정적tr→명시적번역마크업, 작업합계자리표시자, 추천/어워드소유마케팅카피/재생안내도 번역키적용. 창작자제목·설명·파일명·입력값·선택FileList미변경. 폼rerender강제안함.
 - 등록UI1897키×5외국어 누락0/자리표시자일치, 별칭t/tr/text등록누락0. 언어전환/필드파일보존·관리자조회표시·구매진입12검사PASS + FAQ/정책/계약참고번역20조합PASS. 기존675개보존변경0. 추가과금0. 증빙250-production-before.json/translation250-after-report.json/250-helper-key-audit.json. 배포후재확인예정.
+
+- 250 사용자 관리자로그인완료 응답 후 실제 admin-dashboard 조회 및8종세부내역(회원/가입/방문2종/매출/환불/구독/구독환불), admin-reviews 내 심사·계좌/지급·환불·검토·이관조회·정책 UI 확인. 금융실행/승인/삭제/서식제출0. 독일어 일별표의 통화접미사제목4종한국어잔존을 추가확인해 translate의(KRW/NEON/USD)표시패턴보완, 단위/금액 불변. 관련검사13PASS. 첫배포496d7eb7b23fd89d8ae6d9ae57eb00731ea8a0ec / dep-dbfegoqjnfac73em6t60 LIVE2026-10-26 14:44:00KST, 추가수정후최종검증계속.

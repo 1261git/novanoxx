@@ -9103,14 +9103,16 @@
     "productionRouteCount": 29,
     "foreignLanguagesChecked": 5,
     "productionSnapshotsBefore": 145,
-    "adminLiveDataVerified": false,
+    "adminLiveDataVerified": true,
     "uiKeys": 1897,
     "missingRegisteredKeys": 0,
-    "targetedTestsPassed": 12,
+    "targetedTestsPassed": 13,
     "guideCombinationsPassed": 20,
     "hindi": "OPTIONAL_LANGUAGE_SELECTION_AWAITING_REPLY_NOT_ADDED",
     "creatorOriginalsPreserved": true,
     "formRerenderOnLanguageChange": false,
-    "newPaidResources": 0
+    "newPaidResources": 0,
+    "adminDetailKindsChecked": 8,
+    "additionalFix": "CURRENCY_SUFFIX_METRIC_HEADERS_LOCALIZED_WITHOUT_CHANGING_UNITS"
   }
 }
