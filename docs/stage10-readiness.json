@@ -9118,10 +9118,12 @@
     "deployId": "dep-dbfeimtg1s2s73a8sekg",
     "deployedAt": "2026-10-26T05:47:54.726253Z",
     "changedRouteSnapshotsAfter": 25,
-    "adminCurrencyLocalesVerified": 5
+    "adminCurrencyLocalesVerified": 5,
+    "languageRestored": "ko",
+    "viewportReset": true
   },
   "creatorPrice251": {
-    "status": "IMPLEMENTED_PENDING_DEPLOY",
+    "status": "LIVE_VERIFIED",
     "primaryUnit": "NEON",
     "secondaryUnit": "KRW",
     "storedPricesChanged": false,
@@ -9129,6 +9131,21 @@
       "KRW_ONLY_199_NEON_AS_19900_KRW",
       "KRW_ONLY_399_NEON_AS_39900_KRW"
     ],
-    "newPaidResources": 0
+    "newPaidResources": 0,
+    "commit": "4be231a4f133450337da26c9eb974b092b49509d",
+    "deployId": "dep-dbfekquq1p3s73f50950",
+    "deployedAt": "2026-10-26T05:52:31.617957Z",
+    "verifiedNeonPrices": [
+      199,
+      399,
+      1000
+    ],
+    "mobile390Overflow": false,
+    "preservedFilesChecked": 675,
+    "preservedFilesChanged": 0,
+    "evidence": [
+      "251-creator-neon-desktop.png",
+      "251-creator-neon-mobile.png"
+    ]
   }
 }
