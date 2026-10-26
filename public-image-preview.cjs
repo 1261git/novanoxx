@@ -8,10 +8,11 @@ function dimensions(b){if(b[0]!==255||b[1]!==216)throw Error('PREVIEW_JPEG_REQUI
 const run=(args)=>new Promise((resolve,reject)=>execFile(process.env.NNX_PREVIEW_FFMPEG||'ffmpeg',args,{timeout:60000,maxBuffer:512*1024,windowsHide:true},err=>err?reject(Error('PUBLIC_PREVIEW_CONVERSION_FAILED')):resolve()));
 const common=['-nostdin','-y','-v','error','-threads','1','-filter_threads','1','-filter_complex_threads','1','-protocol_whitelist','file,pipe'];
 async function convert(input,output,extension){
- if(!['jpg','jpeg','png','webp'].includes(extension)||path.resolve(input)===path.resolve(output))throw Error('PUBLIC_PREVIEW_SCOPE');
+ if(!['jpg','jpeg','png','webp','mp4','webm'].includes(extension)||path.resolve(input)===path.resolve(output))throw Error('PUBLIC_PREVIEW_SCOPE');
  const temp=await fs.promises.mkdtemp(path.join(path.dirname(output),'image-work-'));let release;
  try{release=require('./preview-work-slot.cjs')();const decoder=extension==='png'?'png':extension==='webp'?'webp':'mjpeg',base=path.join(temp,'base.jpg');
- await run([...common,'-f','image2','-pattern_type','none','-c:v',decoder,'-i',input,'-vf',"scale=w='min(960,iw)':h='min(960,ih)':force_original_aspect_ratio=decrease",'-frames:v','1','-q:v','7','-map_metadata','-1','-threads','1',base]);
+ const video=['mp4','webm'].includes(extension);
+ await run([...common,...(video?['-f',extension==='mp4'?'mov':'matroska']:['-f','image2','-pattern_type','none','-c:v',decoder]),'-i',input,'-vf',"scale=w='min(960,iw)':h='min(960,ih)':force_original_aspect_ratio=decrease",'-frames:v','1','-q:v','7','-map_metadata','-1','-threads','1',base]);
  const d=dimensions(fs.readFileSync(base)),w=Math.max(8,Math.round(Math.min(d.width*.38,d.height*1.1,320))),logo=path.join(__dirname,'assets','novanoxx-brand-logo.png');
  const graph='[1:v]scale='+w+':-1,format=rgba,colorchannelmixer=aa=0.42,split=3[m1][m2][m3];[0:v][m1]overlay=(W-w)*0.12:(H-h)*0.15[p1];[p1][m2]overlay=(W-w)*0.5:(H-h)*0.5[p2];[p2][m3]overlay=(W-w)*0.88:(H-h)*0.85,format=yuvj420p[out]';
  await run([...common,'-i',base,'-i',logo,'-filter_complex',graph,'-map','[out]','-frames:v','1','-q:v','8','-map_metadata','-1','-threads','1','-f','image2','-update','1',output]);

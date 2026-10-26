@@ -794,3 +794,7 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 
 - 251 완료: 4be231a4f133450337da26c9eb974b092b49509d / dep-dbfekquq1p3s73f50950 LIVE2026-10-26 14:52:31 KST. 실제 크리에이터 목록에서 Uyunia 카드2개199/399NEON 및 원화19,900/39,900, 예니체리 카드1개1,000NEON 및100,000원 확인. 390px에서가격영역 가로넘침0(287.5px내표시). 증빙251-creator-neon-desktop.png/251-creator-neon-mobile.png. 실제가격데이터변경0, 자료675개변경0, 실제주문·과금0.
 - 250/251 검증 종료: 브라우저언어한국어로복구, 임시viewport reset완료. 한국어계약원문/창작자콘텐츠/파일/가격/거래자료보존. 힌디어 선택 질문은 아직 답변없음, 추가출시안함. 모국어전문교열·법률검수 완료로 표시하지 않음.
+
+
+## 2026-10-26 — Revision 252: video first-frame thumbnails
+No uploaded thumbnail: catalog imgUrl points to the verified protected full-preview poster (short protected preview fallback). Existing thumbnails take precedence. Original downloads and stored metadata/files unchanged. Shared bounded 32MB/96-image cache, one conversion at a time, maximum 960px watermarked JPEG; no paid resources. Creator upload explains the automatic thumbnail in all six supported languages. Targeted tests: 8 PASS including actual red-first/blue-later FFmpeg frame extraction, concurrent cache reuse, corruption rejection, original hash preservation, and SQLite/PostgreSQL public preview access checks. Production visual verification pending deployment.

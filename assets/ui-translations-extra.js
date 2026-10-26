@@ -4926,4 +4926,8 @@ Object.assign(dictionaries["es"],{"이 작품의 실제 결제는 아직 준비 
 Object.assign(dictionaries["zh-Hans"],{"이 작품의 실제 결제는 아직 준비 중입니다. 심사용 결제창을 이용해주세요.":"此作品暂未开放真实付款。请使用审核支付窗口。"});
 Object.assign(dictionaries["vi"],{"이 작품의 실제 결제는 아직 준비 중입니다. 심사용 결제창을 이용해주세요.":"Thanh toán thực cho tác phẩm này chưa sẵn sàng. Vui lòng dùng cửa sổ thanh toán xét duyệt."});
 Object.assign(dictionaries["de"],{"이 작품의 실제 결제는 아직 준비 중입니다. 심사용 결제창을 이용해주세요.":"Echte Zahlungen für dieses Werk sind noch nicht verfügbar. Bitte den Prüf-Checkout verwenden."});
+Object.assign(dictionaries["es"],{"(썸네일을 올리지 않을 시 자동으로 영상 첫 장면이 썸네일로 보여집니다.)":"(Si no subes una miniatura, se mostrará automáticamente el primer fotograma del vídeo.)"});
+Object.assign(dictionaries["zh-Hans"],{"(썸네일을 올리지 않을 시 자동으로 영상 첫 장면이 썸네일로 보여집니다.)":"（未上传缩略图时，将自动显示视频的第一帧。）"});
+Object.assign(dictionaries["vi"],{"(썸네일을 올리지 않을 시 자동으로 영상 첫 장면이 썸네일로 보여집니다.)":"(Nếu không tải ảnh thu nhỏ lên, khung hình đầu tiên của video sẽ tự động được hiển thị.)"});
+Object.assign(dictionaries["de"],{"(썸네일을 올리지 않을 시 자동으로 영상 첫 장면이 썸네일로 보여집니다.)":"(Wenn du kein Vorschaubild hochlädst, wird automatisch das erste Videobild angezeigt.)"});
 if(typeof module!=='undefined')module.exports=dictionaries;else root.NNX_TRANSLATIONS_EXTRA=dictionaries;})(typeof globalThis!=='undefined'?globalThis:this);

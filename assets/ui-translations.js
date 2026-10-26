@@ -1,4 +1,5 @@
 (function(root){const entries={
+"(썸네일을 올리지 않을 시 자동으로 영상 첫 장면이 썸네일로 보여집니다.)":"(If you do not upload a thumbnail, the first video frame is shown automatically.)",
 "카카오 로그인 연결이 완료됐어요. 이제 카카오로도 같은 계정에 로그인할 수 있어요.":"Kakao sign-in is connected. You can now use Kakao to sign in to this account.",
 "카카오에서 인증을 완료하면 이 계정에 연결됩니다.":"Complete verification on Kakao to link it to this account.",
 "선택한 에셋으로 돌아가기":"Return to the selected asset",
