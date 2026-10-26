@@ -773,3 +773,7 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 - Chrome viewport 기능으로 실제 운영 사이트320/360/390/430×844 검증(세로스크롤바 포함 실제client폭305/345/375/415). 실기기 연결/Android/iOS 터치 에뮬레이션은 아님. 별도 터치 로직 격리 검사2개 및 구매 비활성 검사2개PASS.
 - 운영 상세1004에서 구매46px/지갑44px/찜46px 및 상태 안내가 가로경계 내에 있고 문서가로넘침0, 요소간세로겹침0 확인. 헤더 이름/화살표의 음수margin으로8px 클릭영역겹침 발견, margin-left0 및 모바일market-nav min-height44px로 수정.
 - 마켓 이름클릭 메인추천/어워드 존재와 별도화살표 펼침을 확인. 로컬읽기전용 합성iframe도 잠깐 확인했으나 최종 검증은 운영 모바일viewport에서 수행. 로컬프로세스 종료, 실주문/과금/파일변경/가격변경0. 새유료자원0. 기존675개지문변경0. 배포 후 재측정 기록 예정.
+
+- 249 완료: 첫 레이아웃 수정 be8d5605ce5509006fcade79ef5cb8e88e5e589a / dep-dbfc1t2jnfac73ek4hm0 LIVE 2026-10-26 11:55:32 KST. 후속 PC hover/arrow 충돌 보완 a8f84f9dcb06c36882a5580e250a44411dffece5 / dep-dbfc3n4s728c73dd6bhg LIVE 2026-10-26 11:59:27 KST. wrap 진입은 닫힘 타이머만 취소, 이름 hover만 펼침, 화살표 명시 클릭 독립. 검사4/4PASS.
+- 배포후320/360/390/430px 재측정: 메뉴겹침0px, 이름높이44px, 구매46px/지갑44px/찜46px, 가로넘침0·세로겹침0. 운영390px에서 화살표열기 화면과 이름클릭 #/marketplace 메인·추천·어워드·닫힌메뉴 확인. 물리 휴대폰 및 터치 에뮬레이션은 아닌 Chrome viewport와 별도 touch 로직 격리 검사 범위. 임시 viewport reset완료, 로컬합성서버 종료. 502 일시 응답은 새로고침 후 정상 복구 확인.
+- 증빙: 249-mobile-before.json, 249-mobile-after.json, 249-mobile-main-live.png, 249-mobile-categories-live.png, 249-mobile-purchase-live.png. 기존675개변경0, 실주문/잔액차감/실청구0, 추가과금0. NEON실구매/빌링/지급대행은 계속 비활성, 247 소유자 인증 대기 유지.

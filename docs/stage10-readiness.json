@@ -9062,7 +9062,7 @@
     "physicalMobileVerified": false
   },
   "mobileMarket249": {
-    "status": "IMPLEMENTED_PENDING_DEPLOY",
+    "status": "LIVE_VERIFIED",
     "viewportWidths": [
       320,
       360,
@@ -9077,6 +9077,16 @@
     "headerOverlapBefore": 8,
     "fix": "REMOVE_NEGATIVE_MARGIN_AND_44PX_MOBILE_MAIN_BUTTON",
     "testsPassed": 4,
-    "newPaidResources": 0
+    "newPaidResources": 0,
+    "commit": "a8f84f9dcb06c36882a5580e250a44411dffece5",
+    "deployId": "dep-dbfc3n4s728c73dd6bhg",
+    "deployedAt": "2026-10-26T02:59:27.06057Z",
+    "headerOverlapAfter": 0,
+    "mobileMainButtonMinHeight": 44,
+    "hoverScope": "LABEL_ONLY_ARROW_INDEPENDENT",
+    "viewportReset": true,
+    "preservedFilesChecked": 675,
+    "preservedFilesChanged": 0,
+    "evidence": "249-mobile-after.json"
   }
 }
