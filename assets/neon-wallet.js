@@ -1,9 +1,10 @@
 async function renderEnginePurchaseOptions(asset){
  const button=document.getElementById('test-neon-buy');if(!button)return;const owner=authUser?.id;
  try{
-  const status=await authRequest('engine/status');if(!status.connected||!button.isConnected||authUser?.id!==owner)return;
+  const status=await authRequest('engine/status');if(!button.isConnected||authUser?.id!==owner)return;if(!status.connected){uiMessage(document.getElementById('test-buy-status'),'결제 연결을 준비 중이에요.');return;}button.disabled=false;
   if((status.reviewOnly||status.paymentPreview)&&asset.id<1001){button.disabled=true;const hint=document.getElementById('test-buy-status');if(hint)uiMessage(hint,'전시용 예시는 구매할 수 없습니다. 심사용 등록 상품을 선택해주세요.');return;}
-  if(status.productionSite)button.hidden=true;
+  if(status.productionSite){button.hidden=false;button.disabled=true;button.dataset.purchaseMode='NEON_PENDING';uiMessage(button,'NEON으로 구매 (준비 중)');button.setAttribute('aria-describedby','test-buy-status');const hint=document.getElementById('test-buy-status');if(hint)uiMessage(hint,'NEON 충전·구매 연결을 준비 중입니다. 현재는 결제하거나 잔액을 차감하지 않습니다.');const notice=document.getElementById('neon-purchase-notice');if(notice)notice.hidden=true;const wallet=document.createElement('a');wallet.className='outline-link';wallet.href='#/wallet';uiMessage(wallet,'NEON 지갑 ↗');button.after(wallet);}
+  else{button.textContent=uiText('테스트 NEON으로 구매')+' · '+asset.price+' NEON';const hint=document.getElementById('test-buy-status');if(hint)hint.textContent='';const notice=document.getElementById('neon-purchase-notice');if(notice)notice.hidden=false;}
   if(status.productionSite&&status.realBilling){const available=await authRequest('commerce/availability?assetId='+encodeURIComponent(asset.id));if(!button.isConnected||authUser?.id!==owner)return;status.realBilling=available.realBilling===true;if(!status.realBilling)status.paymentPreview=true;}
   const group=document.createElement('fieldset');group.id='engine-purchase-options';
   const legend=document.createElement('legend');uiMessage(legend,'추가 작업 선택');group.append(legend);

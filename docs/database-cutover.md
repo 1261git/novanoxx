@@ -760,3 +760,9 @@ Official reference: https://developers.naver.com/docs/login/verify/verify.md
 5. 안심정산플랜13,250원은 해당 계약에서 필수인지, 기존 담보/면제와의 관계 및 미가입 시 한도를 알려주세요.
 - 근거: https://docs.tosspayments.com/guides/v2/billing/integration ; https://www.tosspayments.com/about/fee ; https://www.tosspayments.com/blog/articles/30355 .
 - 증빙: novanoxx-stage10-evidence-20261017/247-billing-applicant-handoff.png. 기존 작품/가격/NEON/파일/거래/운영 설정 변경0. 라이브 결제는 비활성 유지.
+
+### 248 작품 상세 구매 진입 및 모바일 마켓 메뉴 수정 — 2026-10-26
+- 원인: renderEnginePurchaseOptions의 productionSite 분기가 테스트 구매 버튼을 숨김. 실제 NEON 구매 미활성임에도 버튼 없는 화면만 보여 혼란. 운영 NEON 구매(준비 중) 비활성 버튼/비차감 설명/지갑 링크 제공. 초기 버튼도 상태 조회 전 비활성화하여 TEST 구매 문구 깜빡임/클릭 방지. TEST 환경은 명시 테스트 라벨·기존 경로 유지. 운영 실구매·원장·카드직접결제 활성화 아님.
+- 모바일 market-nav 클릭 capture가 기본 메인 이동을 막고 카테고리만 열던 문제. 이름은 기존 #/marketplace 메인 라우팅, 별도44px 화살표는 펼침/접힘. PC hover/ArrowDown/Escape/바깥닫기/하위분류/터치스크롤 유지. 메인에는 큐레이션/어워드, category쿼리에는 라이브러리 구분 유지.
+- 6개 언어 신규 문구 추가, 번역등록1889키·누락0. 메뉴/구매진입 회귀4검사PASS. 실제 과금/주문생성/잔액차감0. 신규 유료자원0. 상품·파일·가격·거래·기존 TEST 보존. 모바일 실기기 검증과 터치 로직 격리 검사를 구분.
+- 247 빌링 이메일 인증 대기 상태 유지, 신청/계약/청구 재개 안함. 배포 및 화면 대조는 후속 기록.

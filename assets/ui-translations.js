@@ -1,4 +1,10 @@
 (function(root){const entries={
+"NEON으로 구매":"Buy with NEON",
+"NEON으로 구매 (준비 중)":"Buy with NEON (coming soon)",
+"NEON 충전·구매 연결을 준비 중입니다. 현재는 결제하거나 잔액을 차감하지 않습니다.":"NEON top-ups and purchases are being prepared. No payment or balance deduction is currently made.",
+"구매 가능 여부를 확인하고 있습니다.":"Checking purchase availability.",
+"카테고리 열기":"Open categories",
+"카테고리 닫기":"Close categories",
 "회원·비회원 작품 통계":"Member and guest asset statistics",
 "카드 클릭은 로그인 전후의 작품 진입 클릭이며 상세 조회와 다릅니다. 고유 인원 수가 아닌 횟수이며 과거 기록을 새 분류로 추정하지 않습니다.":"Card clicks count asset-entry activations before or after sign-in, separately from detail views. These are events, not unique people; past records are not reclassified by estimation.",
 "새 집계 시작":"New collection started",

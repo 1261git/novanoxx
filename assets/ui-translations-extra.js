@@ -1,5 +1,11 @@
 (function(root){const dictionaries={
   "es": {
+"NEON으로 구매":"Comprar con NEON",
+"NEON으로 구매 (준비 중)":"Comprar con NEON (próximamente)",
+"NEON 충전·구매 연결을 준비 중입니다. 현재는 결제하거나 잔액을 차감하지 않습니다.":"Se están preparando las recargas y compras con NEON. Por ahora no se realiza ningún cobro ni descuento del saldo.",
+"구매 가능 여부를 확인하고 있습니다.":"Comprobando la disponibilidad de compra.",
+"카테고리 열기":"Abrir categorías",
+"카테고리 닫기":"Cerrar categorías",
 "회원·비회원 작품 통계":"Estadísticas de obras: miembros e invitados",
 "카드 클릭은 로그인 전후의 작품 진입 클릭이며 상세 조회와 다릅니다. 고유 인원 수가 아닌 횟수이며 과거 기록을 새 분류로 추정하지 않습니다.":"Los clics en tarjetas son accesos a obras antes o después de iniciar sesión, distintos de las vistas de detalle. Son eventos, no personas únicas; no se reclasifican registros antiguos mediante estimaciones.",
 "새 집계 시작":"Inicio de la nueva medición",
@@ -997,6 +1003,12 @@
     "워터마크 포함 전체화면": "Pantalla completa con marca de agua"
   },
   "zh-Hans": {
+"NEON으로 구매":"使用 NEON 购买",
+"NEON으로 구매 (준비 중)":"使用 NEON 购买（筹备中）",
+"NEON 충전·구매 연결을 준비 중입니다. 현재는 결제하거나 잔액을 차감하지 않습니다.":"NEON 充值和购买功能正在筹备中。目前不会付款或扣除余额。",
+"구매 가능 여부를 확인하고 있습니다.":"正在检查是否可以购买。",
+"카테고리 열기":"展开分类",
+"카테고리 닫기":"收起分类",
 "회원·비회원 작품 통계":"会员与访客作品统计",
 "카드 클릭은 로그인 전후의 작품 진입 클릭이며 상세 조회와 다릅니다. 고유 인원 수가 아닌 횟수이며 과거 기록을 새 분류로 추정하지 않습니다.":"卡片点击统计登录前后的作品入口点击，与详情浏览分开。这是次数而非独立人数；不会推算旧记录的新分类。",
 "새 집계 시작":"新统计开始时间",
@@ -1994,6 +2006,12 @@
     "워터마크 포함 전체화면": "含水印全屏显示"
   },
   "vi": {
+"NEON으로 구매":"Mua bằng NEON",
+"NEON으로 구매 (준비 중)":"Mua bằng NEON (sắp ra mắt)",
+"NEON 충전·구매 연결을 준비 중입니다. 현재는 결제하거나 잔액을 차감하지 않습니다.":"Tính năng nạp và mua bằng NEON đang được chuẩn bị. Hiện không thu tiền hoặc trừ số dư.",
+"구매 가능 여부를 확인하고 있습니다.":"Đang kiểm tra khả năng mua.",
+"카테고리 열기":"Mở danh mục",
+"카테고리 닫기":"Đóng danh mục",
 "회원·비회원 작품 통계":"Thống kê tác phẩm của thành viên và khách",
 "카드 클릭은 로그인 전후의 작품 진입 클릭이며 상세 조회와 다릅니다. 고유 인원 수가 아닌 횟수이며 과거 기록을 새 분류로 추정하지 않습니다.":"Lượt nhấp thẻ là thao tác mở tác phẩm trước hoặc sau đăng nhập, khác lượt xem chi tiết. Đây là số lần, không phải số người duy nhất; không suy đoán lại phân loại dữ liệu cũ.",
 "새 집계 시작":"Bắt đầu thống kê mới",
@@ -2991,6 +3009,12 @@
     "워터마크 포함 전체화면": "Toàn màn hình có dấu bản quyền"
   },
   "de": {
+"NEON으로 구매":"Mit NEON kaufen",
+"NEON으로 구매 (준비 중)":"Mit NEON kaufen (in Vorbereitung)",
+"NEON 충전·구매 연결을 준비 중입니다. 현재는 결제하거나 잔액을 차감하지 않습니다.":"NEON-Aufladungen und Käufe werden vorbereitet. Derzeit werden keine Zahlungen oder Guthabenabzüge ausgeführt.",
+"구매 가능 여부를 확인하고 있습니다.":"Kaufverfügbarkeit wird geprüft.",
+"카테고리 열기":"Kategorien öffnen",
+"카테고리 닫기":"Kategorien schließen",
 "회원·비회원 작품 통계":"Asset-Statistiken für Mitglieder und Gäste",
 "카드 클릭은 로그인 전후의 작품 진입 클릭이며 상세 조회와 다릅니다. 고유 인원 수가 아닌 횟수이며 과거 기록을 새 분류로 추정하지 않습니다.":"Kartenklicks zählen Aufrufe des Asset-Einstiegs vor oder nach der Anmeldung, getrennt von Detailaufrufen. Gezählt werden Ereignisse, keine eindeutigen Personen; alte Daten werden nicht geschätzt umklassifiziert.",
 "새 집계 시작":"Beginn der neuen Erfassung",

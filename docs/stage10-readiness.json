@@ -1,5 +1,5 @@
 {
-  "revision": 247,
+  "revision": 248,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -9043,5 +9043,16 @@
     "contactInquiryPrepared": true,
     "contactInquirySent": false,
     "evidence": "247-billing-applicant-handoff.png"
+  },
+  "marketPurchase248": {
+    "status": "IMPLEMENTED_PENDING_DEPLOY",
+    "mainLabel": "MARKETPLACE_HOME",
+    "categoryToggle": "SEPARATE_44PX_BUTTON",
+    "purchase": "VISIBLE_DISABLED_NEON_PENDING_NO_SPENDING",
+    "directCardEnabled": false,
+    "newPaidResources": 0,
+    "testsPassed": 4,
+    "translationKeys": 1889,
+    "translationMissing": 0
   }
 }

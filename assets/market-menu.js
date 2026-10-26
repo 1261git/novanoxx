@@ -2,19 +2,24 @@
  const trigger=document.getElementById('market-nav');if(!trigger)return;
  const wrap=document.createElement('div');wrap.className='market-nav-dropdown';trigger.before(wrap);wrap.append(trigger);
  trigger.setAttribute('aria-expanded','false');trigger.setAttribute('aria-controls','market-category-menu');
+ const toggle=document.createElement('button');toggle.type='button';toggle.id='market-category-toggle';toggle.className='market-category-toggle';toggle.textContent='⌄';toggle.setAttribute('aria-controls','market-category-menu');toggle.setAttribute('aria-expanded','false');wrap.append(toggle);
  const menu=document.createElement('div');menu.id='market-category-menu';menu.className='market-category-menu';menu.hidden=true;
  const href=(cat,sub='ALL')=>'#/marketplace?'+new URLSearchParams({category:cat,subcategory:sub});
  menu.innerHTML='<a class="market-all-link" href="#/marketplace?category=ALL"><span data-i18n="전체 에셋 보기 ↗">전체 에셋 보기 ↗</span></a><ul>'+['VIDEO','2D','3D','AUDIO','DOCUMENTS','AI_TOOLS'].map(cat=>`<li><a class="market-parent-link" href="${href(cat)}" aria-expanded="false" aria-controls="market-sub-${cat}"><span data-i18n-category="${esc(cat)}">${esc(categoryLabels[cat])}</span><span aria-hidden="true">›</span></a><div class="market-submenu" id="market-sub-${cat}" hidden><strong data-i18n-category="${esc(cat)}">${esc(categoryLabels[cat])}</strong><a href="${href(cat)}">전체 ${esc(categoryLabels[cat])} 보기</a>${subcategories[cat].map(sub=>`<a href="${href(cat,sub)}">${categoryLabel(sub)}</a>`).join('')}</div></li>`).join('')+'</ul>';
  wrap.append(menu);let timer;
- function close(){clearTimeout(timer);menu.hidden=true;trigger.setAttribute('aria-expanded','false');menu.querySelectorAll('.market-submenu').forEach(el=>el.hidden=true);menu.querySelectorAll('.market-parent-link').forEach(el=>el.setAttribute('aria-expanded','false'))}
- function open(){clearTimeout(timer);menu.style.top=matchMedia('(max-width:760px)').matches?Math.max(0,Math.round(document.querySelector('header').getBoundingClientRect().bottom))+8+'px':'';menu.hidden=false;trigger.setAttribute('aria-expanded','true')}
+ function labelToggle(expanded){toggle.setAttribute('aria-expanded',String(expanded));const text=expanded?'카테고리 닫기':'카테고리 열기';toggle.setAttribute('data-i18n-aria-label',text);toggle.setAttribute('aria-label',typeof uiText==='function'?uiText(text):text)}
+ labelToggle(false);
+ function close(){clearTimeout(timer);menu.hidden=true;trigger.setAttribute('aria-expanded','false');labelToggle(false);menu.querySelectorAll('.market-submenu').forEach(el=>el.hidden=true);menu.querySelectorAll('.market-parent-link').forEach(el=>el.setAttribute('aria-expanded','false'))}
+ function open(){clearTimeout(timer);menu.style.top=matchMedia('(max-width:760px)').matches?Math.max(0,Math.round(document.querySelector('header').getBoundingClientRect().bottom))+8+'px':'';menu.hidden=false;trigger.setAttribute('aria-expanded','true');labelToggle(true)}
  function select(link){menu.querySelectorAll('.market-parent-link').forEach(el=>{const active=el===link;el.setAttribute('aria-expanded',String(active));document.getElementById(el.getAttribute('aria-controls')).hidden=!active})}
  const touchMenu=()=>matchMedia('(hover: none), (pointer: coarse)').matches;
  // Touch pointerleave fires when a finger lifts; it is not a request to dismiss.
  wrap.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'&&!touchMenu())open()});wrap.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'&&!touchMenu())timer=setTimeout(()=>{if(!wrap.contains(document.activeElement))close()},180)});
- trigger.addEventListener('focus',open);trigger.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){e.preventDefault();open();menu.querySelector('a').focus()}});
- // Touch opens the hierarchy first; the menu's explicit links navigate.
- trigger.addEventListener('click',e=>{if(touchMenu()){e.preventDefault();e.stopImmediatePropagation();open()}},true);
+ trigger.addEventListener('focus',()=>{if(!touchMenu())open()});trigger.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){e.preventDefault();open();menu.querySelector('a').focus()}});
+ // The label keeps its marketplace navigation; the separate disclosure opens categories.
+ trigger.addEventListener('click',close,true);
+ toggle.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();if(menu.hidden)open();else close()});
+ toggle.addEventListener('keydown',e=>{if(e.key==='ArrowDown'){e.preventDefault();open();menu.querySelector('a').focus()}});
  menu.addEventListener('pointerover',e=>{if(e.pointerType!=='mouse'||touchMenu())return;const link=e.target.closest('.market-parent-link');if(link)select(link)});
  menu.addEventListener('focusin',e=>{const link=e.target.closest('.market-parent-link');if(link)select(link)});
  menu.addEventListener('keydown',e=>{const link=e.target.closest('.market-parent-link');if(link&&e.key==='ArrowRight'){e.preventDefault();select(link);document.getElementById(link.getAttribute('aria-controls')).querySelector('a').focus()}if(e.key==='ArrowLeft'&&e.target.closest('.market-submenu')){e.preventDefault();menu.querySelector(`[aria-controls="${e.target.closest('.market-submenu').id}"]`).focus()}});
