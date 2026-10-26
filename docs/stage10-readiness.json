@@ -9151,7 +9151,17 @@
   "videoFirstFrameThumbnail": {
     "implemented": true,
     "testsPassed": 8,
-    "productionVerification": "PENDING",
+    "productionVerification": {
+      "status": "VERIFIED",
+      "deploy": "dep-dbfjhnuk1f9s738c0nj0",
+      "commit": "6d6e40d43b35a095126433d964d5a999d4dcdeb8",
+      "viewports": [
+        1920,
+        390
+      ],
+      "asset1005Poster": "960x540",
+      "physicalPhoneTested": false
+    },
     "originalsPreserved": true,
     "additionalPaidResources": false
   }
