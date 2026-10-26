@@ -1,5 +1,6 @@
 .market-nav-dropdown{position:relative;display:flex;align-items:center;height:100%}
-.market-category-toggle{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0!important;margin-left:-8px;border:0;background:transparent;color:inherit;font-size:18px;cursor:pointer}.market-category-toggle:focus-visible{outline:2px solid #ff6b2b;outline-offset:2px;border-radius:8px}
+.market-category-toggle{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0!important;margin-left:0;border:0;background:transparent;color:inherit;font-size:18px;cursor:pointer}.market-category-toggle:focus-visible{outline:2px solid #ff6b2b;outline-offset:2px;border-radius:8px}
+@media(max-width:760px){#market-nav{min-height:44px}}
 /* Overflow on the nav clips its absolutely positioned category menu. */
 header nav:has(.market-nav-dropdown){overflow:visible!important;min-width:0;flex-wrap:wrap}
 @media(max-width:1200px){header:has(.market-nav-dropdown){height:auto;min-height:76px;flex-wrap:wrap;padding-block:12px;gap:10px}header nav:has(.market-nav-dropdown){order:3;width:100%;align-self:auto;justify-content:flex-start;gap:4px}.market-nav-dropdown{height:auto}}

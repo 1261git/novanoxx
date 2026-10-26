@@ -1,5 +1,5 @@
 {
-  "revision": 248,
+  "revision": 249,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -9060,5 +9060,23 @@
     "preservedFilesChecked": 675,
     "preservedFilesChanged": 0,
     "physicalMobileVerified": false
+  },
+  "mobileMarket249": {
+    "status": "IMPLEMENTED_PENDING_DEPLOY",
+    "viewportWidths": [
+      320,
+      360,
+      390,
+      430
+    ],
+    "viewportHeight": 844,
+    "physicalDevice": false,
+    "productionResponsiveTest": true,
+    "purchaseHorizontalOverflow": false,
+    "purchaseVerticalOverlap": false,
+    "headerOverlapBefore": 8,
+    "fix": "REMOVE_NEGATIVE_MARGIN_AND_44PX_MOBILE_MAIN_BUTTON",
+    "testsPassed": 4,
+    "newPaidResources": 0
   }
 }
