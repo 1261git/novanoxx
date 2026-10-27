@@ -20,7 +20,7 @@ function configured({gate,env=process.env}={}){
    child.once('error',()=>{finish(-1);});child.once('exit',finish);timeout=setTimeout(()=>{child?.kill('SIGKILL');},policy.LIMITS.jobTimeoutMs);timeout.unref();
   });
  }
- const handle=statusHandler({token,status:()=>configurationError?{version:1,service:policy.SERVICE,healthy:false,problems:['BACKUP_CONFIGURATION_ERROR'],receipts:[]}:policy.health(store.read(),cfg,Date.now())});
+ const handle=statusHandler({token,status:()=>configurationError?{version:1,service:policy.SERVICE,healthy:false,problems:['BACKUP_CONFIGURATION_ERROR'],receipts:[]}:policy.health(store.read(),cfg,Date.now(),(()=>{const s=fs.statfsSync('/data/.private-nnx-backups');return {usedBytes:require('./backup-automation-job.cjs').treeBytes('/data/.private-nnx-backups'),availableBytes:Number(s.bavail)*Number(s.bsize)}})())});
  return {handle,async start(){if(configurationError||stopping)return;await gate.ready;runner=scheduler({store,cfg,startJob});timer=setInterval(()=>runner.tick().catch(()=>console.error('NNX_BACKUP_AUTOMATION_ALERT SCHEDULER_FAILED')),60000);timer.unref();await runner.tick();},async close(){stopping=true;clearInterval(timer);runner?.close();child?.kill('SIGKILL');}};
 }
 module.exports={authorized,scheduler,statusHandler,configured};
