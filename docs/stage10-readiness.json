@@ -9186,6 +9186,16 @@
     "testsPassed": 28,
     "restoreExecuted": false,
     "streamOriginalVideoExported": false,
-    "costApproved": true
+    "costApproved": true,
+    "finalVerification": {
+      "deploy": "dep-dbfva9d9ljac73fvt0j0",
+      "commit": "ea75f2de153711509e5bf960ff9134e626e767b0",
+      "httpStatus": 200,
+      "healthy": true,
+      "problems": [],
+      "automationEnabled": true,
+      "nextDue": "2026-10-28",
+      "developerNoteVisible": true
+    }
   }
 }
