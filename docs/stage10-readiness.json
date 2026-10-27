@@ -9166,11 +9166,26 @@
     "additionalPaidResources": false
   },
   "backupCapacityRecovery": {
-    "status": "APPROVED_DEPLOYING",
-    "localLimitBytes": 3221225472,
-    "oldBackupsPreserved": true,
+    "status": "VERIFIED",
+    "completedAt": "2026-10-27T00:45:22.398Z",
+    "packetId": "53d5cca4-21c5-47b9-a2eb-ac11e0d4a551",
+    "indexAnchor": "768b3250d4be009aa7a52aa904ca394ad22e07ef21cb9b5d2f3616adfe27a575",
+    "encryptedBytes": 204584524,
+    "objects": 139,
+    "healthy": true,
+    "localBackupBytes": 1038078605,
+    "diskAvailableBytes": 3984097280,
+    "limitBytes": 3221225472,
+    "preservedOldFiles": 1526,
+    "oldFilesChanged": 0,
+    "preservedOldRunRows": 16,
+    "sourceSnapshotCommit": "0da01e85e8ee14748e6d1ad1017b8913c4186175",
+    "nextAutomaticKst": "2026-10-28T03:00:00+09:00",
+    "oldBackupDeletion": false,
+    "newInfrastructure": false,
     "testsPassed": 28,
-    "paidTransmissionStarted": false,
+    "restoreExecuted": false,
+    "streamOriginalVideoExported": false,
     "costApproved": true
   }
 }
