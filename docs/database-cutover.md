@@ -847,3 +847,6 @@ Revision258 FINAL: {"status":"VERIFIED","deploy":"dep-dbioic3m8hqs73f2440g","com
 
 ## 2026-10-31 revision259 — 기본 최신등록순
 HTML sort 첫항목/selected newest, URL sort미지정 복원 newest. 추천순 선택은 sort=curated로 명시 저장하여 새로고침/카테고리 이동에도 유지, 기본newest만 URL생략. 필터/가격순/추천순별동작 보존, 최신순은 featured우선없이 createdDESC/idDESC. 회귀11개PASS. DB/파일 변경없음. 배포 후 기본선택값·실제카드확인예정.
+
+Revision259 FINAL: {"status":"VERIFIED","deploy":"dep-dbiong3bc2fs73cn3as0","commit":"1c93c03a09603faad28452c08a8355505225f2e0","liveAt":"2026-10-31T06:34:27.270176Z","defaultSort":"newest","defaultLabel":"최신순","allAndVideoVerified":true,"first":"일상 속 선케어 — 달바 톤업 선크림 쇼핑쇼츠","last":"RE:TENSION eye | Luxury AI Beauty Commercial","testsPassed":11,"assetDataChanged":false}
+실제 운영 ALL 및 VIDEO 필터 모두 sort=newest/최신순 확인, screenshot259-market-newest.png.

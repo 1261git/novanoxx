@@ -9311,6 +9311,18 @@
     "default": "newest",
     "testsPassed": 11,
     "assetDataChanged": false,
-    "deployment": "PENDING"
+    "deployment": {
+      "status": "VERIFIED",
+      "deploy": "dep-dbiong3bc2fs73cn3as0",
+      "commit": "1c93c03a09603faad28452c08a8355505225f2e0",
+      "liveAt": "2026-10-31T06:34:27.270176Z",
+      "defaultSort": "newest",
+      "defaultLabel": "최신순",
+      "allAndVideoVerified": true,
+      "first": "일상 속 선케어 — 달바 톤업 선크림 쇼핑쇼츠",
+      "last": "RE:TENSION eye | Luxury AI Beauty Commercial",
+      "testsPassed": 11,
+      "assetDataChanged": false
+    }
   }
 }
