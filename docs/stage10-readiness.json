@@ -1,5 +1,5 @@
 {
-  "revision": 253,
+  "revision": 254,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -9197,5 +9197,20 @@
       "nextDue": "2026-10-28",
       "developerNoteVisible": true
     }
+  },
+  "saleFee254": {
+    "date": "2026-10-31",
+    "ratePercent": 15,
+    "sellerNetPercent": 85,
+    "pgFeeIncluded": true,
+    "feeVatIncluded": true,
+    "policyVersion": "SALE_KRW_FLOOR_15_V2",
+    "existingOperatingPayments": 0,
+    "existingOperatingOrders": 0,
+    "existingPayouts": 0,
+    "existingEngineOrders": 0,
+    "legacyRecordsPreserved": true,
+    "testsPassed": 39,
+    "deployment": "PENDING"
   }
 }

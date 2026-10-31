@@ -11,7 +11,7 @@ CREATE TABLE nnx_operating_v1.orders(
  fee_krw bigint NOT NULL CHECK(fee_krw>=0 AND fee_krw<=amount_krw),terms_snapshot jsonb NOT NULL,
  state text NOT NULL CHECK(state IN ('PENDING','PAID','IN_PROGRESS','PREVIEW_READY','REVIEW_PAUSED','COMPLETED','CANCELED','REFUND_PENDING','REFUNDED')),
  request_id text NOT NULL,created_at timestamptz NOT NULL DEFAULT now(),UNIQUE(buyer_id,request_id),UNIQUE(id,amount_krw),CHECK(buyer_id<>seller_id),
- CHECK(fee_krw=floor(amount_krw::numeric*12/100)));
+ CHECK(fee_krw=floor(amount_krw::numeric*15/100)));
 CREATE TABLE nnx_operating_v1.payments(
  id text PRIMARY KEY,order_id text NOT NULL UNIQUE REFERENCES nnx_operating_v1.orders(id),
  provider text NOT NULL CHECK(provider='TOSS'),environment text NOT NULL CHECK(environment='LIVE'),
