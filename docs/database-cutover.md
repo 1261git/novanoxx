@@ -850,3 +850,8 @@ HTML sort 첫항목/selected newest, URL sort미지정 복원 newest. 추천순 
 
 Revision259 FINAL: {"status":"VERIFIED","deploy":"dep-dbiong3bc2fs73cn3as0","commit":"1c93c03a09603faad28452c08a8355505225f2e0","liveAt":"2026-10-31T06:34:27.270176Z","defaultSort":"newest","defaultLabel":"최신순","allAndVideoVerified":true,"first":"일상 속 선케어 — 달바 톤업 선크림 쇼핑쇼츠","last":"RE:TENSION eye | Luxury AI Beauty Commercial","testsPassed":11,"assetDataChanged":false}
 실제 운영 ALL 및 VIDEO 필터 모두 sort=newest/최신순 확인, screenshot259-market-newest.png.
+
+
+## 2026-10-31 revision260 — 실제 등록순·로고 중복
+READONLY 운영조회: first submitted1005=1792724686693,1003=1792719507021,1004=1792719338428; new5는 각created순과동일. MIN(creator_contract_records.submitted) registeredAt 공개필드 추가, created원값보존. newest/curated동률은 registeredAtDESC(created fallback)로 정렬해 고양이1008→RE1005→향수1003→캐리어1004. 수동위치하드코딩/날짜수정/DB쓰기 없음.
+preview-protection.baked는 검증+known image-logo-v1/brand-logo-v1/brand-logo-full-v1만 true. public catalog previewWatermarked가true인 카드/추천/어워드는CSS반복overlay생략, publicimage image/poster변환도이미로고가있는경우추가3로고생략. 크기제한·워터마크미확인소스보호·원본접근제한 유지. existing-mark cachekey분리, 원본파일수정/삭제없음. 오디오/3D등마크미확인경로기존overlay유지. 7개 API/썸네일/원본/PG 검사+정렬12개 PASS. 배포후메뉴실화면/정렬확인예정.

@@ -6,6 +6,7 @@ module.exports=function({db,dir,user,json,origin,isAdmin=require('./admin-policy
  async function record(fileId,sourceId,info,size,filename){const digest=crypto.createHash('sha256');for await(const chunk of fs.createReadStream(filename))digest.update(chunk);return {fileId,sourceId,version:info.version,digest:digest.digest('hex'),size,description:info.description,created:Date.now()};}
  function insert(proof){db.prepare('INSERT INTO public_preview_proofs VALUES(?,?,?,?,?,?,?)').run(proof.fileId,proof.version,proof.sourceId,proof.digest,proof.size,proof.description,proof.created);}
  const verified=file=>{const proof=db.prepare('SELECT size FROM public_preview_proofs WHERE file_id=?').get(file.id);try{return !!proof&&proof.size===file.size&&fs.statSync(path.join(folder,file.id)).size===file.size;}catch{return false;}};
+ const baked=file=>verified(file)&&['image-logo-v1','brand-logo-v1','brand-logo-full-v1'].includes(db.prepare('SELECT version FROM public_preview_proofs WHERE file_id=?').get(file.id)?.version);
  async function handle(req,res,name){
   if(!['/api/auth/admin/preview-protection','/api/auth/admin/protect-preview'].includes(name))return false;
   const actor=user(req);if(!actor){json(res,401,{error:'로그인이 필요합니다.'});return true;}if(!isAdmin(actor)){json(res,403,{error:'관리자 권한이 필요합니다.'});return true;}
@@ -20,5 +21,5 @@ module.exports=function({db,dir,user,json,origin,isAdmin=require('./admin-policy
    db.exec('BEGIN IMMEDIATE');try{if(db.prepare('SELECT COALESCE(SUM(size),0) AS total FROM creator_files').get().total+bytes>700*1024*1024)throw Error('PREVIEW_CAPACITY');const duplicate=db.prepare('SELECT result_id FROM preview_protection_audit WHERE source_id=?').get(source.id);if(duplicate){db.exec('ROLLBACK');json(res,200,{ok:true,fileId:duplicate.result_id,alreadyProtected:true});return true;}db.prepare('INSERT INTO creator_files VALUES(?,?,?,?,?,?,?,?)').run(id,source.asset_id,source.user_id,source.kind,path.parse(source.name).name+'-protected.'+info.ext,info.ext,bytes,Date.now());insert(proof);db.prepare('INSERT INTO preview_protection_audit VALUES(?,?,?,?,?)').run(crypto.randomUUID(),actor.id,source.id,id,Date.now());db.exec('COMMIT');committed=true;}catch(error){db.exec('ROLLBACK');throw error;}json(res,200,{ok:true,fileId:id});
   }catch(error){json(res,error.message==='PREVIEW_BUSY'?409:400,{error:'보호 파일을 만들지 못했습니다. 원본은 유지됩니다. 도구·저장 공간과 파일 형식을 확인해주세요.'});}finally{if(!committed)await fs.promises.unlink(output).catch(()=>{});}return true;
  }
- return {handle,record,insert,verified};
+ return {handle,record,insert,verified,baked};
 };
