@@ -9330,6 +9330,29 @@
     "knownBakedMarksOnly": true,
     "originalFilesChanged": false,
     "testsPassed": 19,
-    "deployment": "PENDING"
+    "deployment": {
+      "status": "VERIFIED",
+      "deploy": "dep-dbiosauq1p3s73a0ni1g",
+      "commit": "d4d8b066affa5f21397bbe7621f9a8431c0526b3",
+      "liveAt": "2026-10-31T06:44:48.560253Z",
+      "sortBasis": "FIRST_SUBMITTED",
+      "positions": [
+        "1008",
+        "1005",
+        "1003",
+        "1004"
+      ],
+      "catalogCards": 8,
+      "imagesLoaded": 8,
+      "extraCatalogOverlays": 0,
+      "featuredCards": 2,
+      "featuredOverlays": 0,
+      "awardSlides": 2,
+      "awardOverlays": 0,
+      "testsPassed": 19,
+      "originalFilesChanged": false,
+      "operatingHistoryChanged": false,
+      "screenshot": "260-watermark-order.png"
+    }
   }
 }

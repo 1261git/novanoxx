@@ -855,3 +855,6 @@ Revision259 FINAL: {"status":"VERIFIED","deploy":"dep-dbiong3bc2fs73cn3as0","com
 ## 2026-10-31 revision260 — 실제 등록순·로고 중복
 READONLY 운영조회: first submitted1005=1792724686693,1003=1792719507021,1004=1792719338428; new5는 각created순과동일. MIN(creator_contract_records.submitted) registeredAt 공개필드 추가, created원값보존. newest/curated동률은 registeredAtDESC(created fallback)로 정렬해 고양이1008→RE1005→향수1003→캐리어1004. 수동위치하드코딩/날짜수정/DB쓰기 없음.
 preview-protection.baked는 검증+known image-logo-v1/brand-logo-v1/brand-logo-full-v1만 true. public catalog previewWatermarked가true인 카드/추천/어워드는CSS반복overlay생략, publicimage image/poster변환도이미로고가있는경우추가3로고생략. 크기제한·워터마크미확인소스보호·원본접근제한 유지. existing-mark cachekey분리, 원본파일수정/삭제없음. 오디오/3D등마크미확인경로기존overlay유지. 7개 API/썸네일/원본/PG 검사+정렬12개 PASS. 배포후메뉴실화면/정렬확인예정.
+
+Revision260 FINAL: {"status":"VERIFIED","deploy":"dep-dbiosauq1p3s73a0ni1g","commit":"d4d8b066affa5f21397bbe7621f9a8431c0526b3","liveAt":"2026-10-31T06:44:48.560253Z","sortBasis":"FIRST_SUBMITTED","positions":["1008","1005","1003","1004"],"catalogCards":8,"imagesLoaded":8,"extraCatalogOverlays":0,"featuredCards":2,"featuredOverlays":0,"awardSlides":2,"awardOverlays":0,"testsPassed":19,"originalFilesChanged":false,"operatingHistoryChanged":false,"screenshot":"260-watermark-order.png"}
+실제영상메뉴 고양이→RE→향수→캐리어 순서,8개이미지로드,추가CSSoverlay0. 각영상baked로고유지실화면확인. 메인추천2/어워드2 모두추가overlay0 확인.
