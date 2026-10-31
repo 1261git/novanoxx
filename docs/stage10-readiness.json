@@ -1,5 +1,5 @@
 {
-  "revision": 256,
+  "revision": 257,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -9264,5 +9264,11 @@
       "screenshot": "256-live-creator-assets.png"
     },
     "originalTreePreserved": 675
+  },
+  "marketSort257": {
+    "policy": "FEATURED_DESC_CREATED_DESC_ID_DESC",
+    "testsPassed": 10,
+    "changedAssetData": false,
+    "deployment": "PENDING"
   }
 }

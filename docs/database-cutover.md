@@ -829,3 +829,7 @@ Revision254 FINAL: {"status":"VERIFIED","deploy":"dep-dbimrmggbm7c73f8v45g","com
 
 Revision256 FINAL: {"status":"VERIFIED","deploy":"dep-dbiob4m417fc73a5irsg","commit":"75ae6c690871f12436628cb9eca93ac2513beda1","liveAt":"2026-10-31T06:08:14.360301Z","productionOwnerCards":11,"productionOwnerVideoPreviews":8,"productionOwnerImagePreviews":2,"actualVideoDuration":15,"actualVideoReadyState":4,"actualVideoError":null,"mobileVerified":true,"publicOtherCategoryCount":0,"otherFormatsVerifiedWithIsolatedFixtures":true,"originalsExposedPublicly":false,"paidServiceAdded":false,"testsPassed":7,"screenshot":"256-live-creator-assets.png"}
 실제 운영 계정 내 에셋11개에서8개 영상·2개 이미지 표시 확인, 기존 선크림 전체 보호 영상15초 재생readyState4/error없음. 모바일 단일열·실제 썸네일 확인. 현재 공개 카탈로그는 영상3개, 다른 유형은 운영용 테스트 상품을 만들지 않고 격리 fixture/API로 검증. 로컬서버 종료, viewport 복원. BLEND 자동 변환 없음, 공개3D는 별도 경량모델 업로드 필요. 기존자료675파일 무변경.
+
+
+## 2026-10-31 revision257 — 추천순 동률 정렬
+공개API의8개VIDEO 모두 featured=false, API등록일ASC. 기본curated가 featured비교만 해서RE:TENSION1005(created1792634355078)가 첫번째에 남음. curated 비교를 featured DESC → created DESC → id DESC로 보완하여 현재 oldest1005가 맨뒤. 고정ID/작품명 하드코딩·추천여부변경·DB변경 없음. 가격순·최신순 보존. market-search10개 검사 통과. 배포 후 실제카드 순서 확인 예정.
