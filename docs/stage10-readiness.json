@@ -9292,6 +9292,19 @@
     "caseInsensitive": true,
     "sourceChanged": false,
     "testsPassed": 3,
-    "deployment": "PENDING"
+    "deployment": {
+      "status": "VERIFIED",
+      "deploy": "dep-dbioic3m8hqs73f2440g",
+      "commit": "1d7c0d1a1a7234a0423368686670fff4330023cb",
+      "liveAt": "2026-10-31T06:23:34.755073Z",
+      "assetId": 1006,
+      "paragraphs": 4,
+      "clickableLinks": 1,
+      "queryParametersPreserved": true,
+      "mobileWidth": 330,
+      "mobileScrollWidth": 330,
+      "testsPassed": 3,
+      "sourceTextChanged": false
+    }
   }
 }

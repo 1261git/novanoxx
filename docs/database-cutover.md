@@ -840,3 +840,6 @@ Revision257 FINAL: {"status":"VERIFIED","deploy":"dep-dbiog2u417fc73a5m9qg","com
 
 ## 2026-10-31 revision258 — 에셋 소개 문단·링크
 상세 a.desc esc-only p를 안전한 단락 renderer로 교체. CRLF정규화·빈줄문단·단일줄바꿈 pre-wrap 유지·긴주소 overflow-wrap:anywhere. 대소문자 HTTP(S) 링크만 URL검증+HTMLescape, targetblank noopener/noreferrer/ugc, query 파라미터 보존, HTML/script 미실행. 원문DB수정 없음. 3개 경계/안전/링크 검사 PASS. 배포 후 실제 냉장고 트레이 상세 확인 예정.
+
+Revision258 FINAL: {"status":"VERIFIED","deploy":"dep-dbioic3m8hqs73f2440g","commit":"1d7c0d1a1a7234a0423368686670fff4330023cb","liveAt":"2026-10-31T06:23:34.755073Z","assetId":1006,"paragraphs":4,"clickableLinks":1,"queryParametersPreserved":true,"mobileWidth":330,"mobileScrollWidth":330,"testsPassed":3,"sourceTextChanged":false}
+운영 냉장고 트레이 상세1006: 문단4개, 전체CoupangURL 링크1개 target_blank noopener/noreferrer/ugc, pre-wrap 확인. 모바일330px본문/scrollWidth330px로 가로넘침 없음. screenshots258-description-desktop.png,258-description-mobile.png. 원문DB·파일·판매조건 불변.
