@@ -1,0 +1,32 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{Readable,Writable}=require('node:stream'),{DatabaseSync}=require('node:sqlite'),crypto=require('node:crypto');
+const media=require('./asset-media.cjs');
+function model(){return {asset:{version:'2.0'},meshes:[{primitives:[{attributes:{POSITION:0}}]}],buffers:[{byteLength:12,uri:'data:application/octet-stream;base64,AAAAAAAAAAAAAAAA'}]};}
+test('3D validation accepts embedded resources, rejects URLs, traversal, compressed and malformed models',()=>{
+ assert.equal(media.validateModel(Buffer.from(JSON.stringify(model())),'gltf').asset.version,'2.0');const json=Buffer.from(JSON.stringify(model()).padEnd(Math.ceil(JSON.stringify(model()).length/4)*4,' ')),glb=Buffer.alloc(20+json.length);glb.writeUInt32LE(0x46546c67,0);glb.writeUInt32LE(2,4);glb.writeUInt32LE(glb.length,8);glb.writeUInt32LE(json.length,12);glb.writeUInt32LE(0x4e4f534a,16);json.copy(glb,20);assert.equal(media.validateModel(glb,'glb').asset.version,'2.0');
+ for(const uri of ['https://example.invalid/a.bin','../private.bin','file:///etc/passwd','data:image/svg+xml;base64,AAAA']){const m=model();m.buffers[0].uri=uri;assert.throws(()=>media.validateModel(Buffer.from(JSON.stringify(m)),'gltf'),/MODEL_EXTERNAL/);}
+ const m=model();m.extensionsUsed=['KHR_draco_mesh_compression'];assert.throws(()=>media.validateModel(Buffer.from(JSON.stringify(m)),'gltf'),/MODEL_COMPRESSED/);
+ assert.throws(()=>media.validateModel(Buffer.from('invalid'),'glb'),/MODEL_FORMAT/);
+});
+test('descriptors keep public originals private and choose image, PDF, video, audio, model and text',()=>{
+ for(const [name,kind]of [['a.png','image'],['a.pdf','image'],['a.mp4','video'],['a.mp3','audio'],['a.glb','model'],['a.md','text']]){const f={id:'original',name,kind:'original'};assert.equal(media.descriptor({category:'3D'},[f]),null);const p=media.descriptor({category:'3D'},[f],{owner:true});assert.equal(p.kind,kind);assert.match(p.url,/auth\/creator/);assert.equal(media.descriptor({},[{...f,id:'preview',kind:'preview'}]).kind,kind);}
+});
+test('private owner access, public preview gating, byte ranges, escaped text and PDF first page preserve original bytes',async()=>{
+ const dir=fs.mkdtempSync(path.resolve('../novanoxx-stage10-evidence-20261017/media256-')),db=new DatabaseSync(path.join(dir,'db.sqlite'));let who={id:'seller'};
+ db.exec("CREATE TABLE users(id TEXT PRIMARY KEY,name TEXT,email TEXT);INSERT INTO users VALUES('seller','Seller','seller@example.invalid');CREATE TABLE creator_profiles(user_id TEXT,display_name TEXT);INSERT INTO creator_profiles VALUES('seller','Seller');");
+ const json=(res,status,data)=>{res.writeHead(status,{});res.end(JSON.stringify(data));},api=require('./creator-api.cjs')(db,dir,()=>who,json),folder=path.join(dir,'uploads');
+ db.prepare('INSERT INTO creator_assets VALUES(?,?,?,?,?,?)').run('asset','seller',JSON.stringify({title:'Fixture',category:'3D',price:100}),'ACTIVE',1,1);db.exec("INSERT INTO catalog_links(asset_id) VALUES('asset')");
+ function add(id,kind,extension,bytes,proof=false){fs.writeFileSync(path.join(folder,id),bytes);db.prepare('INSERT INTO creator_files VALUES(?,?,?,?,?,?,?,?)').run(id,'asset','seller',kind,id+'.'+extension,extension,bytes.length,1);if(proof)db.prepare('INSERT INTO public_preview_proofs VALUES(?,?,?,?,?,?,?)').run(id,'fixture',id,'digest',bytes.length,'fixture',1);}
+ add('original','original','gltf',Buffer.from(JSON.stringify(model())));add('public-model','preview','gltf',Buffer.from(JSON.stringify(model())),true);add('unverified','thumbnail','png',Buffer.from('private'));
+ add('text','preview','txt',Buffer.from('<script>alert(1)</script>\nExample tool usage'),true);add('audio','preview','mp3',Buffer.from('0123456789'),true);
+ async function call(url,range,data){const req=Readable.from(data?[data]:[]);req.url=url;req.method=data?'POST':'GET';req.headers=data?{origin:require('./deployment-config.cjs').base,'content-type':'application/octet-stream'}:range?{range}:{};let status,headers,chunks=[];const res=new Writable({write(c,e,done){chunks.push(c);done();}});res.writeHead=(s,h)=>{status=s;headers=h;return res;};const done=new Promise((resolve,reject)=>{res.on('finish',resolve);res.on('error',reject);});await api(req,res,new URL(url,'http://localhost').pathname);await done;return {status,headers,body:Buffer.concat(chunks)};}
+ try{
+ assert.equal((await call('/api/auth/creator/file?id=original&inline=1')).status,200);who={id:'other'};assert.equal((await call('/api/auth/creator/file?id=original&inline=1')).status,403);who=null;
+ assert.equal((await call('/api/catalog/file?id=original')).status,404);assert.equal((await call('/api/catalog/file?id=unverified')).status,404);assert.equal((await call('/api/catalog/file?id=public-model')).headers['Content-Type'],'model/gltf+json');
+ const text=await call('/api/catalog/file?id=text&sample=1');assert.match(text.headers['Content-Type'],/text\/plain/);assert.match(text.headers['Content-Security-Policy'],/sandbox/);
+ who={id:'seller'};for(const [id,extension,bytes]of [['upload-model','gltf',Buffer.from(JSON.stringify(model()))],['upload-text','txt',Buffer.from('A useful AI sample')]]){db.prepare('INSERT INTO creator_assets VALUES(?,?,?,?,?,?)').run(id,'seller',JSON.stringify({category:'3D',saleMode:'MULTI'}),'DRAFT',1,1);const uploaded=await call('/api/auth/creator/upload?id='+id+'&kind=preview&name=sample.'+extension,null,bytes);assert.equal(uploaded.status,200,uploaded.body.toString());assert.equal(db.prepare('SELECT count(*) n FROM public_preview_proofs p JOIN creator_files f ON f.id=p.file_id WHERE f.asset_id=?').get(id).n,1);}who=null;
+ const range=await call('/api/catalog/file?id=audio','bytes=2-5');assert.equal(range.status,206);assert.equal(range.body.toString(),'2345');
+ const fixtures=JSON.parse(fs.readFileSync('../novanoxx-stage10-evidence-20261017/full-media160-fixtures.json'));const bytes=fs.readFileSync(fixtures.document);add('pdf-original','original','pdf',bytes);const before=crypto.createHash('sha256').update(bytes).digest('hex');who={id:'seller'};
+ const pdf=await call('/api/auth/creator/file?id=pdf-original&inline=1&poster=1');assert.equal(pdf.status,200);assert.equal(pdf.headers['Content-Type'],'image/jpeg');assert.match(pdf.headers['Cache-Control'],/private/);assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(folder,'pdf-original'))).digest('hex'),before);
+ }finally{db.close();}
+});

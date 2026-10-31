@@ -822,3 +822,7 @@ Post-deployment final verification: ea75f2de153711509e5bf960ff9134e626e767b0 / R
 
 Revision254 FINAL: {"status":"VERIFIED","deploy":"dep-dbimrmggbm7c73f8v45g","commit":"add8e59e17c16326a7c4327c7152071e98b44891","liveAt":"2026-10-31T04:27:23.030765Z","totalFeePercent":15,"sellerNetPercent":85,"dbConstraint":"orders_fee_15_floor","koreanFaqVerified":true,"englishFaqVerified":true,"translationSourcesChecked":6,"existingRealTransactions":0,"financialActivationChanged":false,"testsPassed":39,"originalTreeFilesPreserved":675,"screenshot":"254-fee-faq-live.png"}
 15% 안내는 실제 FAQ 한국어/영어 화면에서 확인. 6언어 소스 회귀 검사 통과. Render 최종 LIVE 확인. 구독 가격·작품가격·기존 백업과 테스트 이력 보존. 추가 유료 검사/서비스 신청 없음.
+
+
+## 2026-10-31 revision256 — 다종 에셋 미리보기
+내 에셋: owner-only mediaPreview URL·private/no-store·원본은 소유자만, 이미지/PDF 첫페이지/영상poster+controls/audio/model/text. 마켓/상세: 검증된 preview/thumbnail/detailPreview만 공개; original 노출 없음. 3D는 별도 공개 경량 GLB/embedded GLTF24MB 이하, 외부URI·로컬파일·압축decoder의 외부CDN 의존 거절, @google/model-viewer4.4.0 Apache2 로컬번들 지연 로드. .blend/문서 원본은 그대로 보관, 별도 PDF·대표이미지 권장. TXT/MD/JSON/YAML 공개 샘플 UTF8≤1MB 입력/최대4000자, text/plain+CSPsandbox, UI textContent로 실행 안 함. 오디오 protected sample controls·단일재생, 영상 기존 마켓 동작 보존. 원본 변경/삭제·실청구/구독/송금/새 유료서비스 활성화 없음. 6개 API·권한·원본·PDF·미디어 회귀 검사 PASS + 번역1903키6언어(추가5키) 검사 PASS. 실제 브라우저 GLTF 회전/오디오 readyState4·재생/PDF960px/텍스트 스크립트 실행 안 됨 확인. 로컬 기존자료675파일 보존. UI fixture256은 격리 테스트 서버 전용, 운영상품 추가 안 함. 배포 최종 결과는 아래 추가 기록.

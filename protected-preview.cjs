@@ -3,6 +3,8 @@ const fs=require('node:fs'),path=require('node:path'),{execFile}=require('node:c
 
 const run=(bin,args)=>new Promise((resolve,reject)=>execFile(bin,args,{timeout:180000,maxBuffer:1024*1024,windowsHide:true},error=>error?reject(Error('PREVIEW_CONVERSION_FAILED')):resolve()));
 module.exports=async function protect(input,output,extension){
+ if(['glb','gltf'].includes(extension)){if(fs.statSync(input).size>24*1024*1024)throw Error('MODEL_LIMIT');const b=fs.readFileSync(input);require('./asset-media.cjs').validateModel(b,extension);await fs.promises.writeFile(output,b,{flag:'wx'});return {ext:extension,version:'embedded-model-preview-v1',description:'creator-supplied-public-model-preview-no-external-resources'};}
+ if(['txt','md','json','yaml','yml'].includes(extension)){if(fs.statSync(input).size>1024*1024)throw Error('TEXT_LIMIT');const sample=require('./asset-media.cjs').textSample(fs.readFileSync(input));await fs.promises.writeFile(output,'NovaNoxX · PUBLIC SAMPLE\n\n'+sample);return {ext:'txt',version:'bounded-text-preview-v1',description:'plain-text-sample-up-to-4000-characters'};}
  if(!['png','jpg','jpeg','webp','mp3','wav','pdf'].includes(extension))throw Error('PREVIEW_UNSUPPORTED');const release=require('./preview-work-slot.cjs')();let temp;
  try{temp=await fs.promises.mkdtemp(path.join(path.dirname(output),'preview-work-'));let source=input;
   if(extension==='pdf'){const prefix=path.join(temp,'page');await run('pdftoppm',['-f','1','-l','1','-singlefile','-scale-to','1280','-jpeg',input,prefix]);source=prefix+'.jpg';}
