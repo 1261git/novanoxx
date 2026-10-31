@@ -858,3 +858,7 @@ preview-protection.baked는 검증+known image-logo-v1/brand-logo-v1/brand-logo-
 
 Revision260 FINAL: {"status":"VERIFIED","deploy":"dep-dbiosauq1p3s73a0ni1g","commit":"d4d8b066affa5f21397bbe7621f9a8431c0526b3","liveAt":"2026-10-31T06:44:48.560253Z","sortBasis":"FIRST_SUBMITTED","positions":["1008","1005","1003","1004"],"catalogCards":8,"imagesLoaded":8,"extraCatalogOverlays":0,"featuredCards":2,"featuredOverlays":0,"awardSlides":2,"awardOverlays":0,"testsPassed":19,"originalFilesChanged":false,"operatingHistoryChanged":false,"screenshot":"260-watermark-order.png"}
 실제영상메뉴 고양이→RE→향수→캐리어 순서,8개이미지로드,추가CSSoverlay0. 각영상baked로고유지실화면확인. 메인추천2/어워드2 모두추가overlay0 확인.
+
+
+## 2026-10-31 revision261 — 개발자노트/문단 유지 범위 확인
+사용자 요청으로 기존·신규 모든 마켓플레이스 에셋 소개(6종)의 공통renderer 적용과 Enter/빈줄 작성법, HTTP(S)링크/모바일줄바꿈 및 적용범위를 공개노트에 명시. 별도게시판·다른입력란 전체에 동일적용됐다고 주장하지 않음. 원문미변경, 기존258변경공통상세render 및 CSSpre-wrap 재확인. 기능코드변경 없음. 최신260실등록제출순/중복워터마크 개선 결과도소개에반영.

@@ -1,5 +1,5 @@
 {
-  "revision": 260,
+  "revision": 261,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -9354,5 +9354,11 @@
       "operatingHistoryChanged": false,
       "screenshot": "260-watermark-order.png"
     }
+  },
+  "notesScope261": {
+    "scope": "ALL_EXISTING_AND_FUTURE_ASSET_DESCRIPTIONS",
+    "otherPostTypesClaimed": false,
+    "formattingCodeChanged": false,
+    "deployment": "PENDING"
   }
 }
