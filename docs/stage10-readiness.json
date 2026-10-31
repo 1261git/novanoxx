@@ -9244,7 +9244,25 @@
     "paidServiceAdded": false,
     "autoBlendConversion": false,
     "testsPassed": 7,
-    "deployment": "PENDING",
+    "deployment": {
+      "status": "VERIFIED",
+      "deploy": "dep-dbiob4m417fc73a5irsg",
+      "commit": "75ae6c690871f12436628cb9eca93ac2513beda1",
+      "liveAt": "2026-10-31T06:08:14.360301Z",
+      "productionOwnerCards": 11,
+      "productionOwnerVideoPreviews": 8,
+      "productionOwnerImagePreviews": 2,
+      "actualVideoDuration": 15,
+      "actualVideoReadyState": 4,
+      "actualVideoError": null,
+      "mobileVerified": true,
+      "publicOtherCategoryCount": 0,
+      "otherFormatsVerifiedWithIsolatedFixtures": true,
+      "originalsExposedPublicly": false,
+      "paidServiceAdded": false,
+      "testsPassed": 7,
+      "screenshot": "256-live-creator-assets.png"
+    },
     "originalTreePreserved": 675
   }
 }
