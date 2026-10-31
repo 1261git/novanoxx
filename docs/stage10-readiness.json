@@ -1,5 +1,5 @@
 {
-  "revision": 257,
+  "revision": 258,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -9282,5 +9282,16 @@
       "assetDataChanged": false,
       "screenshot": "257-video-last-order.png"
     }
+  },
+  "assetDescription258": {
+    "preserveParagraphs": true,
+    "linkSchemes": [
+      "http",
+      "https"
+    ],
+    "caseInsensitive": true,
+    "sourceChanged": false,
+    "testsPassed": 3,
+    "deployment": "PENDING"
   }
 }

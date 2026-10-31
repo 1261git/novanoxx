@@ -836,3 +836,7 @@ Revision256 FINAL: {"status":"VERIFIED","deploy":"dep-dbiob4m417fc73a5irsg","com
 
 Revision257 FINAL: {"status":"VERIFIED","deploy":"dep-dbiog2u417fc73a5m9qg","commit":"894995af306062e9310bb5e48a34dfa91d176318","liveAt":"2026-10-31T06:18:36.688632Z","sort":"curated","videoCount":8,"lastTitle":"RE:TENSION eye | Luxury AI Beauty Commercial","lastPosition":8,"testsPassed":10,"assetDataChanged":false,"screenshot":"257-video-last-order.png"}
 실제 운영 영상 메뉴 기본추천순 DOM 순서와 화면 확인, 최신쇼핑쇼츠부터표시·RE:TENSION 마지막8번째. 가격·판매상태·원본파일·운영DB 수정 없음.
+
+
+## 2026-10-31 revision258 — 에셋 소개 문단·링크
+상세 a.desc esc-only p를 안전한 단락 renderer로 교체. CRLF정규화·빈줄문단·단일줄바꿈 pre-wrap 유지·긴주소 overflow-wrap:anywhere. 대소문자 HTTP(S) 링크만 URL검증+HTMLescape, targetblank noopener/noreferrer/ugc, query 파라미터 보존, HTML/script 미실행. 원문DB수정 없음. 3개 경계/안전/링크 검사 PASS. 배포 후 실제 냉장고 트레이 상세 확인 예정.

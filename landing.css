@@ -106,3 +106,5 @@ body.info-view{background:#0b0c10}.info-view main{background:radial-gradient(ell
 .route-page[data-route="developer-notes"]{max-width:1040px;margin-inline:auto}
 
 .operating-finance input[type="checkbox"]{display:inline-block;width:auto;margin-inline-end:8px}
+
+.asset-description-body{min-width:0;overflow-wrap:anywhere}.asset-description-body .asset-description-paragraph{white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;margin:0 0 1.1em;line-height:1.95}.asset-description-body a{color:#ff976a;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}.asset-description-body a:hover{color:#ffb894}.asset-description-body a:focus-visible{outline:2px solid #ff6b25;outline-offset:3px}
