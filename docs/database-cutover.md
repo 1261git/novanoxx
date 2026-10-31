@@ -819,3 +819,6 @@ Post-deployment final verification: ea75f2de153711509e5bf960ff9134e626e767b0 / R
 운영 DB 읽기 확인: nnx_operating_v1.payments/orders/payouts 및 public.engine_orders 모두0건. 소급 변경할 실제 거래 없음. 거래·테스트·감사·백업 기록 삭제/갱신 없음. 빈 원장 전용 database/010-sale-fee-15.sql은 잠금/원장 비어 있음 검증 후 기존12% DB CHECK를15%로 교체, 비어 있지 않으면 거절. 신규 DB 정의도15% 갱신.
 정산·부분 환불·관리자 합계·송금 후보·탈퇴 미지급 확인은 공통 sale-policy.cjs fee 사용. 판매자 SQL합계 및 Brief 제안 예상액도15%. FAQ·플랜·6개 언어 안내15%/85% 통일. 구독 가격·NEON 작품가격·권리계약 버전은 그대로. 실제 결제/충전/구독/환불/송금 활성화 안 함.
 검증: 격리 PostgreSQL 수수료·권한·환불·송금·탈퇴15개 테스트 + Marketplace/Brief 스냅샷·경계/큰정수·재시작24개 확인 통과(외부 금융 호출0). 배포 후 확인은 별도 최종 기록 참고.
+
+Revision254 FINAL: {"status":"VERIFIED","deploy":"dep-dbimrmggbm7c73f8v45g","commit":"add8e59e17c16326a7c4327c7152071e98b44891","liveAt":"2026-10-31T04:27:23.030765Z","totalFeePercent":15,"sellerNetPercent":85,"dbConstraint":"orders_fee_15_floor","koreanFaqVerified":true,"englishFaqVerified":true,"translationSourcesChecked":6,"existingRealTransactions":0,"financialActivationChanged":false,"testsPassed":39,"originalTreeFilesPreserved":675,"screenshot":"254-fee-faq-live.png"}
+15% 안내는 실제 FAQ 한국어/영어 화면에서 확인. 6언어 소스 회귀 검사 통과. Render 최종 LIVE 확인. 구독 가격·작품가격·기존 백업과 테스트 이력 보존. 추가 유료 검사/서비스 신청 없음.

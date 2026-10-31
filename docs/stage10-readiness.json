@@ -9211,6 +9211,22 @@
     "existingEngineOrders": 0,
     "legacyRecordsPreserved": true,
     "testsPassed": 39,
-    "deployment": "PENDING"
+    "deployment": {
+      "status": "VERIFIED",
+      "deploy": "dep-dbimrmggbm7c73f8v45g",
+      "commit": "add8e59e17c16326a7c4327c7152071e98b44891",
+      "liveAt": "2026-10-31T04:27:23.030765Z",
+      "totalFeePercent": 15,
+      "sellerNetPercent": 85,
+      "dbConstraint": "orders_fee_15_floor",
+      "koreanFaqVerified": true,
+      "englishFaqVerified": true,
+      "translationSourcesChecked": 6,
+      "existingRealTransactions": 0,
+      "financialActivationChanged": false,
+      "testsPassed": 39,
+      "originalTreeFilesPreserved": 675,
+      "screenshot": "254-fee-faq-live.png"
+    }
   }
 }
