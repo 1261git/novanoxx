@@ -833,3 +833,6 @@ Revision256 FINAL: {"status":"VERIFIED","deploy":"dep-dbiob4m417fc73a5irsg","com
 
 ## 2026-10-31 revision257 — 추천순 동률 정렬
 공개API의8개VIDEO 모두 featured=false, API등록일ASC. 기본curated가 featured비교만 해서RE:TENSION1005(created1792634355078)가 첫번째에 남음. curated 비교를 featured DESC → created DESC → id DESC로 보완하여 현재 oldest1005가 맨뒤. 고정ID/작품명 하드코딩·추천여부변경·DB변경 없음. 가격순·최신순 보존. market-search10개 검사 통과. 배포 후 실제카드 순서 확인 예정.
+
+Revision257 FINAL: {"status":"VERIFIED","deploy":"dep-dbiog2u417fc73a5m9qg","commit":"894995af306062e9310bb5e48a34dfa91d176318","liveAt":"2026-10-31T06:18:36.688632Z","sort":"curated","videoCount":8,"lastTitle":"RE:TENSION eye | Luxury AI Beauty Commercial","lastPosition":8,"testsPassed":10,"assetDataChanged":false,"screenshot":"257-video-last-order.png"}
+실제 운영 영상 메뉴 기본추천순 DOM 순서와 화면 확인, 최신쇼핑쇼츠부터표시·RE:TENSION 마지막8번째. 가격·판매상태·원본파일·운영DB 수정 없음.

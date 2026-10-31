@@ -9269,6 +9269,18 @@
     "policy": "FEATURED_DESC_CREATED_DESC_ID_DESC",
     "testsPassed": 10,
     "changedAssetData": false,
-    "deployment": "PENDING"
+    "deployment": {
+      "status": "VERIFIED",
+      "deploy": "dep-dbiog2u417fc73a5m9qg",
+      "commit": "894995af306062e9310bb5e48a34dfa91d176318",
+      "liveAt": "2026-10-31T06:18:36.688632Z",
+      "sort": "curated",
+      "videoCount": 8,
+      "lastTitle": "RE:TENSION eye | Luxury AI Beauty Commercial",
+      "lastPosition": 8,
+      "testsPassed": 10,
+      "assetDataChanged": false,
+      "screenshot": "257-video-last-order.png"
+    }
   }
 }
