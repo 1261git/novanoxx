@@ -843,3 +843,7 @@ Revision257 FINAL: {"status":"VERIFIED","deploy":"dep-dbiog2u417fc73a5m9qg","com
 
 Revision258 FINAL: {"status":"VERIFIED","deploy":"dep-dbioic3m8hqs73f2440g","commit":"1d7c0d1a1a7234a0423368686670fff4330023cb","liveAt":"2026-10-31T06:23:34.755073Z","assetId":1006,"paragraphs":4,"clickableLinks":1,"queryParametersPreserved":true,"mobileWidth":330,"mobileScrollWidth":330,"testsPassed":3,"sourceTextChanged":false}
 운영 냉장고 트레이 상세1006: 문단4개, 전체CoupangURL 링크1개 target_blank noopener/noreferrer/ugc, pre-wrap 확인. 모바일330px본문/scrollWidth330px로 가로넘침 없음. screenshots258-description-desktop.png,258-description-mobile.png. 원문DB·파일·판매조건 불변.
+
+
+## 2026-10-31 revision259 — 기본 최신등록순
+HTML sort 첫항목/selected newest, URL sort미지정 복원 newest. 추천순 선택은 sort=curated로 명시 저장하여 새로고침/카테고리 이동에도 유지, 기본newest만 URL생략. 필터/가격순/추천순별동작 보존, 최신순은 featured우선없이 createdDESC/idDESC. 회귀11개PASS. DB/파일 변경없음. 배포 후 기본선택값·실제카드확인예정.
