@@ -862,3 +862,6 @@ Revision260 FINAL: {"status":"VERIFIED","deploy":"dep-dbiosauq1p3s73a0ni1g","com
 
 ## 2026-10-31 revision261 — 개발자노트/문단 유지 범위 확인
 사용자 요청으로 기존·신규 모든 마켓플레이스 에셋 소개(6종)의 공통renderer 적용과 Enter/빈줄 작성법, HTTP(S)링크/모바일줄바꿈 및 적용범위를 공개노트에 명시. 별도게시판·다른입력란 전체에 동일적용됐다고 주장하지 않음. 원문미변경, 기존258변경공통상세render 및 CSSpre-wrap 재확인. 기능코드변경 없음. 최신260실등록제출순/중복워터마크 개선 결과도소개에반영.
+
+Revision261 FINAL: {"status":"VERIFIED","deploy":"dep-dbiouudg1s2s73f82ca0","commit":"088194e1e0fa813c58c7863b25a5e40a2442621c","liveAt":"2026-10-31T06:50:26.942077Z","publicEntryVisible":true,"scope":"ALL_EXISTING_AND_FUTURE_MARKETPLACE_ASSET_DESCRIPTIONS","screenshot":"261-notes-formatting-scope.png"}
+운영 개발자노트 최신항목 제목·적용범위·Enter/빈줄 안내 표시 확인.

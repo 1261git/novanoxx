@@ -9359,6 +9359,14 @@
     "scope": "ALL_EXISTING_AND_FUTURE_ASSET_DESCRIPTIONS",
     "otherPostTypesClaimed": false,
     "formattingCodeChanged": false,
-    "deployment": "PENDING"
+    "deployment": {
+      "status": "VERIFIED",
+      "deploy": "dep-dbiouudg1s2s73f82ca0",
+      "commit": "088194e1e0fa813c58c7863b25a5e40a2442621c",
+      "liveAt": "2026-10-31T06:50:26.942077Z",
+      "publicEntryVisible": true,
+      "scope": "ALL_EXISTING_AND_FUTURE_MARKETPLACE_ASSET_DESCRIPTIONS",
+      "screenshot": "261-notes-formatting-scope.png"
+    }
   }
 }
