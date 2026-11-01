@@ -1,5 +1,5 @@
 {
-  "revision": 261,
+  "revision": 265,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -9368,5 +9368,19 @@
       "scope": "ALL_EXISTING_AND_FUTURE_MARKETPLACE_ASSET_DESCRIPTIONS",
       "screenshot": "261-notes-formatting-scope.png"
     }
+  },
+  "displayLanguage265": {
+    "status": "TESTED_READY_TO_DEPLOY",
+    "categoryMenuLocalized": true,
+    "dateLocaleFixed": true,
+    "curatedOriginalTitles": 8,
+    "displayLanguages": 6,
+    "machineTranslationConnected": false,
+    "originalTitleMutation": false,
+    "databaseMutation": false,
+    "paidServicesAdded": false,
+    "coverageKeys": 1904,
+    "testsPassed": 35,
+    "legacyOperationsHttpSuite": "7 pure-language checks pass; legacy HTTP fixture fetch fails before administrative tests. No operating data touched."
   }
 }
