@@ -865,3 +865,8 @@ Revision260 FINAL: {"status":"VERIFIED","deploy":"dep-dbiosauq1p3s73a0ni1g","com
 
 Revision261 FINAL: {"status":"VERIFIED","deploy":"dep-dbiouudg1s2s73f82ca0","commit":"088194e1e0fa813c58c7863b25a5e40a2442621c","liveAt":"2026-10-31T06:50:26.942077Z","publicEntryVisible":true,"scope":"ALL_EXISTING_AND_FUTURE_MARKETPLACE_ASSET_DESCRIPTIONS","screenshot":"261-notes-formatting-scope.png"}
 운영 개발자노트 최신항목 제목·적용범위·Enter/빈줄 안내 표시 확인.
+
+## 2026-11-01 revision265 — 메뉴·제목·시각 표시 언어
+운영 LIVE dep-dbjfenuq1p3s73amho30 / a0221315c503acb080cee1eec582f3e5b9a483ee / 2026-11-01T08:25:57.63311Z. 시장 메뉴 parent/subheading에data-i18n보완, 전체 {category} 보기의category도 언어 재전환마다지역화. 작가 공개카드의카테고리도지역화. 현재 한국어 작품제목8개를 assets/asset-title-translations.js에서6언어별 표시번역: 공개카드/상세/작가카드/내에셋/추천·어워드. 작성입력·DB원문·파일·설명 미변경, 알수없는새제목은원문유지. 유료기계번역/외부콘텐츠전송연결없음.
+uiDateMarkup의ISO원값을보관하고 Intl선택locale로매전환재표시: 가격변경·심사·계약·로그인시각, 지갑이력·주문시각. 실제6언어동일시각변환확인; en=11/1/2026,5:02:12PM,ko=오후5:02:12,others현지형식. 영어/스페인어작가8제목실화면,390px모바일문서scrollWidth375/카드제목넘침없음확인,viewport/선택언어English복원.
+회귀:언어/메뉴13+SQLite/Postgres공개프로필2+장문가이드20통과;1904UI키5개외국어누락0. 기존language-operations HTTP fixture는MODULE_NOT_FOUND를NODE_PATH수정후다시시도해도서버기동뒤fetch failed(순수언어7통과)로관리자HTTP부분미검증. UI변경이므로운영원본/DB금융기능변경없음. 증빙265-display-language-live.json. 코드배포완료;인수인계추가기록커밋은skip render.

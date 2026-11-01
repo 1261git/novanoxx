@@ -9370,7 +9370,7 @@
     }
   },
   "displayLanguage265": {
-    "status": "TESTED_READY_TO_DEPLOY",
+    "status": "VERIFIED_LIVE",
     "categoryMenuLocalized": true,
     "dateLocaleFixed": true,
     "curatedOriginalTitles": 8,
@@ -9381,6 +9381,23 @@
     "paidServicesAdded": false,
     "coverageKeys": 1904,
     "testsPassed": 35,
-    "legacyOperationsHttpSuite": "7 pure-language checks pass; legacy HTTP fixture fetch fails before administrative tests. No operating data touched."
+    "legacyOperationsHttpSuite": "7 pure-language checks pass; legacy HTTP fixture fetch fails before administrative tests. No operating data touched.",
+    "deployment": {
+      "id": "dep-dbjfenuq1p3s73amho30",
+      "commit": "a0221315c503acb080cee1eec582f3e5b9a483ee",
+      "liveAt": "2026-11-01T08:25:57.63311Z"
+    },
+    "productionCreatorTitles": 8,
+    "dateLocalesVerified": [
+      "ko",
+      "en",
+      "es",
+      "zh-Hans",
+      "vi",
+      "de"
+    ],
+    "mobileViewport": 390,
+    "mobileDocumentScrollWidth": 375,
+    "originalTitleInputsUnchanged": true
   }
 }
