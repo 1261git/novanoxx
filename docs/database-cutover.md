@@ -870,3 +870,9 @@ Revision261 FINAL: {"status":"VERIFIED","deploy":"dep-dbiouudg1s2s73f82ca0","com
 운영 LIVE dep-dbjfenuq1p3s73amho30 / a0221315c503acb080cee1eec582f3e5b9a483ee / 2026-11-01T08:25:57.63311Z. 시장 메뉴 parent/subheading에data-i18n보완, 전체 {category} 보기의category도 언어 재전환마다지역화. 작가 공개카드의카테고리도지역화. 현재 한국어 작품제목8개를 assets/asset-title-translations.js에서6언어별 표시번역: 공개카드/상세/작가카드/내에셋/추천·어워드. 작성입력·DB원문·파일·설명 미변경, 알수없는새제목은원문유지. 유료기계번역/외부콘텐츠전송연결없음.
 uiDateMarkup의ISO원값을보관하고 Intl선택locale로매전환재표시: 가격변경·심사·계약·로그인시각, 지갑이력·주문시각. 실제6언어동일시각변환확인; en=11/1/2026,5:02:12PM,ko=오후5:02:12,others현지형식. 영어/스페인어작가8제목실화면,390px모바일문서scrollWidth375/카드제목넘침없음확인,viewport/선택언어English복원.
 회귀:언어/메뉴13+SQLite/Postgres공개프로필2+장문가이드20통과;1904UI키5개외국어누락0. 기존language-operations HTTP fixture는MODULE_NOT_FOUND를NODE_PATH수정후다시시도해도서버기동뒤fetch failed(순수언어7통과)로관리자HTTP부분미검증. UI변경이므로운영원본/DB금융기능변경없음. 증빙265-display-language-live.json. 코드배포완료;인수인계추가기록커밋은skip render.
+
+## 2026-11-02 revision269 — 신규 주문 전체 제공기간7일
+
+- 결제/자료 대기1일/작업 합산 최대5일/검수1일의 새 주문 조건을 동결. 기한 초과·변환 중 경과·분쟁 재개·자동 확정 차단, 초과 주문 검토 보류. 기존 주문 스냅샷/원본 보존, 금융 활성화·자동 환불/송금 없음.
+- 703e77338b92ed52f5a53abcca5d1d1ef4235c11 / dep-dbka2e7avr4c73cups30 LIVE 2026-11-02T14:42:55.058719Z. FAQ KO/EN·작품상세·등록 작업일max5·서버 심사용 주문서·노트 운영 확인. 격리SQLite/PGlite기한 검사와 거래/금융 회귀검사 통과. 전체 실결제 검증 아님.
+- 작업 소스는 D:/AI asset market/novanoxx-seven-day-20261102 (codex/fulfillment-seven-days). 이전 integration 폴더의 Azure 준비 커밋558ff71/730a0f2는 취소·미배포이며 이번 코드에 포함하지 않음.
