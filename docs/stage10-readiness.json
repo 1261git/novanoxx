@@ -1,5 +1,5 @@
 {
-  "revision": 265,
+  "revision": 269,
   "status": "DEVELOPMENT_NOTES_UPDATED_REMAINING_IMPLEMENTATION_ACTIVATION_AND_REVIEW_EXPLICIT",
   "source": {
     "file": "novanoxx-live/docs/function-status-crosswalk-2026-10-13.csv",
@@ -9399,5 +9399,20 @@
     "mobileViewport": 390,
     "mobileDocumentScrollWidth": 375,
     "originalTitleInputsUnchanged": true
+  },
+  "sevenDayFulfillment": {
+    "date": "2026-11-02",
+    "status": "READY_TO_DEPLOY",
+    "appliesTo": "new asset and brief orders; existing paid snapshots preserved",
+    "version": "SEVEN_DAY_V1",
+    "totalDays": 7,
+    "materialsDays": 1,
+    "maximumCombinedWorkDays": 5,
+    "reviewDays": 1,
+    "deadlineCannotExtend": true,
+    "expiration": "processing/auto confirmation blocked; existing refund review process, no automatic provider refund",
+    "billingActivated": false,
+    "azureTranslationConnected": false,
+    "validation": "SQLite/PGlite boundary+async delivery race+dispute resume+legacy preservation; 19 related tests, 41 engine assertions,25 PostgreSQL correspondence assertions,29 PostgreSQL dispute assertions;1913 translation keys zero missing"
   }
 }

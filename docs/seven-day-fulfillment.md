@@ -1,0 +1,15 @@
+# Seven-day fulfillment policy — revision 269, 2026-11-02
+
+New asset/commission orders freeze SEVEN_DAY_V1 in their terms at verified order payment (TEST debit time for isolated tests). This is not a NEON balance expiration or subscription term. Original listings, uploaded files and existing paid-order terms are preserved.
+
+Materials must be submitted within 24 hours, combined base/selected option work is at most 5 calendar days, and delivery reserves 24 hours for review. Delivery cannot occur after paidAt+6 days and the completeBy bound is paidAt+7 days. Actual promised work due dates are still recorded from material submission. Instant registered-original delivery remains immediate; its unused legacy work-days value is not interpreted as a work promise.
+
+Creator save, individual quote/purchase, Brief quote/purchase and offers enforce the combined work limit. Pending pre-policy checkout snapshots must be reopened if their terms change; they are not silently reused with new terms. Verified Toss approvedAt is used when present; absent a provider timestamp, checkout creation bounds the start conservatively, rather than letting delayed reconciliation restart the period.
+
+Material waiting, final upload, async conversion completion, review confirmation and administrator dispute resume check immutable deadlines. The existing gated engine worker marks expired unfinished orders REVIEW_PAUSED and emits one FULFILLMENT_EXPIRED audit event. Existing disputed orders remain disputed. No final entitlement or settlement is created by expiry. Messages/dispute and refund-review access remain. No refund is automatically sent to Toss and no paid service is activated. Invalid/missing payment configuration continues to block live charging.
+
+Frontend displays the policy on product checkout, confirmation dialog, creator editor, FAQ and refund guidance, with new-order deadlines in buyer/seller order views. Korean, English, Spanish, Simplified Chinese, Vietnamese and German translations are supplied.
+
+Validation: fulfillment-period.test.cjs uses SQLite and isolated PGlite and a synthetic conversion double for clock/race tests (not media quality). Tests cover option sums, one-day material boundary, day-six delivery, day-seven stop, review correction, administrator resume rejection, retries, original metadata preservation and historical order non-migration. Existing real protected-image workflow tests, operating finance, checkout and dispute suites also passed without provider calls. An old Brief fee assertion was corrected from historical 12% to the existing 15%; fee implementation was not changed.
+
+Prepared in a clean worktree from main 20694a9, excluding canceled Azure translation commits. No new paid resource, credentials, real charge, refund or payout was created. Deployment and live-page evidence are recorded after release.

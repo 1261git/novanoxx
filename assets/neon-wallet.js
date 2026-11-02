@@ -7,6 +7,7 @@ async function renderEnginePurchaseOptions(asset){
   else{button.textContent=uiText('테스트 NEON으로 구매')+' · '+asset.price+' NEON';const hint=document.getElementById('test-buy-status');if(hint)hint.textContent='';const notice=document.getElementById('neon-purchase-notice');if(notice)notice.hidden=false;}
   if(status.productionSite&&status.realBilling){const available=await authRequest('commerce/availability?assetId='+encodeURIComponent(asset.id));if(!button.isConnected||authUser?.id!==owner)return;status.realBilling=available.realBilling===true;if(!status.realBilling)status.paymentPreview=true;}
   const group=document.createElement('fieldset');group.id='engine-purchase-options';
+  const periodNotice=document.createElement('p');uiMessage(periodNotice,'새 에셋·제작 의뢰 주문은 결제 후 최대 7일 안에 자료 대기·작업·검수를 마칩니다. 자료 제출은 1일 이내, 작업은 최대 5일, 검수는 1일입니다. 추가 작업을 합산해도 작업일은 5일을 넘길 수 없습니다.');group.append(periodNotice);
   const legend=document.createElement('legend');uiMessage(legend,'추가 작업 선택');group.append(legend);
   const note=document.createElement('p');uiMessage(note,asset.optionPricing?'항목별 추가 금액과 작업일이 합산됩니다.':'지원 항목만 선택할 수 있습니다. 유료 추가 작업은 표시된 묶음 금액을 한 번 적용합니다.');group.append(note);
   if(asset.fulfillment==='REGISTERED_INSTANT'){const hint=document.createElement('p');uiMessage(hint,'추가 작업 없이 구매하면 등록 최종본이 즉시 제공됩니다.');group.append(hint);}
