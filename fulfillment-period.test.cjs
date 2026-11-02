@@ -4,7 +4,7 @@ const period=require('./fulfillment-period.cjs'),DAY=period.DAY,uuid=()=>crypto.
 test('seven-day allocation, work sum and explicit instant-delivery exception',()=>{
  const p=period.create(1000,5);assert.equal(p.materialsBy,1000+DAY);assert.equal(p.deliveryBy,1000+6*DAY);assert.equal(p.completeBy,1000+7*DAY);
  for(const days of [-1,5.1,6,7,365,NaN])assert.throws(()=>period.validate(days),/FULFILLMENT_PERIOD_LIMIT/);
- assert.equal(period.paymentTime({approvedAt:'2026-11-01T00:00:00Z'},'2026-10-31T23:50:00Z',Date.parse('2026-11-02T00:00:00Z')),Date.parse('2026-11-01T00:00:00Z'));assert.equal(period.paymentTime({},'2026-11-01T00:00:00Z',Date.parse('2026-11-02T00:00:00Z')),Date.parse('2026-11-01T00:00:00Z'));period.validate(7,true);assert.equal(period.policy({terms:'{}'}),null);assert.equal(period.expired({terms:'{}',status:'PAID'},Infinity),false);
+ assert.equal(period.paymentTime({approvedAt:'2026-11-01T00:00:00Z'},'2026-10-31T23:50:00Z',Date.parse('2026-11-02T00:00:00Z')),Date.parse('2026-11-01T00:00:00Z'));assert.equal(period.paymentTime({},'2026-11-01T00:00:00Z',Date.parse('2026-11-02T00:00:00Z')),Date.parse('2026-11-01T00:00:00Z'));assert.equal(require('./assets/option-quote.js').quote({price:100,days:7,fulfillment:'REGISTERED_INSTANT'},[]).days,0);period.validate(7,true);assert.equal(period.policy({terms:'{}'}),null);assert.equal(period.expired({terms:'{}',status:'PAID'},Infinity),false);
  assert.throws(()=>period.policy({terms:{fulfillmentPeriod:{...p,completeBy:p.completeBy+1}}}),/FULFILLMENT_PERIOD_INVALID/);
 });
 for(const backend of ['sqlite','postgres'])test(backend+': purchase, materials, async delivery, review expiry, recovery and legacy preservation',async()=>{
